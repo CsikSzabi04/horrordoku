@@ -10,3 +10,13 @@
 - **Csapda:** ha a shelled `ELECTRON_RUN_AS_NODE=1`-et állít (VS Code-os eszközök), az Electront plain Node-ként indítaná — a `scripts/dev.mjs` és `smoke.mjs` kiszedi; ha közvetlenül indítod, `unset ELECTRON_RUN_AS_NODE`.
 - **A gyökér-konfig most már létezik** (`package.json`, `tsconfig.json`, `vite.config.ts`, `eslint.config.js`): `git pull` után használhatod a `src/cloud/`-hoz; a vitest az `src/**/*.test.ts` és `electron/**/*.test.ts` fájlokat futtatja. Függőséget `chore(deps):` commitban adj hozzá.
 - Következő nálam: **A1** (teljes `src/shared`, UI-készlet, app-váz + a te csonk-képernyőid). A `NullCloud` csonkot az A1-ben hozom létre; azt te veszed át (B1).
+
+## A-002 · 2026-10-25 · → B · INFO · A1 kész — B3/B4 indulhat (UI-készlet, csonk-képernyők, `cloud` átvétel)
+- **Típusok:** `src/shared/*.ts` a CONTRACTS.md blokkjaiból szó szerint (`import type { … } from '../shared'`, barrel: `src/shared/index.ts`). Szerződés nem változott.
+- **`src/cloud/index.ts` a tiéd mostantól (B1).** Jelenleg `NullCloud` (minden hívás `offline`), `export const cloud: CloudService = NullCloud`. A valódi példány behúzásakor az `cloud` exportot cseréld; a menü már `cloud.status()` / `cloud.onStatus()` / `cloud.auth.current()` alapján mutatja a ☁/📴/👤 állapotot.
+- **UI-készlet:** `src/ui` — `Button` (`variant="ghost"`, `size="sm"`), `Panel` (`tag="ÜGYIRAT #001"`), `Tabs`, `Chip`, `Avatar`, `ProgressBar`, `Modal`, `ToastProvider`/`useToast()`. Tokenek és stílus: `src/ui/ui.css` (CSS-változók: `--blood`, `--panel`, `--display` …). Nyugodt mód: a `html.calm` osztály kikapcsolja az animációkat (a settings, A7 állítja).
+- **App-váz:** `src/app/routes.ts` (`Route` unió), `src/app/nav.tsx` (`useNav()` → `{ route, go, back }`), `src/app/App.tsx` (képernyő-tábla). **A te csonkjaid** (innentől a tiéd, a menü már hivatkozik rájuk): `src/screens/{login,profile,friends,lobby,coop}/index.tsx` — cseréld a `<Stub …/>`-ot a valódi képernyőre. A lobby a módot `useNav().route` alól olvassa (`{ name: 'lobby', mode: 'together' | 'killer' }`).
+- **Szövegek:** `src/i18n/hu.ts` (kulcsok) + `t(key)`; új kulcsot a sajátod mellé vegyél fel (ne írd át az enyéimet; ütközés esetén a kulcs-előtag legyen a képernyőé: `login.*`, `profile.*`, …).
+- Ellenőrzés: `npm run typecheck && npm run lint && npm test` zöld; böngészős füst (menü → lobby-csonk → vissza) rendben.
+- Következő nálam: **A2** (`StorageService`) — ezt vár B2.
+

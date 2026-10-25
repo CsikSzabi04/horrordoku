@@ -1,0 +1,197 @@
+/* NIGHTDOKU UI-készlet — tokenek + komponens-stílusok (a web/public/index.html paletta- és betűkészletéből). */
+:root {
+  --bg: #07060a;
+  --panel: #13101a;
+  --ink: #ece4e6;
+  --muted: #a2959c;
+  --dim: #6d636a;
+  --blood: #d1162f;
+  --blood2: #8f0f24;
+  --gold: #c9a45c;
+  --line: rgba(236, 228, 230, 0.12);
+  --display: 'Cinzel', 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+  --type: 'Special Elite', 'Courier New', monospace;
+  --ui: system-ui, 'Segoe UI', Roboto, sans-serif;
+  color-scheme: dark;
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+body {
+  background: radial-gradient(120% 80% at 70% -10%, #1b0a15 0%, var(--bg) 55%) fixed;
+  color: var(--ink);
+  font: 400 16px/1.6 var(--ui);
+  -webkit-font-smoothing: antialiased;
+}
+:focus-visible {
+  outline: 2px solid var(--blood);
+  outline-offset: 3px;
+}
+/* Nyugodt mód / kevesebb mozgás: a settings (A7) a html elemre teszi a .calm osztályt */
+html.calm *,
+html.calm *::before,
+html.calm *::after {
+  animation: none !important;
+  transition: none !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
+
+.nd-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.7rem 1.2rem;
+  border: 1px solid rgba(209, 22, 47, 0.75);
+  border-radius: 2px;
+  background: linear-gradient(180deg, rgba(209, 22, 47, 0.25), rgba(143, 15, 36, 0.25));
+  color: var(--ink);
+  font: 700 0.8rem/1 var(--display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.3s;
+}
+.nd-btn:hover:not(:disabled) {
+  transform: translateY(-2px);
+  box-shadow: 0 0 26px rgba(209, 22, 47, 0.5);
+}
+.nd-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+.nd-btn.ghost {
+  background: rgba(255, 255, 255, 0.03);
+  border-color: var(--line);
+}
+.nd-btn.sm {
+  padding: 0.5rem 0.85rem;
+  font-size: 0.7rem;
+}
+
+.nd-panel {
+  position: relative;
+  padding: 1.2rem 1.1rem;
+  border: 1px solid rgba(236, 228, 230, 0.16);
+  border-radius: 6px;
+  background: linear-gradient(160deg, #1a1520, #100c14);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.55), inset 0 0 50px rgba(0, 0, 0, 0.4);
+}
+.nd-panel[data-tag]::before {
+  content: attr(data-tag);
+  position: absolute;
+  left: 1rem;
+  top: -0.7rem;
+  padding: 0.1rem 0.7rem;
+  background: var(--blood2);
+  color: #fff;
+  font: 0.75rem/1.4 var(--type);
+  letter-spacing: 0.2em;
+  transform: rotate(-2deg);
+}
+
+.nd-tabs {
+  display: flex;
+  gap: 0.25rem;
+  border-bottom: 1px solid var(--line);
+}
+.nd-tab {
+  padding: 0.6rem 1rem;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  background: none;
+  color: var(--muted);
+  font: 0.85rem var(--type);
+  letter-spacing: 0.08em;
+  cursor: pointer;
+}
+.nd-tab[aria-selected='true'] {
+  color: var(--ink);
+  border-bottom-color: var(--blood);
+}
+
+.nd-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.25rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 99px;
+  background: rgba(0, 0, 0, 0.25);
+  color: var(--muted);
+  font: 0.8rem var(--type);
+}
+.nd-dot {
+  width: 0.5rem;
+  height: 0.5rem;
+  border-radius: 50%;
+  background: var(--dim);
+}
+.nd-dot.on {
+  background: var(--blood);
+  box-shadow: 0 0 8px var(--blood);
+}
+
+.nd-avatar {
+  display: inline-grid;
+  place-items: center;
+  width: var(--s, 2.4rem);
+  height: var(--s, 2.4rem);
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #2a1620, #120d16);
+  font-size: calc(var(--s, 2.4rem) * 0.5);
+  line-height: 1;
+}
+
+.nd-bar {
+  height: 0.5rem;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, 0.07);
+  overflow: hidden;
+}
+.nd-bar > i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--blood2), var(--blood));
+}
+
+.nd-modal-back {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: grid;
+  place-items: center;
+  background: rgba(0, 0, 0, 0.7);
+}
+.nd-modal {
+  width: min(92vw, 520px);
+}
+.nd-toasts {
+  position: fixed;
+  left: 50%;
+  bottom: 1.2rem;
+  z-index: 110;
+  display: grid;
+  gap: 0.5rem;
+  transform: translateX(-50%);
+}
+.nd-toast {
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--blood);
+  border-radius: 8px;
+  background: rgba(10, 8, 14, 0.96);
+  font: 0.88rem var(--type);
+}

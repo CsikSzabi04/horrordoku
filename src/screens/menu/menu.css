@@ -1,0 +1,79 @@
+.menu {
+  min-height: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto auto;
+  gap: 1.4rem;
+  padding: 2.5rem clamp(1rem, 4vw, 3rem) 1.5rem;
+  text-align: center;
+}
+.menu h1 {
+  margin: 0;
+  font: 900 clamp(2.2rem, 7vw, 5rem) var(--display);
+  letter-spacing: 0.08em;
+}
+.menu h1 span {
+  color: var(--blood);
+}
+.menu header p {
+  margin: 0.3rem 0 0;
+  font: 1.1rem var(--type);
+  color: var(--muted);
+}
+.modes {
+  align-self: center;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1rem;
+  max-width: 1100px;
+  width: 100%;
+  margin: 0 auto;
+}
+.mode {
+  display: grid;
+  gap: 0.4rem;
+  justify-items: center;
+  padding: 1.6rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  background: var(--panel);
+  color: var(--ink);
+  cursor: pointer;
+  transition: transform 0.2s, border-color 0.3s, box-shadow 0.3s;
+}
+.mode:hover {
+  transform: translateY(-3px);
+  border-color: rgba(209, 22, 47, 0.7);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.5), 0 0 30px rgba(209, 22, 47, 0.15);
+}
+.mode .ico {
+  font-size: 2.4rem;
+  filter: drop-shadow(0 0 12px rgba(209, 22, 47, 0.6));
+}
+.mode strong {
+  font: 700 1.2rem var(--display);
+  letter-spacing: 0.06em;
+}
+.mode small {
+  color: var(--muted);
+  font-size: 0.8rem;
+}
+.more {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  justify-content: center;
+}
+.menu footer {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+.menu .link {
+  background: none;
+  border: 0;
+  color: var(--muted);
+  font: 0.85rem var(--type);
+  cursor: pointer;
+  text-decoration: underline;
+}

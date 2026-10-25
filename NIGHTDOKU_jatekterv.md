@@ -1472,51 +1472,48 @@ A **Napi ügy** a Random mód mindenkinek azonos változata: a **seed a dátum**
 
 ### 20.1 A mintapálya JSON-ban
 
-> Ugyanez a JSON kerül az app `puzzles/` mappájába **és** a Supabase `puzzles.data` mezőjébe (18.4). A `solution` mező az előre megírt megoldás — hogy ki hol volt. A katalógus-pályák `mode` értéke `classic`, `event` vagy `bonus`; az Esemény-pályákon a karakterek `source` mezője a forrás-játékot jelöli (pl. `{ "game": "resident-evil-2" }`).
+> *(A mérvadó típus-definíció: [docs/CONTRACTS.md](docs/CONTRACTS.md) 2. fejezet, `src/shared/puzzle.ts`.)* Ugyanez a JSON kerül az app `puzzles/` mappájába **és** a Supabase `puzzles.data` mezőjébe (18.4). A `solution` mező az előre megírt megoldás — hogy ki hol volt. A katalógus-pályák `mode` értéke `classic`, `event` vagy `bonus`; az Esemény-pályákon a karakterek `source` mezője a forrás-játékot jelöli (pl. `{ "game": "resident-evil-2" }`).
 
 ```json
 {
+  "v": 1,
   "id": "classic-01-midnight-mass",
+  "mode": "classic",
+  "world": "hollowmere",
+  "chapter": 1,
   "title": "Éjféli Mise",
+  "story": "Éjfél. A Szent Bertalan-kápolna harangja magától megszólalt. Ábelt, a Rend írnokát a harangláb tövében találták.",
   "size": 6,
   "difficulty": 1,
-  "rooms": {
-    "K": "Kripta", "S": "Sekrestye", "O": "Oltár",
-    "H": "Harangláb", "T": "Temetőkert"
-  },
-  "layout": [
-    "KKSSSS",
-    "KKSSSS",
-    "KKOOTT",
-    "HHOOTT",
-    "HHOOTT",
-    "HHHTTT"
-  ],
+  "rooms": { "K": "Kripta", "S": "Sekrestye", "O": "Oltár", "H": "Harangláb", "T": "Temetőkert" },
+  "layout": ["KKSSSS", "KKSSSS", "KKOOTT", "HHOOTT", "HHOOTT", "HHHTTT"],
   "objects": [
-    { "type": "coffin", "at": "A1" }, { "type": "coffin", "at": "B2" },
-    { "type": "bench",  "at": "D1" }, { "type": "bench",  "at": "E1" },
-    { "type": "bench",  "at": "B6" }, { "type": "candle", "at": "F2", "blocking": true },
-    { "type": "carpet", "at": ["C3","D3","C4","D4"] },
-    { "type": "grave",  "at": "F3", "blocking": true },
-    { "type": "grave",  "at": "E5", "blocking": true },
-    { "type": "tree",   "at": "E6", "blocking": true },
-    { "type": "bell",   "at": "A4", "blocking": true }
+    { "type": "coffin", "at": ["A1", "B2"] },
+    { "type": "bench", "at": ["D1", "E1", "B6"] },
+    { "type": "carpet", "at": ["C3", "D3", "C4", "D4"] },
+    { "type": "candle", "at": "F2", "blocking": true },
+    { "type": "grave", "at": ["F3", "E5"], "blocking": true },
+    { "type": "tree", "at": "E6", "blocking": true },
+    { "type": "bell", "at": "A4", "blocking": true }
   ],
   "characters": [
-    { "id": "vlad",     "race": "vampire", "clue": { "on": "bench", "room": "S" } },
-    { "id": "morrigan", "race": "witch",   "clue": { "beside": "bell" } },
-    { "id": "silas",    "race": "ghost",   "clue": { "on": "coffin" } },
-    { "id": "lilith",   "race": "demon",   "clue": { "on": "carpet", "room": "O" } },
-    { "id": "ezekiel",  "race": "werewolf","clue": { "room": "T" } },
-    { "id": "abel",     "race": "human",   "victim": true, "clue": { "room": "H" } }
+    { "id": "vlad", "name": "Vlad Drăgulescu", "race": "vampire",
+      "clues": [{ "kind": "on", "object": "bench", "room": "S" }], "clueText": ["Egy padon ült a Sekrestyében."] },
+    { "id": "morrigan", "name": "Morrigan Ashvale", "race": "witch",
+      "clues": [{ "kind": "beside", "object": "bell" }], "clueText": ["A harang mellett állt."] },
+    { "id": "silas", "name": "Silas Grey", "race": "ghost",
+      "clues": [{ "kind": "on", "object": "coffin" }], "clueText": ["Egy koporsón pihent."] },
+    { "id": "lilith", "name": "Lilith Vane", "race": "demon",
+      "clues": [{ "kind": "on", "object": "carpet", "room": "O" }], "clueText": ["Az Oltár szőnyegén térdelt."] },
+    { "id": "ezekiel", "name": "Ezekiel Thorne", "race": "werewolf",
+      "clues": [{ "kind": "in", "room": "T" }], "clueText": ["A Temetőkertben volt."] },
+    { "id": "abel", "name": "Ábel Kóródi", "race": "human", "victim": true,
+      "clues": [{ "kind": "aloneWithKiller", "room": "H" }], "clueText": ["A Haranglábban volt, egyedül a gyilkosával."] }
   ],
   "activePowers": [],
-  "solution": {
-    "vlad": "E1", "silas": "B2", "lilith": "D3",
-    "ezekiel": "F4", "morrigan": "A5", "abel": "C6"
-  },
-  "murderer": "morrigan"
-}
+  "solution": { "vlad": "E1", "silas": "B2", "lilith": "D3", "ezekiel": "F4", "morrigan": "A5", "abel": "C6" },
+  "murderer": "morrigan",
+  "rev": 1
 ```
 
 ### 20.2 Megoldó / egyértelműség-ellenőrző (algoritmus)
