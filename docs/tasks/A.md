@@ -6,7 +6,7 @@
 
 | ID | Feladat | Függ | Állapot | Commit / megjegyzés |
 |---|---|---|---|---|
-| A0 | Alap (Electron+Vite+React+TS), híd (`secure`, `memory`), CI, **fejlesztői userData-elkülönítés** | — | ⬜ | **B ezt várja — elsőnek** |
+| A0 | Alap (Electron+Vite+React+TS), híd (`secure`, `memory`), CI, **fejlesztői userData-elkülönítés** | — | ✅ | `1d4abda` · 35 egység-teszt · valódi-Electron füstteszt (dev + csomagolt `.exe`) · portable build 110 MB |
 | A1 | Közös típusok (`src/shared`), UI-készlet, app-váz, csonk-képernyők, i18n | A0 | ⬜ | |
 | A2 | `StorageService` (helyi mentés, scope, SyncOp) | A1 | ⬜ | |
 | A3 | Szabálymotor, megoldó, generátor | A1 | ⬜ | |

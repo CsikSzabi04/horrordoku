@@ -292,6 +292,7 @@ export interface NightdokuBridge {
   platform: 'win32' | 'darwin' | 'linux'
   memory: {
     dir(): Promise<string>                                         // a memory mappa teljes útja (megjelenítésre)
+    status(): Promise<{ dir: string; fallback: boolean }>          // [bővítés, A0] fallback=true: az app mappája nem írható → %APPDATA%\NIGHTDOKU\memory; a UI figyelmeztet
     readJson<T>(rel: string): Promise<T | null>                    // rel: "u_ab12cd34/progress.json" — csak a memory mappán belül
     writeJson(rel: string, data: unknown): Promise<void>          // atomikus + .bak
     remove(rel: string): Promise<void>
@@ -299,7 +300,7 @@ export interface NightdokuBridge {
     usage(): Promise<{ bytes: number }>
     openInExplorer(): Promise<void>
   }
-  /** Electron safeStorage: a token titkosítva, a felhasználói fiókhoz kötve kerül a memory/<scope>/auth.bin-be. */
+  /** Electron safeStorage (Windows: a felhasználói fiókhoz kötött titkosítás). Egyetlen fájl: memory/auth.bin; a kulcsok átlátszatlanok — a scope-előtag a hívó dolga (pl. "u_ab12cd34/sb-token"). */
   secure: {
     get(key: string): Promise<string | null>
     set(key: string, value: string): Promise<void>
