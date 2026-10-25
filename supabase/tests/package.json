@@ -1,0 +1,12 @@
+{
+  "name": "nightdoku-sql-tests",
+  "private": true,
+  "type": "module",
+  "description": "A Supabase-migrációk tesztjei helyi Postgres-ben (PGlite). Nincs szükség Supabase-fiókra.",
+  "scripts": {
+    "test": "node migrations.test.mjs"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "0.5.11"
+  }
+}

@@ -5,7 +5,12 @@
 
 # --- játékos-adatok (a memory mappa a játékos gépén keletkezik, de fejlesztés közben a projektben is) ---
 memory/
+memory-*/
+.dev-userdata/
 *.corrupt
+
+# --- az AI-k saját munkakönyvtárai (git worktree; scripts/ai-setup.sh hozza létre) ---
+.work/
 
 # --- függőségek, build ---
 node_modules/

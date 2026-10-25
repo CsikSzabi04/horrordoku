@@ -1797,6 +1797,8 @@ HorrorDoku/
 
 ## 25. Ütemterv (roadmap)
 
+> **Munkamegosztás:** a projektet két AI viszi párhuzamosan — **AI-A** a játékot (motor, tábla, helyi mentés, Klasszikus / Esemény / Random mód), **AI-B** a felhőt, a társas módokat és a kiadást (fiók, szinkron, barátok, Együtt / Gyilkos mód, adatbázis, weboldal). A részletek, a feladat-sorrend és a közös szerződések: [docs/AI_SPLIT.md](docs/AI_SPLIT.md), [docs/CONTRACTS.md](docs/CONTRACTS.md), [docs/TASKS.md](docs/TASKS.md). Az alábbi fázisok *sorrendet* adnak, nem naptári időt.
+
 | Fázis | Időtartam | Tartalom |
 |---|---|---|
 | **0. Prototípus** | 2 hét | Electron-ablak (saját, önálló ablak), 6×6 rács, lerakás, X-elés, nyomok, beküldés, 1 pálya (Éjféli Mise); `memory` mappa (settings, progress, session) |

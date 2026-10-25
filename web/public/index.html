@@ -1,28 +1,29 @@
 <!doctype html>
-<html lang="hu">
+<html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>NIGHTDOKU — Ahol a sudoku vért ont</title>
-<meta name="description" content="NIGHTDOKU: horror-gyilkossági logikai rejtvényjáték. Egy rács, egy gyilkos, egyetlen megoldás. Klasszikus, Esemény, Random és két co-op mód — letölthető, offline is játszható.">
-<meta name="theme-color" content="#07060a">
+<title data-i="meta.title">NIGHTDOKU — Where sudoku spills blood</title>
+<meta name="description" data-i-content="meta.desc" content="NIGHTDOKU: a horror murder-mystery logic puzzle. One grid, one killer, a single solution. Classic, Event, Random and two co-op modes — downloadable, playable offline.">
+<meta name="theme-color" content="#211a2d">
 <meta name="color-scheme" content="dark">
 <meta property="og:type" content="website">
-<meta property="og:title" content="NIGHTDOKU — Ahol a sudoku vért ont">
-<meta property="og:description" content="Horror-gyilkossági logikai rejtvény. Egy rács. Egy gyilkos. Egyetlen megoldás.">
+<meta property="og:title" data-i-content="meta.title" content="NIGHTDOKU — Where sudoku spills blood">
+<meta property="og:description" data-i-content="meta.ogdesc" content="Horror murder-mystery logic puzzle. One grid. One killer. A single solution.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23b3122d'/%3E%3Ccircle cx='11' cy='11' r='5' fill='%23ff6a5c' opacity='.45'/%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Special+Elite&display=swap" rel="stylesheet">
 <script>
-/* "js" osztály + nyugodt mód (mentett beállítás vagy a rendszer "kevesebb mozgás" kérése) — még a festés előtt */
+/* "js" osztály + nyelv (alapból angol, mentett választás) + nyugodt mód (mentett beállítás vagy a rendszer "kevesebb mozgás" kérése) — még a festés előtt */
 (function(){var d=document.documentElement;d.classList.add('js');var r=false;try{r=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+try{if(localStorage.getItem('nd_lang')==='hu')d.lang='hu'}catch(e){}
 try{var c=localStorage.getItem('nd_calm');if(c==='1'||(c===null&&r))d.classList.add('calm')}catch(e){if(r)d.classList.add('calm')}})();
 </script>
 <style>
 :root{
-  --bg:#07060a; --panel:#13101a; --ink:#ece4e6; --muted:#a2959c; --dim:#6d636a;
-  --blood:#d1162f; --blood2:#8f0f24; --blood3:#4a0812; --gold:#c9a45c; --line:rgba(236,228,230,.12);
+  --bg:#211a2d; --panel:#2d2439; --ink:#f4eef0; --muted:#c3b8bf; --dim:#968a94; --cloud:rgba(33,26,45,.9);
+  --blood:#d1162f; --hot:#f2475d; --blood2:#8f0f24; --blood3:#4a0812; --gold:#c9a45c; --line:rgba(244,238,240,.17);
   --display:"Cinzel","Palatino Linotype","Book Antiqua",Georgia,serif;
   --type:"Special Elite","Courier New",monospace;
   --ui:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
@@ -30,7 +31,7 @@ try{var c=localStorage.getItem('nd_calm');if(c==='1'||(c===null&&r))d.classList.
 }
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;background:var(--bg);color-scheme:dark}
-body{margin:0;background:radial-gradient(120% 80% at 70% -10%,#1b0a15 0%,var(--bg) 55%) fixed;color:var(--ink);
+body{margin:0;background:radial-gradient(120% 80% at 70% -10%,#44213f 0%,var(--bg) 58%) fixed;color:var(--ink);
   font:400 17px/1.65 var(--ui);overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
 a{color:inherit}
 button{font:inherit;color:inherit}
@@ -41,7 +42,7 @@ b,strong{font-weight:700}
 /* ---------- háttér-rétegek ---------- */
 .fx{position:fixed;inset:0;pointer-events:none}
 #embers{position:fixed;inset:0;z-index:1;pointer-events:none}
-.fog{z-index:0;opacity:.55;filter:blur(40px)}
+.fog{z-index:0;opacity:.85;filter:blur(40px)}
 .fog.f1{background:radial-gradient(40% 30% at 20% 70%,rgba(120,130,160,.16),transparent 70%),radial-gradient(35% 25% at 80% 30%,rgba(120,130,160,.1),transparent 70%);animation:fogA 38s ease-in-out infinite alternate}
 .fog.f2{background:radial-gradient(45% 30% at 70% 80%,rgba(160,60,80,.14),transparent 70%),radial-gradient(30% 25% at 15% 20%,rgba(120,130,160,.1),transparent 70%);animation:fogB 52s ease-in-out infinite alternate}
 @keyframes fogA{to{transform:translate3d(8%,-4%,0) scale(1.15)}}
@@ -49,20 +50,17 @@ b,strong{font-weight:700}
 .lightning{z-index:2;background:radial-gradient(70% 60% at 70% 0%,rgba(255,200,210,.5),transparent 70%);opacity:0}
 .lightning.go{animation:bolt 1.5s ease-out}
 @keyframes bolt{0%{opacity:0}6%{opacity:.5}12%{opacity:.08}20%{opacity:.34}100%{opacity:0}}
-.spot{z-index:3;background:radial-gradient(circle 440px at var(--mx) var(--my),rgba(0,0,0,0) 0%,rgba(0,0,0,0) 38%,rgba(3,2,5,.44) 100%)}
+.spot{z-index:3;background:radial-gradient(circle 520px at var(--mx) var(--my),rgba(0,0,0,0) 0%,rgba(0,0,0,0) 40%,rgba(12,7,20,.14) 100%)}
 .grain{z-index:4;opacity:.09;mix-blend-mode:overlay;animation:grain 1s steps(6) infinite;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
 @keyframes grain{0%{transform:translate(0,0)}20%{transform:translate(-3%,2%)}40%{transform:translate(2%,-3%)}60%{transform:translate(-2%,-1%)}80%{transform:translate(3%,3%)}100%{transform:translate(0,0)}}
-.vignette{z-index:4;background:radial-gradient(120% 100% at 50% 40%,transparent 55%,rgba(0,0,0,.6) 100%)}
+.vignette{z-index:4;background:radial-gradient(120% 100% at 50% 40%,transparent 60%,rgba(0,0,0,.26) 100%)}
 
 /* ---------- felső sáv ---------- */
 .nav{position:fixed;inset:0 0 auto 0;z-index:30;display:flex;align-items:center;gap:1rem;padding:.7rem max(16px,3vw);
-  background:linear-gradient(rgba(7,6,10,.88),rgba(7,6,10,0));backdrop-filter:blur(6px)}
+  background:linear-gradient(rgba(33,26,45,.9),rgba(33,26,45,0));backdrop-filter:blur(6px)}
 .brand{font-family:var(--display);font-weight:900;letter-spacing:.2em;font-size:.95rem;text-decoration:none;white-space:nowrap}
 .brand b{color:var(--blood)}
-.nav ul{display:flex;gap:1.5rem;margin:0 auto 0 1.5rem;padding:0;list-style:none}
-.nav ul a{font-family:var(--type);font-size:.85rem;letter-spacing:.12em;text-transform:uppercase;text-decoration:none;color:var(--muted);transition:color .2s}
-.nav ul a:hover,.nav ul a.on{color:var(--ink)}
 .tools{display:flex;gap:.5rem;margin-left:auto}
 .tgl{display:inline-flex;align-items:center;gap:.4rem;padding:.35rem .7rem;border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:99px;
   font-family:var(--type);font-size:.78rem;cursor:pointer;color:var(--muted);transition:.2s}
@@ -82,7 +80,7 @@ b,strong{font-weight:700}
     radial-gradient(circle at 36% 73%,rgba(60,0,10,.4) 0 5%,transparent 6%),radial-gradient(circle at 42% 42%,#d1162f 0%,#8f0f24 56%,#35040c 100%);
   box-shadow:0 0 60px 8px rgba(209,22,47,.45),0 0 220px 70px rgba(143,15,36,.34);animation:moon 8s ease-in-out infinite}
 @keyframes moon{50%{transform:scale(1.035);box-shadow:0 0 80px 14px rgba(209,22,47,.55),0 0 260px 90px rgba(143,15,36,.4)}}
-.cloud{position:absolute;z-index:-3;top:12%;width:55%;height:11%;background:linear-gradient(90deg,transparent,rgba(7,6,10,.92) 40%,rgba(7,6,10,.92) 60%,transparent);filter:blur(16px);animation:cloud 26s linear infinite}
+.cloud{position:absolute;z-index:-3;top:12%;width:55%;height:11%;background:linear-gradient(90deg,transparent,var(--cloud) 40%,var(--cloud) 60%,transparent);filter:blur(16px);animation:cloud 26s linear infinite}
 .cloud.c2{top:24%;height:8%;animation-duration:38s;animation-delay:-14s}
 @keyframes cloud{from{transform:translateX(-70%)}to{transform:translateX(190%)}}
 .hero-in{position:relative;max-width:1100px}
@@ -122,17 +120,12 @@ b,strong{font-weight:700}
 .btn[disabled],.btn.off{cursor:not-allowed}
 .btn.sm{padding:.6rem 1rem;font-size:.7rem}
 .btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none;animation:none}
-.chip{display:inline-flex;align-items:center;gap:.55rem;padding:.35rem .9rem;border:1px solid var(--line);border-radius:99px;font-family:var(--type);font-size:.82rem;color:var(--muted);background:rgba(0,0,0,.25)}
-.dot{width:.55rem;height:.55rem;border-radius:50%;background:var(--blood);box-shadow:0 0 10px var(--blood);animation:blink 1.4s steps(2) infinite}
 .metaline{margin-top:1rem;color:var(--dim);font-family:var(--type);font-size:.85rem;letter-spacing:.06em}
-.scrollhint{position:absolute;bottom:1.4rem;left:50%;transform:translateX(-50%);font-family:var(--type);font-size:.78rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);text-decoration:none;display:grid;justify-items:center;gap:.3rem}
-.scrollhint span{animation:bob 1.8s ease-in-out infinite;color:var(--blood)}
-@keyframes bob{50%{transform:translateY(6px)}}
 
 /* ---------- szekciók ---------- */
 section{position:relative;z-index:2;max-width:1180px;margin:0 auto;padding:clamp(4rem,10vw,8rem) 16px}
 .slash{height:1px;max-width:900px;margin:0 auto;position:relative;z-index:2;background:linear-gradient(90deg,transparent,var(--blood),transparent);opacity:.55}
-.eyebrow{margin:0;font-family:var(--type);color:var(--blood);letter-spacing:.3em;text-transform:uppercase;font-size:.78rem}
+.eyebrow{margin:0;font-family:var(--type);color:var(--hot);letter-spacing:.3em;text-transform:uppercase;font-size:.78rem}
 h2{margin:.3rem 0 1rem;font-family:var(--display);font-weight:900;font-size:clamp(1.8rem,5vw,3.4rem);line-height:1.08;letter-spacing:.04em;text-shadow:0 0 30px rgba(209,22,47,.25)}
 h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
 .lead{max-width:62ch;color:var(--muted);margin:0 0 1.6rem}
@@ -144,7 +137,7 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
 .casegrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,520px);gap:2rem;align-items:start}
 .how{margin:0 0 1.2rem;padding:0;list-style:none;display:grid;gap:.5rem;counter-reset:s;color:var(--muted);font-size:.95rem}
 .how li{counter-increment:s;display:flex;gap:.7rem}
-.how li::before{content:counter(s);flex:none;width:1.5rem;height:1.5rem;display:grid;place-items:center;border:1px solid var(--blood);border-radius:50%;font-family:var(--type);font-size:.8rem;color:var(--blood)}
+.how li::before{content:counter(s);flex:none;width:1.5rem;height:1.5rem;display:grid;place-items:center;border:1px solid var(--blood);border-radius:50%;font-family:var(--type);font-size:.8rem;color:var(--hot)}
 .suspects{display:grid;gap:.55rem}
 .sus{display:flex;gap:.8rem;align-items:flex-start;width:100%;padding:.65rem .85rem;text-align:left;cursor:pointer;border:1px solid var(--line);border-radius:10px;background:rgba(255,255,255,.02);transition:.2s}
 .sus:hover{border-color:rgba(209,22,47,.6);background:rgba(209,22,47,.06)}
@@ -153,12 +146,14 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
 .sus .em{flex:none;font-size:1.7rem;line-height:1;filter:drop-shadow(0 0 8px rgba(209,22,47,.5))}
 .sus .nm{display:block;font-family:var(--display);font-weight:700;letter-spacing:.05em;font-size:.95rem}
 .sus .cl{display:block;font-family:var(--type);font-size:.88rem;color:var(--muted);line-height:1.4}
-.sus .tag{margin-left:auto;flex:none;align-self:center;font-family:var(--type);font-size:.78rem;color:var(--blood)}
+.sus .tag{margin-left:auto;flex:none;align-self:center;font-family:var(--type);font-size:.78rem;color:var(--hot)}
 .sus.victim{border-style:dashed}
-.sus.victim .nm::after{content:" · ÁLDOZAT";color:var(--blood);font-size:.72rem;letter-spacing:.14em}
-.dossier{position:relative;justify-self:center;width:100%;padding:1.2rem 1.1rem 1.1rem;border:1px solid rgba(236,228,230,.16);border-radius:6px;
-  background:linear-gradient(160deg,#1a1520,#100c14);box-shadow:0 30px 70px rgba(0,0,0,.6),inset 0 0 60px rgba(0,0,0,.45)}
-.dossier::before{content:"ÜGYIRAT #001";position:absolute;left:1.1rem;top:-.75rem;padding:.1rem .7rem;background:var(--blood2);font-family:var(--type);font-size:.78rem;letter-spacing:.2em;color:#fff;transform:rotate(-2deg)}
+.sus.victim .nm::after{content:" · VICTIM";color:var(--hot);font-size:.72rem;letter-spacing:.14em}
+:root[lang="hu"] .sus.victim .nm::after{content:" · ÁLDOZAT"}
+.dossier{position:relative;justify-self:center;width:100%;padding:1.2rem 1.1rem 1.1rem;border:1px solid rgba(244,238,240,.2);border-radius:6px;
+  background:linear-gradient(160deg,#352b43,#271f33);box-shadow:0 24px 60px rgba(0,0,0,.4),inset 0 0 50px rgba(0,0,0,.22)}
+.dossier::before{content:"CASE FILE #001";position:absolute;left:1.1rem;top:-.75rem;padding:.1rem .7rem;background:var(--blood2);font-family:var(--type);font-size:.78rem;letter-spacing:.2em;color:#fff;transform:rotate(-2deg)}
+:root[lang="hu"] .dossier::before{content:"ÜGYIRAT #001"}
 .seal{position:absolute;right:-14px;top:-18px;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:1.35rem;color:#5c0a17;
   background:radial-gradient(circle at 35% 30%,#ff5a6a,#b3122d 55%,#6e0716);box-shadow:0 6px 16px rgba(0,0,0,.6),inset 0 0 0 4px rgba(0,0,0,.18);transform:rotate(12deg);z-index:2}
 .active{min-height:3.1rem;margin:.5rem 0 .8rem;font-family:var(--type);font-size:.95rem;color:var(--ink);line-height:1.4}
@@ -169,7 +164,7 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
 .cell:hover{filter:brightness(1.45)}
 .cell.bt{border-top:3px solid rgba(236,228,230,.62)}.cell.bb{border-bottom:3px solid rgba(236,228,230,.62)}
 .cell.bl{border-left:3px solid rgba(236,228,230,.62)}.cell.br{border-right:3px solid rgba(236,228,230,.62)}
-.cell .rl{position:absolute;z-index:2;left:3px;top:2px;font-family:var(--type);font-size:clamp(.36rem,1.9vw,.52rem);letter-spacing:0;white-space:nowrap;text-transform:uppercase;color:rgba(236,228,230,.55);pointer-events:none}
+.cell .rl{position:absolute;z-index:2;left:3px;top:2px;font-family:var(--type);font-size:clamp(.36rem,1.9vw,.52rem);letter-spacing:0;white-space:nowrap;text-transform:uppercase;color:rgba(244,238,240,.82);pointer-events:none}
 .cell .ob{font-size:clamp(1rem,3.6vw,1.65rem);opacity:.85;pointer-events:none}
 .cell.blocked .ob{opacity:1;filter:saturate(.7)}
 .cell .xm{position:absolute;inset:0;display:grid;place-items:center;font-family:var(--type);font-size:1.05rem;color:rgba(209,22,47,.5);pointer-events:none}
@@ -192,7 +187,7 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
 .dossier.solved .stamp{animation:stamp .7s cubic-bezier(.2,1.7,.3,1) forwards}
 @keyframes stamp{0%{opacity:0;transform:translate(-50%,-50%) rotate(-14deg) scale(2.2)}60%{opacity:1;transform:translate(-50%,-50%) rotate(-14deg) scale(.92)}100%{opacity:.92;transform:translate(-50%,-50%) rotate(-14deg) scale(1)}}
 .dossier.hurt{animation:hurt .7s}
-@keyframes hurt{0%,100%{box-shadow:0 30px 70px rgba(0,0,0,.6),inset 0 0 60px rgba(0,0,0,.45)}30%{box-shadow:0 0 0 2px var(--blood),0 0 80px rgba(209,22,47,.8),inset 0 0 90px rgba(209,22,47,.5);transform:translateX(-5px)}60%{transform:translateX(5px)}}
+@keyframes hurt{0%,100%{box-shadow:0 24px 60px rgba(0,0,0,.4),inset 0 0 50px rgba(0,0,0,.22)}30%{box-shadow:0 0 0 2px var(--blood),0 0 80px rgba(209,22,47,.8),inset 0 0 90px rgba(209,22,47,.5);transform:translateX(-5px)}60%{transform:translateX(5px)}}
 .scare-opt{display:flex;gap:.6rem;align-items:flex-start;margin-top:1rem;font-size:.82rem;color:var(--dim);cursor:pointer}
 .scare-opt input{accent-color:var(--blood);margin-top:.2rem}
 .scare-opt small{display:block}
@@ -217,19 +212,19 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
 .archive{margin-top:1.6rem;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:.9rem 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
 .rail{display:flex;width:max-content;gap:2.2rem;animation:rail 38s linear infinite;font-family:var(--type);letter-spacing:.12em;color:var(--dim);white-space:nowrap}
 .rail span{display:inline-flex;align-items:center;gap:.7rem}
-.rail i{display:inline-block;height:1.05em;background:#2a2430;border-radius:2px}
+.rail i{display:inline-block;height:1.05em;background:#443a52;border-radius:2px}
 @keyframes rail{to{transform:translateX(-50%)}}
 
 /* ---------- gyilkos ---------- */
 .killer{border-radius:0}
 .killer::before{content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(60% 55% at 50% 0%,rgba(143,15,36,.28),transparent 72%)}
 .abil{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr));gap:1.1rem}
-.ab{padding:1.4rem 1.3rem;border:1px solid var(--line);border-radius:14px;background:rgba(10,8,14,.7)}
+.ab{padding:1.4rem 1.3rem;border:1px solid var(--line);border-radius:14px;background:rgba(22,15,32,.42)}
 .ab h3{font-size:1.2rem;margin:.1rem 0 .5rem}
-.ab h3 span{margin-right:.4rem}
+.ab h3 .e{margin-right:.4rem}
 .ab p{margin:.7rem 0 0;color:var(--muted);font-size:.95rem}
 .cd{margin-top:.8rem;font-family:var(--type);font-size:.78rem;color:var(--dim)}
-.demo{position:relative;min-height:128px;display:grid;place-items:center;border:1px dashed rgba(236,228,230,.16);border-radius:10px;background:rgba(0,0,0,.35);overflow:hidden;padding:.8rem}
+.demo{position:relative;min-height:128px;display:grid;place-items:center;border:1px dashed rgba(244,238,240,.22);border-radius:10px;background:rgba(0,0,0,.2);overflow:hidden;padding:.8rem}
 .clock{font-family:var(--type);font-size:2.6rem;letter-spacing:.1em;color:var(--ink);text-shadow:0 0 18px rgba(209,22,47,.6)}
 .clock.jump{animation:jump .5s}
 @keyframes jump{0%,100%{transform:none;color:var(--ink)}30%{transform:translateX(-6px) skewX(8deg);color:var(--blood)}60%{transform:translateX(6px) skewX(-8deg);color:var(--blood)}}
@@ -238,7 +233,7 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
 @keyframes flick{50%{opacity:.55}}
 .notif{position:absolute;right:.6rem;bottom:.4rem;font-family:var(--type);font-size:.72rem;color:var(--dim)}
 .vgrid{display:grid;grid-template-columns:repeat(3,52px);gap:3px}
-.vc{position:relative;width:52px;height:52px;display:grid;place-items:center;border:1px solid rgba(236,228,230,.16);background:#1a1520;font-size:1.5rem}
+.vc{position:relative;width:52px;height:52px;display:grid;place-items:center;border:1px solid rgba(244,238,240,.2);background:#352b43;font-size:1.5rem}
 .vc.mid .ob{transition:opacity .5s,transform .5s}
 .vc.mid.gone .ob{opacity:0;transform:scale(.4) rotate(20deg)}
 .vc.mid .tk{position:absolute;inset:0;display:grid;place-items:center;opacity:0;transform:scale(2.2)}
@@ -254,16 +249,34 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
 .pw div{padding:1rem 1.1rem;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.02);transition:.25s}
 .pw div:hover{border-color:rgba(209,22,47,.6);background:rgba(209,22,47,.07);transform:translateY(-3px)}
 .pw b{display:block;font-family:var(--display);letter-spacing:.06em}
-.pw b span{margin-right:.45rem;font-size:1.25rem}
+.pw b .e{margin-right:.45rem;font-size:1.25rem}
 .pw p{margin:.35rem 0 0;color:var(--muted);font-size:.9rem}
 
 /* ---------- lábléc ---------- */
-.foot{position:relative;z-index:2;text-align:center;padding:5rem 16px 3.5rem;border-top:1px solid var(--line);background:linear-gradient(transparent,rgba(74,8,18,.25))}
-.quote{max-width:30ch;margin:0 auto 1.4rem;font-family:var(--display);font-weight:500;font-size:clamp(1.3rem,3.4vw,2rem);line-height:1.35;letter-spacing:.03em}
-.quote small{display:block;margin-top:.7rem;font-family:var(--type);font-size:.85rem;color:var(--blood);letter-spacing:.14em}
-.foot nav{display:flex;flex-wrap:wrap;justify-content:center;gap:1.4rem;margin:1.8rem 0 1rem;font-family:var(--type);font-size:.88rem}
-.foot nav a{color:var(--muted);text-decoration:none;border-bottom:1px solid transparent}.foot nav a:hover{color:var(--ink);border-color:var(--blood)}
-.fine{max-width:70ch;margin:0 auto;color:var(--dim);font-size:.8rem}
+.foot{position:relative;z-index:2;padding:4rem 16px 6rem;border-top:1px solid var(--line);background:rgba(14,9,22,.34)}
+.foot-in{max-width:1180px;margin:0 auto}
+.foot-top{display:grid;grid-template-columns:minmax(0,2fr) repeat(3,minmax(0,1fr));gap:2.5rem}
+.foot-brand .brand{display:inline-block;font-size:1.15rem}
+.foot-brand p{margin:.9rem 0 1.3rem;max-width:36ch;color:var(--muted);font-size:.95rem;line-height:1.55}
+.soc{display:flex;gap:.5rem}
+.soc a{width:36px;height:36px;display:grid;place-items:center;border:1px solid var(--line);border-radius:8px;background:rgba(255,255,255,.04);color:var(--muted);transition:color .2s,border-color .2s}
+.soc a:hover{color:var(--ink);border-color:var(--blood)}
+.soc svg{width:18px;height:18px;fill:currentColor}
+.foot-col{display:flex;flex-direction:column;align-items:flex-start;gap:.8rem;font-size:.95rem}
+.foot-col h4{margin:0 0 .35rem;font:600 .72rem/1 var(--ui);letter-spacing:.14em;text-transform:uppercase;color:var(--dim)}
+.foot-col a{color:var(--muted);text-decoration:none;transition:color .2s}
+.foot-col a:hover{color:var(--ink)}
+.foot-col span{color:var(--muted)}
+.foot-col .soon{color:var(--dim)}
+.foot-bot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:.8rem 2.5rem;margin-top:3rem;padding-top:1.6rem;border-top:1px solid var(--line);font-size:.82rem;color:var(--dim)}
+.foot-bot p{margin:0}
+.foot-bot p+p{max-width:62ch}
+
+/* ---------- nyelvváltó (bal alsó sarok) ---------- */
+.lang{position:fixed;left:16px;bottom:16px;z-index:40;width:46px;height:46px;display:grid;place-items:center;padding:0;border-radius:50%;cursor:pointer;
+  border:1px solid rgba(244,238,240,.3);background:rgba(40,31,54,.9);backdrop-filter:blur(6px);color:var(--ink);font-family:var(--type);font-size:.85rem;letter-spacing:.06em;
+  box-shadow:0 6px 20px rgba(0,0,0,.35);transition:border-color .2s,box-shadow .2s,transform .2s}
+.lang:hover{border-color:var(--blood);box-shadow:0 0 18px rgba(209,22,47,.4);transform:translateY(-2px)}
 
 /* ---------- jumpscare + értesítés ---------- */
 #scare{position:fixed;inset:0;z-index:120;display:grid;place-items:center;background:#000;opacity:0;visibility:hidden;pointer-events:none}
@@ -273,17 +286,18 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
 #scare.on svg{animation:scFace .95s cubic-bezier(.1,1.2,.2,1) forwards,scShake .08s linear 8}
 @keyframes scFace{0%{transform:scale(.25)}18%{transform:scale(1.05)}100%{transform:scale(1.28)}}
 @keyframes scShake{25%{translate:-6px 3px}75%{translate:6px -3px}}
-.toast{position:fixed;left:50%;bottom:1.5rem;z-index:110;transform:translate(-50%,30px);padding:.7rem 1.2rem;border:1px solid var(--blood);border-radius:8px;background:rgba(10,8,14,.95);font-family:var(--type);font-size:.88rem;opacity:0;pointer-events:none;transition:.35s;max-width:calc(100vw - 32px)}
+.toast{position:fixed;left:50%;bottom:1.5rem;z-index:110;transform:translate(-50%,30px);padding:.7rem 1.2rem;border:1px solid var(--blood);border-radius:8px;background:rgba(40,31,54,.96);font-family:var(--type);font-size:.88rem;opacity:0;pointer-events:none;transition:.35s;max-width:calc(100vw - 32px)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
 /* ---------- reszponzív + nyugodt mód ---------- */
-@media (max-width:900px){.casegrid{grid-template-columns:minmax(0,1fr)}.nav ul{display:none}.dossier{max-width:520px}}
+@media (max-width:900px){.casegrid{grid-template-columns:minmax(0,1fr)}.dossier{max-width:520px}.foot-top{grid-template-columns:repeat(3,minmax(0,1fr))}.foot-brand{grid-column:1/-1}}
+@media (max-width:700px){.toast{bottom:4.8rem}.foot-top{grid-template-columns:repeat(2,minmax(0,1fr))}.foot-bot{flex-direction:column}}
 @media (max-width:520px){.tgl .t{display:none}.suspects{grid-template-columns:1fr 1fr}.sus{flex-direction:column;gap:.3rem}.sus .tag{margin:0;align-self:flex-start}.sus .cl{display:none}.seal{right:-6px}}
 .calm *,.calm *::before,.calm *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 .calm .reveal{opacity:1!important;transform:none!important}
 .calm .ch{opacity:1}
 .calm #embers,.calm .lightning,.calm .grain{display:none}
-.calm .spot{background:radial-gradient(circle 560px at 50% 30%,transparent,rgba(3,2,5,.26))}
+.calm .spot{background:radial-gradient(circle 560px at 50% 30%,transparent,rgba(12,7,20,.1))}
 .calm .ch.dr::before,.calm .ch.dr::after{display:none}
 .calm .stamp{opacity:.92!important;transform:translate(-50%,-50%) rotate(-14deg)!important}
 .calm .dossier:not(.solved) .stamp{opacity:0!important}
@@ -301,20 +315,14 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
 
 <header class="nav">
   <a class="brand" href="#top">NIGH<b>T</b>DOKU</a>
-  <ul>
-    <li><a href="#case">Az ügy</a></li>
-    <li><a href="#modes">Módok</a></li>
-    <li><a href="#killer">Gyilkos</a></li>
-    <li><a href="#powers">Erők</a></li>
-  </ul>
   <div class="tools">
-    <button class="tgl" id="soundBtn" type="button" aria-pressed="false" title="Hang be/ki">🔇 <span class="t">Hang</span></button>
-    <button class="tgl" id="calmBtn" type="button" aria-pressed="false" title="Nyugodt mód: kevesebb mozgás és villogás">🌘 <span class="t">Nyugodt mód</span></button>
+    <button class="tgl" id="soundBtn" type="button" aria-pressed="false" data-i-title="nav.soundT" title="Sound on/off">🔇 <span class="t" data-i="nav.sound">Sound</span></button>
+    <button class="tgl" id="calmBtn" type="button" aria-pressed="false" data-i-title="nav.calmT" title="Calm mode: less motion and flashing">🌘 <span class="t" data-i="nav.calm">Calm mode</span></button>
   </div>
 </header>
 
 <main id="top">
-  <!-- ======================= HŐS ======================= -->
+  <!-- ======================= HERO ======================= -->
   <div class="hero">
     <div class="floor" aria-hidden="true"></div>
     <div class="bigmoon" aria-hidden="true"></div>
@@ -325,145 +333,168 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
       <h1 class="logo" aria-label="NIGHTDOKU">
         <span class="ch" style="--i:0" aria-hidden="true">N</span><span class="ch" style="--i:1" aria-hidden="true">I</span><span class="ch dr" style="--i:2;--dx:62%;--len:.5em;--dl:0s" aria-hidden="true">G</span><span class="ch" style="--i:3" aria-hidden="true">H</span><span class="ch dr" style="--i:4;--dx:50%;--len:.38em;--dl:2.1s" aria-hidden="true">T</span><span class="ch dr" style="--i:5;--dx:30%;--len:.6em;--dl:1.1s" aria-hidden="true">D</span><span class="ch o" style="--i:6" aria-hidden="true"><i></i></span><span class="ch dr" style="--i:7;--dx:72%;--len:.46em;--dl:3.2s" aria-hidden="true">K</span><span class="ch" style="--i:8" aria-hidden="true">U</span>
       </h1>
-      <p class="tagline" id="typed" aria-label="Ahol a sudoku vért ont."></p>
-      <p class="sub">Horror-gyilkossági logikai rejtvény. Egy rács. Egy gyilkos. Egyetlen megoldás.</p>
+      <p class="tagline" id="typed" aria-label="Where sudoku spills blood."></p>
+      <p class="sub" data-i="hero.sub">Horror murder-mystery logic puzzle. One grid. One killer. A single solution.</p>
       <div class="cta">
-        <button class="btn primary" id="dlBtn" type="button">⬇ Letöltés — hamarosan</button>
-        <a class="btn ghost" href="#case">🕯️ Próbáld ki az ügyet</a>
+        <button class="btn primary" id="dlBtn" type="button" data-i="hero.dl">⬇ Download — coming soon</button>
+        <a class="btn ghost" href="#case" data-i="hero.try">🕯️ Try the case</a>
       </div>
-      <span class="chip"><i class="dot"></i>Fejlesztés alatt · Windows · offline is játszható</span>
-      <p class="metaline">Co-op és Gyilkos mód · végtelen Random ügyek · 16+</p>
+      <p class="metaline" data-i="hero.meta">Co-op and Killer mode · endless Random cases · 16+</p>
     </div>
-    <a class="scrollhint" href="#case">lefelé… ha mersz <span>▼</span></a>
   </div>
 
   <div class="slash" aria-hidden="true"></div>
 
-  <!-- ======================= AZ ÜGY ======================= -->
+  <!-- ======================= THE CASE ======================= -->
   <section id="case">
     <div class="reveal">
-      <p class="eyebrow">Ügyirat #001 · nagyon könnyű</p>
-      <h2>Éjféli Mise</h2>
-      <p class="lead">Éjfél. A Szent Bertalan-kápolna harangja magától megszólalt. Ábelt, a Rend írnokát a harangláb tövében találták, kezében egy fekete varjútollal. <b>Öten voltak a kápolnában aznap éjjel.</b> Ki ölte meg?</p>
+      <p class="eyebrow" data-i="case.eyebrow">Case file #001 · very easy</p>
+      <h2 data-i="case.title">Midnight Mass</h2>
+      <p class="lead" data-i="case.lead">Midnight. The bell of Saint Bartholomew’s Chapel rang by itself. Ábel, the Order’s scribe, was found at the foot of the belfry, a black raven feather in hand. <b>Five people were in the chapel that night.</b> Who killed Ábel?</p>
     </div>
     <div class="casegrid">
       <div class="reveal" style="--d:.1s">
         <ol class="how">
-          <li><span>Válassz egy gyanúsítottat a kártyák közül.</span></li>
-          <li><span>Rakd le a rácson — <b>soronként és oszloponként csak egy</b> karakter állhat.</span></li>
-          <li><span>Minden nyomnak teljesülnie kell. A „mellette" = közvetlenül szomszédos, <b>ugyanabban a helyiségben</b>.</span></li>
-          <li><span>Ha mindenki a helyén van: <b>Beküldés</b>. És imádkozz, hogy igazad legyen…</span></li>
+          <li><span data-i="how.1">Pick a suspect from the cards.</span></li>
+          <li><span data-i="how.2">Place them on the grid — <b>only one character per row and column</b>.</span></li>
+          <li><span data-i="how.3">Every clue must hold. “Next to” = directly adjacent, <b>in the same room</b>.</span></li>
+          <li><span data-i="how.4">When everyone is in place: <b>Submit</b>. And pray you’re right…</span></li>
         </ol>
         <div class="suspects" id="suspects"></div>
       </div>
       <div class="dossier reveal" id="dossier" style="--d:.2s">
         <div class="seal" aria-hidden="true">N</div>
         <div class="active" id="active" aria-live="polite"></div>
-        <div class="bd" id="bd" role="group" aria-label="6×6-os rács"></div>
-        <div class="stampbox" aria-hidden="true"><div class="stamp">LEZÁRVA</div></div>
+        <div class="bd" id="bd" role="group" data-i-label="case.grid" aria-label="6×6 grid"></div>
+        <div class="stampbox" aria-hidden="true"><div class="stamp" data-i="case.stamp">CLOSED</div></div>
         <div class="msg" id="msg" aria-live="polite"></div>
         <div class="ctrls">
-          <button class="btn sm" id="submitBtn" type="button" disabled>🩸 Beküldés</button>
-          <button class="btn sm ghost" id="hintBtn" type="button">💡 Tipp</button>
-          <button class="btn sm ghost" id="solveBtn" type="button">▶ Megoldás</button>
-          <button class="btn sm ghost" id="resetBtn" type="button">↺ Újra</button>
+          <button class="btn sm" id="submitBtn" type="button" disabled data-i="btn.submit">🩸 Submit</button>
+          <button class="btn sm ghost" id="hintBtn" type="button" data-i="btn.hint">💡 Hint</button>
+          <button class="btn sm ghost" id="solveBtn" type="button" data-i="btn.solve">▶ Solve</button>
+          <button class="btn sm ghost" id="resetBtn" type="button" data-i="btn.reset">↺ Reset</button>
           <span class="counters" id="counters">💀 0 · 💡 0</span>
         </div>
         <div class="verdict" id="verdict" hidden></div>
-        <label class="scare-opt"><input type="checkbox" id="scareOn"><span>Jumpscare bekapcsolása <small>rossz beküldésnél hirtelen kép és hang · csak 16+ · a Nyugodt mód kikapcsolja</small></span></label>
+        <label class="scare-opt"><input type="checkbox" id="scareOn"><span data-i="scare.l">Enable jumpscare <small>on a wrong submission: sudden image and sound · 16+ only · Calm mode turns it off</small></span></label>
       </div>
     </div>
   </section>
 
   <div class="slash" aria-hidden="true"></div>
 
-  <!-- ======================= MÓDOK ======================= -->
+  <!-- ======================= MODES ======================= -->
   <section id="modes">
     <div class="reveal">
-      <p class="eyebrow">Öt mód</p>
-      <h2>Válaszd a rémálmod</h2>
-      <p class="lead">Egyedül a sötétben, barátokkal egy asztalnál — vagy úgy, hogy közülük az egyik <b>hazudik</b>.</p>
+      <p class="eyebrow" data-i="modes.eyebrow">Five modes</p>
+      <h2 data-i="modes.title">Choose your nightmare</h2>
+      <p class="lead" data-i="modes.lead">Alone in the dark, at a table with friends — or with one of them <b>lying</b>.</p>
     </div>
     <div class="grid5">
-      <div class="reveal" style="--d:.05s"><article class="card tilt"><span class="no">01</span><span class="ic">🕯️</span><h3>Klasszikus</h3>
-        <p>Hollowmere ügyei: vámpírok, boszorkányok, szellemek — és egy kampány, ami fejezetről fejezetre egyre sötétebb. Kézzel tervezett pályák, egyetlen megoldással.</p><span class="badge">10 pálya</span></article></div>
-      <div class="reveal" style="--d:.12s"><article class="card tilt"><span class="no">02</span><span class="ic">🎬</span><h3>Esemény</h3>
-        <p>Tíz híres horror-játék világa, a játékok karaktereivel. A főgonosz az áldozat — te pedig kinyomozod, ki ölte meg.</p><span class="badge">10 pálya · eltitkosítva</span></article></div>
-      <div class="reveal" style="--d:.19s"><article class="card tilt"><span class="no">03</span><span class="ic">🎲</span><h3>Random</h3>
-        <p>Soha ugyanaz az ügy kétszer. Mindig kivihető, mindig új — és ha félúton abbahagyod, a felhő megjegyzi, hol tartottál. Bármelyik gépen folytathatod.</p><span class="badge">végtelen</span></article></div>
-      <div class="reveal" style="--d:.26s"><article class="card tilt"><span class="no">04</span><span class="ic">🤝</span><h3>Együtt</h3>
-        <p>Közös tábla. Mindketten raktok, és a másikét is elviheted. Chat — de csak a játékban, ott, ahol a tét van.</p><span class="badge">2–4 játékos</span></article></div>
-      <div class="reveal" style="--d:.33s"><article class="card tilt"><span class="no">05</span><span class="ic">🔪</span><h3><span class="glitch" data-t="Gyilkos">Gyilkos</span></h3>
-        <p>Egyikőtök áruló. Ő is nyomoz — de titokban szabotál. Nincs értesítés. Nincs jelzés. Csak a gyanú.</p><span class="badge">3–6 játékos</span></article></div>
+      <div class="reveal" style="--d:.05s"><article class="card tilt"><span class="no">01</span><span class="ic">🕯️</span><h3 data-i="m1.t">Classic</h3>
+        <p data-i="m1.p">The cases of Hollowmere: vampires, witches, ghosts — and a campaign that grows darker chapter by chapter. Hand-crafted levels, each with a single solution.</p><span class="badge" data-i="m1.b">10 levels</span></article></div>
+      <div class="reveal" style="--d:.12s"><article class="card tilt"><span class="no">02</span><span class="ic">🎬</span><h3 data-i="m2.t">Event</h3>
+        <p data-i="m2.p">The worlds of ten famous horror games, with the games’ own characters. The big bad is the victim — and you work out who killed them.</p><span class="badge" data-i="m2.b">10 levels · classified</span></article></div>
+      <div class="reveal" style="--d:.19s"><article class="card tilt"><span class="no">03</span><span class="ic">🎲</span><h3 data-i="m3.t">Random</h3>
+        <p data-i="m3.p">Never the same case twice. Always solvable, always new — and if you quit halfway, the cloud remembers where you were. Continue on any machine.</p><span class="badge" data-i="m3.b">endless</span></article></div>
+      <div class="reveal" style="--d:.26s"><article class="card tilt"><span class="no">04</span><span class="ic">🤝</span><h3 data-i="m4.t">Together</h3>
+        <p data-i="m4.p">A shared board. You both place pieces, and you can move each other’s too. Chat — but only inside the game, where the stakes are.</p><span class="badge" data-i="m4.b">2–4 players</span></article></div>
+      <div class="reveal" style="--d:.33s"><article class="card tilt"><span class="no">05</span><span class="ic">🔪</span><h3><span class="glitch" data-i="m5.t" data-i-t="m5.t" data-t="Killer">Killer</span></h3>
+        <p data-i="m5.p">One of you is a traitor. They investigate too — but secretly sabotage. No notification. No sign. Only suspicion.</p><span class="badge" data-i="m5.b">3–6 players</span></article></div>
     </div>
-    <div class="archive reveal" aria-label="Az Esemény mód tíz eltitkosított világa">
+    <div class="archive reveal" data-i-label="archive.aria" aria-label="The ten classified worlds of Event mode">
       <div class="rail" id="rail"></div>
     </div>
   </section>
 
   <div class="slash" aria-hidden="true"></div>
 
-  <!-- ======================= GYILKOS ======================= -->
+  <!-- ======================= KILLER ======================= -->
   <section id="killer" class="killer">
     <div class="reveal">
-      <p class="eyebrow">Co-op: Gyilkos</p>
-      <h2>Valaki köztetek hazudik.</h2>
-      <p class="lead">A szerver titokban kisorsol egy gyilkost. Ő is velünk nyomoz, ugyanazt a táblát látja — de három néma képességgel hátráltat. <b>Senki nem kap értesítést.</b> A többieknek csak a megfigyelés, a logika és a Gyűlés marad.</p>
+      <p class="eyebrow" data-i="killer.eyebrow">Co-op: Killer</p>
+      <h2 data-i="killer.title">Someone among you is lying.</h2>
+      <p class="lead" data-i="killer.lead">The server secretly picks a killer. They investigate with you and see the same board — but hinder you with three silent abilities. <b>Nobody gets a notification.</b> All that’s left for the others is observation, logic and the Meeting.</p>
     </div>
     <div class="abil">
       <div class="reveal" style="--d:.05s"><div class="ab">
-        <h3><span>⏱️</span>Időcsavar</h3>
+        <h3><span class="e">⏱️</span><span data-i="ab1.t">Time Warp</span></h3>
         <div class="demo"><div class="clock" id="clk">12:40</div></div>
-        <p>Elvesz az óráról 20 másodpercet. Az óra csak… ugrik. Senki sem tudja, miért.</p>
-        <div class="cd">hűtés: 90 mp · játékonként 3×</div></div></div>
+        <p data-i="ab1.p">Takes 20 seconds off the clock. The clock just… jumps. Nobody knows why.</p>
+        <div class="cd" data-i="ab1.cd">cooldown: 90 s · 3× per game</div></div></div>
       <div class="reveal" style="--d:.15s"><div class="ab">
-        <h3><span>✍️</span>Szövegcsere</h3>
-        <div class="demo"><div class="clue" id="clue">Vlad egy padon ült a Sekrestyében.</div><span class="notif">értesítés: —</span></div>
-        <p>Öt másodpercre más szöveg áll a nyomkártyán. Aztán visszaáll. Ki látta? Ki hitte el?</p>
-        <div class="cd">hűtés: 45 mp · nincs jelzés</div></div></div>
+        <h3><span class="e">✍️</span><span data-i="ab2.t">Text Swap</span></h3>
+        <div class="demo"><div class="clue" id="clue" data-i="demo.clueA">Vlad sat on a bench in the Sacristy.</div><span class="notif" data-i="demo.notif">notification: —</span></div>
+        <p data-i="ab2.p">For five seconds the clue card shows different text. Then it changes back. Who saw it? Who believed it?</p>
+        <div class="cd" data-i="ab2.cd">cooldown: 45 s · no sign</div></div></div>
       <div class="reveal" style="--d:.25s"><div class="ab">
-        <h3><span>🕳️</span>Eltüntetés</h3>
+        <h3><span class="e">🕳️</span><span data-i="ab3.t">Vanish</span></h3>
         <div class="demo"><div class="vgrid" id="vgrid"></div></div>
-        <p>Egy tárgy eltűnik — és a mező szabadnak látszik. Rakj oda bármit, és ha visszatér, minden elvész, a mező pedig örökre zárolt.</p>
-        <div class="cd">hűtés: 60 mp · 8 mp hatás</div></div></div>
+        <p data-i="ab3.p">An object disappears — and the cell looks free. Place anything there, and when it returns, everything is lost and the cell is locked forever.</p>
+        <div class="cd" data-i="ab3.cd">cooldown: 60 s · 8 s effect</div></div></div>
     </div>
     <div class="reveal" style="--d:.1s;margin-top:1.6rem">
-      <p class="lead" style="margin:0"><b>Ellenjáték:</b> 🔎 <b>Szimat</b> — „használt valaki képességet az elmúlt 30 mp-ben?" · 🗳️ <b>Gyűlés</b> — vita, majd szavazás: ha eltalálod, leleplezed. Ha nem… ő nevet a végén.</p>
+      <p class="lead" style="margin:0" data-i="killer.counter"><b>Counterplay:</b> 🔎 <b>Sniff</b> — “did anyone use an ability in the last 30 s?” · 🗳️ <b>Meeting</b> — discussion, then a vote: guess right and you expose them. Guess wrong… and they get the last laugh.</p>
     </div>
   </section>
 
   <div class="slash" aria-hidden="true"></div>
 
-  <!-- ======================= ERŐK ======================= -->
+  <!-- ======================= POWERS ======================= -->
   <section id="powers">
     <div class="reveal">
-      <p class="eyebrow">Erő-szabályok</p>
-      <h2>A faj számít.</h2>
-      <p class="lead">A karakter faja megváltoztatja, hová állhat — és hogyan kell olvasni a nyomát. A szabályok a rejtvény részei.</p>
+      <p class="eyebrow" data-i="powers.eyebrow">Power rules</p>
+      <h2 data-i="powers.title">Species matter.</h2>
+      <p class="lead" data-i="powers.lead">A character’s species changes where they can stand — and how to read their clue. The rules are part of the puzzle.</p>
     </div>
     <div class="pw">
-      <div class="reveal" style="--d:.03s"><b><span>🧛</span>Vámpír</b><p>Nem állhat holdfényes mezőn, és tükör mellett sem.</p></div>
-      <div class="reveal" style="--d:.08s"><b><span>👻</span>Szellem</b><p>A „mellette" a falon át is érvényes rá, és foglalt tárgyon is állhat.</p></div>
-      <div class="reveal" style="--d:.13s"><b><span>😈</span>Démon</b><p>Egy nyom hazudik. A kérdés: melyik?</p></div>
-      <div class="reveal" style="--d:.18s"><b><span>🐺</span>Vérfarkas</b><p>Teliholdkor csak kültéren lehet — a Hold épp „fent van".</p></div>
-      <div class="reveal" style="--d:.23s"><b><span>🧙</span>Boszorkány</b><p>A pentagramma-mezőkön csak ő állhat. Mindenki más elkerüli.</p></div>
-      <div class="reveal" style="--d:.28s"><b><span>🧟</span>Élőhalott</b><p>Élő emberrel nem lehet szomszédos — még átlósan sem. Megérzik a szagát.</p></div>
-      <div class="reveal" style="--d:.33s"><b><span>🕷️</span>Alakváltó</b><p>Két kártyája van. Neked kell kitalálni, melyik az igazi.</p></div>
+      <div class="reveal" style="--d:.03s"><b><span class="e">🧛</span><span data-i="pw1.t">Vampire</span></b><p data-i="pw1.p">Can’t stand on a moonlit cell, nor next to a mirror.</p></div>
+      <div class="reveal" style="--d:.08s"><b><span class="e">👻</span><span data-i="pw2.t">Ghost</span></b><p data-i="pw2.p">“Next to” holds through walls for them, and they can stand on occupied objects.</p></div>
+      <div class="reveal" style="--d:.13s"><b><span class="e">😈</span><span data-i="pw3.t">Demon</span></b><p data-i="pw3.p">One clue lies. The question is: which one?</p></div>
+      <div class="reveal" style="--d:.18s"><b><span class="e">🐺</span><span data-i="pw4.t">Werewolf</span></b><p data-i="pw4.p">On a full moon they can only be outdoors — and the Moon is “up” right now.</p></div>
+      <div class="reveal" style="--d:.23s"><b><span class="e">🧙</span><span data-i="pw5.t">Witch</span></b><p data-i="pw5.p">Only the witch may stand on pentagram cells. Everyone else avoids them.</p></div>
+      <div class="reveal" style="--d:.28s"><b><span class="e">🧟</span><span data-i="pw6.t">Undead</span></b><p data-i="pw6.p">Can’t be adjacent to a living person — not even diagonally. They can smell them.</p></div>
+      <div class="reveal" style="--d:.33s"><b><span class="e">🕷️</span><span data-i="pw7.t">Shapeshifter</span></b><p data-i="pw7.p">Has two cards. You have to work out which one is real.</p></div>
     </div>
   </section>
 </main>
 
 <footer class="foot">
-  <p class="quote reveal">„A halottak nem hazudnak, nyomozó. Csak nem mondanak el mindent."<small>— SILAS GREY, A TIZENHARMADIK LAKÓ</small></p>
-  <p class="reveal"><span class="chip"><i class="dot"></i>Fejlesztés alatt — a letöltés hamarosan érkezik</span></p>
-  <nav class="reveal" aria-label="Linkek">
-    <a href="https://github.com/CsikSzabi04/horrordoku" rel="noopener">GitHub</a>
-    <a href="#case">Az ügy</a>
-    <a href="#modes">Módok</a>
-    <a href="#top">Vissza a sötétbe ↑</a>
-  </nav>
-  <p class="fine">⚠ Fotoszenzitív figyelmeztetés: az oldal enyhe villogó és mozgó effekteket tartalmaz. A <b>Nyugodt mód</b> (jobb felül) kikapcsolja őket; a jumpscare alapból ki van kapcsolva. Horror-tartalom, 16+ ajánlott. Rajongói, nem kereskedelmi fejlesztés alatt álló projekt.</p>
+  <div class="foot-in">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <a class="brand" href="#top">NIGH<b>T</b>DOKU</a>
+        <p data-i="foot.desc">A horror murder-mystery logic puzzle. One grid, one killer, a single solution.</p>
+        <div class="soc">
+          <a href="https://github.com/CsikSzabi04/horrordoku" rel="noopener" aria-label="GitHub" title="GitHub"><svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg></a>
+        </div>
+      </div>
+      <nav class="foot-col" aria-labelledby="fh-explore">
+        <h4 id="fh-explore" data-i="foot.explore">Explore</h4>
+        <a href="#case" data-i="foot.case">The case</a>
+        <a href="#modes" data-i="foot.modes">Modes</a>
+        <a href="#killer" data-i="foot.killer">Killer mode</a>
+        <a href="#powers" data-i="foot.powers">Powers</a>
+      </nav>
+      <div class="foot-col">
+        <h4 data-i="foot.project">Project</h4>
+        <a href="https://github.com/CsikSzabi04/horrordoku" rel="noopener">GitHub</a>
+        <span class="soon" data-i="foot.dl">Download — coming soon</span>
+        <a href="#top" data-i="foot.top">Back to top</a>
+      </div>
+      <div class="foot-col">
+        <h4 data-i="foot.made">Made by</h4>
+        <span>Szabolcs Csík</span>
+      </div>
+    </div>
+    <div class="foot-bot">
+      <p data-i="foot.copy">© 2026 NIGHTDOKU. Fan-made, non-commercial project in development.</p>
+      <p data-i="foot.warn">⚠ Photosensitivity warning: flashing and moving effects. Calm mode (top right) turns them off. Horror content, 16+ recommended.</p>
+    </div>
+  </div>
 </footer>
+
+<button class="lang" id="langBtn" type="button" data-i-label="lang.aria" aria-label="Switch language to Hungarian">HU</button>
 
 <div id="scare" aria-hidden="true">
   <svg viewBox="0 0 400 480" role="presentation">
@@ -492,6 +523,126 @@ var calm=root.classList.contains('calm');
 var store={get:function(k){try{return localStorage.getItem(k)}catch(e){return null}},set:function(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
 var rand=function(a,b){return a+Math.random()*(b-a)};
 
+/* ---------- nyelv: alapból angol, a bal alsó „HU" gombbal magyar ---------- */
+/* A statikus angol szöveg a HTML-ben van (data-i kulcsokkal) — onnan olvassuk ki; az EN-ben csak a JS-ből generált szövegek vannak. */
+var lang=root.lang==='hu'?'hu':'en',langHooks=[];
+var EN={
+  'tag.text':'Where sudoku spills blood.',
+  'room.K':'Crypt','room.S':'Sacristy','room.O':'Altar','room.H':'Belfry','room.T':'Graveyard',
+  'obj.coffin':'coffin','obj.bench':'bench','obj.candle':'candle','obj.carpet':'carpet','obj.grave':'gravestone','obj.tree':'tree','obj.bell':'bell',
+  'ch.vlad.clue':'Sat on a bench in the Sacristy.','ch.vlad.why':'Sat on a bench in the Sacristy: E1.',
+  'ch.morrigan.clue':'Stood next to the bell.','ch.morrigan.why':'Next to the bell (A4), in the same room: A5.',
+  'ch.silas.clue':'Rested on a coffin.','ch.silas.why':'Rested on a coffin in the Crypt: B2.',
+  'ch.lilith.clue':'Knelt on the Altar carpet.','ch.lilith.why':'Knelt on the Altar carpet: D3.',
+  'ch.ezekiel.clue':'Was in the Graveyard.','ch.ezekiel.why':'In the Graveyard, in the gap left between the gravestones: F4.',
+  'ch.abel.clue':'Was in the Belfry, alone with the killer.','ch.abel.why':'In the Belfry, alone with the killer: C6.',
+  'g.intro':'Pick a card, then click the grid to place them. (Try the “▶ Solve” button if you want to see the reasoning.)',
+  'g.pick':'Pick a suspect from the cards first.',
+  'g.blocked':'Nobody can stand here: the {o} blocks the cell.',
+  'g.taken':'Someone already took this cell.',
+  'g.clash':'Only one character per row and column.',
+  'g.alldown':'Everyone is down. If you’re sure… hit Submit.',
+  'g.win':'Correct. The silence of the belfry speaks: only two were there.',
+  'g.verdict':'<h4>🩸 The killer: MORRIGAN ASHVALE</h4><p>Only Morrigan and Ábel were in the belfry. “The Order drove my mother out. Ábel signed the order.” — but the feather wasn’t left there by Morrigan…</p>',
+  'g.lose':'Wrong solution. The dead don’t lie — you do.',
+  'g.hint':'💡 A candle lights up… {n}: {why}',
+  'g.closed':'<b>Case closed.</b><small>The dead don’t lie.</small>',
+  'g.click':'Click a cell to place.',
+  'g.ready':'Everyone is in place — time to submit.',
+  'g.here':', occupied by: ',
+  'toast.sound':'Sound on','toast.calmOn':'Calm mode: on','toast.calmOff':'Calm mode: off',
+  'toast.dl':'Still in the works — the download will be here after the prototype.',
+  'toast.scare':'Calm mode is on, so the jumpscare won’t run.',
+  'demo.clueB':'Vlad sat on a coffin in the Crypt.'
+};
+var HU={
+  'tag.text':'Ahol a sudoku vért ont.',
+  'room.K':'Kripta','room.S':'Sekrestye','room.O':'Oltár','room.H':'Harangláb','room.T':'Temetőkert',
+  'obj.coffin':'koporsó','obj.bench':'pad','obj.candle':'gyertya','obj.carpet':'szőnyeg','obj.grave':'sírkő','obj.tree':'fa','obj.bell':'harang',
+  'ch.vlad.clue':'Egy padon ült a Sekrestyében.','ch.vlad.why':'Padon ült a Sekrestyében: E1.',
+  'ch.morrigan.clue':'A harang mellett állt.','ch.morrigan.why':'A harang (A4) mellett, ugyanabban a helyiségben: A5.',
+  'ch.silas.clue':'Egy koporsón pihent.','ch.silas.why':'Koporsón pihent a Kriptában: B2.',
+  'ch.lilith.clue':'Az Oltár szőnyegén térdelt.','ch.lilith.why':'Az Oltár szőnyegén térdelt: D3.',
+  'ch.ezekiel.clue':'A Temetőkertben volt.','ch.ezekiel.why':'A Temetőkertben, a sírkövek közt maradt hely: F4.',
+  'ch.abel.clue':'A Haranglábban volt, egyedül a gyilkosával.','ch.abel.why':'A Haranglábban, egyedül a gyilkossal: C6.',
+  'g.intro':'Válassz egy kártyát, majd kattints a rácson a helyére. (Próbáld a „▶ Megoldás" gombot, ha látni akarod a levezetést.)',
+  'g.pick':'Előbb válassz egy gyanúsítottat a kártyák közül.',
+  'g.blocked':'Ide nem állhat senki: a(z) {o} foglalt tárgy.',
+  'g.taken':'Ezt a mezőt már elfoglalta valaki.',
+  'g.clash':'Soronként és oszloponként csak egy karakter állhat.',
+  'g.alldown':'Mindenki lent van. Ha biztos vagy benne… nyomd meg a Beküldést.',
+  'g.win':'Helyes. A harangláb csöndje beszél: csak ketten voltak ott.',
+  'g.verdict':'<h4>🩸 A gyilkos: MORRIGAN ASHVALE</h4><p>A Haranglábban csak ő és Ábel volt. „A Rend elűzte az anyámat. Ábel írta alá a parancsot." — de a tollat nem ő hagyta ott…</p>',
+  'g.lose':'Hibás megoldás. A halottak nem hazudnak — te igen.',
+  'g.hint':'💡 Egy gyertya gyullad… {n}: {why}',
+  'g.closed':'<b>Ügy lezárva.</b><small>A halottak nem hazudnak.</small>',
+  'g.click':'Kattints egy mezőre a lerakáshoz.',
+  'g.ready':'Mindenki a helyén van — jöhet a beküldés.',
+  'g.here':', itt áll: ',
+  'toast.sound':'Hang bekapcsolva','toast.calmOn':'Nyugodt mód: be','toast.calmOff':'Nyugodt mód: ki',
+  'toast.dl':'Még készül — a prototípus után itt lesz a letöltés.',
+  'toast.scare':'A Nyugodt mód miatt a jumpscare nem fut le.',
+  'demo.clueB':'Vlad egy koporsón ült a Kriptában.',
+  'demo.clueA':'Vlad egy padon ült a Sekrestyében.','demo.notif':'értesítés: —',
+
+  'meta.title':'NIGHTDOKU — Ahol a sudoku vért ont',
+  'meta.desc':'NIGHTDOKU: horror-gyilkossági logikai rejtvényjáték. Egy rács, egy gyilkos, egyetlen megoldás. Klasszikus, Esemény, Random és két co-op mód — letölthető, offline is játszható.',
+  'meta.ogdesc':'Horror-gyilkossági logikai rejtvény. Egy rács. Egy gyilkos. Egyetlen megoldás.',
+  'nav.sound':'Hang','nav.soundT':'Hang be/ki','nav.calm':'Nyugodt mód','nav.calmT':'Nyugodt mód: kevesebb mozgás és villogás',
+  'lang.aria':'Váltás angol nyelvre',
+  'hero.sub':'Horror-gyilkossági logikai rejtvény. Egy rács. Egy gyilkos. Egyetlen megoldás.',
+  'hero.dl':'⬇ Letöltés — hamarosan','hero.try':'🕯️ Próbáld ki az ügyet','hero.meta':'Co-op és Gyilkos mód · végtelen Random ügyek · 16+',
+  'case.eyebrow':'Ügyirat #001 · nagyon könnyű','case.title':'Éjféli Mise',
+  'case.lead':'Éjfél. A Szent Bertalan-kápolna harangja magától megszólalt. Ábelt, a Rend írnokát a harangláb tövében találták, kezében egy fekete varjútollal. <b>Öten voltak a kápolnában aznap éjjel.</b> Ki ölte meg?',
+  'how.1':'Válassz egy gyanúsítottat a kártyák közül.',
+  'how.2':'Rakd le a rácson — <b>soronként és oszloponként csak egy</b> karakter állhat.',
+  'how.3':'Minden nyomnak teljesülnie kell. A „mellette" = közvetlenül szomszédos, <b>ugyanabban a helyiségben</b>.',
+  'how.4':'Ha mindenki a helyén van: <b>Beküldés</b>. És imádkozz, hogy igazad legyen…',
+  'case.grid':'6×6-os rács','case.stamp':'LEZÁRVA',
+  'btn.submit':'🩸 Beküldés','btn.hint':'💡 Tipp','btn.solve':'▶ Megoldás','btn.reset':'↺ Újra',
+  'scare.l':'Jumpscare bekapcsolása <small>rossz beküldésnél hirtelen kép és hang · csak 16+ · a Nyugodt mód kikapcsolja</small>',
+  'modes.eyebrow':'Öt mód','modes.title':'Válaszd a rémálmod','modes.lead':'Egyedül a sötétben, barátokkal egy asztalnál — vagy úgy, hogy közülük az egyik <b>hazudik</b>.',
+  'm1.t':'Klasszikus','m1.p':'Hollowmere ügyei: vámpírok, boszorkányok, szellemek — és egy kampány, ami fejezetről fejezetre egyre sötétebb. Kézzel tervezett pályák, egyetlen megoldással.','m1.b':'10 pálya',
+  'm2.t':'Esemény','m2.p':'Tíz híres horror-játék világa, a játékok karaktereivel. A főgonosz az áldozat — te pedig kinyomozod, ki ölte meg.','m2.b':'10 pálya · eltitkosítva',
+  'm3.t':'Random','m3.p':'Soha ugyanaz az ügy kétszer. Mindig kivihető, mindig új — és ha félúton abbahagyod, a felhő megjegyzi, hol tartottál. Bármelyik gépen folytathatod.','m3.b':'végtelen',
+  'm4.t':'Együtt','m4.p':'Közös tábla. Mindketten raktok, és a másikét is elviheted. Chat — de csak a játékban, ott, ahol a tét van.','m4.b':'2–4 játékos',
+  'm5.t':'Gyilkos','m5.p':'Egyikőtök áruló. Ő is nyomoz — de titokban szabotál. Nincs értesítés. Nincs jelzés. Csak a gyanú.','m5.b':'3–6 játékos',
+  'archive.aria':'Az Esemény mód tíz eltitkosított világa',
+  'killer.eyebrow':'Co-op: Gyilkos','killer.title':'Valaki köztetek hazudik.',
+  'killer.lead':'A szerver titokban kisorsol egy gyilkost. Ő is velünk nyomoz, ugyanazt a táblát látja — de három néma képességgel hátráltat. <b>Senki nem kap értesítést.</b> A többieknek csak a megfigyelés, a logika és a Gyűlés marad.',
+  'ab1.t':'Időcsavar','ab1.p':'Elvesz az óráról 20 másodpercet. Az óra csak… ugrik. Senki sem tudja, miért.','ab1.cd':'hűtés: 90 mp · játékonként 3×',
+  'ab2.t':'Szövegcsere','ab2.p':'Öt másodpercre más szöveg áll a nyomkártyán. Aztán visszaáll. Ki látta? Ki hitte el?','ab2.cd':'hűtés: 45 mp · nincs jelzés',
+  'ab3.t':'Eltüntetés','ab3.p':'Egy tárgy eltűnik — és a mező szabadnak látszik. Rakj oda bármit, és ha visszatér, minden elvész, a mező pedig örökre zárolt.','ab3.cd':'hűtés: 60 mp · 8 mp hatás',
+  'killer.counter':'<b>Ellenjáték:</b> 🔎 <b>Szimat</b> — „használt valaki képességet az elmúlt 30 mp-ben?" · 🗳️ <b>Gyűlés</b> — vita, majd szavazás: ha eltalálod, leleplezed. Ha nem… ő nevet a végén.',
+  'powers.eyebrow':'Erő-szabályok','powers.title':'A faj számít.','powers.lead':'A karakter faja megváltoztatja, hová állhat — és hogyan kell olvasni a nyomát. A szabályok a rejtvény részei.',
+  'pw1.t':'Vámpír','pw1.p':'Nem állhat holdfényes mezőn, és tükör mellett sem.',
+  'pw2.t':'Szellem','pw2.p':'A „mellette" a falon át is érvényes rá, és foglalt tárgyon is állhat.',
+  'pw3.t':'Démon','pw3.p':'Egy nyom hazudik. A kérdés: melyik?',
+  'pw4.t':'Vérfarkas','pw4.p':'Teliholdkor csak kültéren lehet — a Hold épp „fent van".',
+  'pw5.t':'Boszorkány','pw5.p':'A pentagramma-mezőkön csak ő állhat. Mindenki más elkerüli.',
+  'pw6.t':'Élőhalott','pw6.p':'Élő emberrel nem lehet szomszédos — még átlósan sem. Megérzik a szagát.',
+  'pw7.t':'Alakváltó','pw7.p':'Két kártyája van. Neked kell kitalálni, melyik az igazi.',
+  'foot.desc':'Horror-gyilkossági logikai rejtvény. Egy rács, egy gyilkos, egyetlen megoldás.',
+  'foot.explore':'Felfedezés','foot.case':'Az ügy','foot.modes':'Módok','foot.killer':'Gyilkos mód','foot.powers':'Erők',
+  'foot.project':'Projekt','foot.dl':'Letöltés — hamarosan','foot.top':'Vissza a tetejére','foot.made':'Készítette',
+  'foot.copy':'© 2026 NIGHTDOKU. Rajongói, nem kereskedelmi, fejlesztés alatt álló projekt.',
+  'foot.warn':'⚠ Fotoszenzitív figyelmeztetés: villogó és mozgó effektek. A Nyugodt mód (jobb felül) kikapcsolja őket. Horror-tartalom, 16+ ajánlott.'
+};
+var I18N={en:EN,hu:HU};
+var ATTRS=[['data-i-title','title'],['data-i-label','aria-label'],['data-i-content','content'],['data-i-t','data-t']];
+$$('[data-i]').forEach(function(el){EN[el.getAttribute('data-i')]=el.innerHTML});
+ATTRS.forEach(function(a){$$('['+a[0]+']').forEach(function(el){EN[el.getAttribute(a[0])]=el.getAttribute(a[1])})});
+function t(k,v){var s=I18N[lang][k];if(s==null)s=EN[k];if(s==null)s=k;return v?s.replace(/\{(\w+)\}/g,function(m,n){return v[n]!=null?v[n]:m}):s}
+function applyStatic(){
+  $$('[data-i]').forEach(function(el){el.innerHTML=t(el.getAttribute('data-i'))});
+  ATTRS.forEach(function(a){$$('['+a[0]+']').forEach(function(el){el.setAttribute(a[1],t(el.getAttribute(a[0])))})})}
+function setLang(l,persist){
+  lang=l;root.lang=l;if(persist)store.set('nd_lang',l);
+  applyStatic();$('#langBtn').textContent=l==='hu'?'EN':'HU';
+  langHooks.forEach(function(f){f()})}
+$('#langBtn').addEventListener('click',function(){setLang(lang==='hu'?'en':'hu',true)});
+if(lang==='hu')setLang('hu',false);
+
 /* ---------- értesítés ---------- */
 var toastT;function toast(t){var el=$('#toast');el.textContent=t;el.classList.add('on');clearTimeout(toastT);toastT=setTimeout(function(){el.classList.remove('on')},2600)}
 
@@ -509,12 +660,12 @@ var Snd={ctx:null,on:false,
   stinger:function(){this.noise(.6,.5);this.tone(900,0,.7,'sawtooth',.28,60);this.tone(1400,0,.5,'square',.12,90)},
   rumble:function(){this.noise(1.2,.12);this.tone(48,0,1.2,'sine',.3)}};
 function setSound(v){Snd.on=v;var b=$('#soundBtn');b.setAttribute('aria-pressed',v);b.firstChild.nodeValue=v?'🔊 ':'🔇 ';if(v)Snd.init()}
-$('#soundBtn').addEventListener('click',function(){setSound(!Snd.on);if(Snd.on){Snd.thud();toast('Hang bekapcsolva')}});
+$('#soundBtn').addEventListener('click',function(){setSound(!Snd.on);if(Snd.on){Snd.thud();toast(t('toast.sound'))}});
 
 /* ---------- nyugodt mód ---------- */
 function setCalm(v){calm=v;root.classList.toggle('calm',v);$('#calmBtn').setAttribute('aria-pressed',v);store.set('nd_calm',v?'1':'0');if(v&&!ctxClear.done){}clearEmbers()}
 $('#calmBtn').setAttribute('aria-pressed',calm);
-$('#calmBtn').addEventListener('click',function(){setCalm(!calm);toast(calm?'Nyugodt mód: be':'Nyugodt mód: ki')});
+$('#calmBtn').addEventListener('click',function(){setCalm(!calm);toast(t(calm?'toast.calmOn':'toast.calmOff'))});
 var ctxClear={done:false};
 
 /* ---------- zseblámpa-kurzor ---------- */
@@ -547,9 +698,12 @@ var lastE=0;addEventListener('pointermove',function(e){if(calm||e.pointerType===
   var p=mk(false,e.clientX*DPR,e.clientY*DPR);p.extra=true;p.life=.9;p.vy=-rand(.3,.9)*DPR;p.r=rand(.5,1.5)*DPR;parts.push(p)},{passive:true});
 
 /* ---------- gépelt szlogen ---------- */
-(function(){var el=$('#typed'),txt='Ahol a sudoku vért ont.';
-  if(calm){el.textContent=txt;return}var i=0;
-  setTimeout(function step(){if(i<=txt.length){el.textContent=txt.slice(0,i++);setTimeout(step,i>txt.length?0:rand(55,120)+(txt[i-1]===' '?90:0))}},1900)})();
+(function(){var el=$('#typed'),i=0,fin=false;
+  function full(){var s=t('tag.text');el.setAttribute('aria-label',s);return s}
+  function show(){fin=true;el.textContent=full()}
+  langHooks.push(show);
+  if(calm){show();return}
+  setTimeout(function step(){if(fin)return;var txt=full();if(i<=txt.length){el.textContent=txt.slice(0,i++);setTimeout(step,i>txt.length?0:rand(55,120)+(txt[i-1]===' '?90:0))}},1900)})();
 
 /* ---------- logó-villódzás + villám ---------- */
 (function(){var letters=$$('.logo .ch');
@@ -557,13 +711,10 @@ var lastE=0;addEventListener('pointermove',function(e){if(calm||e.pointerType===
   var lt=$('#lightning');
   (function bolt(){setTimeout(function(){if(!calm&&!document.hidden){lt.classList.remove('go');void lt.offsetWidth;lt.classList.add('go');setTimeout(Snd.rumble.bind(Snd),500)}bolt()},rand(11000,24000))})()})();
 
-/* ---------- megjelenés görgetésre + menü kiemelés ---------- */
+/* ---------- megjelenés görgetésre ---------- */
 (function(){var io;
   if('IntersectionObserver' in window){io=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target)}})},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
-    $$('.reveal').forEach(function(el){io.observe(el)})}else{$$('.reveal').forEach(function(el){el.classList.add('in')})}
-  var links=$$('.nav ul a');
-  if('IntersectionObserver' in window){var so=new IntersectionObserver(function(es){es.forEach(function(e){if(e.isIntersecting){links.forEach(function(a){a.classList.toggle('on',a.getAttribute('href')==='#'+e.target.id)})}})},{rootMargin:'-45% 0px -50% 0px'});
-    ['case','modes','killer','powers'].forEach(function(id){so.observe(document.getElementById(id))})}})();
+    $$('.reveal').forEach(function(el){io.observe(el)})}else{$$('.reveal').forEach(function(el){el.classList.add('in')})}})();
 
 /* ---------- döntés kártyák: tilt ---------- */
 $$('.tilt').forEach(function(el){
@@ -578,7 +729,7 @@ $$('.tilt').forEach(function(el){
   var lab=document.createElement('span');lab.textContent='';})();
 
 /* ---------- letöltés gomb ---------- */
-$('#dlBtn').addEventListener('click',function(){toast('Még készül — a prototípus után itt lesz a letöltés.');Snd.thud()});
+$('#dlBtn').addEventListener('click',function(){toast(t('toast.dl'));Snd.thud()});
 
 /* ---------- jumpscare ---------- */
 function softHurt(){var d=$('#dossier');d.classList.remove('hurt');void d.offsetWidth;d.classList.add('hurt')}
@@ -586,34 +737,35 @@ function scare(){softHurt();if(calm||!$('#scareOn').checked)return;var s=$('#sca
   var off=function(){s.classList.remove('on')};s.onclick=off;setTimeout(off,980)}
 addEventListener('keydown',function(e){if(e.key==='Escape')$('#scare').classList.remove('on')});
 
-/* ======================= A JÁTSZHATÓ ÜGY ======================= */
+/* ======================= THE PLAYABLE CASE ======================= */
 (function(){
   var LAYOUT=['KKSSSS','KKSSSS','KKOOTT','HHOOTT','HHOOTT','HHHTTT'];
-  var ROOM={K:'Kripta',S:'Sekrestye',O:'Oltár',H:'Harangláb',T:'Temetőkert'};
-  var RC={K:'#1e1233',S:'#0e2733',O:'#2e1119',H:'#2d2210',T:'#10261b'};
+  var RC={K:'#33224f',S:'#17415a',O:'#4a1f2c',H:'#4c3b19',T:'#1b4631'};
   var OBJ={A1:'coffin',B2:'coffin',D1:'bench',E1:'bench',B6:'bench',F2:'candle',C3:'carpet',D3:'carpet',C4:'carpet',D4:'carpet',F3:'grave',E5:'grave',E6:'tree',A4:'bell'};
   var ICON={coffin:'⚰️',bench:'🪑',candle:'🕯️',carpet:'🟥',grave:'🪦',tree:'🌳',bell:'🔔'};
-  var NAME={coffin:'koporsó',bench:'pad',candle:'gyertya',carpet:'szőnyeg',grave:'sírkő',tree:'fa',bell:'harang'};
   var BLOCK={candle:1,grave:1,tree:1,bell:1};
+  var room=function(k){return t('room.'+k)}, oname=function(k){return t('obj.'+k)};
   var CH=[
-    {id:'vlad',e:'🧛',n:'Vlad Drăgulescu',clue:'Egy padon ült a Sekrestyében.',why:'Padon ült a Sekrestyében: E1.'},
-    {id:'morrigan',e:'🌒',n:'Morrigan Ashvale',clue:'A harang mellett állt.',why:'A harang (A4) mellett, ugyanabban a helyiségben: A5.'},
-    {id:'silas',e:'👻',n:'Silas Grey',clue:'Egy koporsón pihent.',why:'Koporsón pihent a Kriptában: B2.'},
-    {id:'lilith',e:'😈',n:'Lilith Vane',clue:'Az Oltár szőnyegén térdelt.',why:'Az Oltár szőnyegén térdelt: D3.'},
-    {id:'ezekiel',e:'🐺',n:'Ezekiel Thorne',clue:'A Temetőkertben volt.',why:'A Temetőkertben, a sírkövek közt maradt hely: F4.'},
-    {id:'abel',e:'📜',n:'Ábel Kóródi',clue:'A Haranglábban volt, egyedül a gyilkosával.',why:'A Haranglábban, egyedül a gyilkossal: C6.',victim:true}
+    {id:'vlad',e:'🧛',n:'Vlad Drăgulescu'},
+    {id:'morrigan',e:'🌒',n:'Morrigan Ashvale'},
+    {id:'silas',e:'👻',n:'Silas Grey'},
+    {id:'lilith',e:'😈',n:'Lilith Vane'},
+    {id:'ezekiel',e:'🐺',n:'Ezekiel Thorne'},
+    {id:'abel',e:'📜',n:'Ábel Kóródi',victim:true}
   ];
+  var clueOf=function(c){return t('ch.'+c.id+'.clue')}, whyOf=function(c){return t('ch.'+c.id+'.why')};
+  var quote=function(s){return lang==='hu'?'„'+s+'"':'“'+s+'”'};
   var SOL={vlad:'E1',silas:'B2',lilith:'D3',ezekiel:'F4',morrigan:'A5',abel:'C6'};
   var ORDER=['morrigan','vlad','silas','abel','lilith','ezekiel'];
   var byId={};CH.forEach(function(c){byId[c.id]=c});
   var cid=function(r,c){return String.fromCharCode(65+c)+(r+1)};
   var pos=function(id){return {c:id.charCodeAt(0)-65,r:+id.slice(1)-1}};
 
-  var placed={},sel='morrigan',solved=false,busy=false,wrongs=0,hints=0,cells={},cards={};
+  var placed={},sel='morrigan',solved=false,busy=false,wrongs=0,hints=0,cells={},cards={},roomLbl={},lastSay=null;
   var bd=$('#bd'),sus=$('#suspects'),msgEl=$('#msg'),act=$('#active'),dos=$('#dossier'),sub=$('#submitBtn'),ver=$('#verdict');
 
   /* rács felépítése */
-  var firstOf={};bd.appendChild(document.createElement('div'));
+  bd.appendChild(document.createElement('div'));
   'ABCDEF'.split('').forEach(function(l){var d=document.createElement('div');d.className='ax';d.textContent=l;bd.appendChild(d)});
   for(var r=0;r<6;r++){
     var ax=document.createElement('div');ax.className='ax';ax.textContent=r+1;bd.appendChild(ax);
@@ -623,7 +775,7 @@ addEventListener('keydown',function(e){if(e.key==='Escape')$('#scare').classList
       if(r===0||LAYOUT[r-1][c]!==rm)b.classList.add('bt');if(r===5||LAYOUT[r+1][c]!==rm)b.classList.add('bb');
       if(c===0||LAYOUT[r][c-1]!==rm)b.classList.add('bl');if(c===5||LAYOUT[r][c+1]!==rm)b.classList.add('br');
       if(OBJ[id]&&BLOCK[OBJ[id]])b.classList.add('blocked');
-      if(!firstOf[rm]){firstOf[rm]=1;var rl=document.createElement('span');rl.className='rl';rl.textContent=ROOM[rm];b.appendChild(rl)}
+      if(!roomLbl[rm]){var rl=document.createElement('span');rl.className='rl';b.appendChild(rl);roomLbl[rm]=rl}
       if(OBJ[id]){var ob=document.createElement('span');ob.className='ob';ob.textContent=ICON[OBJ[id]];b.appendChild(ob)}
       b.addEventListener('click',(function(i){return function(){place(i)}})(id));
       bd.appendChild(b);cells[id]=b}}
@@ -631,10 +783,12 @@ addEventListener('keydown',function(e){if(e.key==='Escape')$('#scare').classList
   /* kártyák */
   CH.forEach(function(ch){
     var b=document.createElement('button');b.type='button';b.className='sus'+(ch.victim?' victim':'');
-    b.innerHTML='<span class="em">'+ch.e+'</span><span><span class="nm">'+ch.n+'</span><span class="cl">„'+ch.clue+'"</span></span><span class="tag"></span>';
+    b.innerHTML='<span class="em">'+ch.e+'</span><span><span class="nm">'+ch.n+'</span><span class="cl"></span></span><span class="tag"></span>';
     b.addEventListener('click',function(){if(!solved&&!busy)select(ch.id)});sus.appendChild(b);cards[ch.id]=b});
 
-  function say(t){msgEl.textContent=t}
+  /* üzenet: kulcs + (opcionális) változó-függvény, hogy nyelvváltáskor újra lefordíthassuk */
+  function say(k,f){lastSay=k?{k:k,f:f}:null;paintSay()}
+  function paintSay(){msgEl.textContent=lastSay?t(lastSay.k,lastSay.f&&lastSay.f()):''}
   function select(id){sel=id;render()}
   function nextUnplaced(){for(var i=0;i<CH.length;i++)if(!placed[CH[i].id])return CH[i].id;return null}
   function shakeCell(id){var el=cells[id];el.classList.remove('shake');void el.offsetWidth;el.classList.add('shake')}
@@ -642,62 +796,65 @@ addEventListener('keydown',function(e){if(e.key==='Escape')$('#scare').classList
   function render(){
     var rows={},cols={},taken={};
     Object.keys(placed).forEach(function(k){var p=pos(placed[k]);rows[p.r]=1;cols[p.c]=1;taken[placed[k]]=k});
+    Object.keys(roomLbl).forEach(function(k){roomLbl[k].textContent=room(k)});
     Object.keys(cells).forEach(function(id){
       var el=cells[id],p=pos(id),tk=el.querySelector('.tok'),xm=el.querySelector('.xm'),was=el.dataset.tk;
       var who=taken[id];
-      if(who){if(was!==who){if(tk)tk.remove();var t=document.createElement('span');t.className='tok';t.textContent=byId[who].e;el.appendChild(t);el.dataset.tk=who}}
+      if(who){if(was!==who){if(tk)tk.remove();var piece=document.createElement('span');piece.className='tok';piece.textContent=byId[who].e;el.appendChild(piece);el.dataset.tk=who}}
       else{if(tk)tk.remove();delete el.dataset.tk}
       var isX=!who&&(rows[p.r]||cols[p.c]);
       if(isX&&!xm){var x=document.createElement('span');x.className='xm';x.textContent='✕';el.appendChild(x)}else if(!isX&&xm)xm.remove();
-      el.setAttribute('aria-label',id+', '+ROOM[LAYOUT[p.r][p.c]]+(OBJ[id]?', '+NAME[OBJ[id]]:'')+(who?', itt áll: '+byId[who].n:''));
+      el.setAttribute('aria-label',id+', '+room(LAYOUT[p.r][p.c])+(OBJ[id]?', '+oname(OBJ[id]):'')+(who?t('g.here')+byId[who].n:''));
       el.classList.toggle('hl',solved&&LAYOUT[p.r][p.c]==='H')});
-    CH.forEach(function(ch){var b=cards[ch.id];b.classList.toggle('sel',!solved&&sel===ch.id);b.classList.toggle('done',!!placed[ch.id]);b.querySelector('.tag').textContent=placed[ch.id]?'→ '+placed[ch.id]:''});
+    CH.forEach(function(ch){var b=cards[ch.id];b.classList.toggle('sel',!solved&&sel===ch.id);b.classList.toggle('done',!!placed[ch.id]);
+      b.querySelector('.cl').textContent=quote(clueOf(ch));b.querySelector('.tag').textContent=placed[ch.id]?'→ '+placed[ch.id]:''});
     var s=byId[sel];
-    act.innerHTML=solved?'<b>Ügy lezárva.</b><small>A halottak nem hazudnak.</small>':(s?s.e+' <b>'+s.n+'</b>: „'+s.clue+'"<small>Kattints egy mezőre a lerakáshoz.</small>':'Mindenki a helyén van — jöhet a beküldés.');
+    act.innerHTML=solved?t('g.closed'):(s?s.e+' <b>'+s.n+'</b>: '+quote(clueOf(s))+'<small>'+t('g.click')+'</small>':t('g.ready'));
+    if(solved)ver.innerHTML=t('g.verdict');
     sub.disabled=solved||busy||Object.keys(placed).length<6;
     $('#counters').textContent='💀 '+wrongs+' · 💡 '+hints}
 
   function place(id){
     if(solved||busy)return;
-    if(!sel){say('Előbb válassz egy gyanúsítottat a kártyák közül.');return}
-    var o=OBJ[id];if(o&&BLOCK[o]){shakeCell(id);say('Ide nem állhat senki: a(z) '+NAME[o]+' foglalt tárgy.');return}
+    if(!sel){say('g.pick');return}
+    var o=OBJ[id];if(o&&BLOCK[o]){shakeCell(id);say('g.blocked',function(){return {o:oname(o)}});return}
     var occ=null;Object.keys(placed).forEach(function(k){if(placed[k]===id)occ=k});
     if(occ===sel){delete placed[sel];render();say('');return}
-    if(occ){shakeCell(id);say('Ezt a mezőt már elfoglalta valaki.');return}
+    if(occ){shakeCell(id);say('g.taken');return}
     var p=pos(id),clash=false;
     Object.keys(placed).forEach(function(k){if(k===sel)return;var q=pos(placed[k]);if(q.r===p.r||q.c===p.c)clash=true});
-    if(clash){shakeCell(id);say('Soronként és oszloponként csak egy karakter állhat.');return}
+    if(clash){shakeCell(id);say('g.clash');return}
     placed[sel]=id;Snd.thud();say('');
     var n=nextUnplaced();sel=n;render();
-    if(!n)say('Mindenki lent van. Ha biztos vagy benne… nyomd meg a Beküldést.')}
+    if(!n)say('g.alldown')}
 
   function win(){
-    solved=true;dos.classList.add('solved');render();Snd.bell();
-    say('Helyes. A harangláb csöndje beszél: csak ketten voltak ott.');
-    ver.hidden=false;ver.innerHTML='<h4>🩸 A gyilkos: MORRIGAN ASHVALE</h4><p>A Haranglábban csak ő és Ábel volt. „A Rend elűzte az anyámat. Ábel írta alá a parancsot." — de a tollat nem ő hagyta ott…</p>'}
-  function lose(){wrongs++;render();say('Hibás megoldás. A halottak nem hazudnak — te igen.');scare()}
+    solved=true;dos.classList.add('solved');ver.hidden=false;render();Snd.bell();
+    say('g.win')}
+  function lose(){wrongs++;render();say('g.lose');scare()}
   sub.addEventListener('click',function(){if(sub.disabled)return;var ok=CH.every(function(c){return placed[c.id]===SOL[c.id]});ok?win():lose()});
 
   $('#hintBtn').addEventListener('click',function(){
     if(solved||busy)return;
     var nx=null;for(var i=0;i<ORDER.length;i++)if(placed[ORDER[i]]!==SOL[ORDER[i]]){nx=ORDER[i];break}
     if(!nx)return;
-    var t=pos(SOL[nx]);
-    Object.keys(placed).forEach(function(k){if(k===nx)return;var q=pos(placed[k]);if(placed[k]===SOL[nx]||q.r===t.r||q.c===t.c)delete placed[k]});
-    placed[nx]=SOL[nx];hints++;Snd.thud();sel=nextUnplaced();render();say('💡 Egy gyertya gyullad… '+byId[nx].n+': '+byId[nx].why)});
+    var tp=pos(SOL[nx]);
+    Object.keys(placed).forEach(function(k){if(k===nx)return;var q=pos(placed[k]);if(placed[k]===SOL[nx]||q.r===tp.r||q.c===tp.c)delete placed[k]});
+    placed[nx]=SOL[nx];hints++;Snd.thud();sel=nextUnplaced();render();say('g.hint',function(){return {n:byId[nx].n,why:whyOf(byId[nx])}})});
 
   $('#resetBtn').addEventListener('click',reset);
   function reset(){placed={};solved=false;busy=false;dos.classList.remove('solved','hurt');ver.hidden=true;ver.innerHTML='';sel='morrigan';say('');
-    Object.keys(cells).forEach(function(id){var el=cells[id],t=el.querySelector('.tok');if(t)t.remove();delete el.dataset.tk});render()}
+    Object.keys(cells).forEach(function(id){var el=cells[id],tk=el.querySelector('.tok');if(tk)tk.remove();delete el.dataset.tk});render()}
 
   $('#solveBtn').addEventListener('click',function(){
     if(busy)return;reset();busy=true;render();var i=0;
     (function step(){if(i>=ORDER.length){busy=false;sel=null;render();setTimeout(win,500);return}
-      var id=ORDER[i++];sel=id;render();say(byId[id].why);
+      var id=ORDER[i++];sel=id;render();say('ch.'+id+'.why');
       setTimeout(function(){placed[id]=SOL[id];Snd.thud();render();setTimeout(step,calm?400:900)},calm?300:800)})()});
 
-  $('#scareOn').addEventListener('change',function(){if(this.checked&&calm)toast('A Nyugodt mód miatt a jumpscare nem fut le.');Snd.init()});
-  render();say('Válassz egy kártyát, majd kattints a rácson a helyére. (Próbáld a „▶ Megoldás" gombot, ha látni akarod a levezetést.)');
+  $('#scareOn').addEventListener('change',function(){if(this.checked&&calm)toast(t('toast.scare'));Snd.init()});
+  langHooks.push(function(){render();paintSay()});
+  render();say('g.intro');
 })();
 
 /* ======================= GYILKOS-DEMÓK ======================= */
@@ -706,15 +863,15 @@ addEventListener('keydown',function(e){if(e.key==='Escape')$('#scare').classList
   if('IntersectionObserver' in window){var o=new IntersectionObserver(function(es){es.forEach(function(e){vis[e.target.id]=e.isIntersecting})},{threshold:.2});
     ['clk','clue','vgrid'].forEach(function(id){o.observe(document.getElementById(id))})}else{['clk','clue','vgrid'].forEach(function(id){vis[id]=true})}
   /* Időcsavar */
-  var clk=$('#clk'),t=760,cnt=0;
+  var clk=$('#clk'),secs=760,cnt=0;
   function fmt(s){return Math.floor(s/60)+':'+('0'+(s%60)).slice(-2)}
-  setInterval(function(){if(!vis.clk||document.hidden)return;cnt++;t=Math.max(0,t-1);
-    if(cnt%8===5){t=Math.max(0,t-20);clk.classList.remove('jump');void clk.offsetWidth;clk.classList.add('jump');Snd.tick()}
-    if(cnt%8===0){t=760}clk.textContent=fmt(t)},1000);
+  setInterval(function(){if(!vis.clk||document.hidden)return;cnt++;secs=Math.max(0,secs-1);
+    if(cnt%8===5){secs=Math.max(0,secs-20);clk.classList.remove('jump');void clk.offsetWidth;clk.classList.add('jump');Snd.tick()}
+    if(cnt%8===0){secs=760}clk.textContent=fmt(secs)},1000);
   /* Szövegcsere */
-  var clue=$('#clue'),A='Vlad egy padon ült a Sekrestyében.',B='Vlad egy koporsón ült a Kriptában.';
-  setInterval(function(){if(!vis.clue||document.hidden)return;clue.textContent=B;clue.classList.add('fake');
-    setTimeout(function(){clue.textContent=A;clue.classList.remove('fake')},calm?2600:2400)},6500);
+  var clue=$('#clue');
+  setInterval(function(){if(!vis.clue||document.hidden)return;clue.textContent=t('demo.clueB');clue.classList.add('fake');
+    setTimeout(function(){clue.textContent=t('demo.clueA');clue.classList.remove('fake')},calm?2600:2400)},6500);
   /* Eltüntetés */
   var g=$('#vgrid'),mid;
   for(var i=0;i<9;i++){var c=document.createElement('div');c.className='vc'+(i===4?' mid':'');
