@@ -1,0 +1,12 @@
+dist
+dist-electron
+release
+node_modules
+.work
+memory*
+.dev-userdata
+supabase
+web
+docs
+*.md
+package-lock.json

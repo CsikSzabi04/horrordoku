@@ -1,0 +1,57 @@
+:root {
+  --bg: #07060a;
+  --ink: #ece4e6;
+  --muted: #a2959c;
+  --blood: #d1162f;
+  color-scheme: dark;
+}
+* {
+  box-sizing: border-box;
+}
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}
+body {
+  background: radial-gradient(120% 80% at 70% -10%, #1b0a15 0%, var(--bg) 55%);
+  color: var(--ink);
+  font: 16px/1.6 system-ui, 'Segoe UI', sans-serif;
+}
+.boot {
+  min-height: 100%;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  gap: 0.5rem;
+}
+.boot h1 {
+  margin: 0;
+  font: 900 clamp(2rem, 8vw, 5rem) Georgia, serif;
+  letter-spacing: 0.08em;
+}
+.boot h1 span {
+  color: var(--blood);
+}
+.boot p {
+  margin: 0 0 1.5rem;
+  color: var(--muted);
+}
+dl {
+  display: grid;
+  grid-template-columns: auto auto;
+  gap: 0.2rem 1rem;
+  justify-content: center;
+  font-family: Consolas, monospace;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+dt {
+  text-align: right;
+  color: var(--blood);
+}
+dd {
+  margin: 0;
+  text-align: left;
+}
