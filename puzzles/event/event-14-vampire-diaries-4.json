@@ -1,0 +1,279 @@
+{
+  "v": 1,
+  "id": "event-14-vampire-diaries-4",
+  "mode": "event",
+  "world": "vampire-diaries",
+  "title": "A szellem látogatása",
+  "story": "Jeremy Gilbert utoljára a régi házban látták. A lámpák fénykörén kívül minden árnyék.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "M": "Mystic Grill",
+    "S": "Salvatore-kúria",
+    "G": "Gilbert-ház",
+    "W": "Wickery-híd",
+    "L": "Lockwood-kúria",
+    "T": "Temető",
+    "I": "Gimnázium",
+    "R": "Régi templom"
+  },
+  "layout": [
+    "RRSSSSMMM",
+    "RRSSMMMMM",
+    "RRSSSMMMW",
+    "RRSLLLWWW",
+    "RRRLLWWWW",
+    "LLLLLWWWI",
+    "TTLLGGGGI",
+    "TTTTTGGGI",
+    "TTTTTTGGI"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "A5",
+        "D1",
+        "E2",
+        "G5"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "C9",
+        "H8",
+        "I3",
+        "D7"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "B7",
+        "E7",
+        "E3"
+      ]
+    },
+    {
+      "type": "lamp",
+      "at": [
+        "I7",
+        "G8",
+        "A1",
+        "H6",
+        "F4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "charger",
+      "at": [
+        "I5",
+        "D9"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "candle",
+      "at": [
+        "I6",
+        "G3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": [
+        "B4",
+        "C1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "grave",
+      "at": "A2",
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "A4",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "damon-salvatore",
+      "name": "Damon Salvatore",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "tyler-lockwood",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Tylertől északra** volt."
+      ],
+      "source": {
+        "game": "The Vampire Diaries"
+      }
+    },
+    {
+      "id": "tyler-lockwood",
+      "name": "Tyler Lockwood",
+      "race": "werewolf",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "damon-salvatore",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Damontól keletre** volt."
+      ],
+      "source": {
+        "game": "The Vampire Diaries"
+      }
+    },
+    {
+      "id": "stefan-salvatore",
+      "name": "Stefan Salvatore",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "W"
+        }
+      ],
+      "clueText": [
+        "A Wickery-hídon egy **széken** ült."
+      ],
+      "source": {
+        "game": "The Vampire Diaries"
+      }
+    },
+    {
+      "id": "caroline-forbes",
+      "name": "Caroline Forbes",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "bonnie-bennett",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Bonniétől keletre** volt."
+      ],
+      "source": {
+        "game": "The Vampire Diaries"
+      }
+    },
+    {
+      "id": "katherine-pierce",
+      "name": "Katherine Pierce",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **növény mellett** volt."
+      ],
+      "source": {
+        "game": "The Vampire Diaries"
+      }
+    },
+    {
+      "id": "bonnie-bennett",
+      "name": "Bonnie Bennett",
+      "race": "witch",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A helyiségében **hárman** voltak."
+      ],
+      "source": {
+        "game": "The Vampire Diaries"
+      }
+    },
+    {
+      "id": "elena-gilbert",
+      "name": "Elena Gilbert",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dark"
+        }
+      ],
+      "clueText": [
+        "Sötét mezőn állt — a Sötétség megszállta."
+      ],
+      "source": {
+        "game": "The Vampire Diaries"
+      }
+    },
+    {
+      "id": "matt-donovan",
+      "name": "Matt Donovan",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "A Gilbert-házban egy **széken** ült."
+      ],
+      "source": {
+        "game": "The Vampire Diaries"
+      }
+    },
+    {
+      "id": "jeremy-gilbert",
+      "name": "Jeremy Gilbert",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Temetőben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "The Vampire Diaries"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "damon-salvatore": "D1",
+    "tyler-lockwood": "E2",
+    "stefan-salvatore": "I3",
+    "caroline-forbes": "G4",
+    "katherine-pierce": "A5",
+    "bonnie-bennett": "F6",
+    "elena-gilbert": "B7",
+    "matt-donovan": "H8",
+    "jeremy-gilbert": "C9"
+  },
+  "murderer": "elena-gilbert",
+  "rev": 1,
+  "worldRule": "light"
+}

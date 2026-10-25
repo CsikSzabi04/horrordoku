@@ -1,0 +1,169 @@
+{
+  "v": 1,
+  "id": "classic-1-15-gym",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az edzőterem – nyitás előtt",
+  "story": "Ünnepnap volt az edzőteremben, és az edző többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 6,
+  "difficulty": 1,
+  "rooms": {
+    "E": "Edzőterem",
+    "L": "Öltöző",
+    "U": "Uszoda",
+    "B": "Büfé"
+  },
+  "layout": [
+    "BBBEEE",
+    "BBBEEL",
+    "UBBEEL",
+    "UUEEEL",
+    "UUULLL",
+    "UUUULL"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "F1",
+        "E1"
+      ]
+    },
+    {
+      "type": "ball",
+      "at": [
+        "B4",
+        "E4"
+      ]
+    },
+    {
+      "type": "plant",
+      "at": [
+        "C2",
+        "C1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "sink",
+      "at": "F5",
+      "blocking": true
+    },
+    {
+      "type": "treadmill",
+      "at": "E3",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Edzőteremben egy **padon** ült."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. sorban** volt."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "ball",
+          "room": "U"
+        }
+      ],
+      "clueText": [
+        "Az Uszodában egy **labdán** volt."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "Az Öltözőben volt."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 5
+        }
+      ],
+      "clueText": [
+        "Az **5. oszlopban** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "F1",
+    "barry": "A2",
+    "victor": "C3",
+    "cody": "B4",
+    "dora": "D5",
+    "elena": "E6"
+  },
+  "murderer": "barry",
+  "rev": 1,
+  "floors": {
+    "E": "tile",
+    "L": "tile",
+    "U": "water",
+    "B": "wood"
+  }
+}

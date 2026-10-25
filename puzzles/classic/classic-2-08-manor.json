@@ -1,0 +1,169 @@
+{
+  "v": 1,
+  "id": "classic-2-08-manor",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A kúria – hétvégén",
+  "story": "Zárás után a kúriában a háziúr holtan feküdt. Csak páran voltak ma bent.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "E": "Előcsarnok",
+    "K": "Könyvtár",
+    "B": "Ebédlő",
+    "O": "Konyha"
+  },
+  "layout": [
+    "OKKKKK",
+    "OOOOBB",
+    "OOOOBB",
+    "EEEOBB",
+    "EEEEEE",
+    "EEEEEE"
+  ],
+  "objects": [
+    {
+      "type": "sofa",
+      "at": [
+        "D1",
+        "C6",
+        "B5",
+        "B1"
+      ]
+    },
+    {
+      "type": "rug",
+      "at": [
+        "F4",
+        "E3",
+        "F5"
+      ]
+    },
+    {
+      "type": "painting",
+      "at": "E2",
+      "blocking": true
+    },
+    {
+      "type": "fireplace",
+      "at": [
+        "E4",
+        "F3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "armor",
+      "at": "B4",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Könyvtárban egy **kanapén** ült."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "painting"
+        }
+      ],
+      "clueText": [
+        "Egy **festmény mellett** volt."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "cody"
+        }
+      ],
+      "clueText": [
+        "**Codyvel** egy helyiségben volt."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "armor"
+        }
+      ],
+      "clueText": [
+        "Egy **páncél mellett** volt."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "D1",
+    "bruno": "A2",
+    "cody": "E3",
+    "dora": "F4",
+    "elena": "B5",
+    "victor": "C6"
+  },
+  "murderer": "elena",
+  "rev": 1,
+  "floors": {
+    "K": "carpet",
+    "B": "wood",
+    "O": "tile"
+  }
+}

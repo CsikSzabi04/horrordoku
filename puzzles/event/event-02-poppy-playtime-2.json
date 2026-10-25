@@ -1,0 +1,187 @@
+{
+  "v": 1,
+  "id": "event-02-poppy-playtime-2",
+  "mode": "event",
+  "world": "poppy-playtime",
+  "title": "Üres dobszó",
+  "story": "Bunzo Bunny dobja elnémult, ő maga pedig a játékgyár folyosóján fekszik. A szalagok még mindig mennek, mintha mi sem történt volna.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "E": "Előcsarnok",
+    "G": "Gyártósor",
+    "J": "Játékbolt",
+    "T": "Játszószoba",
+    "R": "Raktár",
+    "S": "Szellőzőrendszer"
+  },
+  "layout": [
+    "TTGGSS",
+    "JJGGSS",
+    "JRGGSS",
+    "JRRRSS",
+    "RREEES",
+    "REEEEE"
+  ],
+  "objects": [
+    {
+      "type": "toybox",
+      "at": [
+        "D3",
+        "B1",
+        "A4"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "E1",
+        "C2",
+        "A6",
+        "F5"
+      ]
+    },
+    {
+      "type": "panel",
+      "at": [
+        "C6",
+        "B2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "conveyor",
+      "at": [
+        "B3",
+        "F3",
+        "C4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "speaker",
+      "at": "A2",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "kissy-missy",
+      "name": "Kissy Missy",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "pj-pug-a-pillar",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **PJtól északra** volt."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "bunzo-bunny",
+      "name": "Bunzo Bunny",
+      "race": "ghoul",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Gyártósoron **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "mommy-long-legs",
+      "name": "Mommy Long Legs",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "toybox"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **játékdoboz mellett**."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "pj-pug-a-pillar",
+      "name": "PJ Pug-a-Pillar",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "mommy-long-legs",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Mommytől délre** volt."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "poppy",
+      "name": "Poppy",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "kissy-missy"
+        }
+      ],
+      "clueText": [
+        "**Kissyvel** egy helyiségben volt."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "a-latogato",
+      "name": "A Látogató",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "A Raktárban egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "kissy-missy": "E1",
+    "bunzo-bunny": "C2",
+    "mommy-long-legs": "D3",
+    "pj-pug-a-pillar": "B4",
+    "poppy": "F5",
+    "a-latogato": "A6"
+  },
+  "murderer": "mommy-long-legs",
+  "rev": 1,
+  "worldRule": "grab"
+}

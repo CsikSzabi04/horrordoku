@@ -1,0 +1,259 @@
+{
+  "v": 1,
+  "id": "classic-5-13-apartment",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A lakás – zárás után",
+  "story": "Zárás után a lakásban a lakástulajdonos holtan feküdt. Csak páran voltak ma bent.",
+  "size": 10,
+  "difficulty": 5,
+  "rooms": {
+    "H": "Hálószoba",
+    "K": "Konyha",
+    "N": "Nappali",
+    "F": "Fürdő",
+    "E": "Előszoba",
+    "R": "Erkély"
+  },
+  "layout": [
+    "NNNNEEEEEE",
+    "NNNNNEEEEE",
+    "NNNNNNNEEE",
+    "RKKKNNNNEE",
+    "RRRKKKKNNF",
+    "RRRKKKKFFF",
+    "RRRKKKFFFF",
+    "RRRRHKFFFF",
+    "RRRHHKFFFF",
+    "RHHHHHHHHH"
+  ],
+  "objects": [
+    {
+      "type": "rug",
+      "at": [
+        "B2",
+        "F1",
+        "E4",
+        "D9"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "D3",
+        "H4"
+      ]
+    },
+    {
+      "type": "tv",
+      "at": "B1",
+      "blocking": true
+    },
+    {
+      "type": "fridge",
+      "at": "G5",
+      "blocking": true
+    },
+    {
+      "type": "bath",
+      "at": [
+        "J7",
+        "H9",
+        "J8",
+        "I7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "stove",
+      "at": "D5",
+      "blocking": true
+    },
+    {
+      "type": "sofa",
+      "at": "G3"
+    },
+    {
+      "type": "bed",
+      "at": "B10"
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Előszobában egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "tv"
+        }
+      ],
+      "clueText": [
+        "Egy **tévé mellett** volt."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "deborah",
+      "name": "Deborah",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "ivan",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Ivantól északra** volt."
+      ]
+    },
+    {
+      "id": "gordon",
+      "name": "Gordon",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "victor",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Victortól északra** volt."
+      ]
+    },
+    {
+      "id": "hugo",
+      "name": "Hugo",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 8
+        }
+      ],
+      "clueText": [
+        "A **8. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "ivan",
+      "name": "Ivan",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "hugo"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Hugóval**."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "F1",
+    "barry": "B2",
+    "cody": "D3",
+    "deborah": "E4",
+    "eva": "C5",
+    "flavia": "J6",
+    "gordon": "G7",
+    "hugo": "H8",
+    "ivan": "I9",
+    "victor": "A10"
+  },
+  "murderer": "eva",
+  "rev": 1,
+  "floors": {
+    "H": "wood",
+    "K": "tile",
+    "N": "carpet",
+    "F": "tile",
+    "E": "brick",
+    "R": "stone"
+  }
+}

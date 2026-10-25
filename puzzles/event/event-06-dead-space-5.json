@@ -1,0 +1,258 @@
+{
+  "v": 1,
+  "id": "event-06-dead-space-5",
+  "mode": "event",
+  "world": "dead-space",
+  "title": "A kapitány utolsó parancsa",
+  "story": "Benjamin Mathius kiadta az utolsó parancsot, aztán csend lett. Az Ishimura szekciói közül néhányba csak páncélosok léphetnek.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "H": "Híd",
+    "O": "Orvosi szárny",
+    "G": "Gépház",
+    "Y": "Gyárterem",
+    "I": "Hidroponika",
+    "K": "Külső szekció"
+  },
+  "layout": [
+    "GGGGGYYYY",
+    "GGGGGYYYY",
+    "GGGGYYYYY",
+    "OOOGGIIYY",
+    "KKOOOIIHH",
+    "KKOIIIIHH",
+    "KKOOOIIHH",
+    "KKKOOIHHH",
+    "KKKOIIHHH"
+  ],
+  "objects": [
+    {
+      "type": "stasis",
+      "at": [
+        "C3",
+        "I2",
+        "B6",
+        "E5",
+        "H6",
+        "C9"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "F9",
+        "B2",
+        "F1"
+      ]
+    },
+    {
+      "type": "lockdoor",
+      "at": [
+        "A8",
+        "I3",
+        "F8",
+        "C6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "terminal",
+      "at": "H7",
+      "blocking": true
+    },
+    {
+      "type": "savepoint",
+      "at": "G6",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "zach-hammond",
+      "name": "Zach Hammond",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "hans-tiedemann",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Hanstól északra** volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "ellie-langford",
+      "name": "Ellie Langford",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "on",
+          "object": "stasis",
+          "room": "Y"
+        }
+      ],
+      "clueText": [
+        "A Gyárteremben egy **sztázis-állomáson** volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "hans-tiedemann",
+      "name": "Hans Tiedemann",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "stasis"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **sztázis-állomás mellett**."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "nicole-brennan",
+      "name": "Nicole Brennan",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "a-hunter",
+      "name": "A Hunter",
+      "race": "ghoul",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "on",
+          "object": "stasis",
+          "room": "O"
+        }
+      ],
+      "clueText": [
+        "Az Orvosi szárnyban egy **sztázis-állomáson** volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "isaac-clarke",
+      "name": "Isaac Clarke",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "a-hunter",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **a Huntertől délre** volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "benjamin-mathius",
+      "name": "Benjamin Mathius",
+      "race": "human",
+      "victim": true,
+      "armored": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Hidroponikában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "challus-mercer",
+      "name": "Challus Mercer",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "kendra-daniels",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Kendrától keletre** volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "kendra-daniels",
+      "name": "Kendra Daniels",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "A Hidroponikában egy **padon** ült."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "zach-hammond": "D1",
+    "ellie-langford": "I2",
+    "hans-tiedemann": "C3",
+    "nicole-brennan": "A4",
+    "a-hunter": "E5",
+    "isaac-clarke": "B6",
+    "benjamin-mathius": "G7",
+    "challus-mercer": "H8",
+    "kendra-daniels": "F9"
+  },
+  "murderer": "kendra-daniels",
+  "rev": 1,
+  "worldRule": "vacuum",
+  "vacuumRooms": [
+    "K",
+    "Y"
+  ]
+}

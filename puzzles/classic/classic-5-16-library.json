@@ -1,0 +1,248 @@
+{
+  "v": 1,
+  "id": "classic-5-16-library",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A könyvtár",
+  "story": "Ünnepnap volt a könyvtárban, és a könyvtáros többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "R": "Raktár",
+    "G": "Gyerekszoba",
+    "K": "Kávézó",
+    "I": "Információ",
+    "O": "Olvasóterem"
+  },
+  "layout": [
+    "IIIIIIOOO",
+    "IIIIIIIOO",
+    "GGGIIIIOO",
+    "GGGGIKKOO",
+    "GGGGIKKOO",
+    "GGGGKKKOO",
+    "GGGKKKRRR",
+    "KKKKKKRRR",
+    "RRRRRRRRR"
+  ],
+  "objects": [
+    {
+      "type": "sofa",
+      "at": [
+        "B3",
+        "I1",
+        "H4",
+        "C6"
+      ]
+    },
+    {
+      "type": "stool",
+      "at": "E8"
+    },
+    {
+      "type": "rug",
+      "at": [
+        "A7",
+        "C7"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "H6",
+        "G5"
+      ]
+    },
+    {
+      "type": "computer",
+      "at": [
+        "A2",
+        "G2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "F7",
+      "blocking": true
+    },
+    {
+      "type": "table",
+      "at": [
+        "I5",
+        "D8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "shelf",
+      "at": "C5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa",
+          "room": "O"
+        }
+      ],
+      "clueText": [
+        "Az Olvasóteremben egy **kanapén** ült."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "terrain",
+          "style": "stone",
+          "not": true
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **köves talajon**."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa"
+        }
+      ],
+      "clueText": [
+        "Egy **kanapén** ült."
+      ]
+    },
+    {
+      "id": "deborah",
+      "name": "Deborah",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "chair",
+            "plant"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **szék vagy cserepes növény mellett** volt."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "gina",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Ginától északra** volt."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "gina",
+      "name": "Gina",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "stool"
+        }
+      ],
+      "clueText": [
+        "Egy **bárszéken** ült."
+      ]
+    },
+    {
+      "id": "hugo",
+      "name": "Hugo",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "bianca",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Biancától keletre** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "I1",
+    "bianca": "C2",
+    "carl": "B3",
+    "deborah": "G4",
+    "ervin": "F5",
+    "frank": "H6",
+    "vickie": "A7",
+    "gina": "E8",
+    "hugo": "D9"
+  },
+  "murderer": "carl",
+  "rev": 1,
+  "floors": {
+    "R": "stone",
+    "G": "checker",
+    "K": "wood",
+    "I": "tile",
+    "O": "carpet"
+  }
+}

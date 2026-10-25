@@ -1,0 +1,180 @@
+{
+  "v": 1,
+  "id": "classic-2-12-playground",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A játszótér – este",
+  "story": "A játszótéren reggel egy felnőttet holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "H": "Hinták",
+    "P": "Piknikhely",
+    "F": "Focipálya",
+    "O": "Homokozó"
+  },
+  "layout": [
+    "PPFFOO",
+    "PPPFFO",
+    "PPFFOO",
+    "HHHFOO",
+    "HHHFFO",
+    "HHHHHO"
+  ],
+  "objects": [
+    {
+      "type": "ball",
+      "at": [
+        "F5",
+        "E1",
+        "C3",
+        "E5"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "A4",
+        "B2",
+        "C5"
+      ]
+    },
+    {
+      "type": "seesaw",
+      "at": "D6"
+    },
+    {
+      "type": "fountain",
+      "at": "A3",
+      "blocking": true
+    },
+    {
+      "type": "picnic",
+      "at": [
+        "C2",
+        "A1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "D5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 6
+        }
+      ],
+      "clueText": [
+        "A **6. oszloptól balra** volt."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Piknikhelyen egy **padon** ült."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "ball",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Focipályán egy **labdán** volt."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Hintáknál egy **padon** ült."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "seesaw",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Hintáknál egy **libikókán** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "E1",
+    "bruno": "B2",
+    "carl": "C3",
+    "dora": "A4",
+    "victor": "F5",
+    "eva": "D6"
+  },
+  "murderer": "adam",
+  "rev": 1,
+  "floors": {
+    "H": "grass",
+    "P": "checker",
+    "F": "grass",
+    "O": "sand"
+  }
+}

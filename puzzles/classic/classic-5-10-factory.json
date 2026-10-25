@@ -1,0 +1,243 @@
+{
+  "v": 1,
+  "id": "classic-5-10-factory",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A gyár – esős napon",
+  "story": "Zárás után a gyárban a műszakvezető holtan feküdt. Csak páran voltak ma bent.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "U": "Udvar",
+    "L": "Öltöző",
+    "G": "Gyártósor",
+    "R": "Raktár",
+    "I": "Iroda",
+    "B": "Büfé"
+  },
+  "layout": [
+    "UUUUUUBII",
+    "UUUUBBBII",
+    "UUUUBBBII",
+    "GGGUBBRRI",
+    "GGGGBBBRI",
+    "LLGGBBBRI",
+    "LLLGGRRRI",
+    "LLLGRRRRI",
+    "LLLGGIIII"
+  ],
+  "objects": [
+    {
+      "type": "crate",
+      "at": [
+        "A5",
+        "G4",
+        "A4"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "B1",
+        "B2"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "H3",
+        "F4",
+        "E5"
+      ]
+    },
+    {
+      "type": "computer",
+      "at": "I6",
+      "blocking": true
+    },
+    {
+      "type": "shelf",
+      "at": [
+        "H6",
+        "E8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "E3",
+      "blocking": true
+    },
+    {
+      "type": "locker",
+      "at": "A6",
+      "blocking": true
+    },
+    {
+      "type": "machine",
+      "at": "C5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "counter"
+        }
+      ],
+      "clueText": [
+        "Egy **pult mellett** volt."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "Az Irodában egy **széken** ült."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "A Raktárban egy **ládán** volt."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "derek",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Derektől délre** volt."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "hanna",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Hannától északra** volt."
+      ]
+    },
+    {
+      "id": "greg",
+      "name": "Greg",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "hanna",
+      "name": "Hanna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A helyiségében **hárman** voltak."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "B1",
+    "bella": "E2",
+    "cody": "H3",
+    "derek": "G4",
+    "vlad": "A5",
+    "eva": "D6",
+    "felicia": "I7",
+    "greg": "C8",
+    "hanna": "F9"
+  },
+  "murderer": "eva",
+  "rev": 1,
+  "floors": {
+    "U": "grass",
+    "L": "tile",
+    "R": "stone",
+    "B": "wood"
+  }
+}

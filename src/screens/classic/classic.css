@@ -1,0 +1,210 @@
+.classic {
+  max-width: 980px;
+  margin: 0 auto;
+  padding: 1rem 1rem 3rem;
+}
+.classic header {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+.classic h2 {
+  flex: 1;
+  margin: 0;
+  font: 700 1.7rem var(--display);
+  letter-spacing: 0.1em;
+}
+.classic .lead {
+  color: var(--muted);
+  max-width: 62ch;
+}
+.classic h3 {
+  margin: 1.6rem 0 0.6rem;
+  font: 600 0.85rem var(--ui);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+.cases {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 0.7rem;
+}
+.case {
+  position: relative;
+  display: grid;
+  gap: 0.15rem;
+  text-align: left;
+  padding: 0.9rem 1rem 0.8rem 3.2rem;
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 0.15s, transform 0.15s, box-shadow 0.15s;
+}
+.case:hover {
+  border-color: var(--blood);
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(209, 22, 47, 0.18);
+}
+.case .no {
+  position: absolute;
+  left: 0.8rem;
+  top: 0.7rem;
+  font: 700 1.5rem var(--display);
+  color: var(--blood);
+}
+.case b {
+  font: 600 1.02rem var(--ui);
+}
+.case small {
+  color: var(--gold);
+  letter-spacing: 0.08em;
+}
+.case .state {
+  margin-top: 0.3rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+.case.done {
+  border-color: rgba(201, 164, 92, 0.45);
+}
+.case.done .state {
+  color: var(--gold);
+}
+
+/* a Klasszikus listája: fekete oldal (mint az app többi része), a „játék" csempék fehérek; a sötét mód kapcsolóval sötétek */
+.classic .dm {
+  width: 36px;
+  height: 32px;
+  border: 2px solid var(--ink);
+  border-radius: 8px;
+  background: transparent;
+  color: var(--ink);
+  font-size: 1.05rem;
+  cursor: pointer;
+}
+.classic .dm[aria-pressed='true'] {
+  background: var(--ink);
+  color: #07060a;
+}
+.classic.plain .case {
+  background: #fff;
+  border: 2px solid #121212;
+  color: #121212;
+  box-shadow: 4px 4px 0 rgba(255, 255, 255, 0.08);
+  padding-left: 4.2rem;
+}
+.classic.plain .case:hover {
+  border-color: #2f7de1;
+  box-shadow: 4px 4px 0 rgba(47, 125, 225, 0.45);
+  transform: translateY(-2px);
+}
+.classic.plain .case .no {
+  font-size: 2rem;
+  top: 0.6rem;
+  color: inherit;
+}
+.classic.plain .case .num {
+  position: absolute;
+  right: 0.7rem;
+  top: 0.5rem;
+  color: #9b9ba6;
+  font: 800 0.75rem var(--ui);
+  font-style: normal;
+}
+.classic.plain .case small {
+  color: #8a6a1c;
+}
+.classic.plain .case .state {
+  color: #5b5b66;
+}
+.classic.plain .case.done {
+  background: #f5f0dc;
+  border-color: #8a6a1c;
+}
+.classic.plain[data-dark='1'] .case {
+  background: #15111d;
+  border-color: rgba(201, 164, 92, 0.6);
+  color: #ece4e6;
+}
+.classic.plain[data-dark='1'] .case small {
+  color: var(--gold);
+}
+.classic.plain[data-dark='1'] .case .state {
+  color: var(--muted);
+}
+.classic.plain[data-dark='1'] .case.done {
+  background: #1d1810;
+}
+
+/* szűrők: szint-fülek, rendezés, elrejtő gombok (mint a murdoku.com listáján) */
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0.9rem 0 0.2rem;
+}
+.filters.sub {
+  margin: 0.6rem 0 1rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+.filters label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.filters select {
+  padding: 0.35rem 0.5rem;
+  border: 2px solid #121212;
+  border-radius: 8px;
+  background: #fff;
+  color: #121212;
+  font: 700 0.85rem var(--ui);
+}
+.pill {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  padding: 0.5rem 0.9rem;
+  border: 2px solid #121212;
+  border-radius: 10px;
+  background: #fff;
+  color: #121212;
+  font: 700 0.85rem var(--ui);
+  cursor: pointer;
+  box-shadow: 0 3px 0 rgba(255, 255, 255, 0.12);
+}
+.pill small {
+  color: #6b6b76;
+  font-weight: 600;
+  font-size: 0.7rem;
+}
+.pill:hover {
+  border-color: #2f7de1;
+}
+.pill.on {
+  background: #fbe9b7;
+  border-color: #d3a52a;
+  box-shadow: 0 0 0 3px rgba(211, 165, 42, 0.45);
+}
+.filters .count {
+  margin-left: auto;
+  color: var(--dim);
+}
+.classic.plain[data-dark='1'] .pill,
+.classic.plain[data-dark='1'] .filters select {
+  background: #15111d;
+  color: #ece4e6;
+  border-color: rgba(201, 164, 92, 0.6);
+}
+.classic.plain[data-dark='1'] .pill small {
+  color: var(--muted);
+}
+.classic.plain[data-dark='1'] .pill.on {
+  background: #3a2f12;
+  color: #fbe9b7;
+}

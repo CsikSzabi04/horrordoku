@@ -1,0 +1,245 @@
+{
+  "v": 1,
+  "id": "classic-5-14-restaurant",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az étterem – nyitás előtt",
+  "story": "Az étteremben reggel a főszakácsot holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "K": "Konyha",
+    "P": "Pult",
+    "R": "Raktár",
+    "T": "Terasz",
+    "E": "Étkező"
+  },
+  "layout": [
+    "EEERRRPPK",
+    "EEERRPPPK",
+    "EEERRRPPK",
+    "EEERRPPPK",
+    "EEERRTKKK",
+    "EERRTTKKK",
+    "RERTTTTKK",
+    "RRRTTTTTK",
+    "RRTTTTTTT"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "B7",
+        "F9",
+        "E6"
+      ]
+    },
+    {
+      "type": "stool",
+      "at": [
+        "H3",
+        "H2"
+      ]
+    },
+    {
+      "type": "rug",
+      "at": [
+        "C4",
+        "A5",
+        "B1",
+        "A4",
+        "B5"
+      ]
+    },
+    {
+      "type": "stove",
+      "at": "G6",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "C1",
+      "blocking": true
+    },
+    {
+      "type": "fridge",
+      "at": [
+        "E5",
+        "F1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "G1",
+      "blocking": true
+    },
+    {
+      "type": "table",
+      "at": "C5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "vlad",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Vladtól északra** volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "furniture"
+        }
+      ],
+      "clueText": [
+        "Egy **bútor mellett** volt."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "felicia",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Feliciától északra** volt."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 5
+        }
+      ],
+      "clueText": [
+        "Az **5. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Étkezőben egy **széken** ült."
+      ]
+    },
+    {
+      "id": "gordon",
+      "name": "Gordon",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A Teraszon volt."
+      ]
+    },
+    {
+      "id": "hanna",
+      "name": "Hanna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A Teraszon egy **széken** ült."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "I1",
+    "bianca": "G2",
+    "vlad": "H3",
+    "cody": "C4",
+    "dora": "A5",
+    "eva": "E6",
+    "felicia": "B7",
+    "gordon": "D8",
+    "hanna": "F9"
+  },
+  "murderer": "bianca",
+  "rev": 1,
+  "floors": {
+    "K": "tile",
+    "P": "checker",
+    "R": "stone",
+    "T": "stone",
+    "E": "wood"
+  }
+}

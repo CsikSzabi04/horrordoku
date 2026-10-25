@@ -1,0 +1,31 @@
+.worlds .case.world {
+  padding-left: 3.6rem;
+}
+.worlds .case.world .no {
+  font-size: 1.8rem;
+  top: 0.55rem;
+}
+.worlds .rulename {
+  color: var(--blood);
+  font: 600 0.72rem var(--ui);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* egy világ ügyei: sorszámozott lista, a következő megoldatlan kiemelve */
+.cases.order {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.cases.order > li {
+  display: contents;
+}
+.worlds .case.world.next,
+.cases.order .case.world.next {
+  border-color: var(--gold);
+  box-shadow: 0 0 0 1px var(--gold) inset;
+}
+.cases.order .case.world .no {
+  font-size: 1.8rem;
+}

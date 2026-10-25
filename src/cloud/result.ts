@@ -24,8 +24,8 @@ export const iso = (t: string) => new Date(t).toISOString().replace(/\.\d{3}Z$/,
 function fromRaise(msg: string): Result<never> {
   if (/not authenticated/i.test(msg)) return fail('unauthenticated', msg)
   if (/not found/i.test(msg)) return fail('not_found', msg)
-  if (/full|already|exists|rev_conflict/i.test(msg)) return fail('conflict', msg)
-  if (/only the host|not a member|not friends|forbidden/i.test(msg)) return fail('forbidden', msg)
+  if (/full|already|exists|rev_conflict|limit/i.test(msg)) return fail('conflict', msg)
+  if (/closed|only the (host|owner)|owner cannot|not a member|not friends|forbidden/i.test(msg)) return fail('forbidden', msg)
   return fail('invalid', msg)
 }
 

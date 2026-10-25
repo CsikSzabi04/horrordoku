@@ -2,14 +2,14 @@
 export type Route =
   | { name: 'menu' }
   | { name: 'classic' }
-  | { name: 'event' }
+  | { name: 'event'; world?: string } // world: egy világ ügyei (5 db, sorban); nélküle a világok listája
   | { name: 'random' }
   | { name: 'game'; ref?: string }
   | { name: 'collection' }
   | { name: 'settings' }
   | { name: 'login' }
   | { name: 'profile' }
-  | { name: 'friends' }
+  | { name: 'friends'; add?: string } // add: barát-link kódja (a link megnyitása után a találat felvehető)
   | { name: 'lobby'; mode?: 'together' | 'killer' }
   | { name: 'coop' }
 

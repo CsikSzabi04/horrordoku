@@ -1,0 +1,184 @@
+{
+  "v": 1,
+  "id": "event-02-poppy-playtime-3",
+  "mode": "event",
+  "world": "poppy-playtime",
+  "title": "Hosszú karok",
+  "story": "Mommy Long Legs a karjaival sem érte el, aki végzett vele. A zöld kéz mégis tudott valamit — a gyanúsítottak viszont nem mind.",
+  "size": 6,
+  "difficulty": 3,
+  "rooms": {
+    "E": "Előcsarnok",
+    "G": "Gyártósor",
+    "J": "Játékbolt",
+    "T": "Játszószoba",
+    "R": "Raktár",
+    "S": "Szellőzőrendszer"
+  },
+  "layout": [
+    "SSSRTT",
+    "SSRRRT",
+    "GSSRRT",
+    "GGSRET",
+    "GGGJET",
+    "JJJJET"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "F5",
+        "E1",
+        "D2",
+        "A2"
+      ]
+    },
+    {
+      "type": "panel",
+      "at": [
+        "A1",
+        "F3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "conveyor",
+      "at": [
+        "F4",
+        "E6",
+        "C1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "speaker",
+      "at": "A5",
+      "blocking": true
+    },
+    {
+      "type": "toybox",
+      "at": "A4"
+    }
+  ],
+  "characters": [
+    {
+      "id": "catnap",
+      "name": "CatNap",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "pj-pug-a-pillar"
+        }
+      ],
+      "clueText": [
+        "**PJjal** egy helyiségben volt."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "kissy-missy",
+      "name": "Kissy Missy",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "A Raktárban egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "mommy-long-legs",
+      "name": "Mommy Long Legs",
+      "race": "ghoul",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Szellőzőrendszerben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "a-latogato",
+      "name": "A Látogató",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "pj-pug-a-pillar",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **PJtól északra** volt."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "pj-pug-a-pillar",
+      "name": "PJ Pug-a-Pillar",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "a-latogato",
+          "dir": "S"
+        }
+      ],
+      "clueText": [
+        "**A Látogatótól délre** volt."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "bunzo-bunny",
+      "name": "Bunzo Bunny",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "kissy-missy",
+          "dir": "W"
+        }
+      ],
+      "clueText": [
+        "**Kissytől nyugatra** volt."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "catnap": "E1",
+    "kissy-missy": "D2",
+    "mommy-long-legs": "B3",
+    "a-latogato": "C4",
+    "pj-pug-a-pillar": "F5",
+    "bunzo-bunny": "A6"
+  },
+  "murderer": "a-latogato",
+  "rev": 1,
+  "worldRule": "grab"
+}

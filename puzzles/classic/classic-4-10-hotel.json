@@ -1,0 +1,220 @@
+{
+  "v": 1,
+  "id": "classic-4-10-hotel",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A hotel – hétvégén",
+  "story": "Zárás után a hotelben az igazgató holtan feküdt. Csak páran voltak ma bent.",
+  "size": 8,
+  "difficulty": 4,
+  "rooms": {
+    "F": "Fürdő",
+    "W": "Wellness",
+    "K": "Kert",
+    "B": "Bár",
+    "R": "Recepció",
+    "T": "Étterem"
+  },
+  "layout": [
+    "FRRRRRKK",
+    "FFRRRKKK",
+    "FFRRKKKK",
+    "FWRWWWKB",
+    "FWWWWBBB",
+    "FWTTTBBB",
+    "FWTTTTBB",
+    "FWWTTTTB"
+  ],
+  "objects": [
+    {
+      "type": "sofa",
+      "at": [
+        "F1",
+        "B1",
+        "C4"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": "D7"
+    },
+    {
+      "type": "reception",
+      "at": "E1",
+      "blocking": true
+    },
+    {
+      "type": "table",
+      "at": [
+        "E7",
+        "C6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "toilet",
+      "at": [
+        "A7",
+        "B3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "bath",
+      "at": "A2",
+      "blocking": true
+    },
+    {
+      "type": "stool",
+      "at": "G5"
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "chair",
+            "reception"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **szék vagy recepciós pult mellett** volt."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "clara"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Clarával**."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "elena",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Elenától északra** volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "clara",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Clarától délre** volt."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "terrain",
+          "style": "wood"
+        }
+      ],
+      "clueText": [
+        "**Fapadlón** volt."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "gordon",
+      "name": "Gordon",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. oszlopban** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "F1",
+    "victor": "B2",
+    "bianca": "H3",
+    "clara": "G4",
+    "derek": "A5",
+    "elena": "E6",
+    "frank": "D7",
+    "gordon": "C8"
+  },
+  "murderer": "derek",
+  "rev": 1,
+  "floors": {
+    "F": "tile",
+    "W": "water",
+    "K": "grass",
+    "B": "checker",
+    "R": "carpet",
+    "T": "wood"
+  }
+}

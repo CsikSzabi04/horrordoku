@@ -12,7 +12,7 @@ import { Avatar, Button, Panel, useToast } from '../../ui'
 import '../login/form.css'
 import './social.css'
 
-type Person = { id: string; username: string; avatar: string; xp: number }
+type Person = { id: string; username: string; avatar: string; xp: number; isMe?: boolean }
 const emoji = (id: string) => content.characters().find((c) => c.id === id)?.emoji
 
 function Row({ p, online, children }: { p: Person; online?: boolean; children?: React.ReactNode }) {
@@ -50,7 +50,9 @@ export default function FriendsScreen() {
 }
 
 function Signed() {
-  const { back } = useNav()
+  const { back, route } = useNav()
+  const addCode = route.name === 'friends' ? route.add : undefined // barát-link: a kódhoz tartozó játékos
+  const [linked, setLinked] = useState<Person | null | undefined>(undefined) // undefined: keresés · null: nincs ilyen kód
   const toast = useToast()
   const [rows, setRows] = useState<FriendRow[]>([])
   const [query, setQuery] = useState('')
@@ -68,6 +70,15 @@ function Signed() {
     void load()
     return cloud.friends.onChange(() => void load()) // új kérés / elfogadás élőben
   }, [load])
+
+  useEffect(() => {
+    if (!addCode) return
+    let live = true
+    void cloud.friends.findByCode(addCode).then((r) => live && setLinked(r.ok ? r.value : null))
+    return () => {
+      live = false
+    }
+  }, [addCode])
 
   useEffect(() => {
     const q = query.trim()
@@ -104,6 +115,17 @@ function Signed() {
   }
 
   const known = new Set(rows.map((r) => r.id))
+  /** A „Barátkérés” gomb — vagy a miért-nem szöveg (saját profil / már barát). */
+  const addAction = (p: Person) =>
+    p.isMe ? (
+      <span className="nd-note">{t('friends.me')}</span>
+    ) : known.has(p.id) ? (
+      <span className="nd-note">{t('friends.requested')}</span>
+    ) : (
+      <Button size="sm" data-act="friend-add" onClick={() => void act(() => cloud.friends.request(p.id)).then((done) => done && toast(t('friends.requested')))}>
+        {t('friends.add')}
+      </Button>
+    )
   const incoming = rows.filter((r) => r.status === 'pending' && !r.requestedByMe)
   const outgoing = rows.filter((r) => r.status === 'pending' && r.requestedByMe)
   const friends = rows.filter((r) => r.status === 'accepted')
@@ -124,6 +146,23 @@ function Signed() {
           <p className="nd-err" role="alert">
             {error}
           </p>
+          {addCode && (
+            <section className="nd-sec" data-act="friend-link-result">
+              <h3>{t('friends.linkTitle')}</h3>
+              {linked === undefined ? (
+                <p className="nd-note">…</p>
+              ) : linked === null ? (
+                <p className="nd-err">{t('friends.linkMissing')}</p>
+              ) : (
+                <>
+                  <p className="nd-note">{t('friends.linkFound')}</p>
+                  <ul className="nd-people">
+                    <Row p={linked}>{addAction(linked)}</Row>
+                  </ul>
+                </>
+              )}
+            </section>
+          )}
           {searched && (
             <section className="nd-sec">
               <h3>{t('friends.results')}</h3>
@@ -133,13 +172,7 @@ function Signed() {
                 <ul className="nd-people">
                   {results.map((p) => (
                     <Row key={p.id} p={p}>
-                      {known.has(p.id) ? (
-                        <span className="nd-note">{t('friends.requested')}</span>
-                      ) : (
-                        <Button size="sm" onClick={() => void act(() => cloud.friends.request(p.id)).then((done) => done && toast(t('friends.requested')))}>
-                          {t('friends.add')}
-                        </Button>
-                      )}
+                      {addAction(p)}
                     </Row>
                   ))}
                 </ul>

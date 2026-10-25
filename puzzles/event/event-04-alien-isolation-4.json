@@ -1,0 +1,237 @@
+{
+  "v": 1,
+  "id": "event-04-alien-isolation-4",
+  "mode": "event",
+  "world": "alien-isolation",
+  "title": "Késő jelentés",
+  "story": "Ricardo nem jelentkezett be a műszak végén. A mozgásérzékelő jelzett — csak éppen nem neki.",
+  "size": 8,
+  "difficulty": 4,
+  "rooms": {
+    "H": "Híd",
+    "O": "Orvosi szárny",
+    "A": "Hangár",
+    "G": "Gépház",
+    "S": "Szellőzőrendszer",
+    "L": "Légzsilip"
+  },
+  "layout": [
+    "SSSSSHHH",
+    "LSSSHHAA",
+    "LLSHHAAA",
+    "LLSHHAAA",
+    "LLGGGAAA",
+    "LLGOOOOA",
+    "LLGOOOOA",
+    "GGGOOOOO"
+  ],
+  "objects": [
+    {
+      "type": "vent",
+      "at": [
+        "F2",
+        "E1"
+      ]
+    },
+    {
+      "type": "cryopod",
+      "at": [
+        "D8",
+        "E8"
+      ]
+    },
+    {
+      "type": "airlock",
+      "at": "H3",
+      "blocking": true
+    },
+    {
+      "type": "tracker",
+      "at": "D7",
+      "blocking": true
+    },
+    {
+      "type": "flamer",
+      "at": [
+        "A3",
+        "C5",
+        "F4",
+        "H7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "cardreader",
+      "at": [
+        "F7",
+        "B2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": [
+        "C2",
+        "C6"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "axel",
+      "name": "Axel",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "tracker",
+          "cells": 7
+        }
+      ],
+      "clueText": [
+        "Mozgás 7 mezőre a mozgásérzékelőtől."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "marlow",
+      "name": "Marlow",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "ricardo",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Ricardótól északra** volt."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "a-xenomorph",
+      "name": "A Xenomorph",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "airlock",
+          "cells": 1
+        }
+      ],
+      "clueText": [
+        "Mozgás 1 mezőre a légzsiliptől."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "ricardo",
+      "name": "Ricardo",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Szellőzőrendszerben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "samuels",
+      "name": "Samuels",
+      "race": "ghost",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "ricardo",
+          "dir": "W"
+        }
+      ],
+      "clueText": [
+        "**Ricardótól nyugatra** volt."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "waits",
+      "name": "Waits",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "aloneWith",
+          "with": "a-xenomorph"
+        }
+      ],
+      "clueText": [
+        "**Egyedül** volt **a Xenomorphhal**."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "nina-taylor",
+      "name": "Nina Taylor",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "amanda-ripley",
+      "name": "Amanda Ripley",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "samuels",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Samuelstől délre** volt."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "axel": "E1",
+    "marlow": "F2",
+    "a-xenomorph": "G3",
+    "ricardo": "C4",
+    "samuels": "A5",
+    "waits": "H6",
+    "nina-taylor": "B7",
+    "amanda-ripley": "D8"
+  },
+  "murderer": "axel",
+  "rev": 1,
+  "worldRule": "motion"
+}

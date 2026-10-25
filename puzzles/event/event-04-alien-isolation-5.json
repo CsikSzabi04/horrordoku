@@ -1,0 +1,233 @@
+{
+  "v": 1,
+  "id": "event-04-alien-isolation-5",
+  "mode": "event",
+  "world": "alien-isolation",
+  "title": "A hívás megszakadt",
+  "story": "Nina Taylor hangja félbeszakadt a rádióban, aztán sisteregni kezdett. A Sevastopol állomás újra hallgat.",
+  "size": 8,
+  "difficulty": 5,
+  "rooms": {
+    "H": "Híd",
+    "O": "Orvosi szárny",
+    "A": "Hangár",
+    "G": "Gépház",
+    "S": "Szellőzőrendszer",
+    "L": "Légzsilip"
+  },
+  "layout": [
+    "SSSOOOOO",
+    "SSSOOOOO",
+    "LLSSOOOO",
+    "LSSSGGGG",
+    "LLSSGGGG",
+    "LLASHHHH",
+    "LLAAAHHH",
+    "LAAAAAAH"
+  ],
+  "objects": [
+    {
+      "type": "vent",
+      "at": [
+        "D7",
+        "G4",
+        "F8",
+        "C2",
+        "F3"
+      ]
+    },
+    {
+      "type": "airlock",
+      "at": "D4",
+      "blocking": true
+    },
+    {
+      "type": "tracker",
+      "at": "E5",
+      "blocking": true
+    },
+    {
+      "type": "flamer",
+      "at": [
+        "D6",
+        "B3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "cardreader",
+      "at": [
+        "A2",
+        "A5",
+        "H8",
+        "F7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "cryopod",
+      "at": [
+        "A4",
+        "D2"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "marlow",
+      "name": "Marlow",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "tracker",
+          "cells": 7
+        }
+      ],
+      "clueText": [
+        "Mozgás 7 mezőre a mozgásérzékelőtől."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "axel",
+      "name": "Axel",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "marlow"
+        }
+      ],
+      "clueText": [
+        "**Marlowwal** egy helyiségben volt."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "a-xenomorph",
+      "name": "A Xenomorph",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "marlow",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Marlowtól délre** volt."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "nina-taylor",
+      "name": "Nina Taylor",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Gépházban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "waits",
+      "name": "Waits",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "cryopod",
+          "cells": 7
+        }
+      ],
+      "clueText": [
+        "Mozgás 7 mezőre a hibernálókapszulától."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "samuels",
+      "name": "Samuels",
+      "race": "ghost",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "flamer",
+          "cells": 1
+        }
+      ],
+      "clueText": [
+        "Mozgás 1 mezőre a lángszóró-szekrénytől."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "amanda-ripley",
+      "name": "Amanda Ripley",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "aloneWith",
+          "with": "ricardo"
+        }
+      ],
+      "clueText": [
+        "**Egyedül** volt **Ricardóval**."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "ricardo",
+      "name": "Ricardo",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "cryopod",
+          "cells": 8
+        }
+      ],
+      "clueText": [
+        "Mozgás 8 mezőre a hibernálókapszulától."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "marlow": "B1",
+    "axel": "C2",
+    "a-xenomorph": "A3",
+    "nina-taylor": "G4",
+    "waits": "H5",
+    "samuels": "E6",
+    "amanda-ripley": "D7",
+    "ricardo": "F8"
+  },
+  "murderer": "waits",
+  "rev": 1,
+  "worldRule": "motion"
+}

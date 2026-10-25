@@ -1,0 +1,237 @@
+{
+  "v": 1,
+  "id": "event-06-dead-space-2",
+  "mode": "event",
+  "world": "dead-space",
+  "title": "A néma folyosó",
+  "story": "Terrence Kyne a gépház melletti folyosón maradt, ahol a lámpák villognak. A nyomásmentes szekciók ajtaja nyitva áll.",
+  "size": 8,
+  "difficulty": 4,
+  "rooms": {
+    "H": "Híd",
+    "O": "Orvosi szárny",
+    "G": "Gépház",
+    "Y": "Gyárterem",
+    "I": "Hidroponika",
+    "K": "Külső szekció"
+  },
+  "layout": [
+    "HHGGGKKO",
+    "HHHGGKOO",
+    "HHHGGKKO",
+    "HHHGGKKO",
+    "YHHGGKKO",
+    "YYYYYKKO",
+    "YYYYYIIO",
+    "YYYYYIIO"
+  ],
+  "objects": [
+    {
+      "type": "crate",
+      "at": [
+        "H4",
+        "A5",
+        "F7",
+        "E5"
+      ]
+    },
+    {
+      "type": "stasis",
+      "at": [
+        "B1",
+        "B7",
+        "F2"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": "D6"
+    },
+    {
+      "type": "terminal",
+      "at": [
+        "D7",
+        "A3",
+        "F3",
+        "A2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "lockdoor",
+      "at": "A7",
+      "blocking": true
+    },
+    {
+      "type": "savepoint",
+      "at": "B2",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "terrence-kyne",
+      "name": "Terrence Kyne",
+      "race": "human",
+      "victim": true,
+      "armored": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Hídon **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "a-hunter",
+      "name": "A Hunter",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "hans-tiedemann"
+        }
+      ],
+      "clueText": [
+        "**Hansszal** egy helyiségben volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "challus-mercer",
+      "name": "Challus Mercer",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "terrence-kyne",
+          "dir": "S"
+        }
+      ],
+      "clueText": [
+        "**Terrencétől délre** volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "hans-tiedemann",
+      "name": "Hans Tiedemann",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "challus-mercer",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Challustól délre** volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "kendra-daniels",
+      "name": "Kendra Daniels",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "zach-hammond"
+        }
+      ],
+      "clueText": [
+        "**Zachhal** egy helyiségben volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "zach-hammond",
+      "name": "Zach Hammond",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "leftOf",
+          "of": "benjamin-mathius"
+        }
+      ],
+      "clueText": [
+        "**Benjamintól balra** volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "isaac-clarke",
+      "name": "Isaac Clarke",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "A Hidroponikában egy **ládán** volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "benjamin-mathius",
+      "name": "Benjamin Mathius",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "zach-hammond",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Zachtól délre** volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "terrence-kyne": "B1",
+    "a-hunter": "G2",
+    "challus-mercer": "C3",
+    "hans-tiedemann": "H4",
+    "kendra-daniels": "A5",
+    "zach-hammond": "D6",
+    "isaac-clarke": "F7",
+    "benjamin-mathius": "E8"
+  },
+  "murderer": "challus-mercer",
+  "rev": 1,
+  "worldRule": "vacuum",
+  "vacuumRooms": [
+    "K",
+    "Y"
+  ]
+}

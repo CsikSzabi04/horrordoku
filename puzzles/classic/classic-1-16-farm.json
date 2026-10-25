@@ -1,0 +1,151 @@
+{
+  "v": 1,
+  "id": "classic-1-16-farm",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A farm – esős napon",
+  "story": "Zárás után a farmon a gazda holtan feküdt. Csak páran voltak ma bent.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "I": "Istálló",
+    "S": "Szántó",
+    "G": "Gazdaház",
+    "P": "Pajta"
+  },
+  "layout": [
+    "GPPPP",
+    "GPPPP",
+    "GGPPP",
+    "IISSS",
+    "SSSSS"
+  ],
+  "objects": [
+    {
+      "type": "haybale",
+      "at": [
+        "D4",
+        "A5"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "B3",
+        "A2",
+        "A3"
+      ]
+    },
+    {
+      "type": "barrel",
+      "at": [
+        "D3",
+        "E1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "cow",
+      "at": [
+        "A4",
+        "B4"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "aloneWith",
+          "with": "barry"
+        }
+      ],
+      "clueText": [
+        "**Egyedül** volt **Barryvel**."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "barrel",
+            "cow"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **hordó vagy tehén mellett** volt."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 4
+        }
+      ],
+      "clueText": [
+        "A **4. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "C1",
+    "barry": "E2",
+    "carly": "B3",
+    "dora": "D4",
+    "vera": "A5"
+  },
+  "murderer": "dora",
+  "rev": 1,
+  "floors": {
+    "I": "dirt",
+    "S": "dirt",
+    "G": "wood"
+  }
+}

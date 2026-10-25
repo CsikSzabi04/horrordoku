@@ -1,0 +1,223 @@
+{
+  "v": 1,
+  "id": "classic-4-16-farm",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A farm – reggel",
+  "story": "Szombat este a farmon a gazda nem tért haza. Valaki egyedül maradt vele.",
+  "size": 8,
+  "difficulty": 4,
+  "rooms": {
+    "K": "Kert",
+    "U": "Udvar",
+    "I": "Istálló",
+    "S": "Szántó",
+    "G": "Gazdaház",
+    "P": "Pajta"
+  },
+  "layout": [
+    "KKUUUUUU",
+    "KKUUUUSS",
+    "GKUSSSSS",
+    "GGSSSPSS",
+    "GPPPPPIS",
+    "GPIIIIII",
+    "GPPPIIII",
+    "GGGGGGII"
+  ],
+  "objects": [
+    {
+      "type": "haybale",
+      "at": [
+        "F4",
+        "E6",
+        "C7",
+        "G3",
+        "B5",
+        "G2"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": "A5"
+    },
+    {
+      "type": "tractor",
+      "at": "H5",
+      "blocking": true
+    },
+    {
+      "type": "cow",
+      "at": [
+        "F6",
+        "D6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "bush",
+      "at": "E3",
+      "blocking": true
+    },
+    {
+      "type": "horse",
+      "at": [
+        "F2",
+        "H1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": "C8"
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Kertben volt."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "carl",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Carltól északra** volt."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "haybale",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "A Szántón egy **szalmabálán** ült."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "bella",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Bellától délre** volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "haybale",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Pajtában egy **szalmabálán** ült."
+      ]
+    },
+    {
+      "id": "gordon",
+      "name": "Gordon",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "gt",
+          "n": 7
+        }
+      ],
+      "clueText": [
+        "A **7. sor alatt** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "B1",
+    "bella": "D2",
+    "carl": "G3",
+    "daniel": "F4",
+    "eva": "A5",
+    "victor": "E6",
+    "felicia": "C7",
+    "gordon": "H8"
+  },
+  "murderer": "gordon",
+  "rev": 1,
+  "floors": {
+    "K": "grass",
+    "U": "grass",
+    "I": "dirt",
+    "S": "dirt",
+    "G": "wood"
+  }
+}

@@ -1,0 +1,172 @@
+{
+  "v": 1,
+  "id": "classic-2-14-restaurant",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az étterem – ünnepnap",
+  "story": "Ünnepnap volt az étteremben, és a főszakács többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "P": "Pult",
+    "R": "Raktár",
+    "T": "Terasz",
+    "K": "Étkező"
+  },
+  "layout": [
+    "PPKKKK",
+    "PPPKKK",
+    "PPKKKT",
+    "PPTTTT",
+    "PPPTTT",
+    "TTTTTR"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "E2",
+        "F5"
+      ]
+    },
+    {
+      "type": "stool",
+      "at": [
+        "A3",
+        "A1"
+      ]
+    },
+    {
+      "type": "table",
+      "at": "F2",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": [
+        "F4",
+        "E4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "B5",
+      "blocking": true
+    },
+    {
+      "type": "rug",
+      "at": "E1"
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Egy **szőnyeg mellett** volt."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "Az Étkezőben egy **széken** ült."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "stool"
+        }
+      ],
+      "clueText": [
+        "Egy **bárszéken** ült."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "clara"
+        }
+      ],
+      "clueText": [
+        "**Clarával** egy helyiségben volt."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "D1",
+    "barry": "E2",
+    "clara": "A3",
+    "dora": "B4",
+    "ervin": "F5",
+    "vera": "C6"
+  },
+  "murderer": "ervin",
+  "rev": 1,
+  "floors": {
+    "P": "checker",
+    "R": "stone",
+    "T": "stone",
+    "K": "wood"
+  }
+}

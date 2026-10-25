@@ -1,0 +1,243 @@
+{
+  "v": 1,
+  "id": "event-16-twilight-3",
+  "mode": "event",
+  "world": "twilight",
+  "title": "Az autók szerelmese",
+  "story": "Rosalie Hale a kedvenc autója mellett fekszik. A totemek közelében plusz nyom tárul fel.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "C": "Cullen-ház",
+    "F": "Forks Gimnázium",
+    "E": "Erdei tisztás",
+    "L": "La Push part",
+    "S": "Swan-ház",
+    "O": "Forks kórház",
+    "V": "Volturi-torony"
+  },
+  "layout": [
+    "VVEEESS",
+    "VEEESSS",
+    "VVECCSL",
+    "OCCCLLL",
+    "OFFCLLL",
+    "OFFFLLL",
+    "OOFFLLL"
+  ],
+  "objects": [
+    {
+      "type": "sofa",
+      "at": [
+        "A7",
+        "B6",
+        "A1"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "F2",
+        "G5",
+        "E4"
+      ]
+    },
+    {
+      "type": "totem",
+      "at": [
+        "G4",
+        "B3",
+        "A5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "bush",
+      "at": [
+        "C7",
+        "E3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "rock",
+      "at": "D6",
+      "blocking": true
+    },
+    {
+      "type": "fireplace",
+      "at": "C6",
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "G6",
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": [
+        "F5",
+        "B2"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "jacob-black",
+      "name": "Jacob Black",
+      "race": "werewolf",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "james",
+          "rows": 1
+        },
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Jamestől északra** volt.",
+        "A **2. sor fölött** volt."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    },
+    {
+      "id": "james",
+      "name": "James",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "A Swan-házban egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    },
+    {
+      "id": "bella-swan",
+      "name": "Bella Swan",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **növény mellett** volt."
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    },
+    {
+      "id": "rosalie-hale",
+      "name": "Rosalie Hale",
+      "race": "vampire",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A La Push-parton **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    },
+    {
+      "id": "jasper-hale",
+      "name": "Jasper Hale",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "james",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Jamestől keletre** volt."
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    },
+    {
+      "id": "charlie-swan",
+      "name": "Charlie Swan",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "totem"
+        },
+        {
+          "kind": "on",
+          "object": "sofa",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **totem mellett**.",
+        "A Forks Gimnáziumban egy **kanapén** ült."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    },
+    {
+      "id": "alice-cullen",
+      "name": "Alice Cullen",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "rosalie-hale",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Rosaliétől délre** volt."
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "jacob-black": "C1",
+    "james": "F2",
+    "bella-swan": "D3",
+    "rosalie-hale": "E4",
+    "jasper-hale": "G5",
+    "charlie-swan": "B6",
+    "alice-cullen": "A7"
+  },
+  "murderer": "jasper-hale",
+  "rev": 1,
+  "worldRule": "totems"
+}

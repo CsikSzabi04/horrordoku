@@ -56,8 +56,15 @@ export interface LeaderboardApi {
 }
 
 export interface FriendRow { id: Uuid; username: string; avatar: CharId; xp: number; status: 'pending' | 'accepted'; requestedByMe: boolean; online?: boolean }
+/** Egy találat a barát-keresőben. `isMe`: a saját profilom (nem vehető fel barátnak). */
+export interface PersonRef { id: Uuid; username: string; avatar: CharId; xp: number; isMe?: boolean }
 export interface FriendsApi {
-  search(prefix: string): Promise<Result<{ id: Uuid; username: string; avatar: CharId; xp: number }[]>>   // min. 2 karakter, max. 20 találat
+  /** Keresés a becenévben (bárhol a névben, kis/nagybetűre nem érzékeny; min. 2 karakter, max. 20 találat); 10 karakteres bevitelnél a barát-azonosítót is megnézi. */
+  search(query: string): Promise<Result<PersonRef[]>>
+  /** A saját barát-azonosítóm (10 karakter: betű / szám / írásjel; 0006). */
+  myCode(): Promise<Result<string>>
+  /** Profil a barát-azonosító alapján (a megosztott linkhez); nincs ilyen kód → `null`. */
+  findByCode(code: string): Promise<Result<PersonRef | null>>
   list(): Promise<Result<FriendRow[]>>
   request(userId: Uuid): Promise<Result<void>>
   respond(userId: Uuid, accept: boolean): Promise<Result<void>>

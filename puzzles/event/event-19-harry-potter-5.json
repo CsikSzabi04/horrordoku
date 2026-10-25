@@ -1,0 +1,282 @@
+{
+  "v": 1,
+  "id": "event-19-harry-potter-5",
+  "mode": "event",
+  "world": "harry-potter",
+  "title": "A legmagasabb pont",
+  "story": "Albus Dumbledore a legmagasabb pontról hagyta el a kastélyt. A Tekergők Térképe egyszerre csak egy helyiséget mutat.",
+  "size": 10,
+  "difficulty": 5,
+  "rooms": {
+    "N": "Nagyterem",
+    "G": "Griffendél-torony",
+    "B": "Bájitaltan terem",
+    "T": "Tiltott Rengeteg",
+    "R": "Roxfort kapuja",
+    "H": "Hagrid kunyhója",
+    "S": "Szükség Szobája",
+    "K": "Kviddics-pálya"
+  },
+  "layout": [
+    "KKKKKKKKKN",
+    "SSSSKKBBKN",
+    "SSSSKBBBBN",
+    "SSSSKBBNNN",
+    "SSSSKBGNNN",
+    "TTSSBBGGNN",
+    "TTTTTTTGNN",
+    "TTTHHTTRRR",
+    "TTTHHHHRRR",
+    "TTTHHHHHRR"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "H1",
+        "F3",
+        "G9",
+        "E9"
+      ]
+    },
+    {
+      "type": "broom",
+      "at": [
+        "A2",
+        "C6",
+        "J7",
+        "C3"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "E8",
+        "I4",
+        "D10",
+        "C9",
+        "D3"
+      ]
+    },
+    {
+      "type": "cauldron",
+      "at": [
+        "H3",
+        "D5",
+        "J6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "armor",
+      "at": [
+        "F7",
+        "H6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "painting",
+      "at": [
+        "E1",
+        "A1"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "luna-lovegood",
+      "name": "Luna Lovegood",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "minerva-mcgonagall",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Minervától északra** volt."
+      ],
+      "source": {
+        "game": "Harry Potter"
+      }
+    },
+    {
+      "id": "draco-malfoy",
+      "name": "Draco Malfoy",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "luna-lovegood",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Lunától délre** volt."
+      ],
+      "source": {
+        "game": "Harry Potter"
+      }
+    },
+    {
+      "id": "minerva-mcgonagall",
+      "name": "Minerva McGonagall",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "notSameRoom",
+          "with": "ginny-weasley"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt egy helyiségben **Ginnyvel**."
+      ],
+      "source": {
+        "game": "Harry Potter"
+      }
+    },
+    {
+      "id": "voldemort-nagyur",
+      "name": "Voldemort nagyúr",
+      "race": "ghost",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "A Nagyteremben egy **padon** ült."
+      ],
+      "source": {
+        "game": "Harry Potter"
+      }
+    },
+    {
+      "id": "ginny-weasley",
+      "name": "Ginny Weasley",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "harry-potter"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Harryvel**."
+      ],
+      "source": {
+        "game": "Harry Potter"
+      }
+    },
+    {
+      "id": "harry-potter",
+      "name": "Harry Potter",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "albus-dumbledore",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Albustól északra** volt."
+      ],
+      "source": {
+        "game": "Harry Potter"
+      }
+    },
+    {
+      "id": "albus-dumbledore",
+      "name": "Albus Dumbledore",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Nagyteremben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Harry Potter"
+      }
+    },
+    {
+      "id": "ron-weasley",
+      "name": "Ron Weasley",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyeg mellett** volt."
+      ],
+      "source": {
+        "game": "Harry Potter"
+      }
+    },
+    {
+      "id": "neville-longbottom",
+      "name": "Neville Longbottom",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "Hagrid kunyhójában egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Harry Potter"
+      }
+    },
+    {
+      "id": "hermione-granger",
+      "name": "Hermione Granger",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "Hagrid kunyhójában egy **padon** ült."
+      ],
+      "source": {
+        "game": "Harry Potter"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "luna-lovegood": "H1",
+    "draco-malfoy": "A2",
+    "minerva-mcgonagall": "F3",
+    "voldemort-nagyur": "I4",
+    "ginny-weasley": "B5",
+    "harry-potter": "C6",
+    "albus-dumbledore": "J7",
+    "ron-weasley": "E8",
+    "neville-longbottom": "G9",
+    "hermione-granger": "D10"
+  },
+  "murderer": "voldemort-nagyur",
+  "rev": 1,
+  "worldRule": "cameras"
+}

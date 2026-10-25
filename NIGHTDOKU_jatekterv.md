@@ -113,8 +113,8 @@ A NIGHTDOKU **öt fő játékmóddal** indul — a főmenüben ez az öt kártya
 ┌──────────────────────────────────────────────────────────────────┐
 │                       🩸  NIGHTDOKU  🩸                           │
 ├──────────────────────────────────────────────────────────────────┤
-│  🕯️  KLASSZIKUS     — 10 előre megírt pálya (Hollowmere)           │
-│  🎬  ESEMÉNY        — 10 pálya ismert horror-játékok világaiból     │
+│  🕯️  KLASSZIKUS     — 100 előre megírt pálya (sima Murdoku)        │
+│  🎬  ESEMÉNY        — 19 világ × 5 ügy ismert horror-játékokból     │
 │  🎲  RANDOM         — végtelen, véletlen ügyek; bárhol folytatható  │
 │  🤝  CO-OP: EGYÜTT  — közös tábla, közös chat (2–4 játékos)         │
 │  🔪  CO-OP: GYILKOS — „Among Us"-szerű: egy játékos a gyilkos       │
@@ -324,72 +324,27 @@ Az Erő-szabály a NIGHTDOKU legfontosabb újítása: **a karakter faja megvált
 
 ---
 
-## 8. A 10 pálya (Klasszikus mód)
+## 8. A pályák (Klasszikus mód): 5 szint × 20 pálya
 
-> Mind a 10 pálya kézzel tervezett **sima Murdoku-rejtvény**, **előre megírt megoldással** (a pálya JSON-jában benne van, ki hol volt), egyértelműségre ellenőrizve (lásd 20. fejezet). **Nincs rajtuk Erő-szabály, világ-szabály vagy bármilyen extra** (`activePowers = []`); a nehézséget a méret és a nyomok szerkezete adja. A karakterek és helyszínek Hollowmere-témájúak.
->
-> Két ügy az eredeti tervből („Utolsó Pohár", „Az Elsüllyedt Malom") **bónuszügy**: a Rend archívumának hiányzó aktái, így a 12 gyilkosságból 10 a fő sztori, 2 feloldható extra.
+> **v0.7 döntés:** a Klasszikus **sima Murdoku, mint a murdoku.com**, **öt szinttel, szintenként 20 pályával (összesen 100)**, a lista tetején szint-fülekkel (Mind + öt szint), rendezéssel (nehézség / méret / név) és „befejezettek / megkezdettek elrejtése" gombokkal. Hétköznapi helyszínek és **hétköznapi nevek** (Alfred, Barry, Carolyn… — mindenkinek egyedi kezdőbetűje van, az áldozat „V"), rajzolt arcképekkel és ♂/♀ jelvénnyel. **Nincs** vámpír, Erő-szabály, jumpscare vagy bármilyen extra (`activePowers = []`). Minden pálya **előre megírt** (a JSON-ban benne van, ki hol volt) és **pontosan 1 megoldású** (a `validate:puzzles` mind a százat ellenőrzi).
 
-| # | Pálya | Méret | Nehézség | Azonosító |
+| Szint | Név | Eredeti nehézség | Méret | Pályák |
 |---|---|---|---|---|
-| 1 | Éjféli Mise | 6×6 | 🟢 Nagyon könnyű | `classic-01-midnight-mass` |
-| 2 | Gyógytea | 6×6 | 🟡 Könnyű | `classic-02-herbal-tea` |
-| 3 | Holdfény-galéria | 7×7 | 🟡 Könnyű | `classic-03-moonlight-gallery` |
-| 4 | A Blackwood-kúria | 7×7 | 🟠 Közepes | `classic-04-blackwood-manor` |
-| 5 | Vadászház | 8×8 | 🟠 Közepes | `classic-05-hunting-lodge` |
-| 6 | Hideg Asztal | 8×8 | 🟠 Közepes | `classic-06-cold-table` |
-| 7 | Alku a keresztútnál | 8×8 | 🔴 Nehéz | `classic-07-crossroads-deal` |
-| 8 | Tükrök Terme | 9×9 | 🔴 Nehéz | `classic-08-hall-of-mirrors` |
-| 9 | A Rend Levéltára | 10×10 | ⚫ Szakértő | `classic-09-order-archive` |
-| 10 | Vörös Hold | 10×10 | ⚫ Szakértő | `classic-10-red-moon` |
+| 1 | 🌱 Gyakornok | nagyon könnyű | 5×5 – 6×6 | 20 |
+| 2 | 👮 Járőr | könnyű | 6×6 – 7×7 | 20 |
+| 3 | 🕵️ Nyomozó | közepes | 7×7 – 8×8 | 20 |
+| 4 | 🔎 Főnyomozó | nehéz | 8×8 – 9×9 | 20 |
+| 5 | 🎖️ Felügyelő | szakértő | 9×9 – 10×10 | 20 |
 
-### I. FEJEZET — „Az első vér"
+**Helyszínek (30 téma, körbe-körbe):** virágbolt, játszótér, lakás, étterem, iskola, könyvtár, strand, állatkert, vidámpark, hotel, pékség, kórház, múzeum, mozi, edzőterem, farm, vasútállomás, reptér, kemping, iroda, stadion, piac, cirkusz, hajó, szépségszalon, autószerelő, tévéstúdió, kúria, állatorvos, gyár. Ugyanaz a helyszín más szinten más méretben, más szobákkal, más nyomokkal és történettel tér vissza (a cím is más: „A virágbolt – este"). Minden tárgy a helyiségébe való (tűzhely → Konyha). Azonosító: `classic-<szint>-<sorszám>-<helyszín>`.
 
-**1. 🟢 „Éjféli Mise" — Szent Bertalan-kápolna (6×6, Nagyon könnyű)**
-Helyiségek: Kripta, Sekrestye, Oltár, Harangláb, Temetőkert. Tárgyak: koporsók, padok, gyertyák, sírkövek, szőnyeg, harang.
-Áldozat: **Ábel, a Rend írnoka**. Bemutató pálya. → *Részletesen kidolgozva a 9. fejezetben.*
+**Bónuszügyek** (feloldhatók): *Utolsó Pohár* — a Crossroads bár (6×6, `bonus-01-last-call`) és *Az Elsüllyedt Malom* (9×9, `bonus-02-sunken-mill`).
 
-**2. 🟡 „Gyógytea" — Morrigan füvesboltja (6×6, Könnyű)**
-Helyiségek: Bolt, Üvegház, Lepárló, Lakás, Kert. Tárgyak: cserepes növények, üst (foglalt), szőnyeg.
-Áldozat: a Rend egy fiatal tagja, Mira.
+**Nyomfajták (22 féle):** tárgyon / tárgy mellett (egy tárgy vagy *kategória*: „állat mellett", „növény mellett") / helyiségben; **tagadások** („nem volt medve mellett", „nem volt állat mellett", „nem a Medve élőhelyen", „nem a 3. oszlopban"); **égtájak** („Victortól északra / keletre / délre / nyugatra volt", „pontosan egy sorral X-től északra"); **átlósan szomszédos**; **padló** („vízben / mocsárban / fűben / homokon / jégen volt" — a szoba padlójának mintája); sor–oszlop relációk („az 5. sor fölött", „a 2. oszloptól balra"); **a pálya szélén**; **hányan voltak a helyiségben** („hárman"); **nem a helyiségében volt egy férfi / nő**; „egyedül volt (Y-nal)", „nem volt egy helyiségben Y-nal"; és az áldozat kártyája: *„Egyedül volt a gyilkossal"* (a helyiség a lerakás helyétől függ). A kártya félkövér kiemeléssel mutatja a lényeget; a térkép alatti jelmagyarázat felsorolja a tárgyakat, a kategóriákat, a padlókat és az égtájakat, a kijelölt kártya nyomában említett dolgok kiemelődnek.
 
-**3. 🟡 „Holdfény-galéria" — Vlad régiségboltja (7×7, Könnyű)**
-Helyiségek: Bemutatóterem, Raktár, Iroda, Pince, Kirakat. Tárgyak: tükrök, páncélok (foglalt), festmények, ládák.
-Áldozat: egy műgyűjtő.
+**Készítés:** a pályák a `src/content/classic.ts` leírásából, a generátorral készülnek rögzített seedekkel (`AUTHOR=1 npx vitest run src/content/author.test.ts`, ~20 mp); a lista a generált `src/content/classic-index.json`-ból épül, a pályák megnyitáskor töltődnek be (lusta betöltés). A kézzel tervezett mintapálya (9. fejezet, „Éjféli Mise") a motor teszt-fixtúrája.
 
-### II. FEJEZET — „A Rend árulója"
-
-**4. 🟠 „A Blackwood-kúria" (7×7, Közepes)**
-Helyiségek: Előcsarnok, Könyvtár, Ebédlő, Lépcsőház, Cselédszoba, Télikert, Padlás. Áldozat: a kúria örököse.
-
-**5. 🟠 „Vadászház" — Az erdő mélyén (8×8, Közepes)**
-Helyiségek: Nappali, Trófeaterem, Kamra, Veranda, Tisztás, Patak, Fenyves. Áldozat: Bram Kessler, a vadász.
-
-**6. 🟠 „Hideg Asztal" — A városi hullaház (8×8, Közepes)**
-Helyiségek: Boncterem, Hűtőkamra, Iroda, Várószoba, Rakodó, Krematórium. Áldozat: egy ápoló.
-
-**7. 🔴 „Alku a keresztútnál" (8×8, Nehéz)**
-Helyszín: négy út kereszteződése egy kihalt benzinkúttal, motellel, kukoricással és egy kápolnaromokkal. Áldozat: Sister Agatha.
-
-### III. FEJEZET — „A Hold gyermeke"
-
-**8. 🔴 „Tükrök Terme" — A vándorcirkusz (9×9, Nehéz)**
-Helyiségek: Porond, Tükörlabirintus, Öltözők, Állatketrecek, Jóslósátor, Körhinta. Áldozat: a cirkuszigazgató.
-
-**9. ⚫ „A Rend Levéltára" (10×10, Szakértő)**
-Helyiségek: Olvasóterem, Tiltott szekció, Térképterem, Óratorony, Titkos átjáró, Kerengő, Kút. Áldozat: Seraphine, a bukott angyal.
-Itt találja meg a játékos Ábel naplójában a „tizenharmadik nevet" (a történet része, nem szabály).
-
-**10. ⚫ „Vörös Hold" — A Varjúherceg trónterme (10×10, Szakértő)**
-A Fátyol túloldala: egy kifordított, lebegő katedrális, a helyiségek a korábbi pályák egy-egy darabjából állnak össze. Áldozat: **Malachar, a Varjúherceg**. Gyanúsítottak: a kampány összes túlélője.
-A megoldás után jön a befejezés (két végkifejlet attól függően, hány pályát oldottál meg tipp nélkül).
-
-### Bónuszpályák (feloldhatók — nem részei a 10 pályás fő kiadásnak)
-- **„Utolsó Pohár" — A Crossroads bár (6×6, Nagyon könnyű)** — Helyiségek: Söntés, Bokszok, Raktár, Mosdó, Hátsó sikátor. Tárgyak: bárszékek, hordók (foglaltak), biliárdasztal (foglalt). Áldozat: egy csapos. Azonosító: `bonus-01-last-call`.
-- **„Az Elsüllyedt Malom" (9×9, Nehéz)** — Helyiségek: Malomkerék, Őrlőterem, Gabonapadlás, Molnárház, Stég, Mocsár, Fűzfás. Áldozat: Old Tobias, a temetőőr. Azonosító: `bonus-02-sunken-mill`.
-- **„Silas zuhanása" (1931)** — fekete-fehér, szépia stílusú pálya.
-- **„Vlad első éjszakája" (1612)** — erdélyi kastély, régi magyar/román feliratokkal.
-- **„Pip & Poppy babaháza"** — mini 5×5-ös pálya egy babaházban.
+**Játékmenet (minden pályán):** kártya kiválasztása → mezőre koppintás = a **kezdőbetű** (jegyzet) → ~1 mp nyomva tartás = a karakter lekerül (megtelő gyűrű) · ✕ · radír (nyomva tartva: teljes törlés) · visszavonás · tipp. Belépéskor a térkép darabjai és a kártyák fentről zuhannak le.
 
 ---
 
@@ -490,8 +445,9 @@ A lore-ban: amikor a Fátyol elvékonyodik, nem csak Hollowmere lényei kerülne
 
 ### 10.2 Felépítés
 
-- **10 világ × 1 pálya = 10 pálya**, mind kézzel tervezett, előre megírt megoldással (mint a Klasszikus mód pályái; azonosítójuk `event-NN-…`, mód: `event`).
-- A sorrend **szabad** — minden pálya az elejétől játszható; a nehézség felfelé halad (2 Könnyű · 3 Közepes · 3 Nehéz · 2 Szakértő).
+- **19 világ × 5 ügy = 95 pálya** (v0.5), előre legyártott, egyetlen megoldású pályák (azonosítójuk `event-NN-<világ>-K`, K = 1–5, mód: `event`; adat: `src/content/events.ts` + `event-cases.ts`, a pályák `puzzles/event/`, az index `src/content/event-index.json`).
+- **Egy világ 5 ügye sorban** követi egymást: a méret és a nehézség felfelé halad (a világ alapjához képest −1 … +1 méret, −1 … +2 nehézség), mindegyik ügynek **saját áldozata** (a világ szereplő-készletéből; az eredeti áldozat ilyenkor gyanúsítottként beáll a helyére), **saját címe és története**, és más helyiség-készlete. A játékos bármelyiket megnyithatja (nincs zár), a **következő megoldatlan** ki van emelve; a félbehagyott játék elmentődik.
+- **Mentés ujjlenyomattal:** a mentés a pálya ujjlenyomatát (`SessionState.meta.fp`, `src/game/fingerprint.ts`) is viszi. Ha a pálya közben megváltozott, a régi lerakások nem kerülnek rá az új térképre: friss játék indul, és üzenet jelzi (a pálya közben frissült). Ez minden módra érvényes.
 - Minden világnak saját **színpalettája, tárgykészlete, zenéje, jumpscare-e** és egy **világ-specifikus szabálya** van (mint a Klasszikus mód Erő-szabályai).
 - A megoldott pályák **karaktereit** a játékos megkapja a Gyűjteményébe, és a **Random mód** (19. fejezet) is ezekből a karakterekből és helyszínekből dolgozik.
 - Mind a 10 megoldása: **„Archivárius"** jelvény + egy arany jumpscare.
@@ -658,6 +614,10 @@ A világok **lemezek / kazetták** formájában jelennek meg egy poros polcon. K
 ### 11.3 Filmes világok és további játékok — későbbi bővítés és a Random mód készlete
 
 > A korábbi tervben szereplő filmes világok (és a 3 pálya / világ, valamint a „Végső ügy" ötlet) **nem részei** a 10 pályás Esemény módnak. Megmaradnak **későbbi bővítésnek**, és a **Random mód** készletét bővíthetik (19.4).
+
+> **Frissítés (v0.5):** minden világnak **5 ügye** van (lásd 10.2) — a lenti „Pálya” sorok a világ *alap*-ügyére vonatkoznak; az 1. ügy ennél eggyel kisebb és könnyebb, az 5. eggyel nagyobb és nehezebb.
+
+> **Frissítés (2026-10-25):** kilenc ilyen világ **már az Esemény mód része** (11–19. pálya, `puzzles/event/event-11…19-*.json`; adat: `src/content/events.ts`, szabály-szövegek: `src/game/worlds.ts`): Stranger Things (Starcourt Mall, *Fejjel lefelé* — éjjellátó), Game of Thrones (Winterfell, *A fal* — vákuum), Rick and Morty (Smith-ház garázsa, *Portálok* — zárt ajtók), The Vampire Diaries (Mystic Falls, *Napfény* — fény/sötét), Kalandra fel! (Ooo Földje, *Térkép* — mozgásérzékelő), Alkonyat (Forks, *Alice látomásai* — totem), The Walking Dead (Alexandria, *Zaj* — generátorok), The Last of Us (Karantén-zóna, *Spórák* — rádió), Harry Potter (Roxfort, *Tekergők térképe* — kamerák). Az Esemény mód így **19 pályás**; a franchise-nevek védjegyek (21. fejezet).
 
 ### 🔦 STRANGER THINGS — „Starcourt Mall"
 - **Helyszín:** Starcourt bevásárlóközpont, Hawkins, 1985. július 4. (3. évad).
@@ -987,6 +947,8 @@ Külön oldal (főmenü → **Profil**, vagy a jobb felső profil-chipre kattint
 
 ### 14.9 Barátok
 
+> **Barát-azonosító és barát-link (v0.7, felhasználói kérés).** Minden profilnak van egy véletlen, **10 karakteres azonosítója** (betű / szám / írásjel; a félreolvasható `I l O 0 1` nélkül), ami a **Profil** fejlécében látszik (másolható). Mellette egy **barát-link** (`…/play/?add=<kód>`): ha valaki ezt megnyitja és be van jelentkezve, a **Barátok** képernyő egyből megtalálja a kódhoz tartozó játékost, és felvehető barátnak (kijelentkezve előbb a belépés jön, utána ugyanide ér). A keresőmezőbe a kód is beírható (pontos egyezés). A kód nem titok, csak a megtalálást segíti: a nem kereshető profil is megtalálható vele, aki a kódját megosztja, azt akarja. A kódok külön táblában vannak (`profile_codes`), amit közvetlenül senki nem olvas.
+
 ```
 ┌────────────────────────────────────────────────────────────────────┐
 │ 👥 BARÁTOK                                                  ← Menü  │
@@ -1007,6 +969,8 @@ Külön oldal (főmenü → **Profil**, vagy a jobb felső profil-chipre kattint
 - Az online jelző elrejthető (Beállítások → *Láthatatlan mód*).
 
 ### 14.10 Lobby (Együtt és Gyilkos mód)
+
+> **Tartós szobák (v0.6, felhasználói kérés).** A szoba nem egy játékra szól: a létrehozó **saját szobája**, megmarad, és újra felhasználható (két játék között átállítható a neve, a pálya és a létszám), a létrehozó **törölheti**. Legfeljebb 5 saját szoba. Az ajtó **zárva** indul: amíg a létrehozó nem **nyitja meg**, más nem léphet be — de a szoba **létezése látszik** (kóddal rákereshetnek, és **követhetik**, így a listájukban látják, ha megnyílik). A lista két részre oszlik: **Saját szobáim** és **Mások szobái** (ahová tag vagyok vagy követem). Statisztika: összesített (közös játékok, győzelmek) és **szobánként** (lejátszott / megoldott játék, legjobb és átlagidő, összes játékidő, legutóbbi játékok). A szoba 90 nap tétlenség után törlődik. Adatmodell: `0005_rooms.sql`.
 
 ```
 ┌────────────────────────────────────────────────────────────────────┐
@@ -1234,7 +1198,7 @@ A `localStorage` böngészőnként kb. 5 MB; a játék tipikusan **< 100 KB**-ot
 | XP, szellemérmék, széria | az újabb `updatedAt` nyer *(egyjátékos játék; két gépen, offline módon párhuzamosan játszva kis eltérés előfordulhat — ezt vállaljuk)* |
 | feloldások (`unlocks`) | a két halmaz egyesítése |
 
-5. **Vendég → fiók:** a vendég-adatok ugyanezekkel a szabályokkal olvadnak a fiókba (a vendég a „másik gép").
+5. **Vendég → fiók:** a vendég-adatok ugyanezekkel a szabályokkal olvadnak a fiókba (a vendég a „másik gép"). **Kivétel (felhasználói döntés, 2026-10-25):** a profil játék-adatainál (XP, szellemérme, rekord-széria) a *nagyobb* érték marad, hogy egy 0-ról induló vendég-profil ne írja felül a fiók XP-jét; a becenév és az avatár a fiókból jön, a széria és az utolsó napi ügy az újabbé (`mergeGuestProfile`, `src/cloud/merge.ts`).
 6. A felületen mindig látszik az állapot: ☁ *Mentve a felhőbe* / 📴 *Offline — helyben mentve* / 👤 *Vendég — csak ezen a gépen* (14.1).
 
 ---
@@ -1307,7 +1271,9 @@ A séma **forrása az SQL-fájl**, nem ez a dokumentum — így nem csúszhat sz
 | `0002_social.sql` | barátok (`send_friend_request`, `respond_friend_request`, `remove_friend`, `my_friends` nézet), szobák (`create_room`, `join_room`, `leave_room`, `start_room`, `save_room_state`, `invite_friend`), chat, meghívók, takarítás (`cleanup_old_rooms`), RLS | kész, tesztelt |
 | `0003_invites.sql` | `my_invites()` — a meghívott (még nem tag) lássa a szoba kódját, módját és a meghívó nevét (a `rooms` tábla az RLS miatt számára nem olvasható) |
 | `0004_extras.sql` | `profiles.searchable / invisible / last_seen`, `touch_presence`, `my_friends.online`, `search_profiles`, `submit_score` + `leaderboard_top` (a ranglista csak a függvényen át írható), `public_profile`, `chat_reports` + `report_message`, `chat_mutes`, barát-limit (100) |
-| `0005_killer.sql` | *(a Gyilkos mód megvalósításakor)* `room_roles`, szerepsorsolás az `start_room`-ban, `use_ability()`, a privát Realtime-csatornák jogosultságai, nyilvános profil-kártya | terv: 22.3, 23.5 |
+| `0005_rooms.sql` | tartós szobák: `rooms.name / is_open`, `create_room` (név, ajtó zárva), `set_room_open`, `configure_room`, `delete_room`, `follow_room`, `my_rooms`, `room_peek`, `room_stats`, `room_recent_games`, `room_games` napló (`start_room` / `finish_game`), `is_room_member` (zárt ajtónál csak a tulajdonos), `leave_room` (a tulajdonos nem léphet ki), 90 napos takarítás |
+| `0006_friend_code.sql` | barát-kód: minden profilnak véletlen 10 karakteres azonosító (`profile_codes`, közvetlenül nem olvasható), `my_friend_code()`, `find_by_code()`; a `search_profiles` a név *bármely* részében keres és a saját profilt is jelölve adja (`is_me`) | kész, tesztelt (v0.7) |
+| `0007_killer.sql` | *(a Gyilkos mód megvalósításakor)* `room_roles`, szerepsorsolás az `start_room`-ban, `use_ability()`, a privát Realtime-csatornák jogosultságai, nyilvános profil-kártya | terv: 22.3, 23.5 |
 
 Alapelvek:
 - **Minden táblán be van kapcsolva az RLS.** A kliens csak a saját sorait éri el; a barátság, szoba és meghívó írása **kizárólag a függvényeken** keresztül megy (hogy ne lehessen hamisítani).
@@ -1630,7 +1596,7 @@ Az Esemény módban és a Random mód készletében szereplő karakterek, nevek 
 
 ### 23.1 Profil-keresés
 
-- A **Barátok** oldalon (14.9) becenév-előtag szerint keresel: legalább 2 karakter, kis/nagybetű nélkül megkülönböztetve, legfeljebb 20 találat; a gépelés 300 ms-os késleltetéssel indítja a keresést.
+- A **Barátok** oldalon (14.9) a becenév *bármely részére* keresel (nem csak az elejére): legalább 2 karakter, kis/nagybetű nélkül megkülönböztetve, legfeljebb 20 találat; a saját profilod is megjelenik, „Ez te vagy” jelöléssel (felvenni nem lehet); a gépelés 300 ms-os késleltetéssel indítja a keresést.
 - A találatnál **avatár, becenév és rang** látszik. Az e-mail-cím **soha** nem látszik senkinek.
 - A becenév kereshetőségét a `profiles` olvasási szabálya adja (bejelentkezettek láthatják a profilneveket). Egy „Nem kereshető vagyok" kapcsoló és a másik profil előnézete (statisztikával) a **0003** migrációban jön (`public_profile(uuid)` függvény, `profiles.searchable`).
 

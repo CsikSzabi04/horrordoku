@@ -10,9 +10,9 @@
 | B1 | Felhő-alap + belépés (`CloudService`, `auth`, `profile`) | B0, A0 | ✅ | `b4205fa` · 15 egység-teszt · éles projekten csak olvasó próba (`username_available`, `ping` ok) · regisztráció-próba a B3 képernyőn |
 | B2 | Szinkron-motor (`merge`, `sync`, `catalog`) | B1, A2 | ✅ | `src/cloud/{merge,rows,sync,catalog}.ts` · tulajdonság-tesztek (kommutatív/idempotens/asszociatív), kétgépes konvergencia-teszt valódi `StorageService`-szel, offline/FK-hiba/vendég→fiók/katalógus · **a felhőn élőben még nem próbáltuk** (kézi próba: 👤) |
 | B3 | Belépés / Profil / Fiók képernyők | B1, A1 | ✅ | belépés/regisztráció/jelszó-reset + vendég→fiók átvitel kérdése, Profil (rang, Áttekintés, Fiók), felhős adat-export, fiók-törlés (`supabase/functions/delete-account` — **telepítés: 👤**) |
-| B4 | Barátok, lobby, szoba-szolgáltatás, chat | B1, A1 | ✅ | `friends/rooms/roomSession.ts`, Barátok + Lobby képernyő, **`0003_invites.sql`** (👤 futtatni) · Realtime élő próbája: 👤 (két böngészőablak) |
+| B4 | Barátok, lobby, szoba-szolgáltatás, chat | B1, A1 | ✅ | `friends/rooms/roomSession.ts`, Barátok + Lobby képernyő; **tartós szobák** (saját/mások, nyitás-zárás, törlés, követés, statisztika) · **`0003_invites.sql`, `0005_rooms.sql`** (👤 futtatni) · Realtime élő próbája: 👤 (két böngészőablak) |
 | B5 | Együtt mód (Realtime-protokoll, overlay) | B4, A3, A4 | ⛔ | az A3 (motor) és A4 (`BoardController`) után |
-| B6 | Gyilkos mód (`0005`, képességek, Gyűlés/Epilógus) | B5, A7 | ⛔ | B5 és A7 után |
+| B6 | Gyilkos mód (`0007`, képességek, Gyűlés/Epilógus) | B5, A7 | ⛔ | B5 és A7 után |
 | B7 | Ranglista, online-állapot, nyilvános profil, moderáció (`0004`) | B2 | ✅ | **`0004_extras.sql`** (👤 futtatni; SQL-tesztek 88/88) · `leaderboard/presence.ts`, `publicProfile`, chat-jelentés/némítás, online-pont, barát-limit |
 | B9 | **Beállítások képernyő** (hang, jumpscare-mód, Nyugodt mód, nyelv, adat-export/import/törlés) | A1, A2 | ✅ | `c77da2f` · böngészős próba: Nyugodt mód + jumpscare-mód perzisztens, törlés-megerősítés, export/import |
 | B10 | **Gyűjtemény / bestiárium képernyő** (`content` API + unlocks) | A1, A2 | ✅ | `c77da2f` · 6 ismeretlen kártya, számláló, szűrők; az unlock-felfedés A addUnlock-jára vár |

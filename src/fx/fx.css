@@ -1,0 +1,120 @@
+.nd-scare {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.92);
+  animation: nd-in 0.12s ease-out;
+}
+.nd-scare.out {
+  opacity: 0;
+  transition: opacity 0.6s;
+}
+.nd-scare .vig {
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, transparent 25%, rgba(209, 22, 47, 0.7) 100%);
+}
+.nd-scare .face {
+  font-size: 62vmin;
+  line-height: 1;
+  filter: drop-shadow(0 0 40px #d1162f);
+  animation: nd-lunge 0.45s cubic-bezier(0.2, 1.4, 0.3, 1) both;
+}
+.nd-scare.dir-bottom .face {
+  transform-origin: 50% 120%;
+}
+.nd-scare.dir-left .face {
+  animation-name: nd-lunge-l;
+}
+.nd-scare.dir-right .face {
+  animation-name: nd-lunge-r;
+}
+.nd-scare.gold {
+  background: rgba(30, 20, 0, 0.95);
+}
+.nd-scare.gold .face {
+  filter: drop-shadow(0 0 60px #c9a45c);
+  animation-duration: 0.9s;
+}
+.nd-scare.flash::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: #fff;
+  animation: nd-flash 0.18s ease-out forwards;
+}
+.nd-scare.fake {
+  background: transparent;
+  animation: nd-fake 1.6s ease-in-out forwards;
+}
+body.nd-shake {
+  animation: nd-shake 0.09s linear infinite;
+}
+@keyframes nd-in {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes nd-lunge {
+  from {
+    transform: scale(0.15) translateY(30%);
+    opacity: 0;
+  }
+  60% {
+    transform: scale(1.15);
+    opacity: 1;
+  }
+  to {
+    transform: scale(1);
+  }
+}
+@keyframes nd-lunge-l {
+  from {
+    transform: translateX(-120%) scale(0.5);
+  }
+  to {
+    transform: translateX(0) scale(1);
+  }
+}
+@keyframes nd-lunge-r {
+  from {
+    transform: translateX(120%) scale(0.5);
+  }
+  to {
+    transform: translateX(0) scale(1);
+  }
+}
+@keyframes nd-flash {
+  from {
+    opacity: 0.85;
+  }
+  to {
+    opacity: 0;
+  }
+}
+@keyframes nd-fake {
+  0% {
+    opacity: 0;
+  }
+  40% {
+    opacity: 0.8;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes nd-shake {
+  25% {
+    transform: translate(-6px, 3px);
+  }
+  50% {
+    transform: translate(5px, -4px);
+  }
+  75% {
+    transform: translate(-3px, -3px);
+  }
+}

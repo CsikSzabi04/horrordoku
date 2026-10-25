@@ -1,0 +1,245 @@
+{
+  "v": 1,
+  "id": "classic-4-09-amusement-park",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A vidámpark – este",
+  "story": "Ünnepnap volt a vidámparkban, és az üzemeltető többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 9,
+  "difficulty": 4,
+  "rooms": {
+    "F": "Főtér",
+    "B": "Büfé",
+    "J": "Jegypénztár",
+    "T": "Játékterem",
+    "K": "Körhinta",
+    "S": "Szellemvasút"
+  },
+  "layout": [
+    "SSSSJJJJJ",
+    "SSSKKKJJJ",
+    "SSSKKKJJJ",
+    "SSSKKKJJJ",
+    "FFKKBBBJT",
+    "FFKKBBBBT",
+    "FFFBBBTTT",
+    "FFFFBBTTT",
+    "FFFTTTTTT"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "E1",
+        "H4",
+        "G8",
+        "I5",
+        "B4"
+      ]
+    },
+    {
+      "type": "rug",
+      "at": [
+        "F9",
+        "G7",
+        "H7",
+        "D6"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "A6",
+        "D2"
+      ]
+    },
+    {
+      "type": "wheel",
+      "at": [
+        "A9",
+        "A7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "carousel",
+      "at": "E4",
+      "blocking": true
+    },
+    {
+      "type": "ticket",
+      "at": "G1",
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": [
+        "A1",
+        "C4"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Körhintánál egy **padon** ült."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "statue"
+        }
+      ],
+      "clueText": [
+        "Egy **szobor mellett** volt."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "J"
+        }
+      ],
+      "clueText": [
+        "A Jegypénztárnál egy **széken** ült."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A Játékteremben egy **széken** ült."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ]
+    },
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "gina",
+      "name": "Gina",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "hugo",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Hugótól északra** volt."
+      ]
+    },
+    {
+      "id": "hugo",
+      "name": "Hugo",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **szőnyegen** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "E1",
+    "barry": "D2",
+    "carl": "C3",
+    "dora": "H4",
+    "ervin": "I5",
+    "flavia": "A6",
+    "vickie": "B7",
+    "gina": "G8",
+    "hugo": "F9"
+  },
+  "murderer": "flavia",
+  "rev": 1,
+  "floors": {
+    "F": "checker",
+    "B": "wood",
+    "J": "brick",
+    "T": "carpet",
+    "K": "carpet",
+    "S": "stone"
+  }
+}

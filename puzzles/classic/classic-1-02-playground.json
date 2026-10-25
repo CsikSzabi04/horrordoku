@@ -1,0 +1,157 @@
+{
+  "v": 1,
+  "id": "classic-1-02-playground",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A játszótér – reggel",
+  "story": "Szombat este a játszótéren egy felnőtt nem tért haza. Valaki egyedül maradt vele.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "H": "Homokozó",
+    "C": "Csúszda",
+    "I": "Hinták",
+    "P": "Piknikhely"
+  },
+  "layout": [
+    "IICCC",
+    "IICCC",
+    "IIHCC",
+    "IHHHH",
+    "PPPPH"
+  ],
+  "objects": [
+    {
+      "type": "slide",
+      "at": [
+        "D2",
+        "D1"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "B3",
+        "A5"
+      ]
+    },
+    {
+      "type": "ball",
+      "at": [
+        "C4",
+        "E5"
+      ]
+    },
+    {
+      "type": "tree",
+      "at": [
+        "C5",
+        "A4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "picnic",
+      "at": [
+        "D5",
+        "B5"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "A Hintáknál egy **padon** ült."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "ball",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Homokozóban egy **labdán** volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Piknikhelyen volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "vera": "E1",
+    "alfred": "D2",
+    "bianca": "B3",
+    "carly": "C4",
+    "daniel": "A5"
+  },
+  "murderer": "alfred",
+  "rev": 1,
+  "floors": {
+    "H": "sand",
+    "C": "dirt",
+    "I": "grass",
+    "P": "checker"
+  }
+}

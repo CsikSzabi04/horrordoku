@@ -1,0 +1,248 @@
+{
+  "v": 1,
+  "id": "classic-5-08-manor",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A kúria – zárás után",
+  "story": "Szombat este a kúriában a háziúr nem tért haza. Valaki egyedül maradt vele.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "K": "Kert",
+    "P": "Padlás",
+    "E": "Előcsarnok",
+    "N": "Könyvtár",
+    "B": "Ebédlő",
+    "O": "Konyha"
+  },
+  "layout": [
+    "EEEEEBBBB",
+    "PPEPEEBBB",
+    "PPPPEEBBB",
+    "PPPPEEBBE",
+    "PPPPPEEEE",
+    "OOPPPKKKE",
+    "OOOOOOKKK",
+    "OONNNKKKK",
+    "OONNNNNKK"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "E9",
+        "G3",
+        "G4"
+      ]
+    },
+    {
+      "type": "rug",
+      "at": [
+        "I4",
+        "E8",
+        "D8"
+      ]
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "A1",
+        "H5",
+        "C2",
+        "E2"
+      ]
+    },
+    {
+      "type": "statue",
+      "at": "D1",
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": [
+        "F6",
+        "G7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "fireplace",
+      "at": "C8",
+      "blocking": true
+    },
+    {
+      "type": "armor",
+      "at": "F4",
+      "blocking": true
+    },
+    {
+      "type": "painting",
+      "at": "H4",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszloptól balra** volt."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa"
+        }
+      ],
+      "clueText": [
+        "Egy **kanapén** ült."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "ervin",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Ervintől északra** volt."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Előcsarnokban egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "dora"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Dorával**."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "terrain",
+          "style": "dirt"
+        }
+      ],
+      "clueText": [
+        "**Földúton** volt."
+      ]
+    },
+    {
+      "id": "gordon",
+      "name": "Gordon",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "vlad",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Vladtól északra** volt."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "hanna",
+      "name": "Hanna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "A Könyvtárban egy **széken** ült."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "A1",
+    "bruno": "C2",
+    "clara": "G3",
+    "dora": "I4",
+    "ervin": "H5",
+    "flavia": "D6",
+    "gordon": "F7",
+    "vlad": "B8",
+    "hanna": "E9"
+  },
+  "murderer": "gordon",
+  "rev": 1,
+  "floors": {
+    "K": "grass",
+    "P": "dirt",
+    "N": "carpet",
+    "B": "wood",
+    "O": "tile"
+  }
+}

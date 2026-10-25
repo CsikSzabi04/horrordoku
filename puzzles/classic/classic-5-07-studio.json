@@ -1,0 +1,268 @@
+{
+  "v": 1,
+  "id": "classic-5-07-studio",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A tévéstúdió – ünnepnap",
+  "story": "A tévéstúdióban reggel a műsorvezetőt holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 10,
+  "difficulty": 5,
+  "rooms": {
+    "E": "Előtér",
+    "S": "Stúdió",
+    "M": "Maszk",
+    "V": "Vágószoba",
+    "B": "Büfé"
+  },
+  "layout": [
+    "EEESSSVVVV",
+    "EEESSSSVVV",
+    "EEESSSSSVV",
+    "EEEEESSSSV",
+    "EEEEESSSVV",
+    "EEEEESSSVV",
+    "EEESSSSSSV",
+    "BBEEESMMMV",
+    "BBMMMMMMMV",
+    "BBVVVVVVVV"
+  ],
+  "objects": [
+    {
+      "type": "sofa",
+      "at": [
+        "E6",
+        "I4",
+        "F1"
+      ]
+    },
+    {
+      "type": "rug",
+      "at": [
+        "C7",
+        "D3",
+        "G3",
+        "G4",
+        "E5"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "J5",
+        "G9",
+        "D10"
+      ]
+    },
+    {
+      "type": "lamp",
+      "at": [
+        "H4",
+        "H7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "computer",
+      "at": "E10",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "A10",
+      "blocking": true
+    },
+    {
+      "type": "mirror",
+      "at": "I8",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "C6",
+      "blocking": true
+    },
+    {
+      "type": "tv",
+      "at": "H10",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "A Stúdióban egy **kanapén** ült."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "felicia"
+        }
+      ],
+      "clueText": [
+        "**Feliciával** egy helyiségben volt."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "lamp"
+        }
+      ],
+      "clueText": [
+        "Egy **villanyoszlop mellett** volt."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "clara",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Clarától délre** volt."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Előtérben egy **kanapén** ült."
+      ]
+    },
+    {
+      "id": "gabriel",
+      "name": "Gabriel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **növény mellett** volt."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "holly",
+      "name": "Holly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "A Maszkban egy **széken** ült."
+      ]
+    },
+    {
+      "id": "ivan",
+      "name": "Ivan",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Vágószobában volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "F1",
+    "barry": "A2",
+    "clara": "D3",
+    "daniel": "I4",
+    "elena": "J5",
+    "felicia": "E6",
+    "gabriel": "C7",
+    "victor": "H8",
+    "holly": "G9",
+    "ivan": "B10"
+  },
+  "murderer": "holly",
+  "rev": 1,
+  "floors": {
+    "E": "wood",
+    "S": "carpet",
+    "M": "checker",
+    "V": "tile",
+    "B": "wood"
+  }
+}

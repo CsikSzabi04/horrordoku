@@ -1,5 +1,5 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { AuthApi } from '../shared/cloud'
 import type { RunRecord, StorageService } from '../shared/storage'
 import { createStorage, memoryKV } from '../storage'
@@ -129,6 +129,46 @@ describe('szinkron: két gép, egy felhő', () => {
     expect(await guestSync.flush()).toMatchObject({ ok: false, code: 'unauthenticated' })
     expect(guestSync.status()).toBe('guest')
     expect(await createSync(db.client, storage, auth).flush()).toMatchObject({ ok: false, message: 'scope_mismatch' }) // a tároló még 'guest' scope-on áll
+  })
+})
+
+describe('szinkron: a feltöltés nem írja felül a másik gép eredményét', () => {
+  it('a nagyobb wrongSubmits, a korábbi firstSolvedAt és a solved a felhőben is megmarad, bármilyen sorrendben töltenek fel', async () => {
+    vi.useFakeTimers({ toFake: ['Date'] })
+    try {
+      const db = memDb({ puzzles: [{ id: 'classic-01' }] })
+      const A = await machine(db)
+      const B = await machine(db)
+      vi.setSystemTime(new Date('2026-10-25T10:00:00.900Z'))
+      await A.storage.recordRun(run({ ms: 100000, hints: 0, wrongSubmits: 5, at: '2026-10-25T10:00:00.900Z' }))
+      vi.setSystemTime(new Date('2026-10-25T10:00:07.100Z')) // másik másodperc: korábban ez okozta a nem-konvergenciát
+      await B.storage.recordRun(run({ ms: 80000, hints: 2, wrongSubmits: 1, at: '2026-10-25T10:00:07.100Z' }))
+      await A.sync.flush()
+      await B.sync.flush() // B töltött fel utoljára — régen ez felülírta A eredményét a felhőben
+      await A.sync.flush()
+      await B.sync.flush()
+      const cloud = db.tables.progress![0] as Row
+      expect(cloud).toMatchObject({ solved: true, best_time_ms: 80000, hints_used: 2, wrong_submits: 5 })
+      expect(String(cloud.first_solved_at).slice(0, 19)).toBe('2026-10-25T10:00:00') // a korábbi első megoldás
+      const [pa, pb] = [await A.storage.getProgress(), await B.storage.getProgress()]
+      expect(pa.puzzles['classic-01']).toEqual(pb.puzzles['classic-01'])
+      expect(pa.puzzles['classic-01']).toMatchObject({ bestMs: 80000, hints: 2, wrongSubmits: 5 })
+    } finally {
+      vi.useRealTimers()
+    }
+  })
+  it('a felhős mentés/profil/beállítás újabb változatát a régebbi helyi nem írja felül', async () => {
+    const db = memDb({ puzzles: [] })
+    db.tables.saves!.push({ user_id: UID, puzzle_ref: 'gen:1:2:X', state: {}, meta: {}, elapsed_ms: 9, hints_used: 0, updated_at: '2026-10-25T12:00:00Z' })
+    const sent = await pushOps(db.client, UID, [
+      { id: 's', table: 'saves', kind: 'upsert', key: 'gen:1:2:X', payload: { elapsedMs: 1, hintsUsed: 0, wrongSubmits: 0, board: {} as never, updatedAt: '2026-10-25T09:00:00Z' } },
+    ])
+    expect(sent.done).toEqual(['s']) // „kész": nincs mit feltölteni
+    expect(db.tables.saves![0]).toMatchObject({ elapsed_ms: 9 }) // a felhős (újabb) maradt
+    await pushOps(db.client, UID, [
+      { id: 's2', table: 'saves', kind: 'upsert', key: 'gen:1:2:X', payload: { elapsedMs: 77, hintsUsed: 0, wrongSubmits: 0, board: {} as never, updatedAt: '2026-10-25T13:00:00Z' } },
+    ])
+    expect(db.tables.saves![0]).toMatchObject({ elapsed_ms: 77 }) // az újabb helyi felülír
   })
 })
 

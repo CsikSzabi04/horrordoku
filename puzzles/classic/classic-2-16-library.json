@@ -1,0 +1,172 @@
+{
+  "v": 1,
+  "id": "classic-2-16-library",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A könyvtár – nyitás előtt",
+  "story": "A könyvtárban reggel a könyvtárost holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "G": "Gyerekszoba",
+    "K": "Kávézó",
+    "I": "Információ",
+    "O": "Olvasóterem"
+  },
+  "layout": [
+    "GGGGGK",
+    "IIIIGK",
+    "IIIIGK",
+    "IIIOOK",
+    "OOOOOK",
+    "OOOOOO"
+  ],
+  "objects": [
+    {
+      "type": "sofa",
+      "at": [
+        "D5",
+        "D4"
+      ]
+    },
+    {
+      "type": "stool",
+      "at": "F4"
+    },
+    {
+      "type": "shelf",
+      "at": "B6",
+      "blocking": true
+    },
+    {
+      "type": "table",
+      "at": "F1",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "C3",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "C2",
+      "blocking": true
+    },
+    {
+      "type": "rug",
+      "at": "E3"
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 1
+        }
+      ],
+      "clueText": [
+        "Az **első sorban** volt."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Egy **szőnyeg mellett** volt."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "plant"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **cserepes növény mellett**."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "stool",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Kávézóban egy **bárszéken** ült."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa",
+          "room": "O"
+        }
+      ],
+      "clueText": [
+        "Az Olvasóteremben egy **kanapén** ült."
+      ]
+    },
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "B1",
+    "bella": "E2",
+    "cody": "A3",
+    "daniel": "F4",
+    "elena": "D5",
+    "vickie": "C6"
+  },
+  "murderer": "elena",
+  "rev": 1,
+  "floors": {
+    "G": "checker",
+    "K": "wood",
+    "I": "tile",
+    "O": "carpet"
+  }
+}

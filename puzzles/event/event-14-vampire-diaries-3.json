@@ -1,0 +1,256 @@
+{
+  "v": 1,
+  "id": "event-14-vampire-diaries-3",
+  "mode": "event",
+  "world": "vampire-diaries",
+  "title": "Teliholdkor",
+  "story": "Tyler Lockwood a lépcsőn feküdt, amikor kisütött a hold. A napfényes mezőket a vámpírok elkerülik.",
+  "size": 8,
+  "difficulty": 5,
+  "rooms": {
+    "M": "Mystic Grill",
+    "S": "Salvatore-kúria",
+    "G": "Gilbert-ház",
+    "W": "Wickery-híd",
+    "L": "Lockwood-kúria",
+    "T": "Temető",
+    "I": "Gimnázium",
+    "R": "Régi templom"
+  },
+  "layout": [
+    "IILLLLLL",
+    "IIISLLLL",
+    "IIISSRLT",
+    "IIISSRLT",
+    "IIGSSRLT",
+    "MGGSSRTT",
+    "GGWWSRTT",
+    "GGWWWRRR"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "G6",
+        "F5",
+        "B4"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "B1",
+        "E7",
+        "D5"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "H8",
+        "A3"
+      ]
+    },
+    {
+      "type": "lamp",
+      "at": [
+        "G8",
+        "C4",
+        "E5",
+        "D4",
+        "B7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "charger",
+      "at": [
+        "C1",
+        "C6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": [
+        "G1",
+        "H7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "candle",
+      "at": [
+        "E4",
+        "F8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "grave",
+      "at": "D7",
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": "E1",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "bonnie-bennett",
+      "name": "Bonnie Bennett",
+      "race": "witch",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "matt-donovan",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Matttól északra** volt."
+      ],
+      "source": {
+        "game": "The Vampire Diaries"
+      }
+    },
+    {
+      "id": "tyler-lockwood",
+      "name": "Tyler Lockwood",
+      "race": "werewolf",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Salvatore-kúriában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "The Vampire Diaries"
+      }
+    },
+    {
+      "id": "stefan-salvatore",
+      "name": "Stefan Salvatore",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "tyler-lockwood",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Tylertől délre** volt."
+      ],
+      "source": {
+        "game": "The Vampire Diaries"
+      }
+    },
+    {
+      "id": "matt-donovan",
+      "name": "Matt Donovan",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dark"
+        }
+      ],
+      "clueText": [
+        "Sötét mezőn állt — a Sötétség megszállta."
+      ],
+      "source": {
+        "game": "The Vampire Diaries"
+      }
+    },
+    {
+      "id": "jeremy-gilbert",
+      "name": "Jeremy Gilbert",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A helyiségében **ketten** voltak."
+      ],
+      "source": {
+        "game": "The Vampire Diaries"
+      }
+    },
+    {
+      "id": "katherine-pierce",
+      "name": "Katherine Pierce",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A Temetőben egy **széken** ült."
+      ],
+      "source": {
+        "game": "The Vampire Diaries"
+      }
+    },
+    {
+      "id": "alaric-saltzman",
+      "name": "Alaric Saltzman",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "tyler-lockwood"
+        }
+      ],
+      "clueText": [
+        "**Tylerrel** egy helyiségben volt."
+      ],
+      "source": {
+        "game": "The Vampire Diaries"
+      }
+    },
+    {
+      "id": "damon-salvatore",
+      "name": "Damon Salvatore",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "A Régi templomban egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "The Vampire Diaries"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "bonnie-bennett": "B1",
+    "tyler-lockwood": "D2",
+    "stefan-salvatore": "C3",
+    "matt-donovan": "A4",
+    "jeremy-gilbert": "F5",
+    "katherine-pierce": "G6",
+    "alaric-saltzman": "E7",
+    "damon-salvatore": "H8"
+  },
+  "murderer": "alaric-saltzman",
+  "rev": 1,
+  "worldRule": "light"
+}

@@ -1,0 +1,224 @@
+{
+  "v": 1,
+  "id": "classic-4-04-restaurant",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az étterem – zárás után",
+  "story": "Szombat este az étteremben a főszakács nem tért haza. Valaki egyedül maradt vele.",
+  "size": 8,
+  "difficulty": 4,
+  "rooms": {
+    "T": "Terasz",
+    "K": "Étkező",
+    "O": "Konyha",
+    "P": "Pult",
+    "R": "Raktár"
+  },
+  "layout": [
+    "PPPPTTTT",
+    "PPPPPTTT",
+    "PPPPPTTT",
+    "PPPOOTTT",
+    "ROOOOOOK",
+    "ROOKKOKK",
+    "ROOKKKKK",
+    "RRRKKKKK"
+  ],
+  "objects": [
+    {
+      "type": "stool",
+      "at": [
+        "C3",
+        "C1",
+        "A1"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "F1",
+        "H6"
+      ]
+    },
+    {
+      "type": "rug",
+      "at": [
+        "G7",
+        "G6"
+      ]
+    },
+    {
+      "type": "barrel",
+      "at": "B8",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "H7",
+      "blocking": true
+    },
+    {
+      "type": "stove",
+      "at": "E5",
+      "blocking": true
+    },
+    {
+      "type": "fridge",
+      "at": "B5",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": [
+        "D2",
+        "B1"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A Teraszon egy **széken** ült."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "carl",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Carltól északra** volt."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "stool"
+        }
+      ],
+      "clueText": [
+        "Egy **bárszéken** ült."
+      ]
+    },
+    {
+      "id": "deborah",
+      "name": "Deborah",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A helyiségében **hárman** voltak."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **szék mellett**."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "Az Étkezőben egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "greg",
+      "name": "Greg",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "barrel"
+        }
+      ],
+      "clueText": [
+        "Egy **hordó mellett** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "F1",
+    "bella": "E2",
+    "carl": "C3",
+    "deborah": "B4",
+    "elena": "D5",
+    "victor": "H6",
+    "frank": "G7",
+    "greg": "A8"
+  },
+  "murderer": "frank",
+  "rev": 1,
+  "floors": {
+    "T": "stone",
+    "K": "wood",
+    "O": "tile",
+    "P": "checker",
+    "R": "stone"
+  }
+}

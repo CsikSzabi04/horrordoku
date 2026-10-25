@@ -1,0 +1,202 @@
+{
+  "v": 1,
+  "id": "classic-2-11-flower-store",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A virágbolt – reggel",
+  "story": "Zárás után a virágboltban az egyik alkalmazott holtan feküdt. Csak páran voltak ma bent.",
+  "size": 7,
+  "difficulty": 2,
+  "rooms": {
+    "P": "Pénztár",
+    "R": "Raktár",
+    "V": "Üvegház",
+    "E": "Eladótér",
+    "L": "Előkészítés"
+  },
+  "layout": [
+    "VPPPPPP",
+    "VEEEPPP",
+    "VVVEEPP",
+    "VVVEEEP",
+    "VVVEELL",
+    "RVRELLL",
+    "RRRELLL"
+  ],
+  "objects": [
+    {
+      "type": "rug",
+      "at": [
+        "A5",
+        "D6"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "C4",
+        "B2",
+        "D2"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": "E2"
+    },
+    {
+      "type": "flowers",
+      "at": "A2",
+      "blocking": true
+    },
+    {
+      "type": "shelf",
+      "at": [
+        "D3",
+        "B7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "B3",
+      "blocking": true
+    },
+    {
+      "type": "bonsai",
+      "at": "G4",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. sor fölött** volt."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "bonsai"
+        }
+      ],
+      "clueText": [
+        "Egy **bonszaj mellett** volt."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "Az Üvegházban egy **padon** ült."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "Az Előkészítésben volt."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "plant",
+            "rug"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **cserepes növény vagy szőnyeg mellett** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "B1",
+    "bruno": "E2",
+    "carl": "G3",
+    "dora": "C4",
+    "victor": "A5",
+    "emmett": "F6",
+    "frank": "D7"
+  },
+  "murderer": "dora",
+  "rev": 1,
+  "floors": {
+    "P": "brick",
+    "R": "stone",
+    "V": "tile",
+    "E": "checker",
+    "L": "brick"
+  }
+}

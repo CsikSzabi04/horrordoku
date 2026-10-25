@@ -1,0 +1,142 @@
+{
+  "v": 1,
+  "id": "classic-1-08-zoo",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az állatkert – esős napon",
+  "story": "Zárás után az állatkertben az egyik gondozó holtan feküdt. Csak páran voltak ma bent.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "O": "Oroszlán élőhely",
+    "P": "Pingvin élőhely",
+    "M": "Medve élőhely",
+    "K": "Krokodil élőhely"
+  },
+  "layout": [
+    "PPKKM",
+    "PPPKM",
+    "PPPOM",
+    "OOPOO",
+    "OOOOO"
+  ],
+  "objects": [
+    {
+      "type": "rock",
+      "at": [
+        "E3",
+        "A3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "E2",
+      "blocking": true
+    },
+    {
+      "type": "bear",
+      "at": "E1",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszloptól balra** volt."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "gt",
+          "n": 4
+        }
+      ],
+      "clueText": [
+        "A **4. oszloptól jobbra** volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "gt",
+          "n": 4
+        }
+      ],
+      "clueText": [
+        "A **4. sor alatt** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "C1",
+    "bianca": "A2",
+    "vera": "B3",
+    "clara": "E4",
+    "derek": "D5"
+  },
+  "murderer": "bianca",
+  "rev": 1,
+  "floors": {
+    "O": "sand",
+    "P": "ice",
+    "M": "stone",
+    "K": "swamp"
+  }
+}

@@ -1,0 +1,195 @@
+{
+  "v": 1,
+  "id": "classic-2-17-beach",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A strand – esős napon",
+  "story": "Szombat este a strandon a mentőőr nem tért haza. Valaki egyedül maradt vele.",
+  "size": 7,
+  "difficulty": 2,
+  "rooms": {
+    "B": "Büfé",
+    "L": "Öltöző",
+    "M": "Móló",
+    "P": "Pálmaliget",
+    "H": "Homokos part"
+  },
+  "layout": [
+    "LLHHHHH",
+    "LLLPPPM",
+    "LPPPMMM",
+    "LLPPBMB",
+    "LPPBBBB",
+    "LLPBBBB",
+    "LLPBBBB"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "F3",
+        "C6",
+        "G5"
+      ]
+    },
+    {
+      "type": "lounger",
+      "at": [
+        "E1",
+        "F2",
+        "C7"
+      ]
+    },
+    {
+      "type": "palm",
+      "at": [
+        "D1",
+        "B3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "D4",
+      "blocking": true
+    },
+    {
+      "type": "boat",
+      "at": "F4",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "E5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "lounger",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Homokos parton egy **nyugágyon** volt."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "vehicle"
+        }
+      ],
+      "clueText": [
+        "Egy **jármű mellett** volt."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "Egy **ülőhely mellett** volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 5
+        }
+      ],
+      "clueText": [
+        "Az **5. sorban** volt."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Pálmaligetben egy **padon** ült."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "B"
+        }
+      ],
+      "clueText": [
+        "A Büfében volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "E1",
+    "vlad": "B2",
+    "bella": "F3",
+    "carl": "G4",
+    "daniel": "A5",
+    "elena": "C6",
+    "felicia": "D7"
+  },
+  "murderer": "daniel",
+  "rev": 1,
+  "floors": {
+    "B": "wood",
+    "L": "tile",
+    "M": "wood",
+    "P": "grass",
+    "H": "sand"
+  }
+}

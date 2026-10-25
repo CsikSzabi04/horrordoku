@@ -1,0 +1,213 @@
+{
+  "v": 1,
+  "id": "event-11-stranger-things-3",
+  "mode": "event",
+  "world": "stranger-things",
+  "title": "Scoops Ahoy",
+  "story": "Steve Harrington fagylaltos sapkája a pulton maradt, ő maga eltűnt. Az áramszünetben csak a kurzorod fénye világít.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "S": "Scoops Ahoy",
+    "F": "Food court",
+    "M": "Mozi",
+    "J": "Játékbolt",
+    "Z": "Szökőkút-tér",
+    "O": "Szolgálati folyosó",
+    "T": "Titkos labor"
+  },
+  "layout": [
+    "JJJJJJJ",
+    "JJJJZZZ",
+    "SJSZZTT",
+    "SSSZZTT",
+    "OOSFFMM",
+    "OSSFFMM",
+    "OOSFFMM"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "G2",
+        "C5",
+        "B6",
+        "E3",
+        "G1"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "F1",
+        "D7"
+      ]
+    },
+    {
+      "type": "popcorn",
+      "at": [
+        "B3",
+        "B1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "D5",
+      "blocking": true
+    },
+    {
+      "type": "arcade",
+      "at": [
+        "G4",
+        "F7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "E1",
+        "F2"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "vecna",
+      "name": "Vecna",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "J"
+        }
+      ],
+      "clueText": [
+        "A Játékboltban egy **padon** ült."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    },
+    {
+      "id": "steve-harrington",
+      "name": "Steve Harrington",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "Z"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Szökőkút-téren **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    },
+    {
+      "id": "erica-sinclair",
+      "name": "Erica Sinclair",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "vecna",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Vecnától délre** volt."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    },
+    {
+      "id": "will-byers",
+      "name": "Will Byers",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "jim-hopper"
+        }
+      ],
+      "clueText": [
+        "**Jimmel** egy helyiségben volt."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    },
+    {
+      "id": "eleven",
+      "name": "Eleven",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "jim-hopper"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Jimmel**."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    },
+    {
+      "id": "jim-hopper",
+      "name": "Jim Hopper",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "eleven",
+          "dir": "S"
+        }
+      ],
+      "clueText": [
+        "**Eleventől délre** volt."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    },
+    {
+      "id": "mike-wheeler",
+      "name": "Mike Wheeler",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "leftOf",
+          "of": "erica-sinclair"
+        }
+      ],
+      "clueText": [
+        "**Ericától balra** volt."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "vecna": "F1",
+    "steve-harrington": "G2",
+    "erica-sinclair": "E3",
+    "will-byers": "A4",
+    "eleven": "C5",
+    "jim-hopper": "B6",
+    "mike-wheeler": "D7"
+  },
+  "murderer": "erica-sinclair",
+  "rev": 1,
+  "worldRule": "nightvision"
+}

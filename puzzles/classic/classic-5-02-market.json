@@ -1,0 +1,243 @@
+{
+  "v": 1,
+  "id": "classic-5-02-market",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A piac – esős napon",
+  "story": "Zárás után a piacon az egyik árus holtan feküdt. Csak páran voltak ma bent.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "F": "Főtér",
+    "Z": "Zöldséges",
+    "H": "Halas",
+    "P": "Pékes",
+    "V": "Virágos"
+  },
+  "layout": [
+    "ZZZZVVVVV",
+    "ZZZZFVVVV",
+    "ZZZZFVVVV",
+    "ZZZZFFFFF",
+    "HHZZFFFFF",
+    "HHHHPFFFF",
+    "HHHHPFPPF",
+    "HHPPPPPPP",
+    "HHPPPPPPP"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "E5",
+        "G5"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "H6",
+        "F5",
+        "F4"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "B3",
+        "C1",
+        "H8"
+      ]
+    },
+    {
+      "type": "flowers",
+      "at": [
+        "F3",
+        "G3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "fish",
+      "at": "D7",
+      "blocking": true
+    },
+    {
+      "type": "barrel",
+      "at": "D1",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": [
+        "F8",
+        "C9"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "barrel"
+        }
+      ],
+      "clueText": [
+        "Egy **hordó mellett** volt."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **növény mellett** volt."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "Z"
+        }
+      ],
+      "clueText": [
+        "A Zöldségesnél egy **ládán** volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 7
+        }
+      ],
+      "clueText": [
+        "A **7. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "fred",
+      "name": "Fred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ]
+    },
+    {
+      "id": "gabriel",
+      "name": "Gabriel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "ne",
+          "n": 9
+        }
+      ],
+      "clueText": [
+        "**Nem** a **9. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "holly",
+      "name": "Holly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "chair",
+            "counter"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **szék vagy pult mellett** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "C1",
+    "bella": "F2",
+    "clara": "B3",
+    "daniel": "G4",
+    "emmett": "E5",
+    "fred": "H6",
+    "gabriel": "A7",
+    "vlad": "I8",
+    "holly": "D9"
+  },
+  "murderer": "holly",
+  "rev": 1,
+  "floors": {
+    "F": "checker",
+    "Z": "dirt",
+    "H": "tile",
+    "P": "brick",
+    "V": "grass"
+  }
+}

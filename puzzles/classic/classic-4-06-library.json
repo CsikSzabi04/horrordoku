@@ -1,0 +1,220 @@
+{
+  "v": 1,
+  "id": "classic-4-06-library",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A könyvtár – esős napon",
+  "story": "Zárás után a könyvtárban a könyvtáros holtan feküdt. Csak páran voltak ma bent.",
+  "size": 8,
+  "difficulty": 4,
+  "rooms": {
+    "I": "Információ",
+    "O": "Olvasóterem",
+    "R": "Raktár",
+    "G": "Gyerekszoba",
+    "K": "Kávézó"
+  },
+  "layout": [
+    "IIIKKKKK",
+    "IIIKKKKK",
+    "IIIKKKKK",
+    "IIIKKKKK",
+    "GGIIKOOO",
+    "GGGIIOOO",
+    "GRROOOOO",
+    "RROOOOOO"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "H2",
+        "E4",
+        "B5"
+      ]
+    },
+    {
+      "type": "stool",
+      "at": "G3"
+    },
+    {
+      "type": "shelf",
+      "at": [
+        "F7",
+        "G7",
+        "C7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "F2",
+      "blocking": true
+    },
+    {
+      "type": "globe",
+      "at": "D8",
+      "blocking": true
+    },
+    {
+      "type": "table",
+      "at": "E3",
+      "blocking": true
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "H8",
+        "E8"
+      ]
+    },
+    {
+      "type": "rug",
+      "at": "A6"
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 1
+        }
+      ],
+      "clueText": [
+        "Az **első oszlopban** volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "dora",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Dorától északra** volt."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "stool"
+        }
+      ],
+      "clueText": [
+        "Egy **bárszéken** ült."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "table"
+        }
+      ],
+      "clueText": [
+        "Egy **asztal mellett** volt."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "A Gyerekszobában egy **széken** ült."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "globe"
+        }
+      ],
+      "clueText": [
+        "Egy **földgömb mellett** volt."
+      ]
+    },
+    {
+      "id": "gabriel",
+      "name": "Gabriel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "furniture"
+        }
+      ],
+      "clueText": [
+        "Egy **bútor mellett** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "A1",
+    "bianca": "H2",
+    "clara": "G3",
+    "dora": "E4",
+    "ervin": "B5",
+    "victor": "C6",
+    "frank": "D7",
+    "gabriel": "F8"
+  },
+  "murderer": "ervin",
+  "rev": 1,
+  "floors": {
+    "I": "tile",
+    "O": "carpet",
+    "R": "stone",
+    "G": "checker",
+    "K": "wood"
+  }
+}

@@ -1,0 +1,245 @@
+{
+  "v": 1,
+  "id": "classic-5-04-ship",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A hajó – reggel",
+  "story": "Szombat este a hajón a kapitány nem tért haza. Valaki egyedül maradt vele.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "M": "Medence",
+    "F": "Fedélzet",
+    "T": "Étkező",
+    "K": "Kabin",
+    "G": "Gépház"
+  },
+  "layout": [
+    "TKKKKKGMM",
+    "TTTKKKGMM",
+    "TTTKKGGFM",
+    "TTKKKGFFF",
+    "TTTKGGFFF",
+    "TTKKGGFFF",
+    "TTTGGGFFF",
+    "TTGGGGFFF",
+    "TTGGGGFFF"
+  ],
+  "objects": [
+    {
+      "type": "bed",
+      "at": [
+        "F2",
+        "D6"
+      ]
+    },
+    {
+      "type": "lounger",
+      "at": [
+        "H5",
+        "I2",
+        "H1"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "B7",
+        "A1",
+        "I8",
+        "C3"
+      ]
+    },
+    {
+      "type": "sink",
+      "at": "C1",
+      "blocking": true
+    },
+    {
+      "type": "anchor",
+      "at": "H8",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "A4",
+      "blocking": true
+    },
+    {
+      "type": "barrel",
+      "at": [
+        "F3",
+        "C9"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "A5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bed",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Kabinban egy **ágyon** volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "cody"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Codyvel**."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "flavia",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Flaviától északra** volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "lounger",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Fedélzeten egy **nyugágyon** volt."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "derek"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Derekkel**."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "aloneWith",
+          "with": "vera"
+        }
+      ],
+      "clueText": [
+        "**Egyedül** volt **Verával**."
+      ]
+    },
+    {
+      "id": "greg",
+      "name": "Greg",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Fedélzeten egy **széken** ült."
+      ]
+    },
+    {
+      "id": "holly",
+      "name": "Holly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "ne",
+          "n": 1
+        }
+      ],
+      "clueText": [
+        "**Nem** az **első sorban** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "vera": "A1",
+    "alfred": "F2",
+    "bianca": "D3",
+    "cody": "C4",
+    "derek": "H5",
+    "ervin": "G6",
+    "flavia": "B7",
+    "greg": "I8",
+    "holly": "E9"
+  },
+  "murderer": "flavia",
+  "rev": 1,
+  "floors": {
+    "M": "water",
+    "F": "wood",
+    "T": "wood",
+    "K": "carpet"
+  }
+}

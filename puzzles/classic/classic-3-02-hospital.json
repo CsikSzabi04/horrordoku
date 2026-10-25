@@ -1,0 +1,197 @@
+{
+  "v": 1,
+  "id": "classic-3-02-hospital",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A kórház – ünnepnap",
+  "story": "Ünnepnap volt a kórházban, és az ügyeletes orvos többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "M": "Műtő",
+    "L": "Labor",
+    "F": "Folyosó",
+    "K": "Kávézó",
+    "V": "Váróterem"
+  },
+  "layout": [
+    "FFFFKKK",
+    "FFFKKLK",
+    "FFLLLLK",
+    "MFLLLLK",
+    "MMMMMVV",
+    "MMMMVVV",
+    "MMMMMVV"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "F6",
+        "D1"
+      ]
+    },
+    {
+      "type": "wheelchair",
+      "at": [
+        "A1",
+        "B4"
+      ]
+    },
+    {
+      "type": "computer",
+      "at": "C4",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "E2",
+      "blocking": true
+    },
+    {
+      "type": "sink",
+      "at": [
+        "B5",
+        "D4",
+        "E7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "chair",
+      "at": [
+        "G7",
+        "E1"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "wheelchair"
+        }
+      ],
+      "clueText": [
+        "Egy **kerekesszéken** ült."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "aloneWith",
+          "with": "carly"
+        }
+      ],
+      "clueText": [
+        "**Egyedül** volt **Carlyvel**."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "gt",
+          "n": 6
+        }
+      ],
+      "clueText": [
+        "A **6. oszloptól jobbra** volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "bianca",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Biancától délre** volt."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 5
+        }
+      ],
+      "clueText": [
+        "Az **5. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "A1",
+    "bianca": "D2",
+    "carly": "G3",
+    "derek": "B4",
+    "ervin": "E5",
+    "felicia": "F6",
+    "vlad": "C7"
+  },
+  "murderer": "ervin",
+  "rev": 1,
+  "floors": {
+    "M": "tile",
+    "L": "tile",
+    "F": "tile",
+    "K": "wood",
+    "V": "tile"
+  }
+}

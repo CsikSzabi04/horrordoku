@@ -1,0 +1,160 @@
+{
+  "v": 1,
+  "id": "event-01-fnaf-1",
+  "mode": "event",
+  "world": "fnaf",
+  "title": "Az éjjeliőr műszakja",
+  "story": "Az éjjeliőr műszakja alatt a lila ruhás férfi nem tért vissza a Biztonsági raktárból. A kamerák mindent láttak — de egyszerre csak egy szobát.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "E": "Ebédlő",
+    "P": "Pirate Cove",
+    "K": "Konyha",
+    "I": "Iroda",
+    "N": "Nyugati folyosó"
+  },
+  "layout": [
+    "KKKKK",
+    "KPPII",
+    "PPIII",
+    "EEEII",
+    "NNEEE"
+  ],
+  "objects": [
+    {
+      "type": "partytable",
+      "at": [
+        "D2",
+        "E5"
+      ]
+    },
+    {
+      "type": "doorbtn",
+      "at": [
+        "A1",
+        "E2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "camera",
+      "at": "C4",
+      "blocking": true
+    },
+    {
+      "type": "oven",
+      "at": "D3",
+      "blocking": true
+    },
+    {
+      "type": "giftbox",
+      "at": "E3"
+    },
+    {
+      "type": "carpet",
+      "at": "B2"
+    }
+  ],
+  "characters": [
+    {
+      "id": "a-marionett",
+      "name": "A Marionett",
+      "race": "ghost",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "doorbtn"
+        }
+      ],
+      "clueText": [
+        "Egy **ajtógomb mellett** volt."
+      ],
+      "source": {
+        "game": "Five Nights at Freddy's"
+      }
+    },
+    {
+      "id": "mike-schmidt",
+      "name": "Mike Schmidt",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "chica",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Chicától északra** volt."
+      ],
+      "source": {
+        "game": "Five Nights at Freddy's"
+      }
+    },
+    {
+      "id": "william-afton",
+      "name": "William Afton",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Az Irodában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Five Nights at Freddy's"
+      }
+    },
+    {
+      "id": "chica",
+      "name": "Chica",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "freddy"
+        }
+      ],
+      "clueText": [
+        "**Freddyvel** egy helyiségben volt."
+      ],
+      "source": {
+        "game": "Five Nights at Freddy's"
+      }
+    },
+    {
+      "id": "freddy",
+      "name": "Freddy",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "partytable",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Ebédlőben egy **party-asztalon** volt."
+      ],
+      "source": {
+        "game": "Five Nights at Freddy's"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "a-marionett": "B1",
+    "mike-schmidt": "D2",
+    "william-afton": "C3",
+    "chica": "A4",
+    "freddy": "E5"
+  },
+  "murderer": "mike-schmidt",
+  "rev": 1,
+  "worldRule": "cameras"
+}

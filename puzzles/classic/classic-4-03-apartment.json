@@ -1,0 +1,245 @@
+{
+  "v": 1,
+  "id": "classic-4-03-apartment",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A lakás – ünnepnap",
+  "story": "A lakásban reggel a lakástulajdonost holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 9,
+  "difficulty": 4,
+  "rooms": {
+    "E": "Előszoba",
+    "R": "Erkély",
+    "H": "Hálószoba",
+    "K": "Konyha",
+    "N": "Nappali",
+    "F": "Fürdő"
+  },
+  "layout": [
+    "HHHHHFFFF",
+    "HHHHHFFFF",
+    "KKHHHRRFF",
+    "KKKKRRRRR",
+    "KKKKKRRRR",
+    "NNNKKRRRR",
+    "NNEKKREER",
+    "NNEEEEEEE",
+    "NNNNEEEEE"
+  ],
+  "objects": [
+    {
+      "type": "rug",
+      "at": [
+        "E8",
+        "G7",
+        "C9"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "A6",
+        "A5",
+        "E5"
+      ]
+    },
+    {
+      "type": "tv",
+      "at": [
+        "B7",
+        "B9"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "fridge",
+      "at": "D6",
+      "blocking": true
+    },
+    {
+      "type": "bath",
+      "at": "I2",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "G9",
+      "blocking": true
+    },
+    {
+      "type": "stove",
+      "at": "B3",
+      "blocking": true
+    },
+    {
+      "type": "bed",
+      "at": "A1"
+    },
+    {
+      "type": "sofa",
+      "at": "A8"
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Hálószobában volt."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "cody",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Codytől északra** volt."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Fürdőben volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "stove"
+        }
+      ],
+      "clueText": [
+        "Egy **tűzhely mellett** volt."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "A Nappaliban egy **széken** ült."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 7
+        }
+      ],
+      "clueText": [
+        "A **7. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "greg",
+      "name": "Greg",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "holly",
+      "name": "Holly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "A Nappaliban egy **szőnyegen** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "D1",
+    "barry": "H2",
+    "cody": "F3",
+    "derek": "B4",
+    "vera": "I5",
+    "emmett": "A6",
+    "frank": "G7",
+    "greg": "E8",
+    "holly": "C9"
+  },
+  "murderer": "cody",
+  "rev": 1,
+  "floors": {
+    "E": "brick",
+    "R": "stone",
+    "H": "wood",
+    "K": "tile",
+    "N": "carpet",
+    "F": "tile"
+  }
+}

@@ -1,0 +1,201 @@
+{
+  "v": 1,
+  "id": "classic-2-19-amusement-park",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A vidámpark – reggel",
+  "story": "Zárás után a vidámparkban az üzemeltető holtan feküdt. Csak páran voltak ma bent.",
+  "size": 7,
+  "difficulty": 2,
+  "rooms": {
+    "H": "Hullámvasút",
+    "C": "Céllövölde",
+    "F": "Főtér",
+    "B": "Büfé",
+    "J": "Jegypénztár"
+  },
+  "layout": [
+    "CCCBBBB",
+    "CCBBBBF",
+    "CFFFFFF",
+    "CFFFJJJ",
+    "HHHHJJJ",
+    "HHHHJJJ",
+    "HHHHHJJ"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "F2",
+        "A3",
+        "C2"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "E4",
+        "D1",
+        "D5",
+        "C7"
+      ]
+    },
+    {
+      "type": "rug",
+      "at": "B5"
+    },
+    {
+      "type": "balloon",
+      "at": [
+        "E3",
+        "F3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "target",
+      "at": "A1",
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": [
+        "G3",
+        "B3"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "B"
+        }
+      ],
+      "clueText": [
+        "A Büfében egy **padon** ült."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "B"
+        }
+      ],
+      "clueText": [
+        "A Büfében egy **széken** ült."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "C"
+        }
+      ],
+      "clueText": [
+        "A Céllövöldében egy **széken** ült."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "amir",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Amirtól délre** volt."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Hullámvasútnál egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **pad mellett** volt."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "D1",
+    "bella": "F2",
+    "carly": "A3",
+    "daniel": "E4",
+    "elena": "B5",
+    "frank": "C6",
+    "vera": "G7"
+  },
+  "murderer": "daniel",
+  "rev": 1,
+  "floors": {
+    "H": "dirt",
+    "C": "wood",
+    "F": "checker",
+    "B": "wood",
+    "J": "brick"
+  }
+}

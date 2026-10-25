@@ -1,0 +1,171 @@
+{
+  "v": 1,
+  "id": "classic-1-05-school",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az iskola – ünnepnap",
+  "story": "Az iskolában reggel az igazgatót holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 6,
+  "difficulty": 1,
+  "rooms": {
+    "T": "Tanterem",
+    "F": "Folyosó",
+    "O": "Tornaterem",
+    "M": "Menza"
+  },
+  "layout": [
+    "FFFOOO",
+    "TTTTOO",
+    "TTTTOO",
+    "TTTMMM",
+    "TTTMMM",
+    "MMMMMM"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "C5",
+        "A6",
+        "E4"
+      ]
+    },
+    {
+      "type": "ball",
+      "at": [
+        "F3",
+        "E2"
+      ]
+    },
+    {
+      "type": "table",
+      "at": [
+        "E5",
+        "D6",
+        "E6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "locker",
+      "at": "C1",
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": "A1"
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "bench",
+            "locker"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **pad vagy szekrény mellett** volt."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. sorban** volt."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "ball"
+        }
+      ],
+      "clueText": [
+        "Egy **labdán** volt."
+      ]
+    },
+    {
+      "id": "deborah",
+      "name": "Deborah",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 5
+        }
+      ],
+      "clueText": [
+        "Az **5. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "B1",
+    "bella": "D2",
+    "cody": "F3",
+    "deborah": "E4",
+    "ervin": "C5",
+    "victor": "A6"
+  },
+  "murderer": "deborah",
+  "rev": 1,
+  "floors": {
+    "T": "wood",
+    "F": "tile",
+    "O": "checker",
+    "M": "tile"
+  }
+}

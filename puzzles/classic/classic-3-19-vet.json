@@ -1,0 +1,215 @@
+{
+  "v": 1,
+  "id": "classic-3-19-vet",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az állatorvos – zárás után",
+  "story": "Zárás után az állatorvosnál az asszisztens holtan feküdt. Csak páran voltak ma bent.",
+  "size": 8,
+  "difficulty": 3,
+  "rooms": {
+    "K": "Kennel",
+    "I": "Iroda",
+    "U": "Udvar",
+    "R": "Rendelő",
+    "V": "Várószoba"
+  },
+  "layout": [
+    "IIIRRRRR",
+    "IIRRRRRR",
+    "IIRRRRRK",
+    "IIURRKKK",
+    "IIUUKKKK",
+    "IUUVVKKK",
+    "IUUVVKKK",
+    "IVVVVVKK"
+  ],
+  "objects": [
+    {
+      "type": "rug",
+      "at": [
+        "B8",
+        "E6"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": "A6"
+    },
+    {
+      "type": "medcab",
+      "at": [
+        "E4",
+        "H2",
+        "D2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "sink",
+      "at": "C2",
+      "blocking": true
+    },
+    {
+      "type": "dogcage",
+      "at": "H7",
+      "blocking": true
+    },
+    {
+      "type": "table",
+      "at": "E1",
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": [
+        "F8",
+        "C4"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "cody",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Codytől északra** volt."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 7
+        }
+      ],
+      "clueText": [
+        "A **7. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "sink"
+        }
+      ],
+      "clueText": [
+        "Egy **mosdókagyló mellett** volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "gt",
+          "n": 7
+        }
+      ],
+      "clueText": [
+        "A **7. oszloptól jobbra** volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "terrain",
+          "style": "grass"
+        }
+      ],
+      "clueText": [
+        "**Fűben** volt."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "Az Irodában egy **széken** ült."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "gabriel",
+      "name": "Gabriel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Egy **szőnyegen** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "F1",
+    "barry": "G2",
+    "cody": "C3",
+    "derek": "H4",
+    "eva": "D5",
+    "frank": "A6",
+    "vlad": "E7",
+    "gabriel": "B8"
+  },
+  "murderer": "gabriel",
+  "rev": 1,
+  "floors": {
+    "K": "dirt",
+    "U": "grass",
+    "R": "tile"
+  }
+}

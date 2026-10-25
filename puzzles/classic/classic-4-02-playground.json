@@ -1,0 +1,224 @@
+{
+  "v": 1,
+  "id": "classic-4-02-playground",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A játszótér – hétvégén",
+  "story": "Zárás után a játszótéren egy felnőtt holtan feküdt. Csak páran voltak ma bent.",
+  "size": 8,
+  "difficulty": 4,
+  "rooms": {
+    "F": "Focipálya",
+    "H": "Homokozó",
+    "C": "Csúszda",
+    "I": "Hinták",
+    "P": "Piknikhely"
+  },
+  "layout": [
+    "FFFFPPII",
+    "FFFPPPII",
+    "FFFPPPPI",
+    "FFFPIIII",
+    "FFFPPIII",
+    "CCCPPHHH",
+    "CCCHHHHH",
+    "CCCHHHHH"
+  ],
+  "objects": [
+    {
+      "type": "seesaw",
+      "at": [
+        "H5",
+        "E4",
+        "F5"
+      ]
+    },
+    {
+      "type": "ball",
+      "at": [
+        "B1",
+        "D8",
+        "A2",
+        "E7"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "F2",
+        "G3"
+      ]
+    },
+    {
+      "type": "slide",
+      "at": [
+        "A7",
+        "C6"
+      ]
+    },
+    {
+      "type": "tree",
+      "at": [
+        "D3",
+        "B2",
+        "G5",
+        "E6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "fountain",
+      "at": [
+        "C8",
+        "F1"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "ball",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Focipályán egy **labdán** volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "fountain"
+        }
+      ],
+      "clueText": [
+        "Egy **kút mellett** volt."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Piknikhelyen egy **padon** ült."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 8
+        }
+      ],
+      "clueText": [
+        "A **8. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 6
+        }
+      ],
+      "clueText": [
+        "A **6. sorban** volt."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "slide"
+        }
+      ],
+      "clueText": [
+        "Egy **csúszdán** volt."
+      ]
+    },
+    {
+      "id": "gina",
+      "name": "Gina",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 5
+        }
+      ],
+      "clueText": [
+        "Az **5. oszloptól balra** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "B1",
+    "bianca": "F2",
+    "carl": "G3",
+    "victor": "E4",
+    "dora": "H5",
+    "ervin": "C6",
+    "frank": "A7",
+    "gina": "D8"
+  },
+  "murderer": "dora",
+  "rev": 1,
+  "floors": {
+    "F": "grass",
+    "H": "sand",
+    "C": "dirt",
+    "I": "grass",
+    "P": "checker"
+  }
+}

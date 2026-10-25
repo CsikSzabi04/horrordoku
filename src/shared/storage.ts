@@ -54,7 +54,7 @@ export interface SessionState {                   // egy félbehagyott játék �
   hintsUsed: number
   wrongSubmits: number
   board: BoardState
-  meta?: { title: string; difficulty: Difficulty; size: number; world: string; startedAt: IsoTime }
+  meta?: { title: string; difficulty: Difficulty; size: number; world: string; startedAt: IsoTime; fp?: string }
   updatedAt: IsoTime
 }
 export interface SessionsFile { v: 1; sessions: Record<PuzzleRef, SessionState> }   // legfeljebb 3 random + a megkezdett katalógus-pályák

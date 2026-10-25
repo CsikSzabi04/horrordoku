@@ -1,0 +1,197 @@
+{
+  "v": 1,
+  "id": "classic-2-09-vet",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az állatorvos – ünnepnap",
+  "story": "Az állatorvosnál reggel az asszisztenst holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 7,
+  "difficulty": 2,
+  "rooms": {
+    "R": "Rendelő",
+    "V": "Várószoba",
+    "K": "Kennel",
+    "I": "Iroda",
+    "U": "Udvar"
+  },
+  "layout": [
+    "KUUUUUU",
+    "KUKUUUU",
+    "KKKKURR",
+    "IKKKUVR",
+    "IKKKVVR",
+    "IIIIIVR",
+    "IIIIVVR"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "B7",
+        "A5",
+        "F4"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": "D1"
+    },
+    {
+      "type": "plant",
+      "at": "E5",
+      "blocking": true
+    },
+    {
+      "type": "sink",
+      "at": "G5",
+      "blocking": true
+    },
+    {
+      "type": "medcab",
+      "at": "G4",
+      "blocking": true
+    },
+    {
+      "type": "computer",
+      "at": "C6",
+      "blocking": true
+    },
+    {
+      "type": "table",
+      "at": "G7",
+      "blocking": true
+    },
+    {
+      "type": "rug",
+      "at": "F7"
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "terrain",
+          "style": "grass"
+        }
+      ],
+      "clueText": [
+        "**Fűben** volt."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 1
+        }
+      ],
+      "clueText": [
+        "Az **első oszlopban** volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 5
+        }
+      ],
+      "clueText": [
+        "Az **5. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "sink",
+            "table"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **mosdókagyló vagy asztal mellett** volt."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "Az Irodában egy **széken** ült."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "D1",
+    "bianca": "F2",
+    "carly": "A3",
+    "daniel": "E4",
+    "vera": "C5",
+    "elena": "G6",
+    "flavia": "B7"
+  },
+  "murderer": "carly",
+  "rev": 1,
+  "floors": {
+    "R": "tile",
+    "K": "dirt",
+    "U": "grass"
+  }
+}

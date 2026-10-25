@@ -1,0 +1,147 @@
+{
+  "v": 1,
+  "id": "classic-1-04-restaurant",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az étterem – hétvégén",
+  "story": "Zárás után az étteremben a főszakács holtan feküdt. Csak páran voltak ma bent.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "T": "Étkező",
+    "K": "Konyha",
+    "P": "Pult",
+    "R": "Raktár"
+  },
+  "layout": [
+    "PPPPP",
+    "TPPKK",
+    "TTRKK",
+    "TRRKK",
+    "TTRRR"
+  ],
+  "objects": [
+    {
+      "type": "plant",
+      "at": "A5",
+      "blocking": true
+    },
+    {
+      "type": "stove",
+      "at": "E2",
+      "blocking": true
+    },
+    {
+      "type": "barrel",
+      "at": "C3",
+      "blocking": true
+    },
+    {
+      "type": "fridge",
+      "at": "D4",
+      "blocking": true
+    },
+    {
+      "type": "rug",
+      "at": [
+        "A4",
+        "A3"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 4
+        }
+      ],
+      "clueText": [
+        "A **4. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Konyhában volt."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "barrel"
+        }
+      ],
+      "clueText": [
+        "Egy **hordó mellett** volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "gt",
+          "n": 4
+        }
+      ],
+      "clueText": [
+        "A **4. sor alatt** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "D1",
+    "vlad": "A2",
+    "bruno": "E3",
+    "carl": "C4",
+    "daniel": "B5"
+  },
+  "murderer": "daniel",
+  "rev": 1,
+  "floors": {
+    "T": "wood",
+    "K": "tile",
+    "P": "checker",
+    "R": "stone"
+  }
+}

@@ -1,0 +1,221 @@
+{
+  "v": 1,
+  "id": "classic-4-08-zoo",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az állatkert – reggel",
+  "story": "Szombat este az állatkertben az egyik gondozó nem tért haza. Valaki egyedül maradt vele.",
+  "size": 8,
+  "difficulty": 4,
+  "rooms": {
+    "E": "Elefánt élőhely",
+    "F": "Főterület",
+    "B": "Büfé",
+    "J": "Bejárat",
+    "O": "Oroszlán élőhely",
+    "P": "Pingvin élőhely"
+  },
+  "layout": [
+    "OOOEEBBB",
+    "OOOEEEBB",
+    "POOEEBBB",
+    "POOEEJJB",
+    "PPFFJJJB",
+    "PPFFFJJJ",
+    "PPFFFJJJ",
+    "PPFFFJJJ"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "C5",
+        "F7"
+      ]
+    },
+    {
+      "type": "elephant",
+      "at": "D3",
+      "blocking": true
+    },
+    {
+      "type": "bush",
+      "at": [
+        "B1",
+        "C6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "lion",
+      "at": "C2",
+      "blocking": true
+    },
+    {
+      "type": "penguin",
+      "at": "B8",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "H3",
+      "blocking": true
+    },
+    {
+      "type": "chair",
+      "at": [
+        "G1",
+        "H4"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "bush"
+        }
+      ],
+      "clueText": [
+        "Egy **bokor mellett** volt."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "carl"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Carllal**."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 6
+        }
+      ],
+      "clueText": [
+        "A **6. oszloptól balra** volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "elephant",
+            "lion"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **elefánt vagy oroszlán mellett** volt."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Főterületen egy **padon** ült."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ]
+    },
+    {
+      "id": "gabriel",
+      "name": "Gabriel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "animal"
+        }
+      ],
+      "clueText": [
+        "Egy **állat mellett** volt."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "A1",
+    "bruno": "F2",
+    "carl": "E3",
+    "derek": "D4",
+    "emmett": "C5",
+    "felicia": "G6",
+    "gabriel": "B7",
+    "vera": "H8"
+  },
+  "murderer": "felicia",
+  "rev": 1,
+  "floors": {
+    "E": "grass",
+    "F": "dirt",
+    "B": "wood",
+    "J": "wood",
+    "O": "sand",
+    "P": "ice"
+  }
+}

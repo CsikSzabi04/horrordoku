@@ -1,0 +1,295 @@
+{
+  "v": 1,
+  "id": "event-18-the-last-of-us-5",
+  "mode": "event",
+  "world": "last-of-us",
+  "title": "Hosszú út",
+  "story": "Abby Anderson hosszú útra indult, és nem tért vissza. A spórák köde elnyeli a nyomok néhány szavát.",
+  "size": 10,
+  "difficulty": 5,
+  "rooms": {
+    "K": "Karantén-zóna",
+    "P": "Pittsburgh",
+    "T": "Tommy gátja",
+    "J": "Jackson",
+    "E": "Egyetem",
+    "R": "Kórház",
+    "M": "Metró",
+    "H": "Hegyi kabin"
+  },
+  "layout": [
+    "EEEEHHHMMR",
+    "EEEEHHHHMM",
+    "EEEHHHHMMP",
+    "EEEEHHMMMP",
+    "TTTEHHMMPP",
+    "TTTTHMMPPP",
+    "KTTTTTMPPP",
+    "KKTTTTJJJP",
+    "KKKTJJJJJJ",
+    "KKKKJJJJJJ"
+  ],
+  "objects": [
+    {
+      "type": "crate",
+      "at": [
+        "H3",
+        "A9",
+        "J4",
+        "I5",
+        "H5",
+        "D1"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "F6",
+        "G2",
+        "C1",
+        "D9"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "B10",
+        "E8",
+        "J2"
+      ]
+    },
+    {
+      "type": "radio",
+      "at": [
+        "F5",
+        "J7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": [
+        "J8",
+        "E2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tent",
+      "at": "J5",
+      "blocking": true
+    },
+    {
+      "type": "car",
+      "at": [
+        "H6",
+        "I10"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "rock",
+      "at": [
+        "D8",
+        "C6"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "sam",
+      "name": "Sam",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Egyetemen egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    },
+    {
+      "id": "henry",
+      "name": "Henry",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Hegyi kabinban egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    },
+    {
+      "id": "bill",
+      "name": "Bill",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "aloneWith",
+          "with": "riley"
+        }
+      ],
+      "clueText": [
+        "**Egyedül** volt **Rileyvel**."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    },
+    {
+      "id": "joel-miller",
+      "name": "Joel Miller",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "riley",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Rileytől északra** volt."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    },
+    {
+      "id": "ellie-williams",
+      "name": "Ellie Williams",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "joel-miller"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Joellel**."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    },
+    {
+      "id": "riley",
+      "name": "Riley",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "A Metróban egy **███** volt."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    },
+    {
+      "id": "tess",
+      "name": "Tess",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "marlene",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Marlenétől északra** volt."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    },
+    {
+      "id": "a-clicker",
+      "name": "A Clicker",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "tess",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Tesstől délre** volt."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    },
+    {
+      "id": "abby-anderson",
+      "name": "Abby Anderson",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Karantén-zónában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    },
+    {
+      "id": "marlene",
+      "name": "Marlene",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Karantén-zónában egy **padon** ült."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "sam": "C1",
+    "henry": "G2",
+    "bill": "H3",
+    "joel-miller": "J4",
+    "ellie-williams": "I5",
+    "riley": "F6",
+    "tess": "D7",
+    "a-clicker": "E8",
+    "abby-anderson": "A9",
+    "marlene": "B10"
+  },
+  "murderer": "marlene",
+  "rev": 1,
+  "worldRule": "radio"
+}

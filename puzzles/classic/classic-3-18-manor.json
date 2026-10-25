@@ -1,0 +1,191 @@
+{
+  "v": 1,
+  "id": "classic-3-18-manor",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A kúria – ünnepnap",
+  "story": "Ünnepnap volt a kúriában, és a háziúr többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "E": "Ebédlő",
+    "K": "Konyha",
+    "R": "Kert",
+    "P": "Padlás",
+    "L": "Előcsarnok"
+  },
+  "layout": [
+    "LKKKKPP",
+    "LLLPPPP",
+    "LLLPPEP",
+    "LRRREEE",
+    "LRREEEE",
+    "RRRREEE",
+    "RRRREEE"
+  ],
+  "objects": [
+    {
+      "type": "rug",
+      "at": [
+        "A3",
+        "F3",
+        "E6"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "E7",
+        "G6"
+      ]
+    },
+    {
+      "type": "armor",
+      "at": [
+        "A4",
+        "B2",
+        "B3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "painting",
+      "at": "G5",
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": "B6",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "gt",
+          "n": 5
+        }
+      ],
+      "clueText": [
+        "Az **5. oszloptól jobbra** volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "terrain",
+          "style": "dirt"
+        }
+      ],
+      "clueText": [
+        "**Földúton** volt."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "anna",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Annától délre** volt."
+      ]
+    },
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "statue"
+        }
+      ],
+      "clueText": [
+        "Egy **szobor mellett** volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "Egy **ülőhely mellett** volt."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Ebédlőben egy **széken** ült."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "G1",
+    "bianca": "D2",
+    "carl": "A3",
+    "vickie": "C4",
+    "daniel": "B5",
+    "eva": "F6",
+    "frank": "E7"
+  },
+  "murderer": "daniel",
+  "rev": 1,
+  "floors": {
+    "E": "wood",
+    "K": "tile",
+    "R": "grass",
+    "P": "dirt"
+  }
+}

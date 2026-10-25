@@ -1,0 +1,238 @@
+{
+  "v": 1,
+  "id": "classic-4-05-school",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az iskola – nyitás előtt",
+  "story": "Ünnepnap volt az iskolában, és az igazgató többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 9,
+  "difficulty": 4,
+  "rooms": {
+    "U": "Udvar",
+    "K": "Könyvtár",
+    "T": "Tanterem",
+    "F": "Folyosó",
+    "O": "Tornaterem",
+    "M": "Menza"
+  },
+  "layout": [
+    "MMMMMOOOO",
+    "MMMMMOOOO",
+    "MMMMMFOOO",
+    "UUTTMFFOO",
+    "UUTTMMFOF",
+    "UUUTMMFFF",
+    "UUUTTFFFF",
+    "UUUTTTTTK",
+    "UKKKKKKKK"
+  ],
+  "objects": [
+    {
+      "type": "ball",
+      "at": [
+        "B8",
+        "I4",
+        "H3",
+        "A5",
+        "B6"
+      ]
+    },
+    {
+      "type": "desk",
+      "at": [
+        "C5",
+        "D6"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": "A6"
+    },
+    {
+      "type": "globe",
+      "at": [
+        "I9",
+        "D4",
+        "C4",
+        "F8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "shelf",
+      "at": [
+        "H9",
+        "I8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "chair",
+      "at": "B1"
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "dora",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Dorától északra** volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 5
+        }
+      ],
+      "clueText": [
+        "Az **5. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "dora"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Dorával**."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "ne",
+          "n": 8
+        }
+      ],
+      "clueText": [
+        "**Nem** a **8. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "dora",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Dorától délre** volt."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "U"
+        }
+      ],
+      "clueText": [
+        "Az Udvaron egy **padon** ült."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "gina",
+      "name": "Gina",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "ball"
+        }
+      ],
+      "clueText": [
+        "Egy **labdán** volt."
+      ]
+    },
+    {
+      "id": "henry",
+      "name": "Henry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "shelf"
+        }
+      ],
+      "clueText": [
+        "Egy **polc mellett** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "F1",
+    "bianca": "E2",
+    "clara": "H3",
+    "dora": "I4",
+    "eva": "C5",
+    "flavia": "A6",
+    "vera": "D7",
+    "gina": "B8",
+    "henry": "G9"
+  },
+  "murderer": "eva",
+  "rev": 1,
+  "floors": {
+    "U": "grass",
+    "K": "carpet",
+    "T": "wood",
+    "F": "tile",
+    "O": "checker",
+    "M": "tile"
+  }
+}

@@ -1,0 +1,230 @@
+{
+  "v": 1,
+  "id": "bonus-02-sunken-mill",
+  "mode": "bonus",
+  "world": "everyday",
+  "title": "Az Elsüllyedt Malom",
+  "story": "A mocsár visszaadta a malom régi őrét. A malomkerék azóta is forog, pedig a víz régen elapadt.",
+  "size": 9,
+  "difficulty": 4,
+  "rooms": {
+    "M": "Malomkerék",
+    "R": "Őrlőterem",
+    "G": "Gabonapadlás",
+    "O": "Molnárház",
+    "S": "Stég",
+    "C": "Mocsár",
+    "F": "Fűzfás"
+  },
+  "layout": [
+    "OOOCCCRRR",
+    "OOOCCRRRR",
+    "OOOOOFRRR",
+    "GGFOFFRSS",
+    "GGFFFFFSS",
+    "GGGGFFSSS",
+    "GGGGMFSSS",
+    "GMMMMMSSS",
+    "MMMMMMMSS"
+  ],
+  "objects": [
+    {
+      "type": "crate",
+      "at": [
+        "A6",
+        "G1",
+        "I2"
+      ]
+    },
+    {
+      "type": "fountain",
+      "at": [
+        "C8",
+        "F9",
+        "G9",
+        "D8",
+        "E9"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "F3",
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": "A2"
+    },
+    {
+      "type": "chair",
+      "at": [
+        "B3",
+        "E3"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "Az Őrlőteremben egy **ládán** volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. sorban** volt."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "crate"
+        }
+      ],
+      "clueText": [
+        "Egy **láda mellett** volt."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "A Gabonapadláson egy **ládán** volt."
+      ]
+    },
+    {
+      "id": "fred",
+      "name": "Fred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A helyiségében **hárman** voltak."
+      ]
+    },
+    {
+      "id": "gina",
+      "name": "Gina",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "fred",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Fredtől délre** volt."
+      ]
+    },
+    {
+      "id": "holly",
+      "name": "Holly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszlopban** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "G1",
+    "bianca": "H2",
+    "clara": "I3",
+    "dora": "C4",
+    "victor": "D5",
+    "ervin": "A6",
+    "fred": "E7",
+    "gina": "F8",
+    "holly": "B9"
+  },
+  "murderer": "dora",
+  "rev": 1,
+  "floors": {
+    "M": "water",
+    "R": "wood",
+    "G": "dirt",
+    "O": "brick",
+    "S": "wood",
+    "C": "swamp",
+    "F": "grass"
+  }
+}

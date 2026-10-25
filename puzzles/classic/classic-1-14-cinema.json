@@ -1,0 +1,147 @@
+{
+  "v": 1,
+  "id": "classic-1-14-cinema",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A mozi – zárás után",
+  "story": "Szombat este a moziban a jegyszedő nem tért haza. Valaki egyedül maradt vele.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "E": "Előcsarnok",
+    "N": "Nézőtér",
+    "B": "Büfé",
+    "V": "Vetítő"
+  },
+  "layout": [
+    "BEEEE",
+    "BBENE",
+    "BBBNN",
+    "BVNNV",
+    "VVVVV"
+  ],
+  "objects": [
+    {
+      "type": "rug",
+      "at": "D2"
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "E1",
+        "D1",
+        "E2"
+      ]
+    },
+    {
+      "type": "counter",
+      "at": "A4",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": [
+        "C1",
+        "C2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "popcorn",
+      "at": "C3",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa"
+        }
+      ],
+      "clueText": [
+        "Egy **kanapén** ült."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "furniture"
+        }
+      ],
+      "clueText": [
+        "Egy **bútor mellett** volt."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. oszlopban** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "E1",
+    "bianca": "D2",
+    "cody": "A3",
+    "vera": "B4",
+    "derek": "C5"
+  },
+  "murderer": "derek",
+  "rev": 1,
+  "floors": {
+    "N": "carpet",
+    "B": "wood",
+    "V": "stone"
+  }
+}

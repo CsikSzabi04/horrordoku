@@ -1,0 +1,199 @@
+{
+  "v": 1,
+  "id": "classic-3-10-office",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az iroda – ünnepnap",
+  "story": "Ünnepnap volt az irodában, és az osztályvezető többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "K": "Konyha",
+    "R": "Raktár",
+    "F": "Főnöki iroda",
+    "N": "Nyitott iroda",
+    "T": "Tárgyaló"
+  },
+  "layout": [
+    "NNNKKKK",
+    "NNNNKKK",
+    "NRRKKTT",
+    "RRRRTTT",
+    "FRRRTTT",
+    "FFFFFTT",
+    "FFFFFTT"
+  ],
+  "objects": [
+    {
+      "type": "rug",
+      "at": [
+        "F7",
+        "F6"
+      ]
+    },
+    {
+      "type": "sofa",
+      "at": "E6"
+    },
+    {
+      "type": "chair",
+      "at": [
+        "C1",
+        "G7",
+        "F3"
+      ]
+    },
+    {
+      "type": "printer",
+      "at": [
+        "B2",
+        "A1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "fridge",
+      "at": "D1",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "F4",
+      "blocking": true
+    },
+    {
+      "type": "officedesk",
+      "at": "A5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. sorban** volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszloptól balra** volt."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "carly",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Carlytől délre** volt."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa"
+        }
+      ],
+      "clueText": [
+        "Egy **kanapén** ült."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Egy **szőnyegen** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "vickie": "C1",
+    "adam": "G2",
+    "bianca": "A3",
+    "carly": "B4",
+    "derek": "D5",
+    "elena": "E6",
+    "felicia": "F7"
+  },
+  "murderer": "bianca",
+  "rev": 1,
+  "floors": {
+    "K": "tile",
+    "R": "stone",
+    "F": "wood",
+    "N": "carpet",
+    "T": "wood"
+  }
+}

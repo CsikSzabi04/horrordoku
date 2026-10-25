@@ -1,0 +1,238 @@
+{
+  "v": 1,
+  "id": "classic-4-17-station",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A vasútállomás – este",
+  "story": "Ünnepnap volt a vasútállomáson, és a forgalmista többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 9,
+  "difficulty": 4,
+  "rooms": {
+    "R": "Raktár",
+    "V": "Váróterem",
+    "P": "Peron",
+    "J": "Jegypénztár",
+    "B": "Büfé"
+  },
+  "layout": [
+    "PPPPRRRVV",
+    "PPPRRRRVV",
+    "PPPRRRVVV",
+    "BPPRRRVVV",
+    "BPPRRRVVV",
+    "BPPRRRVVV",
+    "BPPRRRVVV",
+    "BBJJJRJVV",
+    "BBBBJJJJV"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "H6",
+        "C2",
+        "H1",
+        "I5"
+      ]
+    },
+    {
+      "type": "luggage",
+      "at": [
+        "B5",
+        "C4"
+      ]
+    },
+    {
+      "type": "clock",
+      "at": [
+        "H8",
+        "D1",
+        "B4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": [
+        "C9",
+        "F9"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "I6",
+      "blocking": true
+    },
+    {
+      "type": "chair",
+      "at": "A9"
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "gordon"
+        }
+      ],
+      "clueText": [
+        "**Gordonnal** egy helyiségben volt."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Peronon egy **padon** ült."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "ne",
+          "n": 7
+        }
+      ],
+      "clueText": [
+        "**Nem** a **7. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **pad mellett** volt."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "luggage"
+        }
+      ],
+      "clueText": [
+        "Egy **bőrönd tetején** volt."
+      ]
+    },
+    {
+      "id": "fred",
+      "name": "Fred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "chair",
+            "plant"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **szék vagy cserepes növény mellett** volt."
+      ]
+    },
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "gordon",
+      "name": "Gordon",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "fred",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Fredtől délre** volt."
+      ]
+    },
+    {
+      "id": "hugo",
+      "name": "Hugo",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "gordon",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Gordontól délre** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "G1",
+    "bruno": "C2",
+    "carl": "E3",
+    "daniel": "I4",
+    "emmett": "B5",
+    "fred": "H6",
+    "vickie": "A7",
+    "gordon": "F8",
+    "hugo": "D9"
+  },
+  "murderer": "hugo",
+  "rev": 1,
+  "floors": {
+    "R": "stone",
+    "V": "tile",
+    "P": "stone",
+    "J": "brick",
+    "B": "wood"
+  }
+}

@@ -1,0 +1,241 @@
+{
+  "v": 1,
+  "id": "classic-5-12-playground",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A játszótér – ünnepnap",
+  "story": "Ünnepnap volt a játszótéren, és egy felnőtt többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "C": "Csúszda",
+    "H": "Hinták",
+    "P": "Piknikhely",
+    "F": "Focipálya",
+    "O": "Homokozó"
+  },
+  "layout": [
+    "PPPPPFFFF",
+    "PPPPPFFFF",
+    "PHHPPOOOF",
+    "HHHHHOOOF",
+    "HHHHHCOOF",
+    "HHHHHCOOF",
+    "HHHCCCCOO",
+    "CCCCCCCOO",
+    "CCCCCCCCO"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "A1",
+        "B3",
+        "C7",
+        "E4"
+      ]
+    },
+    {
+      "type": "ball",
+      "at": [
+        "H2",
+        "I6"
+      ]
+    },
+    {
+      "type": "slide",
+      "at": [
+        "G8",
+        "F6"
+      ]
+    },
+    {
+      "type": "picnic",
+      "at": "B1",
+      "blocking": true
+    },
+    {
+      "type": "fountain",
+      "at": [
+        "F9",
+        "F8",
+        "A8",
+        "C8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "A6",
+      "blocking": true
+    },
+    {
+      "type": "seesaw",
+      "at": [
+        "D5",
+        "E6"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Piknikhelyen egy **padon** ült."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "Egy **ülőhely mellett** volt."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "slide"
+        }
+      ],
+      "clueText": [
+        "Egy **csúszda mellett** volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "felicia",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Feliciától északra** volt."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ]
+    },
+    {
+      "id": "gordon",
+      "name": "Gordon",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "slide",
+          "room": "C"
+        }
+      ],
+      "clueText": [
+        "A Csúszdánál egy **csúszdán** volt."
+      ]
+    },
+    {
+      "id": "hugo",
+      "name": "Hugo",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "fountain"
+        }
+      ],
+      "clueText": [
+        "Egy **kút mellett** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "A1",
+    "vlad": "H2",
+    "bella": "B3",
+    "carl": "D4",
+    "dora": "F5",
+    "eva": "I6",
+    "felicia": "C7",
+    "gordon": "G8",
+    "hugo": "E9"
+  },
+  "murderer": "eva",
+  "rev": 1,
+  "floors": {
+    "C": "dirt",
+    "H": "grass",
+    "P": "checker",
+    "F": "grass",
+    "O": "sand"
+  }
+}

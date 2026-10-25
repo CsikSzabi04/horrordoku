@@ -1,0 +1,218 @@
+{
+  "v": 1,
+  "id": "classic-3-07-station",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A vasútállomás – reggel",
+  "story": "Zárás után a vasútállomáson a forgalmista holtan feküdt. Csak páran voltak ma bent.",
+  "size": 8,
+  "difficulty": 3,
+  "rooms": {
+    "J": "Jegypénztár",
+    "B": "Büfé",
+    "R": "Raktár",
+    "V": "Váróterem",
+    "P": "Peron"
+  },
+  "layout": [
+    "JJPPPVVV",
+    "JJPPVVVV",
+    "JJPPVVVV",
+    "JPPPVVVV",
+    "JPPPVVRR",
+    "JPPVVVRR",
+    "JJBBBBRR",
+    "JJBBBRRR"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "E2",
+        "D7",
+        "D8",
+        "E7"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "G1",
+        "C2"
+      ]
+    },
+    {
+      "type": "luggage",
+      "at": "B4"
+    },
+    {
+      "type": "clock",
+      "at": [
+        "G4",
+        "F6",
+        "C1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "barrel",
+      "at": "G5",
+      "blocking": true
+    },
+    {
+      "type": "train",
+      "at": "D1",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "H2",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **pad mellett**."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "A Váróteremben egy **széken** ült."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "luggage",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Peronon egy **bőrönd tetején** volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 1
+        }
+      ],
+      "clueText": [
+        "Az **első oszlopban** volt."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "derek",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Derektől délre** volt."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "gina",
+      "name": "Gina",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 8
+        }
+      ],
+      "clueText": [
+        "A **8. sorban** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "G1",
+    "bruno": "E2",
+    "victor": "C3",
+    "clara": "B4",
+    "derek": "A5",
+    "emmett": "H6",
+    "frank": "D7",
+    "gina": "F8"
+  },
+  "murderer": "clara",
+  "rev": 1,
+  "floors": {
+    "J": "brick",
+    "B": "wood",
+    "R": "stone",
+    "V": "tile",
+    "P": "stone"
+  }
+}

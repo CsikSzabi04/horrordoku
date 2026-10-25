@@ -10,6 +10,8 @@ import { t } from '../../i18n'
 import type { Profile, ProfileStats } from '../../shared/cloud'
 import { Avatar, Button, Chip, Modal, Panel, ProgressBar, Tabs, useToast } from '../../ui'
 import '../login/form.css'
+import { SignOutButton } from '../../components/SignOutButton'
+import { copyText, friendLink } from '../friends/addLink'
 import { hoursMinutes, rankOf } from './rank'
 
 type Tab = 'overview' | 'cases' | 'collection' | 'achievements' | 'account'
@@ -42,6 +44,17 @@ function Signed({ userId }: { userId: string }) {
   const [profile, setProfile] = useState<Profile | null>(null)
   const [stats, setStats] = useState<ProfileStats | null>(null)
   const [error, setError] = useState('')
+  const [code, setCode] = useState<string | null | undefined>(undefined) // undefined: töltődik · null: nem elérhető
+  const toast = useToast()
+
+  useEffect(() => {
+    let live = true
+    void cloud.friends.myCode().then((r) => live && setCode(r.ok ? r.value : null))
+    return () => {
+      live = false
+    }
+  }, [userId])
+  const copy = async (text: string) => toast((await copyText(text)) ? t('profile.copied') : t('profile.copyFailed'))
 
   useEffect(() => {
     let live = true
@@ -75,7 +88,10 @@ function Signed({ userId }: { userId: string }) {
             <div className="nd-pf-head">
               <Avatar id={profile.avatar} emoji={avatar?.emoji} size="4.5rem" />
               <div>
-                <h2>{profile.username}</h2>
+                <div className="nd-pf-top">
+                  <h2>{profile.username}</h2>
+                  <SignOutButton onDone={back} />
+                </div>
                 <p>
                   {t('profile.rank')}: <b>{t(`rank.${rank.id}`)}</b> · {t('profile.joined')}: {profile.createdAt.slice(0, 10)}
                 </p>
@@ -84,6 +100,28 @@ function Signed({ userId }: { userId: string }) {
                   XP {profile.xp}
                   {rank.next !== null && ` / ${rank.next}`} · 💀 {profile.coins} {t('profile.coins')} · 🔥 {profile.streak} {t('profile.streak')} ({t('profile.best')}: {profile.bestStreak})
                 </p>
+                {code !== undefined && (
+                  <div className="nd-pf-code">
+                    {code ? (
+                      <>
+                        <span>
+                          {t('profile.code')}: <code>{code}</code>
+                        </span>
+                        <Button size="sm" variant="ghost" data-act="copy-code" onClick={() => void copy(code)}>
+                          {t('profile.code.copy')}
+                        </Button>
+                        <a className="nd-link" href={friendLink(code)} data-act="friend-link" title={friendLink(code)}>
+                          🔗 {t('profile.link')}
+                        </a>
+                        <Button size="sm" variant="ghost" data-act="copy-link" onClick={() => void copy(friendLink(code))}>
+                          {t('profile.link.copy')}
+                        </Button>
+                      </>
+                    ) : (
+                      <small className="nd-note">{t('profile.code.missing')}</small>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           )}

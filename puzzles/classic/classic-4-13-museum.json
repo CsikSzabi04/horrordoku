@@ -1,0 +1,240 @@
+{
+  "v": 1,
+  "id": "classic-4-13-museum",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A múzeum – nyitás előtt",
+  "story": "Ünnepnap volt a múzeumban, és a teremőr többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 9,
+  "difficulty": 4,
+  "rooms": {
+    "E": "Előcsarnok",
+    "U": "Udvar",
+    "K": "Kiállítóterem",
+    "A": "Ajándékbolt",
+    "R": "Raktár",
+    "I": "Iroda"
+  },
+  "layout": [
+    "AAAAAAAAA",
+    "KKRUUUUUA",
+    "KKRUUUUUA",
+    "KKRRUUUII",
+    "KRRRRUIII",
+    "KKRRREEII",
+    "KRRREEEEI",
+    "KEEEEEEII",
+    "KKEEEEEII"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "E8",
+        "I7",
+        "H8"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "C9",
+        "B4"
+      ]
+    },
+    {
+      "type": "plant",
+      "at": [
+        "F8",
+        "G7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "painting",
+      "at": [
+        "B2",
+        "G8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": "F2",
+      "blocking": true
+    },
+    {
+      "type": "armor",
+      "at": "B6",
+      "blocking": true
+    },
+    {
+      "type": "rug",
+      "at": [
+        "H7",
+        "G6"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "bella"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Bellával**."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "ne",
+          "n": 8
+        }
+      ],
+      "clueText": [
+        "**Nem** a **8. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "statue"
+        }
+      ],
+      "clueText": [
+        "Egy **szobor mellett** volt."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "Az Irodában volt."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "terrain",
+          "style": "stone"
+        }
+      ],
+      "clueText": [
+        "**Köves talajon** volt."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "gordon",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Gordontól északra** volt."
+      ]
+    },
+    {
+      "id": "gordon",
+      "name": "Gordon",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **növény mellett** volt."
+      ]
+    },
+    {
+      "id": "hanna",
+      "name": "Hanna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Előcsarnokban egy **padon** ült."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "H1",
+    "bella": "I2",
+    "clara": "F3",
+    "vera": "B4",
+    "daniel": "G5",
+    "ervin": "D6",
+    "flavia": "A7",
+    "gordon": "E8",
+    "hanna": "C9"
+  },
+  "murderer": "flavia",
+  "rev": 1,
+  "floors": {
+    "U": "grass",
+    "K": "carpet",
+    "A": "wood",
+    "R": "stone"
+  }
+}

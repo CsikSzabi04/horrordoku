@@ -1,0 +1,260 @@
+{
+  "v": 1,
+  "id": "classic-5-03-circus",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A cirkusz",
+  "story": "A cirkuszban reggel a zsonglőrt holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 10,
+  "difficulty": 5,
+  "rooms": {
+    "B": "Büfé",
+    "P": "Porond",
+    "N": "Nagysátor",
+    "L": "Állatketrecek",
+    "T": "Öltözők"
+  },
+  "layout": [
+    "BBBBBBBNNN",
+    "BBBBBBNNNN",
+    "TBBBBNNNNN",
+    "TBBBBNNNNN",
+    "TTTBBNNNNN",
+    "TTTTNNNNNN",
+    "TTTTPNPPPP",
+    "LLLLPPPPPP",
+    "LLLPPPPPPP",
+    "LLLPPPPPPP"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "C2",
+        "F4",
+        "G6",
+        "I6"
+      ]
+    },
+    {
+      "type": "rug",
+      "at": [
+        "B7",
+        "H10",
+        "I8"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "D6",
+        "E5"
+      ]
+    },
+    {
+      "type": "mirror",
+      "at": [
+        "C6",
+        "A4",
+        "D7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "C3",
+      "blocking": true
+    },
+    {
+      "type": "lion",
+      "at": [
+        "A10",
+        "A8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "balloon",
+      "at": "D1",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 8
+        }
+      ],
+      "clueText": [
+        "A **8. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "furniture"
+        }
+      ],
+      "clueText": [
+        "Egy **bútor mellett** volt."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "daniel"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Daniellel**."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "B"
+        }
+      ],
+      "clueText": [
+        "A Büfében egy **széken** ült."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "Az Öltözőkben egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "gina",
+      "name": "Gina",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Egy **szőnyeg mellett** volt."
+      ]
+    },
+    {
+      "id": "hugo",
+      "name": "Hugo",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "balloon",
+            "lion"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **lufi vagy oroszlán mellett** volt."
+      ]
+    },
+    {
+      "id": "iris",
+      "name": "Iris",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "gt",
+          "n": 9
+        }
+      ],
+      "clueText": [
+        "A **9. sor alatt** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "H1",
+    "bruno": "C2",
+    "clara": "G3",
+    "daniel": "F4",
+    "ervin": "E5",
+    "victor": "D6",
+    "flavia": "B7",
+    "gina": "J8",
+    "hugo": "A9",
+    "iris": "I10"
+  },
+  "murderer": "flavia",
+  "rev": 1,
+  "floors": {
+    "B": "wood",
+    "N": "sand"
+  }
+}

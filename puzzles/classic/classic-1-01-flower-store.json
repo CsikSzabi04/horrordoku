@@ -1,0 +1,177 @@
+{
+  "v": 1,
+  "id": "classic-1-01-flower-store",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A virágbolt",
+  "story": "A virágboltban reggel az egyik alkalmazottat holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 6,
+  "difficulty": 1,
+  "rooms": {
+    "E": "Eladótér",
+    "L": "Előkészítés",
+    "P": "Pénztár",
+    "R": "Raktár"
+  },
+  "layout": [
+    "EEPPPP",
+    "EEPPPP",
+    "ERRRRP",
+    "ERRRRP",
+    "EEERRL",
+    "EEELLL"
+  ],
+  "objects": [
+    {
+      "type": "rug",
+      "at": "A3"
+    },
+    {
+      "type": "chair",
+      "at": [
+        "F4",
+        "C2"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "B5",
+        "B1"
+      ]
+    },
+    {
+      "type": "shelf",
+      "at": "B3",
+      "blocking": true
+    },
+    {
+      "type": "register",
+      "at": "D2",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "A2",
+      "blocking": true
+    },
+    {
+      "type": "flowers",
+      "at": "C5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **szék mellett** volt."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. sorban** volt."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Pénztárnál egy **széken** ült."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "chair",
+            "flowers"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **szék vagy virágcserje mellett** volt."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "Az Előkészítésben volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "C1",
+    "bruno": "E2",
+    "vlad": "A3",
+    "clara": "F4",
+    "daniel": "B5",
+    "elena": "D6"
+  },
+  "murderer": "daniel",
+  "rev": 1,
+  "floors": {
+    "E": "checker",
+    "L": "brick",
+    "P": "brick",
+    "R": "stone"
+  }
+}

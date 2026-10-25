@@ -1,0 +1,244 @@
+{
+  "v": 1,
+  "id": "event-12-game-of-thrones-2",
+  "mode": "event",
+  "world": "game-of-thrones",
+  "title": "A bor és a méreg",
+  "story": "Cersei Lannister a pohár mellett maradt, amikor a kandallók kialudtak. A Falon túlra csak páncélos mer menni.",
+  "size": 8,
+  "difficulty": 4,
+  "rooms": {
+    "N": "Nagyterem",
+    "I": "Isteni liget",
+    "F": "Fegyvertár",
+    "K": "Kripta",
+    "T": "Toronyszoba",
+    "A": "A Falon túl",
+    "G": "Fagyott tó"
+  },
+  "layout": [
+    "KKKKTTTT",
+    "KKKTTTTT",
+    "IIIAATTT",
+    "IIIAAGGG",
+    "IIIAFGGG",
+    "NIIFFGGG",
+    "NNNFFGGG",
+    "NNNNFFFF"
+  ],
+  "objects": [
+    {
+      "type": "crate",
+      "at": [
+        "H1",
+        "B7",
+        "E5"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "D8",
+        "A4"
+      ]
+    },
+    {
+      "type": "armor",
+      "at": [
+        "F5",
+        "H6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": [
+        "B2",
+        "B6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "fireplace",
+      "at": "G7",
+      "blocking": true
+    },
+    {
+      "type": "throne",
+      "at": "H8",
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": [
+        "A5",
+        "F7"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "sansa-stark",
+      "name": "Sansa Stark",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A Toronyszobában egy **ládán** volt."
+      ],
+      "source": {
+        "game": "Game of Thrones"
+      }
+    },
+    {
+      "id": "daenerys-targaryen",
+      "name": "Daenerys Targaryen",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "samwell-tarly",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Samwelltől északra** volt."
+      ],
+      "source": {
+        "game": "Game of Thrones"
+      }
+    },
+    {
+      "id": "cersei-lannister",
+      "name": "Cersei Lannister",
+      "race": "human",
+      "victim": true,
+      "armored": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Toronyszobában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Game of Thrones"
+      }
+    },
+    {
+      "id": "samwell-tarly",
+      "name": "Samwell Tarly",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "armor"
+        }
+      ],
+      "clueText": [
+        "Egy **páncél mellett** volt."
+      ],
+      "source": {
+        "game": "Game of Thrones"
+      }
+    },
+    {
+      "id": "arya-stark",
+      "name": "Arya Stark",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "tyrion-lannister",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Tyriontól északra** volt."
+      ],
+      "source": {
+        "game": "Game of Thrones"
+      }
+    },
+    {
+      "id": "az-ejkiraly",
+      "name": "Az Éjkirály",
+      "race": "ghoul",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "jaime-lannister"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Jaimével**."
+      ],
+      "source": {
+        "game": "Game of Thrones"
+      }
+    },
+    {
+      "id": "jaime-lannister",
+      "name": "Jaime Lannister",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "samwell-tarly",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Samwelltől délre** volt."
+      ],
+      "source": {
+        "game": "Game of Thrones"
+      }
+    },
+    {
+      "id": "tyrion-lannister",
+      "name": "Tyrion Lannister",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "jaime-lannister"
+        }
+      ],
+      "clueText": [
+        "**Jaimével** egy helyiségben volt."
+      ],
+      "source": {
+        "game": "Game of Thrones"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "sansa-stark": "H1",
+    "daenerys-targaryen": "C2",
+    "cersei-lannister": "G3",
+    "samwell-tarly": "F4",
+    "arya-stark": "E5",
+    "az-ejkiraly": "A6",
+    "jaime-lannister": "B7",
+    "tyrion-lannister": "D8"
+  },
+  "murderer": "sansa-stark",
+  "rev": 1,
+  "worldRule": "vacuum",
+  "vacuumRooms": [
+    "A",
+    "G"
+  ]
+}

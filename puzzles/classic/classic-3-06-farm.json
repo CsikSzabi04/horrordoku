@@ -1,0 +1,196 @@
+{
+  "v": 1,
+  "id": "classic-3-06-farm",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A farm",
+  "story": "Ünnepnap volt a farmon, és a gazda többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "G": "Gazdaház",
+    "P": "Pajta",
+    "K": "Kert",
+    "U": "Udvar",
+    "I": "Istálló"
+  },
+  "layout": [
+    "IIIIIIK",
+    "IIIIIIK",
+    "IKKKKKK",
+    "GKPPPPK",
+    "GPPPPPU",
+    "GGGGGUU",
+    "GGGGUUU"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "G5",
+        "A6"
+      ]
+    },
+    {
+      "type": "haybale",
+      "at": [
+        "C2",
+        "D4"
+      ]
+    },
+    {
+      "type": "horse",
+      "at": [
+        "E7",
+        "A2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "B4",
+      "blocking": true
+    },
+    {
+      "type": "cow",
+      "at": [
+        "A3",
+        "D2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": [
+        "D7",
+        "G2"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "cow"
+        }
+      ],
+      "clueText": [
+        "Egy **tehén mellett** volt."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "haybale"
+        }
+      ],
+      "clueText": [
+        "Egy **szalmabálán** ült."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 5
+        }
+      ],
+      "clueText": [
+        "Az **5. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "deborah",
+      "name": "Deborah",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Pajtában volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "U"
+        }
+      ],
+      "clueText": [
+        "Az Udvaron egy **széken** ült."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "D1",
+    "bruno": "C2",
+    "clara": "E3",
+    "deborah": "F4",
+    "eva": "G5",
+    "flavia": "A6",
+    "victor": "B7"
+  },
+  "murderer": "flavia",
+  "rev": 1,
+  "floors": {
+    "G": "wood",
+    "K": "grass",
+    "U": "grass",
+    "I": "dirt"
+  }
+}

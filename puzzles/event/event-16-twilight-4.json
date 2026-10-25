@@ -1,0 +1,259 @@
+{
+  "v": 1,
+  "id": "event-16-twilight-4",
+  "mode": "event",
+  "world": "twilight",
+  "title": "A rendőrfőnök",
+  "story": "Charlie Swan a halászbotjával a tópartra indult. Alice látomása szerint nem egyedül ment.",
+  "size": 8,
+  "difficulty": 4,
+  "rooms": {
+    "C": "Cullen-ház",
+    "F": "Forks Gimnázium",
+    "E": "Erdei tisztás",
+    "L": "La Push part",
+    "S": "Swan-ház",
+    "O": "Forks kórház",
+    "V": "Volturi-torony"
+  },
+  "layout": [
+    "SSSVVVVV",
+    "SSSLLVVV",
+    "SSLLLLVV",
+    "SSSLLLVV",
+    "CSELLLEF",
+    "CCEEEEEF",
+    "CCCCOOEF",
+    "CCCOOOOO"
+  ],
+  "objects": [
+    {
+      "type": "sofa",
+      "at": [
+        "E6",
+        "A6"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "A1",
+        "F5",
+        "H3"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "B4",
+        "F7"
+      ]
+    },
+    {
+      "type": "totem",
+      "at": [
+        "B2",
+        "E8",
+        "C4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "fireplace",
+      "at": [
+        "D8",
+        "A2",
+        "E1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "D2",
+      "blocking": true
+    },
+    {
+      "type": "rock",
+      "at": [
+        "E5",
+        "H7"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "jasper-hale",
+      "name": "Jasper Hale",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A helyiségében **hárman** voltak."
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    },
+    {
+      "id": "alice-cullen",
+      "name": "Alice Cullen",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "jasper-hale",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Jaspertől délre** volt."
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    },
+    {
+      "id": "rosalie-hale",
+      "name": "Rosalie Hale",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **növény mellett** volt."
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    },
+    {
+      "id": "bella-swan",
+      "name": "Bella Swan",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "gt",
+          "n": 1
+        }
+      ],
+      "clueText": [
+        "Az **első oszloptól jobbra** volt."
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    },
+    {
+      "id": "edward-cullen",
+      "name": "Edward Cullen",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "rosalie-hale"
+        }
+      ],
+      "clueText": [
+        "**Rosaliével** egy helyiségben volt."
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    },
+    {
+      "id": "james",
+      "name": "James",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "rosalie-hale",
+          "rows": 3
+        },
+        {
+          "kind": "on",
+          "object": "sofa",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Rosaliétől délre** volt.",
+        "Az Erdei tisztáson egy **kanapén** ült."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    },
+    {
+      "id": "charlie-swan",
+      "name": "Charlie Swan",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Az Erdei tisztáson **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    },
+    {
+      "id": "carlisle-cullen",
+      "name": "Carlisle Cullen",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "edward-cullen",
+          "rows": 3
+        },
+        {
+          "kind": "in",
+          "room": "O"
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Edwardtól délre** volt.",
+        "A Forks kórházban volt."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "jasper-hale": "A1",
+    "alice-cullen": "C2",
+    "rosalie-hale": "D3",
+    "bella-swan": "B4",
+    "edward-cullen": "F5",
+    "james": "E6",
+    "charlie-swan": "G7",
+    "carlisle-cullen": "H8"
+  },
+  "murderer": "james",
+  "rev": 1,
+  "worldRule": "totems"
+}

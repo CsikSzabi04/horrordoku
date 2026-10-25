@@ -1,0 +1,271 @@
+{
+  "v": 1,
+  "id": "classic-5-15-school",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az iskola – esős napon",
+  "story": "Szombat este az iskolában az igazgató nem tért haza. Valaki egyedül maradt vele.",
+  "size": 10,
+  "difficulty": 5,
+  "rooms": {
+    "T": "Tanterem",
+    "F": "Folyosó",
+    "O": "Tornaterem",
+    "M": "Menza",
+    "U": "Udvar",
+    "K": "Könyvtár"
+  },
+  "layout": [
+    "KKKKUUMMMM",
+    "KKKKKUMMTM",
+    "KKKUUUMTTT",
+    "KKUUUUMTTT",
+    "KKUUUMMTTT",
+    "KUUUUMTTTT",
+    "KOMMMMFFFF",
+    "OOOOOOFFFF",
+    "OOOOOOOFFF",
+    "OOOOFFFFFF"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "J2",
+        "C3",
+        "G5",
+        "I6",
+        "E7",
+        "G3"
+      ]
+    },
+    {
+      "type": "ball",
+      "at": [
+        "A10",
+        "F1",
+        "B9"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "H9",
+        "C4",
+        "F10"
+      ]
+    },
+    {
+      "type": "locker",
+      "at": [
+        "G10",
+        "I9"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "globe",
+      "at": [
+        "J5",
+        "A5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "board",
+      "at": "H5",
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "E1",
+      "blocking": true
+    },
+    {
+      "type": "table",
+      "at": "H1",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **növény mellett** volt."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "anna",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Annától délre** volt."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "vlad",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Vladtól délre** volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A Tanteremben egy **széken** ült."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "greg",
+      "name": "Greg",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "ball",
+            "tree"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **labda vagy fa mellett** volt."
+      ]
+    },
+    {
+      "id": "henry",
+      "name": "Henry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ]
+    },
+    {
+      "id": "iris",
+      "name": "Iris",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "ball",
+          "room": "O"
+        }
+      ],
+      "clueText": [
+        "A Tornateremben egy **labdán** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "F1",
+    "bruno": "J2",
+    "carl": "C3",
+    "vlad": "D4",
+    "daniel": "G5",
+    "eva": "I6",
+    "frank": "E7",
+    "greg": "B8",
+    "henry": "H9",
+    "iris": "A10"
+  },
+  "murderer": "anna",
+  "rev": 1,
+  "floors": {
+    "T": "wood",
+    "F": "tile",
+    "O": "checker",
+    "M": "tile",
+    "U": "grass",
+    "K": "carpet"
+  }
+}

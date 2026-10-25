@@ -1,0 +1,196 @@
+{
+  "v": 1,
+  "id": "classic-2-03-circus",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A cirkusz – nyitás előtt",
+  "story": "Ünnepnap volt a cirkuszban, és a zsonglőr többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 7,
+  "difficulty": 2,
+  "rooms": {
+    "P": "Porond",
+    "N": "Nagysátor",
+    "L": "Állatketrecek",
+    "T": "Öltözők",
+    "B": "Büfé"
+  },
+  "layout": [
+    "LLLLBBB",
+    "LLLNNNB",
+    "LLLNNNB",
+    "PPNNNNT",
+    "PPPPPTT",
+    "PPPPTTT",
+    "PTTTTTT"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "C4",
+        "D3"
+      ]
+    },
+    {
+      "type": "lion",
+      "at": "A2",
+      "blocking": true
+    },
+    {
+      "type": "mirror",
+      "at": "G7",
+      "blocking": true
+    },
+    {
+      "type": "balloon",
+      "at": "E5",
+      "blocking": true
+    },
+    {
+      "type": "tent",
+      "at": "E3",
+      "blocking": true
+    },
+    {
+      "type": "popcorn",
+      "at": "G1",
+      "blocking": true
+    },
+    {
+      "type": "rug",
+      "at": "C7"
+    },
+    {
+      "type": "chair",
+      "at": [
+        "G6",
+        "E6"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. sorban** volt."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "tent"
+        }
+      ],
+      "clueText": [
+        "Egy **sátor mellett** volt."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "A Nagysátorban egy **padon** ült."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 7
+        }
+      ],
+      "clueText": [
+        "A **7. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **szék mellett** volt."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "cody",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Codytől délre** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "vlad": "A1",
+    "anna": "B2",
+    "bella": "D3",
+    "cody": "C4",
+    "daniel": "G5",
+    "eva": "F6",
+    "flavia": "E7"
+  },
+  "murderer": "anna",
+  "rev": 1,
+  "floors": {
+    "N": "sand",
+    "B": "wood"
+  }
+}

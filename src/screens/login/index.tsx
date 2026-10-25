@@ -1,5 +1,5 @@
 // B3 — belépés / regisztráció / jelszó-visszaállítás (GDD 14.6). A belépés nem kötelező: a vendég-gomb visszaviszi a menübe.
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { useNav } from '../../app/nav'
 import { cloud } from '../../cloud'
@@ -31,18 +31,26 @@ const markOffered = (id: string) => {
 }
 
 export default function LoginScreen() {
-  const { back, go } = useNav()
+  const { back, replace } = useNav()
   const toast = useToast()
   const user = useCloudUser()
   const [mode, setMode] = useState<Mode>('in')
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
+  const [showPw, setShowPw] = useState(false)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
   const [info, setInfo] = useState('')
   const [avail, setAvail] = useState<Avail>('idle')
   const [ask, setAsk] = useState<string | null>(null) // a vendég-átvitel kérdése (a belépett fiók azonosítójával)
+
+  // Már belépve nincs mit itt kezdeni: egyből a profil (a „vissza” így a korábbi képernyőre visz) — akkor is, ha a mentett munkamenet csak most áll helyre.
+  // A most, ezen a képernyőn induló belépést a `submit` / `answer` fejezi be (értesítés, vendég-átvitel kérdése, `back()`).
+  const inFlow = useRef(false)
+  useEffect(() => {
+    if (user && !inFlow.current) replace({ name: 'profile' })
+  }, [user, replace])
 
   // Becenév-ellenőrzés a „Regisztráció" gomb előtt (késleltetve, a lassan érkező válasz nem írja felül az újat).
   useEffect(() => {
@@ -87,6 +95,7 @@ export default function LoginScreen() {
       return
     }
     setBusy(true)
+    inFlow.current = true
     const r =
       mode === 'in'
         ? await cloud.auth.signIn({ email: email.trim(), password })
@@ -139,24 +148,8 @@ export default function LoginScreen() {
     </Modal>
   )
 
-  if (user) {
-    return (
-      <main className="nd-page">
-        {transferModal}
-        <Panel tag={t('login.tag')}>
-          <p>
-            {t('login.already')} <b>{user.username}</b>
-          </p>
-          <div className="nd-row">
-            <Button onClick={() => go({ name: 'profile' })}>{t('profile.title')}</Button>
-            <Button variant="ghost" onClick={back}>
-              ← {t('common.back')}
-            </Button>
-          </div>
-        </Panel>
-      </main>
-    )
-  }
+  // Belépés után nincs köztes „már be vagy lépve” oldal: a folyamat (vendég-átvitel kérdése, értesítés) a háttérben fut, a végén a `back()` visz tovább.
+  if (user) return <main className="nd-page">{transferModal}</main>
 
   const hint = avail === 'checking' ? t('login.checking') : avail === 'free' ? t('login.free') : avail === 'taken' ? t('login.taken') : ''
   return (
@@ -190,7 +183,16 @@ export default function LoginScreen() {
           {mode !== 'reset' && (
             <label className="nd-field">
               {t('login.password')}
-              <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} autoComplete={mode === 'in' ? 'current-password' : 'new-password'} required />
+              <span className="nd-pass">
+                <input type={showPw ? 'text' : 'password'} value={password} onChange={(e) => setPassword(e.target.value)} autoComplete={mode === 'in' ? 'current-password' : 'new-password'} required />
+                <button type="button" className="nd-eye" data-act="show-password" aria-pressed={showPw} aria-label={t(showPw ? 'login.hide' : 'login.show')} title={t(showPw ? 'login.hide' : 'login.show')} onClick={() => setShowPw((v) => !v)}>
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                    <path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z" />
+                    <circle cx="12" cy="12" r="3" />
+                    {showPw && <path d="M3 3l18 18" />}
+                  </svg>
+                </button>
+              </span>
             </label>
           )}
           <p className="nd-err" role="alert">

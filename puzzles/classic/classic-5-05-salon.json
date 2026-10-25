@@ -1,0 +1,256 @@
+{
+  "v": 1,
+  "id": "classic-5-05-salon",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A szépségszalon – este",
+  "story": "Ünnepnap volt a szépségszalonban, és a fodrász többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 10,
+  "difficulty": 5,
+  "rooms": {
+    "M": "Mosdó",
+    "V": "Várakozó",
+    "F": "Fodrászat",
+    "K": "Kozmetika",
+    "R": "Raktár"
+  },
+  "layout": [
+    "MMMVVVVVVV",
+    "MMMMVVVVVR",
+    "MMMMVVVVRR",
+    "MMMMVVVRRR",
+    "MMFMVVVRRR",
+    "FFFFKKKRRR",
+    "FFFFKKKRRR",
+    "FFFFKKKKRR",
+    "FFFKKKKKRR",
+    "FFFFKKKRRR"
+  ],
+  "objects": [
+    {
+      "type": "hairchair",
+      "at": [
+        "G6",
+        "B10",
+        "F9"
+      ]
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "E3",
+        "F5",
+        "G1"
+      ]
+    },
+    {
+      "type": "toilet",
+      "at": [
+        "A4",
+        "C1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "shelf",
+      "at": [
+        "E7",
+        "H6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "mirror",
+      "at": [
+        "C10",
+        "A9"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "sink",
+      "at": "A7",
+      "blocking": true
+    },
+    {
+      "type": "chair",
+      "at": "F3"
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "terrain",
+          "style": "carpet"
+        }
+      ],
+      "clueText": [
+        "**Szőnyegpadlón** volt."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa"
+        }
+      ],
+      "clueText": [
+        "Egy **kanapén** ült."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "sofa"
+        }
+      ],
+      "clueText": [
+        "Egy **kanapé mellett** volt."
+      ]
+    },
+    {
+      "id": "deborah",
+      "name": "Deborah",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "flavia",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Flaviától északra** volt."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "hairchair"
+        }
+      ],
+      "clueText": [
+        "Egy **fodrászszéken** ült."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "sink"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **mosdókagyló mellett**."
+      ]
+    },
+    {
+      "id": "gabriel",
+      "name": "Gabriel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "flavia"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Flaviával**."
+      ]
+    },
+    {
+      "id": "hanna",
+      "name": "Hanna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "gabriel"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Gabriellel**."
+      ]
+    },
+    {
+      "id": "iris",
+      "name": "Iris",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "hairchair",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Fodrászatban egy **fodrászszéken** ült."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "D1",
+    "victor": "C2",
+    "barry": "E3",
+    "cody": "F4",
+    "deborah": "A5",
+    "elena": "G6",
+    "flavia": "H7",
+    "gabriel": "I8",
+    "hanna": "J9",
+    "iris": "B10"
+  },
+  "murderer": "deborah",
+  "rev": 1,
+  "floors": {
+    "M": "tile",
+    "V": "carpet",
+    "F": "checker",
+    "K": "tile",
+    "R": "stone"
+  }
+}

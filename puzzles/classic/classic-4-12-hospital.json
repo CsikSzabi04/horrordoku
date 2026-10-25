@@ -1,0 +1,220 @@
+{
+  "v": 1,
+  "id": "classic-4-12-hospital",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A kórház – zárás után",
+  "story": "Szombat este a kórházban az ügyeletes orvos nem tért haza. Valaki egyedül maradt vele.",
+  "size": 8,
+  "difficulty": 4,
+  "rooms": {
+    "F": "Folyosó",
+    "K": "Kávézó",
+    "V": "Váróterem",
+    "R": "Rendelő",
+    "M": "Műtő",
+    "L": "Labor"
+  },
+  "layout": [
+    "VVVMMMMM",
+    "VVVVMMMM",
+    "VVVVMMMM",
+    "VVVVLFFM",
+    "VKKLLFFM",
+    "KKLLLFFF",
+    "RKKLLFFF",
+    "RRRRRFFF"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "B3",
+        "D4",
+        "D3",
+        "A5"
+      ]
+    },
+    {
+      "type": "wheelchair",
+      "at": "F8"
+    },
+    {
+      "type": "medcab",
+      "at": "A8",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "B4",
+      "blocking": true
+    },
+    {
+      "type": "sink",
+      "at": "E2",
+      "blocking": true
+    },
+    {
+      "type": "computer",
+      "at": "E8",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "A6",
+      "blocking": true
+    },
+    {
+      "type": "hospbed",
+      "at": "H1",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "Egy **ülőhely mellett** volt."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **növény mellett** volt."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "amir",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Amirtól délre** volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "A Laborban volt."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "gabriel",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Gabrieltől északra** volt."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "derek",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Derektől délre** volt."
+      ]
+    },
+    {
+      "id": "gabriel",
+      "name": "Gabriel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "wheelchair",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Folyosón egy **kerekesszéken** ült."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "vlad": "G1",
+    "amir": "D2",
+    "bruno": "B3",
+    "clara": "H4",
+    "derek": "E5",
+    "ervin": "C6",
+    "frank": "A7",
+    "gabriel": "F8"
+  },
+  "murderer": "clara",
+  "rev": 1,
+  "floors": {
+    "F": "tile",
+    "K": "wood",
+    "V": "tile",
+    "R": "tile",
+    "M": "tile",
+    "L": "tile"
+  }
+}

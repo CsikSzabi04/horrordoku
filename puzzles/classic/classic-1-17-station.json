@@ -1,0 +1,174 @@
+{
+  "v": 1,
+  "id": "classic-1-17-station",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A vasútállomás",
+  "story": "A vasútállomáson reggel a forgalmistát holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 6,
+  "difficulty": 1,
+  "rooms": {
+    "V": "Váróterem",
+    "P": "Peron",
+    "J": "Jegypénztár",
+    "B": "Büfé"
+  },
+  "layout": [
+    "VVVBBB",
+    "VVVVBB",
+    "VPPPBB",
+    "VPPPPJ",
+    "PPPJJJ",
+    "JJJJJJ"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "A3",
+        "E1",
+        "E3"
+      ]
+    },
+    {
+      "type": "luggage",
+      "at": [
+        "D4",
+        "C3"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": "C5"
+    },
+    {
+      "type": "ticket",
+      "at": "B6",
+      "blocking": true
+    },
+    {
+      "type": "clock",
+      "at": "B5",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": [
+        "D2",
+        "A4"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "A Váróteremben egy **széken** ült."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "luggage",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Peronon egy **bőrönd tetején** volt."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notSameRoom",
+          "with": "victor"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt egy helyiségben **Victorral**."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "E1",
+    "bianca": "B2",
+    "carl": "A3",
+    "daniel": "D4",
+    "victor": "C5",
+    "emmett": "F6"
+  },
+  "murderer": "daniel",
+  "rev": 1,
+  "floors": {
+    "V": "tile",
+    "P": "stone",
+    "J": "brick",
+    "B": "wood"
+  }
+}

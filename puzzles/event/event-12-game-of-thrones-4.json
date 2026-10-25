@@ -1,0 +1,267 @@
+{
+  "v": 1,
+  "id": "event-12-game-of-thrones-4",
+  "mode": "event",
+  "world": "game-of-thrones",
+  "title": "Tyrion pohara",
+  "story": "Tyrion Lannister utoljára még a borára koccintott, aztán a pohár kihullott a kezéből. A Fal túloldalára csak páncélos merészkedik.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "N": "Nagyterem",
+    "I": "Isteni liget",
+    "F": "Fegyvertár",
+    "K": "Kripta",
+    "T": "Toronyszoba",
+    "A": "A Falon túl",
+    "G": "Fagyott tó"
+  },
+  "layout": [
+    "TTTNNNIII",
+    "TTTNNNIII",
+    "TTTFNNIII",
+    "TTFFFFIIA",
+    "FFFKFFIAA",
+    "GGGKKKIAA",
+    "GGGGKKIAA",
+    "GGGGKKKAA",
+    "GGGGGKAAA"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "E8",
+        "A9",
+        "I6",
+        "G4"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "H7",
+        "C5",
+        "H8"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "D2",
+        "C7"
+      ]
+    },
+    {
+      "type": "fireplace",
+      "at": [
+        "A1",
+        "F4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "throne",
+      "at": "D6",
+      "blocking": true
+    },
+    {
+      "type": "armor",
+      "at": "F7",
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": [
+        "I8",
+        "F9"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "bran-stark",
+      "name": "Bran Stark",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "az-ejkiraly",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **az Éjkirálytól északra** volt."
+      ],
+      "source": {
+        "game": "Game of Thrones"
+      }
+    },
+    {
+      "id": "az-ejkiraly",
+      "name": "Az Éjkirály",
+      "race": "ghoul",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "sansa-stark",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Sansától északra** volt."
+      ],
+      "source": {
+        "game": "Game of Thrones"
+      }
+    },
+    {
+      "id": "tyrion-lannister",
+      "name": "Tyrion Lannister",
+      "race": "human",
+      "victim": true,
+      "armored": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Nagyteremben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Game of Thrones"
+      }
+    },
+    {
+      "id": "sansa-stark",
+      "name": "Sansa Stark",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "aloneWith",
+          "with": "bran-stark"
+        }
+      ],
+      "clueText": [
+        "**Egyedül** volt **Brannal**."
+      ],
+      "source": {
+        "game": "Game of Thrones"
+      }
+    },
+    {
+      "id": "jaime-lannister",
+      "name": "Jaime Lannister",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "Egy **ülőhely mellett** volt."
+      ],
+      "source": {
+        "game": "Game of Thrones"
+      }
+    },
+    {
+      "id": "jon-snow",
+      "name": "Jon Snow",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **vörös szőnyeg mellett**."
+      ],
+      "source": {
+        "game": "Game of Thrones"
+      }
+    },
+    {
+      "id": "samwell-tarly",
+      "name": "Samwell Tarly",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "jon-snow"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Jonnal**."
+      ],
+      "source": {
+        "game": "Game of Thrones"
+      }
+    },
+    {
+      "id": "arya-stark",
+      "name": "Arya Stark",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Kriptában egy **padon** ült."
+      ],
+      "source": {
+        "game": "Game of Thrones"
+      }
+    },
+    {
+      "id": "cersei-lannister",
+      "name": "Cersei Lannister",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "sansa-stark",
+          "dir": "W"
+        }
+      ],
+      "clueText": [
+        "**Sansától nyugatra** volt."
+      ],
+      "source": {
+        "game": "Game of Thrones"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "bran-stark": "C1",
+    "az-ejkiraly": "D2",
+    "tyrion-lannister": "F3",
+    "sansa-stark": "B4",
+    "jaime-lannister": "G5",
+    "jon-snow": "I6",
+    "samwell-tarly": "H7",
+    "arya-stark": "E8",
+    "cersei-lannister": "A9"
+  },
+  "murderer": "az-ejkiraly",
+  "rev": 1,
+  "worldRule": "vacuum",
+  "vacuumRooms": [
+    "A",
+    "G"
+  ]
+}

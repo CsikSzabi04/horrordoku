@@ -1,0 +1,161 @@
+{
+  "v": 1,
+  "id": "event-02-poppy-playtime-1",
+  "mode": "event",
+  "world": "poppy-playtime",
+  "title": "A zöld kéz",
+  "story": "Az elhagyatott játékgyárban Huggy Wuggy nem kel fel többé. A zöld kéz mindenhová elér — a gyanúsítottak viszont nem mind.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "G": "Gyártósor",
+    "J": "Játékbolt",
+    "T": "Játszószoba",
+    "R": "Raktár",
+    "S": "Szellőzőrendszer"
+  },
+  "layout": [
+    "TTTRR",
+    "TGRRR",
+    "GGGJJ",
+    "GSSJJ",
+    "GSSSS"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": "D3"
+    },
+    {
+      "type": "panel",
+      "at": [
+        "C5",
+        "C4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "speaker",
+      "at": "E3",
+      "blocking": true
+    },
+    {
+      "type": "conveyor",
+      "at": [
+        "B2",
+        "E1",
+        "D5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "toybox",
+      "at": [
+        "E5",
+        "A1"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "mommy-long-legs",
+      "name": "Mommy Long Legs",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "toybox"
+        }
+      ],
+      "clueText": [
+        "Egy **játékdoboz mellett** volt."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "kissy-missy",
+      "name": "Kissy Missy",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Játszószobában volt."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "a-latogato",
+      "name": "A Látogató",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "kissy-missy",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Kissytől délre** volt."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "huggy-wuggy",
+      "name": "Huggy Wuggy",
+      "race": "ghoul",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "J"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Játékboltban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "bunzo-bunny",
+      "name": "Bunzo Bunny",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "gt",
+          "n": 4
+        }
+      ],
+      "clueText": [
+        "A **4. sor alatt** volt."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "mommy-long-legs": "B1",
+    "kissy-missy": "C2",
+    "a-latogato": "D3",
+    "huggy-wuggy": "E4",
+    "bunzo-bunny": "A5"
+  },
+  "murderer": "a-latogato",
+  "rev": 1,
+  "worldRule": "grab"
+}

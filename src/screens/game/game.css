@@ -1,0 +1,39 @@
+/* A játékképernyő saját részei: betöltés, modálok. Az elrendezés és a kártyák a components/game-frame.css-ben vannak. */
+.game-msg {
+  min-height: 100%;
+  display: grid;
+  place-content: center;
+  text-align: center;
+  color: var(--muted);
+}
+.tutorial {
+  display: grid;
+  gap: 0.6rem;
+  max-width: 440px;
+}
+.tutorial h3 {
+  margin: 0;
+  font: 700 1.2rem var(--display);
+  letter-spacing: 0.08em;
+}
+.tutorial p {
+  margin: 0;
+  color: var(--muted);
+}
+.tutorial .muted {
+  color: var(--dim);
+  font-size: 0.85rem;
+}
+.tutorial small {
+  color: var(--gold);
+  letter-spacing: 0.1em;
+}
+.tutorial .row {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+  margin-top: 0.4rem;
+}
+.tutorial.win h3 {
+  color: var(--gold);
+}

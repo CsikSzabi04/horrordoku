@@ -1,0 +1,192 @@
+{
+  "v": 1,
+  "id": "classic-3-04-cinema",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A mozi – nyitás előtt",
+  "story": "A moziban reggel a jegyszedőt holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "B": "Büfé",
+    "V": "Vetítő",
+    "P": "Pénztár",
+    "R": "Raktár",
+    "E": "Előcsarnok"
+  },
+  "layout": [
+    "RRRRBPP",
+    "RRVBBBP",
+    "RRVVBBP",
+    "RRVVBEE",
+    "RVVVEEE",
+    "RVVEEEE",
+    "RVVEEEE"
+  ],
+  "objects": [
+    {
+      "type": "popcorn",
+      "at": "F3",
+      "blocking": true
+    },
+    {
+      "type": "ticket",
+      "at": "F1",
+      "blocking": true
+    },
+    {
+      "type": "shelf",
+      "at": "C7",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "G7",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "F2",
+      "blocking": true
+    },
+    {
+      "type": "rug",
+      "at": "G6"
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "E5",
+        "E6"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "carly",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Carlytől északra** volt."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "withGender",
+          "gender": "f"
+        }
+      ],
+      "clueText": [
+        "A helyiségében volt egy **nő**."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "terrain",
+          "style": "wood"
+        }
+      ],
+      "clueText": [
+        "**Fapadlón** volt."
+      ]
+    },
+    {
+      "id": "deborah",
+      "name": "Deborah",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Egy **szőnyeg mellett** volt."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "Egy **ülőhely mellett** volt."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszloptól balra** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "C1",
+    "victor": "D2",
+    "bella": "B3",
+    "carly": "E4",
+    "deborah": "G5",
+    "emmett": "F6",
+    "felicia": "A7"
+  },
+  "murderer": "carly",
+  "rev": 1,
+  "floors": {
+    "B": "wood",
+    "V": "stone",
+    "P": "brick",
+    "R": "stone"
+  }
+}

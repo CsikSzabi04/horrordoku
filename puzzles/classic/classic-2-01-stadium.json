@@ -1,0 +1,202 @@
+{
+  "v": 1,
+  "id": "classic-2-01-stadium",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A stadion – ünnepnap",
+  "story": "A stadionban reggel a pályamestert holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 7,
+  "difficulty": 2,
+  "rooms": {
+    "P": "Pálya",
+    "L": "Lelátó",
+    "T": "Öltöző",
+    "B": "Büfé",
+    "E": "Edzőterem"
+  },
+  "layout": [
+    "TEEEBBB",
+    "TTPEBBB",
+    "TPPEEBB",
+    "TPPEEEB",
+    "TPPPELB",
+    "TPLLLLL",
+    "TTLLLLL"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "B7",
+        "C6",
+        "A1"
+      ]
+    },
+    {
+      "type": "sink",
+      "at": "A7",
+      "blocking": true
+    },
+    {
+      "type": "weights",
+      "at": "D4",
+      "blocking": true
+    },
+    {
+      "type": "goal",
+      "at": "D5",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "G3",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "G4",
+      "blocking": true
+    },
+    {
+      "type": "ball",
+      "at": "B3"
+    },
+    {
+      "type": "chair",
+      "at": [
+        "G6",
+        "F2"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. sor fölött** volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A helyiségében **hárman** voltak."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "deborah"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Deborahhal**."
+      ]
+    },
+    {
+      "id": "deborah",
+      "name": "Deborah",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "adam",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Adamtól délre** volt."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **növény mellett** volt."
+      ]
+    },
+    {
+      "id": "fred",
+      "name": "Fred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "A Lelátón egy **padon** ült."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "A1",
+    "bianca": "D2",
+    "carly": "E3",
+    "deborah": "F4",
+    "emmett": "G5",
+    "fred": "C6",
+    "vera": "B7"
+  },
+  "murderer": "adam",
+  "rev": 1,
+  "floors": {
+    "P": "grass",
+    "L": "stone",
+    "T": "tile",
+    "B": "wood",
+    "E": "tile"
+  }
+}

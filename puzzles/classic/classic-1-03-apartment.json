@@ -1,0 +1,170 @@
+{
+  "v": 1,
+  "id": "classic-1-03-apartment",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A lakás – este",
+  "story": "Ünnepnap volt a lakásban, és a lakástulajdonos többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 6,
+  "difficulty": 1,
+  "rooms": {
+    "H": "Hálószoba",
+    "K": "Konyha",
+    "N": "Nappali",
+    "F": "Fürdő"
+  },
+  "layout": [
+    "KKKKKK",
+    "NKKKKK",
+    "NNKHHH",
+    "NNNHHH",
+    "NNNNFF",
+    "NNNFFF"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": "C1"
+    },
+    {
+      "type": "rug",
+      "at": "A5"
+    },
+    {
+      "type": "stove",
+      "at": [
+        "E2",
+        "F2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tv",
+      "at": "A6",
+      "blocking": true
+    },
+    {
+      "type": "bath",
+      "at": "E6",
+      "blocking": true
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "C5",
+        "B6"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Konyhában egy **széken** ült."
+      ]
+    },
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. sorban** volt."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "daniel"
+        }
+      ],
+      "clueText": [
+        "**Daniellel** egy helyiségben volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "A Nappaliban egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "bath"
+        }
+      ],
+      "clueText": [
+        "Egy **kád mellett** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "C1",
+    "vickie": "D2",
+    "barry": "E3",
+    "clara": "B4",
+    "daniel": "A5",
+    "eva": "F6"
+  },
+  "murderer": "amir",
+  "rev": 1,
+  "floors": {
+    "H": "wood",
+    "K": "tile",
+    "N": "carpet",
+    "F": "tile"
+  }
+}

@@ -1,0 +1,216 @@
+{
+  "v": 1,
+  "id": "classic-3-11-stadium",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A stadion – zárás után",
+  "story": "Zárás után a stadionban a pályamester holtan feküdt. Csak páran voltak ma bent.",
+  "size": 8,
+  "difficulty": 3,
+  "rooms": {
+    "L": "Öltöző",
+    "B": "Büfé",
+    "E": "Edzőterem",
+    "P": "Pálya",
+    "T": "Lelátó"
+  },
+  "layout": [
+    "EEBBBBBB",
+    "EEETBBBB",
+    "EEETTTTB",
+    "EEETTTTT",
+    "LLLPTPTT",
+    "LLLPPPPP",
+    "LLLPPPPP",
+    "LLLLPPPP"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "E2",
+        "D3",
+        "G3"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "B5",
+        "A6"
+      ]
+    },
+    {
+      "type": "locker",
+      "at": [
+        "A8",
+        "C8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "goal",
+      "at": "D5",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": [
+        "H1",
+        "G2",
+        "E1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "ball",
+      "at": "H6"
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. sor fölött** volt."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "terrain",
+          "style": "wood"
+        }
+      ],
+      "clueText": [
+        "**Fapadlón** volt."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "ball"
+        }
+      ],
+      "clueText": [
+        "Egy **labda mellett** volt."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "emmett"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Emmettel**."
+      ]
+    },
+    {
+      "id": "gina",
+      "name": "Gina",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "gt",
+          "n": 7
+        }
+      ],
+      "clueText": [
+        "A **7. oszloptól jobbra** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "A1",
+    "barry": "E2",
+    "clara": "D3",
+    "vlad": "C4",
+    "derek": "B5",
+    "emmett": "G6",
+    "flavia": "F7",
+    "gina": "H8"
+  },
+  "murderer": "alfred",
+  "rev": 1,
+  "floors": {
+    "L": "tile",
+    "B": "wood",
+    "E": "tile",
+    "P": "grass",
+    "T": "stone"
+  }
+}

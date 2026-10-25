@@ -1,0 +1,172 @@
+{
+  "v": 1,
+  "id": "classic-1-19-camping",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A kemping – este",
+  "story": "Ünnepnap volt a kempingben, és az egyik túrázó többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 6,
+  "difficulty": 1,
+  "rooms": {
+    "S": "Sátortábor",
+    "T": "Tó",
+    "Z": "Tűzrakóhely",
+    "E": "Erdő"
+  },
+  "layout": [
+    "EEESSS",
+    "EEEESS",
+    "EEETSS",
+    "EETTSS",
+    "TTTSSS",
+    "TTTZZZ"
+  ],
+  "objects": [
+    {
+      "type": "lounger",
+      "at": [
+        "A6",
+        "B5"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "F1",
+        "F3"
+      ]
+    },
+    {
+      "type": "tent",
+      "at": "D1",
+      "blocking": true
+    },
+    {
+      "type": "bush",
+      "at": "B2",
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "F2",
+      "blocking": true
+    },
+    {
+      "type": "rock",
+      "at": "B6",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. sor fölött** volt."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "alfred",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Alfredtől délre** volt."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "bush"
+        }
+      ],
+      "clueText": [
+        "Egy **bokor mellett** volt."
+      ]
+    },
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "deborah",
+      "name": "Deborah",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A helyiségében **hárman** voltak."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "lounger"
+        }
+      ],
+      "clueText": [
+        "Egy **nyugágyon** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "F1",
+    "barry": "E2",
+    "cody": "B3",
+    "vickie": "C4",
+    "deborah": "D5",
+    "emmett": "A6"
+  },
+  "murderer": "emmett",
+  "rev": 1,
+  "floors": {
+    "S": "grass",
+    "T": "water",
+    "Z": "dirt",
+    "E": "grass"
+  }
+}

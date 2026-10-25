@@ -1,0 +1,170 @@
+{
+  "v": 1,
+  "id": "classic-1-09-amusement-park",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A vidámpark",
+  "story": "A vidámparkban reggel az üzemeltetőt holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 6,
+  "difficulty": 1,
+  "rooms": {
+    "K": "Körhinta",
+    "S": "Szellemvasút",
+    "H": "Hullámvasút",
+    "C": "Céllövölde"
+  },
+  "layout": [
+    "CCCCCC",
+    "CCCSSC",
+    "CCCSSK",
+    "HHHSKK",
+    "HHHSKK",
+    "HHHSSK"
+  ],
+  "objects": [
+    {
+      "type": "rug",
+      "at": [
+        "E6",
+        "C5"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "A1",
+        "D3"
+      ]
+    },
+    {
+      "type": "target",
+      "at": [
+        "C2",
+        "B2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": [
+        "D6",
+        "E2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": "F5"
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "C"
+        }
+      ],
+      "clueText": [
+        "A Céllövöldében egy **széken** ült."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. sorban** volt."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Egy **szőnyeg mellett** volt."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "A1",
+    "bruno": "F2",
+    "carly": "D3",
+    "derek": "C4",
+    "ervin": "B5",
+    "vlad": "E6"
+  },
+  "murderer": "carly",
+  "rev": 1,
+  "floors": {
+    "K": "carpet",
+    "S": "stone",
+    "H": "dirt",
+    "C": "wood"
+  }
+}

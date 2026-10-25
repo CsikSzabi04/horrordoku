@@ -1,0 +1,235 @@
+{
+  "v": 1,
+  "id": "event-11-stranger-things-5",
+  "mode": "event",
+  "world": "stranger-things",
+  "title": "A rádióhívás",
+  "story": "Dustin Henderson utolsó hívása a labor felől érkezett, aztán csend lett. A Fejjel lefelé világ sötétjében csak a zseblámpád fénye marad.",
+  "size": 8,
+  "difficulty": 5,
+  "rooms": {
+    "S": "Scoops Ahoy",
+    "F": "Food court",
+    "M": "Mozi",
+    "J": "Játékbolt",
+    "Z": "Szökőkút-tér",
+    "O": "Szolgálati folyosó",
+    "T": "Titkos labor"
+  },
+  "layout": [
+    "ZZFFFOOO",
+    "ZZFFFOOO",
+    "ZZFFFFOO",
+    "ZZFFFJOO",
+    "ZZZJJJJO",
+    "SZZZJJJM",
+    "STMMJJJM",
+    "TTMMMMMM"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "C6",
+        "C8"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "F8",
+        "B3",
+        "E5",
+        "G8"
+      ]
+    },
+    {
+      "type": "popcorn",
+      "at": [
+        "D8",
+        "G5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "arcade",
+      "at": "B6",
+      "blocking": true
+    },
+    {
+      "type": "fountain",
+      "at": [
+        "B1",
+        "G4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "H3",
+      "blocking": true
+    },
+    {
+      "type": "carpet",
+      "at": "F5"
+    }
+  ],
+  "characters": [
+    {
+      "id": "dustin-henderson",
+      "name": "Dustin Henderson",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "O"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Szolgálati folyosón **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    },
+    {
+      "id": "eleven",
+      "name": "Eleven",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "erica-sinclair"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Ericával**."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    },
+    {
+      "id": "erica-sinclair",
+      "name": "Erica Sinclair",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "notBesideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **ülőhely mellett**."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    },
+    {
+      "id": "lucas-sinclair",
+      "name": "Lucas Sinclair",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "erica-sinclair",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Ericától délre** volt."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    },
+    {
+      "id": "mike-wheeler",
+      "name": "Mike Wheeler",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "J"
+        }
+      ],
+      "clueText": [
+        "A Játékboltban egy **padon** ült."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    },
+    {
+      "id": "steve-harrington",
+      "name": "Steve Harrington",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "Z"
+        }
+      ],
+      "clueText": [
+        "A Szökőkút-téren egy **széken** ült."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    },
+    {
+      "id": "jim-hopper",
+      "name": "Jim Hopper",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "will-byers",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Willtől északra** volt."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    },
+    {
+      "id": "will-byers",
+      "name": "Will Byers",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "dustin-henderson",
+          "dir": "W"
+        }
+      ],
+      "clueText": [
+        "**Dustintól nyugatra** volt."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "dustin-henderson": "G1",
+    "eleven": "A2",
+    "erica-sinclair": "B3",
+    "lucas-sinclair": "H4",
+    "mike-wheeler": "E5",
+    "steve-harrington": "C6",
+    "jim-hopper": "D7",
+    "will-byers": "F8"
+  },
+  "murderer": "lucas-sinclair",
+  "rev": 1,
+  "worldRule": "nightvision"
+}

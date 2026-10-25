@@ -1,0 +1,265 @@
+{
+  "v": 1,
+  "id": "event-08-silent-hill-2-5",
+  "mode": "event",
+  "world": "silent-hill",
+  "title": "A lépcsőház alja",
+  "story": "Angela Orosco a lépcsőházban várt valakire, aki sosem jött el. A rádió egy-egy szót kitakar.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "K": "Kórterem",
+    "L": "Lépcsőház",
+    "A": "Apartman",
+    "B": "Bowlingpálya",
+    "T": "Tóparti szálló",
+    "M": "Másik világ"
+  },
+  "layout": [
+    "BBBBBAAAA",
+    "BBBBBBAAA",
+    "BBBLAAAAA",
+    "BBBLLAAAA",
+    "BBLLLLAAA",
+    "LLLLLLKKA",
+    "TTLLLKKKK",
+    "TTMMMKKKK",
+    "TTMMMMMMM"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "I9",
+        "E1",
+        "H2",
+        "I6"
+      ]
+    },
+    {
+      "type": "wheelchair",
+      "at": [
+        "D3",
+        "B5",
+        "G8",
+        "F7",
+        "A1"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "C4",
+        "G3",
+        "C9"
+      ]
+    },
+    {
+      "type": "radio",
+      "at": [
+        "H1",
+        "E5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "doll",
+      "at": [
+        "C1",
+        "G9"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "window",
+      "at": [
+        "B2",
+        "B9"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "hospbed",
+      "at": [
+        "G1",
+        "H6"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "pyramid-head",
+      "name": "Pyramid Head",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "B"
+        }
+      ],
+      "clueText": [
+        "A Bowlingpályán egy **███** volt."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "eddie-dombrowski",
+      "name": "Eddie Dombrowski",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "A"
+        }
+      ],
+      "clueText": [
+        "Az Apartmanban egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "angela-orosco",
+      "name": "Angela Orosco",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Lépcsőházban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "james-sunderland",
+      "name": "James Sunderland",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "a-hazug-alak"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **a Hazug Alakkal**."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "a-hazug-alak",
+      "name": "A Hazug Alak",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "wheelchair",
+          "room": "B"
+        }
+      ],
+      "clueText": [
+        "A Bowlingpályán egy **kerekesszéken** ült."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "a-buborekfeju-apolono",
+      "name": "A Buborékfejű Ápolónő",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "laura",
+      "name": "Laura",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "wheelchair",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Kórteremben egy **kerekesszéken** ült."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "mary",
+      "name": "Mary",
+      "race": "ghost",
+      "clues": [
+        {
+          "kind": "notSameRoom",
+          "with": "eddie-dombrowski"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt egy helyiségben **Eddiével**."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "maria",
+      "name": "Maria",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "laura",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Laurától délre** volt."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "pyramid-head": "E1",
+    "eddie-dombrowski": "H2",
+    "angela-orosco": "D3",
+    "james-sunderland": "C4",
+    "a-hazug-alak": "B5",
+    "a-buborekfeju-apolono": "A6",
+    "laura": "F7",
+    "mary": "G8",
+    "maria": "I9"
+  },
+  "murderer": "a-buborekfeju-apolono",
+  "rev": 1,
+  "worldRule": "radio"
+}

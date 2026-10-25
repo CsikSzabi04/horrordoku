@@ -62,9 +62,26 @@ export type Clue =
   | { kind: 'diagonal'; of: CharId }                               // átlósan Y mellett (közepestől)
   | { kind: 'corner' }
   | { kind: 'distance'; fromObject: string; cells: number }        // szakértő szint / Alien-szabály
-  | { kind: 'aloneWithKiller'; room: string }                      // az ÁLDOZAT kártyája
+  | { kind: 'aloneWithKiller'; room?: string }                     // az ÁLDOZAT kártyája; `room` nélkül (Murdoku) a helyiség a lerakás helyétől függ
   | { kind: 'roomAlone' }                                          // "a helyiségében senki más nem volt"
   | { kind: 'liar' }                                               // Démon: egy másik nyom hazudik (a pálya `liarOf`-ban jelöli)
+  | { kind: 'lit' }                                                 // Alan Wake: fényes mezőn állt (villanyoszlop / töltő körül)
+  | { kind: 'dark' }                                                // Alan Wake: sötét mezőn állt (a Birtokoltak)
+  | { kind: 'col'; n: number }                                      // Murdoku: „A 2. oszlopban volt." (1 = balról az első)
+  | { kind: 'row'; n: number }                                      // Murdoku: „A 3. sorban volt." (1 = fentről az első)
+  | { kind: 'northOf'; of: CharId; rows: number }                   // Murdoku: „Pontosan egy sorral X-től északra volt." (északra = feljebb)
+  | { kind: 'southOf'; of: CharId; rows: number }                   // …délre (lejjebb)
+  | { kind: 'aloneWith'; with: CharId }                             // Murdoku: „Egyedül volt Marával." (a helyiségben csak ők ketten)
+  | { kind: 'dir'; of: CharId; dir: 'N' | 'E' | 'S' | 'W' }          // „X-től északra volt": szigorúan feljebb (N) / jobbra (E) / lejjebb (S) / balra (W)
+  | { kind: 'notBeside'; object: string }                           // „Nem volt medve mellett."
+  | { kind: 'besideCat'; cat: string }                              // „Egy állat mellett volt." (kategória: `CATEGORIES`)
+  | { kind: 'notBesideCat'; cat: string }                           // „Nem volt állat mellett."
+  | { kind: 'terrain'; style: string; not?: boolean }               // „Vízben / mocsárban / fűben volt." — a helyiség padlója (`Puzzle.floors`)
+  | { kind: 'line'; axis: 'row' | 'col'; op: 'lt' | 'gt' | 'ne'; n: number } // „Az 5. sor fölött / az 2. oszloptól balra / nem a 3. sorban volt."
+  | { kind: 'withGender'; gender: 'm' | 'f' }                       // „A helyiségében volt egy férfi." (rajta kívül legalább egy ilyen nemű)
+  | { kind: 'notSameRoom'; with: CharId }                           // „Nem volt egy helyiségben Marával."
+  | { kind: 'edge'; inner?: boolean }                               // „A pálya szélén volt." / `inner`: nem a szélén
+  | { kind: 'roomCount'; n: number }                                // „A helyiségében hárman voltak." (vele együtt, az áldozatot is beleértve)
 
 export interface PuzzleCharacter {
   id: CharId
@@ -74,6 +91,9 @@ export interface PuzzleCharacter {
   source?: { game?: string; film?: string }   // Esemény-pályáknál a forrás-játék
   clues: Clue[]                   // 1 db; Alakváltónál 2 (a játékosnak kell kitalálnia, melyik az igaz)
   clueText: string[]              // ugyanannyi, mint a `clues` — a kártyán látott magyar szöveg (kézzel írt vagy sablonból generált)
+  gender?: 'm' | 'f'              // arckép / ♂♀ jelvény (Klasszikus: hétköznapi nevek)
+  armored?: boolean               // Dead Space (`vacuumRooms`): csak páncélos állhat nyomásmentes helyiségben
+  hidden?: number[]               // Until Dawn: a `clues` itt felsorolt indexű elemei zároltak, amíg a karakter totem mellé nem kerül
 }
 
 export interface Puzzle {
@@ -93,6 +113,8 @@ export interface Puzzle {
   activePowers: Race[]            // a pályán aktív Erő-szabályok
   worldRule?: string              // az Esemény-világ saját szabálya ("cameras", "vacuum", …)
   liarOf?: CharId                 // Démon-szabálynál: melyik karakter nyoma hazudik (a megoldásba tartozik, a játékos nem látja)
+  vacuumRooms?: string[]          // Dead Space: a nyomásmentes helyiségek betűi
+  floors?: Record<string, string> // helyiség-betű → padló-osztály (water, swamp, grass, sand, ice, stone, dirt, wood, carpet, checker, brick, tile): a `terrain` nyomokhoz
   solution: Record<CharId, CellId>
   murderer: CharId
   rev: number                     // javításkor nő; a Supabase `puzzles.rev` tükre
@@ -207,7 +229,7 @@ export interface SessionState {                   // egy félbehagyott játék �
   hintsUsed: number
   wrongSubmits: number
   board: BoardState
-  meta?: { title: string; difficulty: Difficulty; size: number; world: string; startedAt: IsoTime }
+  meta?: { title: string; difficulty: Difficulty; size: number; world: string; startedAt: IsoTime; fp?: string }   // fp = a pálya ujjlenyomata (game/fingerprint.ts): eltérő pályához nem töltjük vissza a mentést
   updatedAt: IsoTime
 }
 export interface SessionsFile { v: 1; sessions: Record<PuzzleRef, SessionState> }   // legfeljebb 3 random + a megkezdett katalógus-pályák
@@ -396,6 +418,7 @@ export interface RoomInfo {
   id: Uuid; code: string; hostId: Uuid; mode: RoomMode; puzzleRef: PuzzleRef
   status: RoomStatus; maxPlayers: number; settings: RoomSettings
   stateRev: number; startedAt?: IsoTime
+  name: string; isOpen: boolean                    // [0005] tartós szoba: neve, és hogy a tulajdonos megnyitotta-e az ajtót
 }
 export interface RoomSettings {                     // GDD 22.3 beállítás-tábla; mindegyik opcionális, az alap a GDD-ben
   timeLimit?: number | null                         // másodperc; null = nincs
@@ -407,15 +430,41 @@ export interface RoomSettings {                     // GDD 22.3 beállítás-tá
 export interface RoomMember { userId: Uuid; username: string; avatar: CharId; color: string; online: boolean }
 export interface ChatMessage { id: number; userId: Uuid; username: string; body: string; at: IsoTime; system?: boolean }
 
+/** [0005, B4] A szobáim listájának egy eleme: saját (tulajdonos), tag, vagy követett — zárt ajtónál is látszik. */
+export interface RoomSummary {
+  id: Uuid; code: string; name: string; mode: RoomMode; puzzleRef: PuzzleRef; status: RoomStatus; isOpen: boolean; maxPlayers: number
+  ownerId: Uuid; ownerUsername: string; isOwner: boolean; isMember: boolean; memberCount: number
+  gamesPlayed: number; gamesSolved: number; lastPlayed?: IsoTime; createdAt: IsoTime
+}
+/** [0005] Egy szoba „kukucskálása" kóddal: létezik-e, nyitott-e — belépés nélkül. */
+export interface RoomPeek {
+  id: Uuid; code: string; name: string; mode: RoomMode; status: RoomStatus; isOpen: boolean; maxPlayers: number
+  ownerUsername: string; memberCount: number; isMember: boolean
+}
+export interface RoomStats { gamesPlayed: number; gamesSolved: number; bestMs?: number; avgMs?: number; totalMs: number; firstPlayed?: IsoTime; lastPlayed?: IsoTime }
+export interface RoomGame { startedAt: IsoTime; endedAt?: IsoTime; puzzleRef: PuzzleRef; players: number; solved?: boolean; ms?: number }
+
 export interface RoomInvite { roomId: Uuid; code: string; fromUsername: string; mode: RoomMode }
 
 export interface RoomsApi {
-  create(i: { mode: RoomMode; puzzleRef: PuzzleRef; maxPlayers?: number; settings?: RoomSettings }): Promise<Result<RoomInfo>>
+  create(i: { mode: RoomMode; puzzleRef: PuzzleRef; name?: string; maxPlayers?: number; settings?: RoomSettings }): Promise<Result<RoomInfo>>   // az ajtó ZÁRVA indul, legfeljebb 5 saját szoba
   join(code: string): Promise<Result<RoomInfo>>
   invite(roomId: Uuid, userId: Uuid): Promise<Result<void>>
   onInvite(cb: (i: RoomInvite) => void): Unsubscribe
   /** A nekem szóló, még lobby-állapotú szobák meghívói (0003 `my_invites`). Additív bővítés (B4). */
   invites(): Promise<Result<RoomInvite[]>>
+  /** [0005, B4] A szobáim: saját, tag, követett — zárt ajtónál is látszanak (a lista nem ad hozzáférést a szobához). */
+  mine(): Promise<Result<RoomSummary[]>>
+  /** [0005] Kóddal: `null`, ha nincs ilyen szoba; különben látszik, hogy nyitott-e. */
+  peek(code: string): Promise<Result<RoomPeek | null>>
+  follow(code: string): Promise<Result<void>>        // zárt szoba követése: a `mine()`-ban látszik, amíg meg nem nyílik
+  unfollow(roomId: Uuid): Promise<Result<void>>
+  setOpen(roomId: Uuid, open: boolean): Promise<Result<RoomInfo>>   // csak a tulajdonos; játék közben nem zárható
+  configure(roomId: Uuid, p: { name?: string; puzzleRef?: PuzzleRef; maxPlayers?: number; settings?: RoomSettings }): Promise<Result<RoomInfo>>   // csak lobbyban
+  remove(roomId: Uuid): Promise<Result<void>>        // a tulajdonos törli (tagok, chat, napló is)
+  leave(roomId: Uuid): Promise<Result<void>>         // végleges kilépés tagként (a tulajdonos nem léphet ki)
+  stats(roomId: Uuid): Promise<Result<RoomStats>>
+  recentGames(roomId: Uuid, n?: number): Promise<Result<RoomGame[]>>
   /** Megnyit egy élő munkamenetet (Realtime-csatornák, tagok, chat). */
   open(roomId: Uuid): Promise<Result<RoomSession>>
 }
@@ -426,7 +475,8 @@ export interface RoomSession {
   onMembers(cb: (m: RoomMember[]) => void): Unsubscribe
   onInfo(cb: (i: RoomInfo) => void): Unsubscribe                      // státusz-váltás (lobby → playing)
   start(): Promise<Result<RoomInfo>>                                  // csak a host
-  leave(): Promise<Result<void>>
+  leave(): Promise<Result<void>>                                      // VÉGLEGES kilépés a szoba tagjai közül (tulajdonos nem)
+  close(): void                                                       // [0005] csak a Realtime-kapcsolatot zárja le, a tagság marad
   chat: { send(body: string): Promise<Result<void>>; history(): ChatMessage[]; onMessage(cb: (m: ChatMessage) => void): Unsubscribe; report(messageId: number, reason?: string): Promise<Result<void>>; mute(userId: Uuid): Promise<Result<void>> }
   /** A közös tábla műveletei (Broadcast `room:<id>`). */
   ops: { send(op: Op): void; onOp(cb: (e: OpEnvelope) => void): Unsubscribe; saveState(rev: number, state: BoardState): Promise<Result<number>>; loadState(): Promise<Result<{ rev: number; state: BoardState }>> }

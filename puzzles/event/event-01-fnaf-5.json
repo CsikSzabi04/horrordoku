@@ -1,0 +1,200 @@
+{
+  "v": 1,
+  "id": "event-01-fnaf-5",
+  "mode": "event",
+  "world": "fnaf",
+  "title": "Mögötte a függöny",
+  "story": "Amikor a kamerák újra visszajöttek, Foxy már nem mozdult. A fények közben többször is villogtak — valaki a sötétben futott.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "S": "Színpad",
+    "E": "Ebédlő",
+    "P": "Pirate Cove",
+    "K": "Konyha",
+    "I": "Iroda",
+    "N": "Nyugati folyosó"
+  },
+  "layout": [
+    "EEKKKKK",
+    "EEENKKK",
+    "EENNNNK",
+    "EEENNNS",
+    "PPPIISS",
+    "PPPIISS",
+    "PPPIISS"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "A2",
+        "F6",
+        "B4",
+        "D6",
+        "G3",
+        "E6"
+      ]
+    },
+    {
+      "type": "partytable",
+      "at": "G5"
+    },
+    {
+      "type": "giftbox",
+      "at": "E7"
+    },
+    {
+      "type": "camera",
+      "at": [
+        "E3",
+        "E1",
+        "D1",
+        "C7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "oven",
+      "at": "A1",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "golden-freddy",
+      "name": "Golden Freddy",
+      "race": "ghost",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "foxy",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Foxytől északra** volt."
+      ],
+      "source": {
+        "game": "Five Nights at Freddy's"
+      }
+    },
+    {
+      "id": "chica",
+      "name": "Chica",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "oven"
+        }
+      ],
+      "clueText": [
+        "Egy **pizzasütő mellett** volt."
+      ],
+      "source": {
+        "game": "Five Nights at Freddy's"
+      }
+    },
+    {
+      "id": "william-afton",
+      "name": "William Afton",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "golden-freddy",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Golden Freddytől délre** volt."
+      ],
+      "source": {
+        "game": "Five Nights at Freddy's"
+      }
+    },
+    {
+      "id": "foxy",
+      "name": "Foxy",
+      "race": "ghoul",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Az Ebédlőben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Five Nights at Freddy's"
+      }
+    },
+    {
+      "id": "a-marionett",
+      "name": "A Marionett",
+      "race": "ghost",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ],
+      "source": {
+        "game": "Five Nights at Freddy's"
+      }
+    },
+    {
+      "id": "freddy",
+      "name": "Freddy",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "a-marionett"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **a Marionettel**."
+      ],
+      "source": {
+        "game": "Five Nights at Freddy's"
+      }
+    },
+    {
+      "id": "mike-schmidt",
+      "name": "Mike Schmidt",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "freddy",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Freddytől délre** volt."
+      ],
+      "source": {
+        "game": "Five Nights at Freddy's"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "golden-freddy": "C1",
+    "chica": "A2",
+    "william-afton": "D3",
+    "foxy": "B4",
+    "a-marionett": "G5",
+    "freddy": "F6",
+    "mike-schmidt": "E7"
+  },
+  "murderer": "chica",
+  "rev": 1,
+  "worldRule": "cameras"
+}

@@ -1,0 +1,188 @@
+{
+  "v": 1,
+  "id": "event-04-alien-isolation-1",
+  "mode": "event",
+  "world": "alien-isolation",
+  "title": "A szellőző csúszása",
+  "story": "A Xenomorph a szellőzőben csúszott el utoljára. A mozgásérzékelő nem nevet mond — csak távolságot.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "O": "Orvosi szárny",
+    "H": "Hangár",
+    "G": "Gépház",
+    "S": "Szellőzőrendszer",
+    "L": "Légzsilip"
+  },
+  "layout": [
+    "GOOOOO",
+    "GOLLLO",
+    "GOLLLL",
+    "GGHHHH",
+    "GGSHHS",
+    "GGSSSS"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "A4",
+        "E2",
+        "D5",
+        "B6"
+      ]
+    },
+    {
+      "type": "vent",
+      "at": [
+        "F1",
+        "E3"
+      ]
+    },
+    {
+      "type": "airlock",
+      "at": "B5",
+      "blocking": true
+    },
+    {
+      "type": "tracker",
+      "at": "E5",
+      "blocking": true
+    },
+    {
+      "type": "flamer",
+      "at": [
+        "B2",
+        "C2",
+        "A1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "cardreader",
+      "at": "E4",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "a-xenomorph",
+      "name": "A Xenomorph",
+      "race": "ghoul",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "O"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Az Orvosi szárnyban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "waits",
+      "name": "Waits",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "airlock",
+          "cells": 6
+        }
+      ],
+      "clueText": [
+        "Mozgás 6 mezőre a légzsiliptől."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "marlow",
+      "name": "Marlow",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "ricardo",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Ricardótól északra** volt."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "samuels",
+      "name": "Samuels",
+      "race": "ghost",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "a-xenomorph",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **a Xenomorphtól délre** volt."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "ricardo",
+      "name": "Ricardo",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "nina-taylor",
+      "name": "Nina Taylor",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "vent",
+          "cells": 5
+        }
+      ],
+      "clueText": [
+        "Mozgás 5 mezőre a szellőzőrácstól."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "a-xenomorph": "F1",
+    "waits": "E2",
+    "marlow": "B3",
+    "samuels": "A4",
+    "ricardo": "D5",
+    "nina-taylor": "C6"
+  },
+  "murderer": "marlow",
+  "rev": 1,
+  "worldRule": "motion"
+}

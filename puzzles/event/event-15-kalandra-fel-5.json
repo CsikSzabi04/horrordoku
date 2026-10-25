@@ -1,0 +1,217 @@
+{
+  "v": 1,
+  "id": "event-15-kalandra-fel-5",
+  "mode": "event",
+  "world": "adventure-time",
+  "title": "A basszusgitár",
+  "story": "Marceline basszusgitárja a fűben hever. A kard és BMO távolsága segít kideríteni, ki járt arra.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "F": "Fa-erőd",
+    "C": "Cukorka Királyság",
+    "J": "Jég Királyság",
+    "L": "Lich-sírbolt",
+    "T": "Tűz Királyság",
+    "S": "Sötét erdő"
+  },
+  "layout": [
+    "CCCJJJJ",
+    "CCCCCJJ",
+    "SSSSJJJ",
+    "LSSSSTT",
+    "LSFFFTT",
+    "LLLFFTT",
+    "LLFFTTT"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "B1",
+        "F5",
+        "A6",
+        "E7"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": "C3"
+    },
+    {
+      "type": "sword",
+      "at": "B5",
+      "blocking": true
+    },
+    {
+      "type": "bmo",
+      "at": "C5",
+      "blocking": true
+    },
+    {
+      "type": "bush",
+      "at": [
+        "D5",
+        "D2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "rock",
+      "at": [
+        "B7",
+        "A5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "D4",
+      "blocking": true
+    },
+    {
+      "type": "crate",
+      "at": "C7"
+    }
+  ],
+  "characters": [
+    {
+      "id": "marceline",
+      "name": "Marceline",
+      "race": "vampire",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "C"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Cukorka Királyságban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Kalandra fel! (Adventure Time)"
+      }
+    },
+    {
+      "id": "jake",
+      "name": "Jake",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "jegkiraly",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Jégkirálytól északra** volt."
+      ],
+      "source": {
+        "game": "Kalandra fel! (Adventure Time)"
+      }
+    },
+    {
+      "id": "jegkiraly",
+      "name": "Jégkirály",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "A Sötét erdőben egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Kalandra fel! (Adventure Time)"
+      }
+    },
+    {
+      "id": "ragogumi-hercegno",
+      "name": "Rágógumi hercegnő",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "sword",
+          "cells": 6
+        }
+      ],
+      "clueText": [
+        "Mozgás 6 mezőre a kardtól."
+      ],
+      "source": {
+        "game": "Kalandra fel! (Adventure Time)"
+      }
+    },
+    {
+      "id": "finn",
+      "name": "Finn",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "sword",
+          "cells": 4
+        }
+      ],
+      "clueText": [
+        "Mozgás 4 mezőre a kardtól."
+      ],
+      "source": {
+        "game": "Kalandra fel! (Adventure Time)"
+      }
+    },
+    {
+      "id": "lumpy-hercegno",
+      "name": "Lumpy hercegnő",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "bmo",
+          "cells": 2
+        }
+      ],
+      "clueText": [
+        "Mozgás 2 mezőre BMO-tól."
+      ],
+      "source": {
+        "game": "Kalandra fel! (Adventure Time)"
+      }
+    },
+    {
+      "id": "bmo",
+      "name": "BMO",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "leftOf",
+          "of": "lumpy-hercegno"
+        }
+      ],
+      "clueText": [
+        "**Lumpy hercegnőtől balra** volt."
+      ],
+      "source": {
+        "game": "Kalandra fel! (Adventure Time)"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "marceline": "B1",
+    "jake": "E2",
+    "jegkiraly": "C3",
+    "ragogumi-hercegno": "G4",
+    "finn": "F5",
+    "lumpy-hercegno": "D6",
+    "bmo": "A7"
+  },
+  "murderer": "jake",
+  "rev": 1,
+  "worldRule": "motion"
+}

@@ -1,0 +1,241 @@
+{
+  "v": 1,
+  "id": "classic-4-15-gym",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az edzőterem",
+  "story": "Az edzőteremben reggel az edzőt holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 9,
+  "difficulty": 4,
+  "rooms": {
+    "R": "Recepció",
+    "E": "Edzőterem",
+    "L": "Öltöző",
+    "U": "Uszoda",
+    "B": "Büfé"
+  },
+  "layout": [
+    "LLLUUUUUU",
+    "LLLLUUUUU",
+    "LLLLUUUUU",
+    "LLLLEUUUU",
+    "BLLLEEEEU",
+    "BLLEEEEER",
+    "BBBEEERRR",
+    "BBBEERRRR",
+    "BBBBRRRRR"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "B7",
+        "A6",
+        "I6",
+        "A8"
+      ]
+    },
+    {
+      "type": "ball",
+      "at": [
+        "F1",
+        "I4",
+        "E8",
+        "G6"
+      ]
+    },
+    {
+      "type": "reception",
+      "at": "G7",
+      "blocking": true
+    },
+    {
+      "type": "locker",
+      "at": [
+        "D3",
+        "C6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "sink",
+      "at": "D4",
+      "blocking": true
+    },
+    {
+      "type": "treadmill",
+      "at": "F5",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "C9",
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": "B2"
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 1
+        }
+      ],
+      "clueText": [
+        "Az **első sorban** volt."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **pad mellett** volt."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "locker"
+        }
+      ],
+      "clueText": [
+        "Egy **szekrény mellett** volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "ball",
+          "room": "U"
+        }
+      ],
+      "clueText": [
+        "Az Uszodában egy **labdán** volt."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "flavia",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Flaviától északra** volt."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 7
+        }
+      ],
+      "clueText": [
+        "A **7. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "greg",
+      "name": "Greg",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "ball",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Edzőteremben egy **labdán** volt."
+      ]
+    },
+    {
+      "id": "hugo",
+      "name": "Hugo",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **növény mellett** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "F1",
+    "bella": "A2",
+    "carly": "C3",
+    "derek": "I4",
+    "elena": "H5",
+    "flavia": "G6",
+    "vera": "B7",
+    "greg": "E8",
+    "hugo": "D9"
+  },
+  "murderer": "hugo",
+  "rev": 1,
+  "floors": {
+    "R": "carpet",
+    "E": "tile",
+    "L": "tile",
+    "U": "water",
+    "B": "wood"
+  }
+}

@@ -1,0 +1,259 @@
+{
+  "v": 1,
+  "id": "classic-5-17-beach",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A strand – reggel",
+  "story": "Zárás után a strandon a mentőőr holtan feküdt. Csak páran voltak ma bent.",
+  "size": 10,
+  "difficulty": 5,
+  "rooms": {
+    "H": "Homokos part",
+    "M": "Medence",
+    "B": "Büfé",
+    "L": "Öltöző",
+    "A": "Móló",
+    "P": "Pálmaliget"
+  },
+  "layout": [
+    "PPPPHHHHHH",
+    "PPPPPHHHHH",
+    "PPPPPHHHHH",
+    "PPPPHHHHAH",
+    "PPPPBBBAAA",
+    "PPPBBBLAAA",
+    "MMBBBBLAAA",
+    "MMMBBLLLLA",
+    "MMMBBLLLLA",
+    "MMMMMLLLLA"
+  ],
+  "objects": [
+    {
+      "type": "lounger",
+      "at": [
+        "B1",
+        "J3",
+        "H1"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "A5",
+        "J8",
+        "C2",
+        "D6",
+        "F5",
+        "D3"
+      ]
+    },
+    {
+      "type": "tree",
+      "at": [
+        "B2",
+        "A6",
+        "B5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "parasol",
+      "at": "F2",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": [
+        "D7",
+        "E5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "boat",
+      "at": "C9",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "lounger",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Pálmaligetben egy **nyugágyon** volt."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Pálmaligetben egy **padon** ült."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **pad mellett** volt."
+      ]
+    },
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "bruno",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Brunótól délre** volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "carl",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Carltól délre** volt."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "ivan"
+        }
+      ],
+      "clueText": [
+        "**Ivannal** egy helyiségben volt."
+      ]
+    },
+    {
+      "id": "greg",
+      "name": "Greg",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "A"
+        }
+      ],
+      "clueText": [
+        "A Mólón egy **padon** ült."
+      ]
+    },
+    {
+      "id": "holly",
+      "name": "Holly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "eva",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Evától délre** volt."
+      ]
+    },
+    {
+      "id": "ivan",
+      "name": "Ivan",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 6
+        }
+      ],
+      "clueText": [
+        "A **6. oszlopban** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "B1",
+    "bruno": "C2",
+    "carl": "E3",
+    "vickie": "I4",
+    "derek": "A5",
+    "eva": "D6",
+    "felicia": "G7",
+    "greg": "J8",
+    "holly": "H9",
+    "ivan": "F10"
+  },
+  "murderer": "greg",
+  "rev": 1,
+  "floors": {
+    "H": "sand",
+    "M": "water",
+    "B": "wood",
+    "L": "tile",
+    "A": "wood",
+    "P": "grass"
+  }
+}

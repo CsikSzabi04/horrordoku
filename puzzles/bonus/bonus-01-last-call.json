@@ -1,0 +1,166 @@
+{
+  "v": 1,
+  "id": "bonus-01-last-call",
+  "mode": "bonus",
+  "world": "everyday",
+  "title": "Utolsó Pohár",
+  "story": "A Crossroads bár bezárt, a csapos azonban sosem ért haza. A bárpult mögött csak egy tele pohár maradt.",
+  "size": 6,
+  "difficulty": 1,
+  "rooms": {
+    "S": "Söntés",
+    "B": "Bokszok",
+    "R": "Raktár",
+    "M": "Mosdó",
+    "H": "Hátsó sikátor"
+  },
+  "layout": [
+    "HHHMMM",
+    "HHHMMM",
+    "SSBMMM",
+    "SBBBMR",
+    "SBBRRR",
+    "SSBRRR"
+  ],
+  "objects": [
+    {
+      "type": "rug",
+      "at": "C4"
+    },
+    {
+      "type": "pool",
+      "at": "C6",
+      "blocking": true
+    },
+    {
+      "type": "sink",
+      "at": [
+        "F3",
+        "E3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "toilet",
+      "at": "D3",
+      "blocking": true
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "C3",
+        "B4"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "terrain",
+          "style": "wood"
+        }
+      ],
+      "clueText": [
+        "**Fapadlón** volt."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "Egy **ülőhely mellett** volt."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 4
+        }
+      ],
+      "clueText": [
+        "A **4. oszlopban** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "vlad": "F1",
+    "alfred": "E2",
+    "bianca": "A3",
+    "carly": "C4",
+    "daniel": "B5",
+    "emmett": "D6"
+  },
+  "murderer": "alfred",
+  "rev": 1,
+  "floors": {
+    "S": "wood",
+    "B": "carpet",
+    "R": "stone",
+    "M": "tile",
+    "H": "stone"
+  }
+}

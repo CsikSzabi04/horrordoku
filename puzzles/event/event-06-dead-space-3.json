@@ -1,0 +1,238 @@
+{
+  "v": 1,
+  "id": "event-06-dead-space-3",
+  "mode": "event",
+  "world": "dead-space",
+  "title": "A főmérnök naplója",
+  "story": "Hans Tiedemann naplója félbeszakadt, ő maga a padlón fekszik. Csak a páncélosok mehettek utána.",
+  "size": 8,
+  "difficulty": 5,
+  "rooms": {
+    "H": "Híd",
+    "O": "Orvosi szárny",
+    "G": "Gépház",
+    "Y": "Gyárterem",
+    "I": "Hidroponika",
+    "K": "Külső szekció"
+  },
+  "layout": [
+    "OOOOHYYY",
+    "OOOHHHYY",
+    "OOOHHHYY",
+    "OOOHHYYI",
+    "OKGHHYII",
+    "OKGGGYII",
+    "KKKGGYII",
+    "KKKKGYII"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "G8",
+        "C5",
+        "A7",
+        "G6",
+        "C8"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "B3",
+        "H4",
+        "G3"
+      ]
+    },
+    {
+      "type": "terminal",
+      "at": "B6",
+      "blocking": true
+    },
+    {
+      "type": "savepoint",
+      "at": [
+        "D3",
+        "G1",
+        "G5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "lockdoor",
+      "at": [
+        "F6",
+        "A5"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "kendra-daniels",
+      "name": "Kendra Daniels",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "zach-hammond",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Zachtól északra** volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "zach-hammond",
+      "name": "Zach Hammond",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "hans-tiedemann",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Hanstól északra** volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "hans-tiedemann",
+      "name": "Hans Tiedemann",
+      "race": "human",
+      "victim": true,
+      "armored": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "O"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Az Orvosi szárnyban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "isaac-clarke",
+      "name": "Isaac Clarke",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "A Hidroponikában egy **ládán** volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "ellie-langford",
+      "name": "Ellie Langford",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "A Gépházban egy **padon** ült."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "nicole-brennan",
+      "name": "Nicole Brennan",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "zach-hammond",
+          "dir": "W"
+        }
+      ],
+      "clueText": [
+        "**Zachtól nyugatra** volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "terrence-kyne",
+      "name": "Terrence Kyne",
+      "race": "human",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "hans-tiedemann",
+          "dir": "W"
+        }
+      ],
+      "clueText": [
+        "**Hanstól nyugatra** volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    },
+    {
+      "id": "a-hunter",
+      "name": "A Hunter",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "nicole-brennan",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Nicolétől délre** volt."
+      ],
+      "source": {
+        "game": "Dead Space"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "kendra-daniels": "D1",
+    "zach-hammond": "F2",
+    "hans-tiedemann": "B3",
+    "isaac-clarke": "H4",
+    "ellie-langford": "C5",
+    "nicole-brennan": "E6",
+    "terrence-kyne": "A7",
+    "a-hunter": "G8"
+  },
+  "murderer": "kendra-daniels",
+  "rev": 1,
+  "worldRule": "vacuum",
+  "vacuumRooms": [
+    "K",
+    "Y"
+  ]
+}

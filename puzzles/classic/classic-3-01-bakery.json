@@ -1,0 +1,219 @@
+{
+  "v": 1,
+  "id": "classic-3-01-bakery",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A pékség – hétvégén",
+  "story": "Szombat este a pékségben a pék nem tért haza. Valaki egyedül maradt vele.",
+  "size": 8,
+  "difficulty": 3,
+  "rooms": {
+    "R": "Raktár",
+    "I": "Iroda",
+    "U": "Udvar",
+    "E": "Eladótér",
+    "S": "Sütöde"
+  },
+  "layout": [
+    "SSRRRRRU",
+    "SSRRRRRU",
+    "SSIIIRRU",
+    "SSIIRRRU",
+    "SSSIIRRU",
+    "SSIIIIIU",
+    "SSSEEIIU",
+    "SSEEEEIU"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "E7",
+        "H1"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": "G8"
+    },
+    {
+      "type": "rug",
+      "at": [
+        "D4",
+        "C6",
+        "D5",
+        "C4"
+      ]
+    },
+    {
+      "type": "plant",
+      "at": "D3",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": [
+        "D8",
+        "C8",
+        "E8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "register",
+      "at": "D7",
+      "blocking": true
+    },
+    {
+      "type": "barrel",
+      "at": "G4",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "U"
+        }
+      ],
+      "clueText": [
+        "Az Udvaron egy **padon** ült."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "daniel",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Danieltől északra** volt."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszloptól balra** volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **növény mellett** volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "vickie",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Vickiétől északra** volt."
+      ]
+    },
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "furniture"
+        }
+      ],
+      "clueText": [
+        "Egy **bútor mellett** volt."
+      ]
+    },
+    {
+      "id": "gordon",
+      "name": "Gordon",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "H1",
+    "bianca": "C2",
+    "carl": "A3",
+    "daniel": "D4",
+    "eva": "F5",
+    "vickie": "B6",
+    "frank": "E7",
+    "gordon": "G8"
+  },
+  "murderer": "carl",
+  "rev": 1,
+  "floors": {
+    "R": "stone",
+    "U": "grass",
+    "E": "checker",
+    "S": "brick"
+  }
+}

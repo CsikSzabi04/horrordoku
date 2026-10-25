@@ -77,7 +77,7 @@ export default function CollectionScreen() {
                 const known = owned.has(c.id)
                 return (
                   <li key={c.id} className={known ? 'nd-card' : 'nd-card locked'}>
-                    <Avatar id={c.id} emoji={known ? c.emoji : '❔'} size="3.4rem" />
+                    <Avatar id={known ? c.id : 'unknown'} emoji={known ? c.emoji : '❔'} size="3.4rem" />
                     <div>
                       <h4>{known ? c.name : t('collection.unknown')}</h4>
                       <p className="nd-note">

@@ -1,0 +1,259 @@
+{
+  "v": 1,
+  "id": "classic-5-11-flower-store",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A virágbolt – hétvégén",
+  "story": "Szombat este a virágboltban az egyik alkalmazott nem tért haza. Valaki egyedül maradt vele.",
+  "size": 10,
+  "difficulty": 5,
+  "rooms": {
+    "E": "Előkészítés",
+    "P": "Pénztár",
+    "R": "Raktár",
+    "V": "Üvegház",
+    "L": "Eladótér"
+  },
+  "layout": [
+    "LLLLPPPPPP",
+    "LLLLPPPPPP",
+    "LLLLPPPPPP",
+    "LLLLRRRPPP",
+    "LLLLRRPPPP",
+    "LLLLRRRVVV",
+    "LLLLRRVVVV",
+    "EEELRRVVVV",
+    "EEELVVVVVV",
+    "EEEEEEVVVV"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "C1",
+        "J3"
+      ]
+    },
+    {
+      "type": "rug",
+      "at": [
+        "D4",
+        "A7"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "H6",
+        "J9",
+        "D8",
+        "C3",
+        "C4"
+      ]
+    },
+    {
+      "type": "plant",
+      "at": [
+        "D5",
+        "G10"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "flowers",
+      "at": [
+        "C7",
+        "D1",
+        "D10"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "shelf",
+      "at": "G6",
+      "blocking": true
+    },
+    {
+      "type": "register",
+      "at": "I4",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "vickie",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Vickiétől északra** volt."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "register"
+        }
+      ],
+      "clueText": [
+        "Egy **pénztárgép mellett** volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **cserepes növény mellett** volt."
+      ]
+    },
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 8
+        }
+      ],
+      "clueText": [
+        "A **8. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "gordon",
+      "name": "Gordon",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "vickie",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Vickiétől délre** volt."
+      ]
+    },
+    {
+      "id": "henry",
+      "name": "Henry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "Az Üvegházban egy **padon** ült."
+      ]
+    },
+    {
+      "id": "igor",
+      "name": "Igor",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "flowers"
+        }
+      ],
+      "clueText": [
+        "Egy **virágcserje mellett** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "C1",
+    "barry": "B2",
+    "clara": "I3",
+    "daniel": "D4",
+    "vickie": "G5",
+    "ervin": "H6",
+    "flavia": "A7",
+    "gordon": "F8",
+    "henry": "J9",
+    "igor": "E10"
+  },
+  "murderer": "clara",
+  "rev": 1,
+  "floors": {
+    "E": "brick",
+    "P": "brick",
+    "R": "stone",
+    "V": "tile",
+    "L": "checker"
+  }
+}

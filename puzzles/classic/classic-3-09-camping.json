@@ -1,0 +1,219 @@
+{
+  "v": 1,
+  "id": "classic-3-09-camping",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A kemping – hétvégén",
+  "story": "Szombat este a kempingben az egyik túrázó nem tért haza. Valaki egyedül maradt vele.",
+  "size": 8,
+  "difficulty": 3,
+  "rooms": {
+    "T": "Tűzrakóhely",
+    "E": "Erdő",
+    "F": "Fürdőház",
+    "S": "Sátortábor",
+    "A": "Tó"
+  },
+  "layout": [
+    "TTTSSSSS",
+    "TTTTTESS",
+    "TTTTTEES",
+    "TTTTTEES",
+    "ATTTTESS",
+    "AAAEEESF",
+    "AAAAAASF",
+    "AAAAAAFF"
+  ],
+  "objects": [
+    {
+      "type": "lounger",
+      "at": [
+        "A5",
+        "G1",
+        "H4",
+        "C8",
+        "D7"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "D3",
+        "F1",
+        "E4"
+      ]
+    },
+    {
+      "type": "campfire",
+      "at": "C4",
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "H3",
+      "blocking": true
+    },
+    {
+      "type": "canoe",
+      "at": [
+        "F7",
+        "B6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tent",
+      "at": "H2",
+      "blocking": true
+    },
+    {
+      "type": "bush",
+      "at": "G3",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "lounger",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "A Sátortáborban egy **nyugágyon** volt."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **növény mellett** volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "lounger",
+          "room": "A"
+        }
+      ],
+      "clueText": [
+        "A Tónál egy **nyugágyon** volt."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 5
+        }
+      ],
+      "clueText": [
+        "Az **5. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "fred",
+      "name": "Fred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 7
+        }
+      ],
+      "clueText": [
+        "A **7. sorban** volt."
+      ]
+    },
+    {
+      "id": "gina",
+      "name": "Gina",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. oszlopban** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "G1",
+    "vlad": "F2",
+    "barry": "D3",
+    "cody": "H4",
+    "derek": "A5",
+    "emmett": "E6",
+    "fred": "B7",
+    "gina": "C8"
+  },
+  "murderer": "emmett",
+  "rev": 1,
+  "floors": {
+    "T": "dirt",
+    "E": "grass",
+    "F": "tile",
+    "S": "grass",
+    "A": "water"
+  }
+}

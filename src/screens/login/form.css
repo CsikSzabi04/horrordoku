@@ -5,6 +5,11 @@
 .nd-field { display: grid; gap: 0.25rem; font-family: var(--type); font-size: 0.85rem; color: var(--muted); }
 .nd-field input { padding: 0.65rem 0.8rem; border: 1px solid var(--line); border-radius: 6px; background: rgba(255, 255, 255, 0.04); color: var(--ink); font: 400 1rem var(--ui); }
 .nd-field input:focus-visible { outline: 2px solid var(--blood); outline-offset: 1px; }
+.nd-pass { position: relative; display: block; }
+.nd-pass input { width: 100%; box-sizing: border-box; padding-right: 2.8rem; }
+.nd-eye { position: absolute; top: 50%; right: 0.35rem; display: grid; place-items: center; width: 2.1rem; height: 2.1rem; transform: translateY(-50%); border: 0; border-radius: 6px; background: none; color: var(--muted); cursor: pointer; }
+.nd-eye:hover, .nd-eye[aria-pressed='true'] { color: var(--ink); }
+.nd-eye:focus-visible { outline: 2px solid var(--blood); }
 .nd-field small { min-height: 1.1em; }
 .nd-field small.ok { color: #6fcf97; }
 .nd-field small.bad { color: #ff8d9b; }
@@ -17,6 +22,9 @@
 .nd-or::before, .nd-or::after { content: ''; flex: 1; height: 1px; background: var(--line); }
 .nd-pf { width: min(94vw, 760px); display: grid; gap: 1rem; }
 .nd-pf-head { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.nd-pf-code { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; margin-top: 0.5rem; color: var(--muted); }
+.nd-pf-code code { padding: 0.15rem 0.45rem; border: 1px solid var(--line); border-radius: 4px; background: rgba(255, 255, 255, 0.05); color: var(--ink); font: 700 1rem ui-monospace, Consolas, monospace; letter-spacing: 0.08em; user-select: all; }
+.nd-pf-top { display: flex; flex-wrap: wrap; align-items: center; gap: 0.8rem; }
 .nd-pf-head h2 { margin: 0; font-family: var(--display); letter-spacing: 0.06em; }
 .nd-pf-head p { margin: 0; color: var(--muted); }
 .nd-pf-head .nd-bar { width: min(100%, 320px); }

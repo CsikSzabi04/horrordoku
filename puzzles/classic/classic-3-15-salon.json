@@ -1,0 +1,213 @@
+{
+  "v": 1,
+  "id": "classic-3-15-salon",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A szépségszalon – reggel",
+  "story": "Zárás után a szépségszalonban a fodrász holtan feküdt. Csak páran voltak ma bent.",
+  "size": 8,
+  "difficulty": 3,
+  "rooms": {
+    "K": "Kozmetika",
+    "R": "Raktár",
+    "M": "Mosdó",
+    "V": "Várakozó",
+    "F": "Fodrászat"
+  },
+  "layout": [
+    "KKRRRRMM",
+    "KKKRRRRM",
+    "KKKKRRRM",
+    "FFKKKRRM",
+    "FFFKKKKM",
+    "FFFFFFKM",
+    "FFFVVVVV",
+    "FFVVVVVV"
+  ],
+  "objects": [
+    {
+      "type": "hairchair",
+      "at": [
+        "B4",
+        "A6",
+        "D3",
+        "B7"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": "E8"
+    },
+    {
+      "type": "shelf",
+      "at": [
+        "E4",
+        "C1",
+        "E3",
+        "A1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "toilet",
+      "at": [
+        "G1",
+        "H6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "F8",
+        "D7"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "victor",
+          "dir": "N"
+        }
+      ],
+      "clueText": [
+        "**Victortól északra** volt."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "hairchair",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Kozmetikában egy **fodrászszéken** ült."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "derek"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Derekkel**."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "hairchair",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Fodrászatban egy **fodrászszéken** ült."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "A Várakozóban volt."
+      ]
+    },
+    {
+      "id": "greg",
+      "name": "Greg",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "A Várakozóban egy **széken** ült."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "F1",
+    "victor": "G2",
+    "bella": "D3",
+    "carl": "B4",
+    "derek": "C5",
+    "elena": "A6",
+    "frank": "H7",
+    "greg": "E8"
+  },
+  "murderer": "anna",
+  "rev": 1,
+  "floors": {
+    "K": "tile",
+    "R": "stone",
+    "M": "tile",
+    "V": "carpet",
+    "F": "checker"
+  }
+}

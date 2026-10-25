@@ -143,7 +143,12 @@ export async function openSession(client: SupabaseClient, roomId: string): Promi
     ops: { send: noop, onOp: () => noop, saveState: async () => fail('unknown', 'not_implemented'), loadState: async () => fail('unknown', 'not_implemented') },
     cursors: { send: noop, onCursor: () => noop },
     submit: { propose: noop, vote: noop, onProposal: () => noop, onResult: () => noop },
-    finish: async () => fail('unknown', 'not_implemented'),
+    close: () => void client.removeChannel(channel),
+    finish: (res) =>
+      guard(async () => {
+        const { error } = await client.rpc('finish_game', { p_room: roomId, p_solved: res.solved, p_ms: Math.round(res.ms) })
+        return error ? fromError(error) : ok(undefined)
+      }),
   }
   return ok(session)
 }

@@ -1,0 +1,207 @@
+{
+  "v": 1,
+  "id": "classic-2-15-school",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az iskola – zárás után",
+  "story": "Zárás után az iskolában az igazgató holtan feküdt. Csak páran voltak ma bent.",
+  "size": 7,
+  "difficulty": 2,
+  "rooms": {
+    "T": "Tornaterem",
+    "M": "Menza",
+    "U": "Udvar",
+    "K": "Könyvtár",
+    "A": "Tanterem"
+  },
+  "layout": [
+    "AAAAAKK",
+    "AAAAKKK",
+    "UUUAKKK",
+    "UUUUUKK",
+    "MMUMTTT",
+    "MMMMTTT",
+    "MMMTTTT"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "B5",
+        "C1",
+        "F4"
+      ]
+    },
+    {
+      "type": "ball",
+      "at": [
+        "A3",
+        "F6"
+      ]
+    },
+    {
+      "type": "shelf",
+      "at": "G3",
+      "blocking": true
+    },
+    {
+      "type": "table",
+      "at": "A7",
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "C4",
+      "blocking": true
+    },
+    {
+      "type": "board",
+      "at": "D3",
+      "blocking": true
+    },
+    {
+      "type": "globe",
+      "at": "E1",
+      "blocking": true
+    },
+    {
+      "type": "desk",
+      "at": "A2"
+    },
+    {
+      "type": "bench",
+      "at": "B3"
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "A"
+        }
+      ],
+      "clueText": [
+        "A Tanteremben egy **széken** ült."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "withGender",
+          "gender": "f"
+        }
+      ],
+      "clueText": [
+        "A helyiségében volt egy **nő**."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "ne",
+          "n": 5
+        }
+      ],
+      "clueText": [
+        "**Nem** az **5. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "deborah",
+      "name": "Deborah",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "A Menzán egy **széken** ült."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "ball",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A Tornateremben egy **labdán** volt."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "emmett"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Emmettel**."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "C1",
+    "barry": "D2",
+    "carl": "A3",
+    "victor": "E4",
+    "deborah": "B5",
+    "emmett": "F6",
+    "felicia": "G7"
+  },
+  "murderer": "carl",
+  "rev": 1,
+  "floors": {
+    "T": "checker",
+    "M": "tile",
+    "U": "grass",
+    "K": "carpet",
+    "A": "wood"
+  }
+}

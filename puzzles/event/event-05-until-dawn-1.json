@@ -1,0 +1,211 @@
+{
+  "v": 1,
+  "id": "event-05-until-dawn-1",
+  "mode": "event",
+  "world": "until-dawn",
+  "title": "A Wendigo éjszakája",
+  "story": "A hegyi kabinban a Wendigo végzett az éjszakával. A totemek mellett álló szereplők nyomai többet árulnak el.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "K": "Konyha",
+    "F": "Fürdő",
+    "P": "Pince",
+    "H": "Hálók",
+    "T": "Tisztás",
+    "E": "Felvonó"
+  },
+  "layout": [
+    "PPTTTK",
+    "PPPPTK",
+    "HHHHHK",
+    "HHHHEE",
+    "FFFFEE",
+    "FFFFEE"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "F6",
+        "D4"
+      ]
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "E3",
+        "C1"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "A1",
+        "E1"
+      ]
+    },
+    {
+      "type": "totem",
+      "at": [
+        "A3",
+        "B6",
+        "E5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "gunrack",
+      "at": [
+        "A4",
+        "C5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "fireplace",
+      "at": [
+        "F2",
+        "C3"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "a-wendigo",
+      "name": "A Wendigo",
+      "race": "werewolf",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Pincében **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Until Dawn"
+      }
+    },
+    {
+      "id": "ashley",
+      "name": "Ashley",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        },
+        {
+          "kind": "in",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt.",
+        "A Pincében volt."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Until Dawn"
+      }
+    },
+    {
+      "id": "josh",
+      "name": "Josh",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "ne",
+          "n": 1
+        },
+        {
+          "kind": "on",
+          "object": "sofa",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "**Nem** az **első oszlopban** volt.",
+        "A Hálókban egy **kanapén** ült."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Until Dawn"
+      }
+    },
+    {
+      "id": "mike",
+      "name": "Mike",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "josh"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Joshhal**."
+      ],
+      "source": {
+        "game": "Until Dawn"
+      }
+    },
+    {
+      "id": "matt",
+      "name": "Matt",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "gunrack"
+        }
+      ],
+      "clueText": [
+        "Egy **fegyverszekrény mellett** volt."
+      ],
+      "source": {
+        "game": "Until Dawn"
+      }
+    },
+    {
+      "id": "sam",
+      "name": "Sam",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "josh",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Joshtól délre** volt."
+      ],
+      "source": {
+        "game": "Until Dawn"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "a-wendigo": "A1",
+    "ashley": "C2",
+    "josh": "E3",
+    "mike": "D4",
+    "matt": "B5",
+    "sam": "F6"
+  },
+  "murderer": "ashley",
+  "rev": 1,
+  "worldRule": "totems"
+}

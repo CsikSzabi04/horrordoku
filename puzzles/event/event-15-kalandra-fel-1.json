@@ -1,0 +1,171 @@
+{
+  "v": 1,
+  "id": "event-15-kalandra-fel-1",
+  "mode": "event",
+  "world": "adventure-time",
+  "title": "A Lich sírboltja",
+  "story": "Ooo Földjén a Lich holtteste a sírboltban hever. A térkép nem mutat mindent: néhány szereplőről csak annyi derül ki, milyen messze volt a kardtól vagy BMO-tól.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "C": "Cukorka Királyság",
+    "J": "Jég Királyság",
+    "L": "Lich-sírbolt",
+    "T": "Tűz Királyság",
+    "S": "Sötét erdő"
+  },
+  "layout": [
+    "TTSSS",
+    "CTLLS",
+    "CCJJS",
+    "CJJJS",
+    "CJJJS"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "C5",
+        "E1"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "B3",
+        "E2"
+      ]
+    },
+    {
+      "type": "sword",
+      "at": "D1",
+      "blocking": true
+    },
+    {
+      "type": "bmo",
+      "at": "C4",
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": [
+        "D5",
+        "A1",
+        "D2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "bush",
+      "at": "C1",
+      "blocking": true
+    },
+    {
+      "type": "carpet",
+      "at": "E3"
+    }
+  ],
+  "characters": [
+    {
+      "id": "ragogumi-hercegno",
+      "name": "Rágógumi hercegnő",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "sword",
+          "cells": 1
+        }
+      ],
+      "clueText": [
+        "Mozgás 1 mezőre a kardtól."
+      ],
+      "source": {
+        "game": "Kalandra fel! (Adventure Time)"
+      }
+    },
+    {
+      "id": "lumpy-hercegno",
+      "name": "Lumpy hercegnő",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "sword",
+          "cells": 4
+        }
+      ],
+      "clueText": [
+        "Mozgás 4 mezőre a kardtól."
+      ],
+      "source": {
+        "game": "Kalandra fel! (Adventure Time)"
+      }
+    },
+    {
+      "id": "finn",
+      "name": "Finn",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "a-lich",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **a Lichtől északra** volt."
+      ],
+      "source": {
+        "game": "Kalandra fel! (Adventure Time)"
+      }
+    },
+    {
+      "id": "a-lich",
+      "name": "A Lich",
+      "race": "ghoul",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "J"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Jég Királyságban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Kalandra fel! (Adventure Time)"
+      }
+    },
+    {
+      "id": "bmo",
+      "name": "BMO",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "lumpy-hercegno",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Lumpy hercegnőtől délre** volt."
+      ],
+      "source": {
+        "game": "Kalandra fel! (Adventure Time)"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "ragogumi-hercegno": "E1",
+    "lumpy-hercegno": "A2",
+    "finn": "B3",
+    "a-lich": "D4",
+    "bmo": "C5"
+  },
+  "murderer": "bmo",
+  "rev": 1,
+  "worldRule": "motion"
+}

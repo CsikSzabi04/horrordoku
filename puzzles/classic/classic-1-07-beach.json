@@ -1,0 +1,172 @@
+{
+  "v": 1,
+  "id": "classic-1-07-beach",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A strand – nyitás előtt",
+  "story": "Ünnepnap volt a strandon, és a mentőőr többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 6,
+  "difficulty": 1,
+  "rooms": {
+    "H": "Homokos part",
+    "M": "Medence",
+    "B": "Büfé",
+    "L": "Öltöző"
+  },
+  "layout": [
+    "MMHHHH",
+    "MMHHHH",
+    "MMHHHH",
+    "MMMBBH",
+    "MMMBBH",
+    "MMMBLL"
+  ],
+  "objects": [
+    {
+      "type": "ball",
+      "at": [
+        "D2",
+        "B6",
+        "B5"
+      ]
+    },
+    {
+      "type": "lounger",
+      "at": "C3"
+    },
+    {
+      "type": "counter",
+      "at": "E4",
+      "blocking": true
+    },
+    {
+      "type": "parasol",
+      "at": [
+        "F5",
+        "E2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "boat",
+      "at": "A3",
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": "D5"
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. sor fölött** volt."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "carl"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Carllal**."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "lounger",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Homokos parton egy **nyugágyon** volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "boat"
+        }
+      ],
+      "clueText": [
+        "Egy **csónak mellett** volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **pad mellett** volt."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "F1",
+    "bella": "D2",
+    "carl": "C3",
+    "daniel": "A4",
+    "eva": "E5",
+    "vera": "B6"
+  },
+  "murderer": "daniel",
+  "rev": 1,
+  "floors": {
+    "H": "sand",
+    "M": "water",
+    "B": "wood",
+    "L": "tile"
+  }
+}

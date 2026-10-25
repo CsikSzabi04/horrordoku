@@ -1,0 +1,269 @@
+{
+  "v": 1,
+  "id": "event-18-the-last-of-us-3",
+  "mode": "event",
+  "world": "last-of-us",
+  "title": "Két testvér",
+  "story": "Henry a kisöccse mellett maradt a szálláson, ahol a rádió még sistergett. A spórák köde kitakarja a nyomok néhány szavát.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "K": "Karantén-zóna",
+    "P": "Pittsburgh",
+    "T": "Tommy gátja",
+    "J": "Jackson",
+    "E": "Egyetem",
+    "R": "Kórház",
+    "M": "Metró",
+    "H": "Hegyi kabin"
+  },
+  "layout": [
+    "JJJJRRRPP",
+    "JJMMRRPPP",
+    "JEMMMPPPP",
+    "EEEEMMPPP",
+    "EETTTTTPP",
+    "EETTTKKKK",
+    "EHTTHHKKK",
+    "EHHHHHKKK",
+    "HHHHHHKKK"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "A7",
+        "A6",
+        "C1",
+        "H8"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "C4",
+        "B6",
+        "E8",
+        "F1",
+        "G4"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "H2",
+        "D5"
+      ]
+    },
+    {
+      "type": "radio",
+      "at": [
+        "I4",
+        "D9"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "car",
+      "at": [
+        "F2",
+        "H4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "rock",
+      "at": [
+        "I6",
+        "C8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tent",
+      "at": "B7",
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "G1",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "abby-anderson",
+      "name": "Abby Anderson",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "A Kórházban egy **███** volt."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    },
+    {
+      "id": "henry",
+      "name": "Henry",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Pittsburghben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    },
+    {
+      "id": "sam",
+      "name": "Sam",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    },
+    {
+      "id": "bill",
+      "name": "Bill",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Egyetemen egy **ládán** volt."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    },
+    {
+      "id": "joel-miller",
+      "name": "Joel Miller",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "sam",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Samtól délre** volt."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    },
+    {
+      "id": "riley",
+      "name": "Riley",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "tommy-miller"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Tommyvel**."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    },
+    {
+      "id": "tommy-miller",
+      "name": "Tommy Miller",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Egyetemen egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    },
+    {
+      "id": "marlene",
+      "name": "Marlene",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Hegyi kabinban egy **ládán** volt."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    },
+    {
+      "id": "ellie-williams",
+      "name": "Ellie Williams",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "henry",
+          "dir": "W"
+        }
+      ],
+      "clueText": [
+        "**Henrytől nyugatra** volt."
+      ],
+      "source": {
+        "game": "The Last of Us"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "abby-anderson": "F1",
+    "henry": "H2",
+    "sam": "I3",
+    "bill": "C4",
+    "joel-miller": "D5",
+    "riley": "B6",
+    "tommy-miller": "A7",
+    "marlene": "E8",
+    "ellie-williams": "G9"
+  },
+  "murderer": "sam",
+  "rev": 1,
+  "worldRule": "radio"
+}

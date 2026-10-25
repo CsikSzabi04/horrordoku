@@ -1,0 +1,159 @@
+{
+  "v": 1,
+  "id": "classic-1-18-airport",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A reptér – reggel",
+  "story": "Szombat este a repülőtéren az egyik utas nem tért haza. Valaki egyedül maradt vele.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "T": "Terminál",
+    "P": "Poggyászkezelő",
+    "B": "Beszállókapu",
+    "F": "Büfé"
+  },
+  "layout": [
+    "FTTTT",
+    "FBBBT",
+    "FFBBT",
+    "FPPPP",
+    "FPPPP"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "C1",
+        "D3",
+        "C3"
+      ]
+    },
+    {
+      "type": "luggage",
+      "at": [
+        "E5",
+        "D4"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "A4",
+        "B2"
+      ]
+    },
+    {
+      "type": "clock",
+      "at": [
+        "B1",
+        "E3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "computer",
+      "at": "E2",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "A1",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "notBesideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **ülőhely mellett**."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "B"
+        }
+      ],
+      "clueText": [
+        "A Beszállókapunál egy **széken** ült."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "luggage"
+        }
+      ],
+      "clueText": [
+        "Egy **bőrönd tetején** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "C1",
+    "bruno": "B2",
+    "vlad": "D3",
+    "carl": "A4",
+    "derek": "E5"
+  },
+  "murderer": "bruno",
+  "rev": 1,
+  "floors": {
+    "T": "tile",
+    "P": "stone",
+    "B": "carpet",
+    "F": "wood"
+  }
+}

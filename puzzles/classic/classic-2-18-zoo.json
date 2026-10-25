@@ -1,0 +1,164 @@
+{
+  "v": 1,
+  "id": "classic-2-18-zoo",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az állatkert",
+  "story": "Ünnepnap volt az állatkertben, és az egyik gondozó többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "M": "Medve élőhely",
+    "K": "Krokodil élőhely",
+    "E": "Elefánt élőhely",
+    "F": "Főterület"
+  },
+  "layout": [
+    "FEEMMM",
+    "FFEMMM",
+    "FFEEMK",
+    "FFEEMK",
+    "FFEKKK",
+    "FFEKKK"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "A5",
+        "B3",
+        "A4"
+      ]
+    },
+    {
+      "type": "bush",
+      "at": "B2",
+      "blocking": true
+    },
+    {
+      "type": "elephant",
+      "at": "C3",
+      "blocking": true
+    },
+    {
+      "type": "croc",
+      "at": "E6",
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "A1",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "elephant"
+        }
+      ],
+      "clueText": [
+        "Egy **elefánt mellett** volt."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "terrain",
+          "style": "swamp"
+        }
+      ],
+      "clueText": [
+        "**Mocsárban** volt."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 4
+        }
+      ],
+      "clueText": [
+        "A **4. sorban** volt."
+      ]
+    },
+    {
+      "id": "deborah",
+      "name": "Deborah",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Főterületen egy **padon** ült."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "croc"
+        }
+      ],
+      "clueText": [
+        "Egy **krokodil mellett** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "vickie": "B1",
+    "amir": "C2",
+    "barry": "F3",
+    "carl": "E4",
+    "deborah": "A5",
+    "eva": "D6"
+  },
+  "murderer": "amir",
+  "rev": 1,
+  "floors": {
+    "M": "stone",
+    "K": "swamp",
+    "E": "grass",
+    "F": "dirt"
+  }
+}

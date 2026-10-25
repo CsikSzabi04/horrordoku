@@ -1,0 +1,227 @@
+{
+  "v": 1,
+  "id": "event-03-resident-evil-2-2",
+  "mode": "event",
+  "world": "resident-evil",
+  "title": "A kapitány irodája",
+  "story": "Brian Irons a saját irodájában maradt, a titkos ajtó pedig nyitva áll. A kulcsok mindkét irányba nyitnak — és mindkét irányba figyelnek.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "F": "Főcsarnok",
+    "N": "Nyugati iroda",
+    "S": "Sötétkamra",
+    "K": "Könyvtár",
+    "M": "Mentőszoba",
+    "A": "Kapitányi iroda",
+    "L": "Lőtér"
+  },
+  "layout": [
+    "MMFFFLL",
+    "MMMFFLL",
+    "MMFFLLL",
+    "MFFFLLL",
+    "NNKKKSS",
+    "NNKASSS",
+    "NNAAASS"
+  ],
+  "objects": [
+    {
+      "type": "itembox",
+      "at": [
+        "C2",
+        "E7"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "F6",
+        "G4",
+        "G6"
+      ]
+    },
+    {
+      "type": "herb",
+      "at": [
+        "B4",
+        "C3"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": "G5"
+    },
+    {
+      "type": "doorSpade",
+      "at": "F1",
+      "blocking": true
+    },
+    {
+      "type": "doorDiamond",
+      "at": "F7",
+      "blocking": true
+    },
+    {
+      "type": "doorCircle",
+      "at": "E6",
+      "blocking": true
+    },
+    {
+      "type": "typewriter",
+      "at": [
+        "D7",
+        "A4",
+        "A7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": [
+        "D4",
+        "F3"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "sherry-birkin",
+      "name": "Sherry Birkin",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "marvin-branagh",
+          "dir": "W"
+        }
+      ],
+      "clueText": [
+        "**Marvintól nyugatra** volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "ada-wong",
+      "name": "Ada Wong",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "sherry-birkin"
+        }
+      ],
+      "clueText": [
+        "**Sherryvel** egy helyiségben volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "marvin-branagh",
+      "name": "Marvin Branagh",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "ada-wong",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Adától délre** volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "leon-s-kennedy",
+      "name": "Leon S. Kennedy",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "herb",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Főcsarnokban egy **gyógynövényen** volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "brian-irons",
+      "name": "Brian Irons",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Sötétkamrában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "annette-birkin",
+      "name": "Annette Birkin",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "doorDiamond"
+        }
+      ],
+      "clueText": [
+        "Egy **gyémánt ajtó mellett** volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "mr-x",
+      "name": "Mr. X",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "annette-birkin",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Annettétől délre** volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "sherry-birkin": "A1",
+    "ada-wong": "C2",
+    "marvin-branagh": "D3",
+    "leon-s-kennedy": "B4",
+    "brian-irons": "G5",
+    "annette-birkin": "F6",
+    "mr-x": "E7"
+  },
+  "murderer": "annette-birkin",
+  "rev": 1,
+  "worldRule": "doors"
+}

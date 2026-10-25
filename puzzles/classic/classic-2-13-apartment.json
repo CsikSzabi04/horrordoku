@@ -1,0 +1,191 @@
+{
+  "v": 1,
+  "id": "classic-2-13-apartment",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A lakás – hétvégén",
+  "story": "Szombat este a lakásban a lakástulajdonos nem tért haza. Valaki egyedül maradt vele.",
+  "size": 7,
+  "difficulty": 2,
+  "rooms": {
+    "N": "Nappali",
+    "F": "Fürdő",
+    "E": "Előszoba",
+    "R": "Erkély",
+    "H": "Hálószoba"
+  },
+  "layout": [
+    "EEEEHHH",
+    "NEHHHHH",
+    "NEHHHHF",
+    "NEERRRF",
+    "NNRRRRF",
+    "NNRFFFF",
+    "NNRFFFF"
+  ],
+  "objects": [
+    {
+      "type": "bed",
+      "at": "F3"
+    },
+    {
+      "type": "plant",
+      "at": "A1",
+      "blocking": true
+    },
+    {
+      "type": "sink",
+      "at": "G5",
+      "blocking": true
+    },
+    {
+      "type": "bath",
+      "at": "E6",
+      "blocking": true
+    },
+    {
+      "type": "tv",
+      "at": [
+        "A5",
+        "A7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "rug",
+      "at": [
+        "G2",
+        "C1"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": "A3"
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 4
+        }
+      ],
+      "clueText": [
+        "A **4. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bed"
+        }
+      ],
+      "clueText": [
+        "Egy **ágyon** volt."
+      ]
+    },
+    {
+      "id": "deborah",
+      "name": "Deborah",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "aloneWith",
+          "with": "adam"
+        }
+      ],
+      "clueText": [
+        "**Egyedül** volt **Adammal**."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "sink"
+        }
+      ],
+      "clueText": [
+        "Egy **mosdókagyló mellett** volt."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "bath"
+        }
+      ],
+      "clueText": [
+        "Egy **kád mellett** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "D1",
+    "bruno": "A2",
+    "cody": "F3",
+    "deborah": "C4",
+    "vera": "B5",
+    "eva": "G6",
+    "frank": "E7"
+  },
+  "murderer": "bruno",
+  "rev": 1,
+  "floors": {
+    "N": "carpet",
+    "F": "tile",
+    "E": "brick",
+    "R": "stone",
+    "H": "wood"
+  }
+}

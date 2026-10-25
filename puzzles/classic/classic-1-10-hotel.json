@@ -1,0 +1,154 @@
+{
+  "v": 1,
+  "id": "classic-1-10-hotel",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A hotel – reggel",
+  "story": "Szombat este a hotelben az igazgató nem tért haza. Valaki egyedül maradt vele.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "R": "Recepció",
+    "T": "Étterem",
+    "K": "Konyha",
+    "S": "Szoba"
+  },
+  "layout": [
+    "KKKSS",
+    "KKRRS",
+    "KKRRS",
+    "TTTRS",
+    "TTTTT"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": "E5"
+    },
+    {
+      "type": "rug",
+      "at": "D1"
+    },
+    {
+      "type": "table",
+      "at": "C5",
+      "blocking": true
+    },
+    {
+      "type": "fridge",
+      "at": [
+        "A1",
+        "C1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "D2",
+      "blocking": true
+    },
+    {
+      "type": "sofa",
+      "at": "E2"
+    },
+    {
+      "type": "bed",
+      "at": "E3"
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "A Szobában egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "fridge"
+        }
+      ],
+      "clueText": [
+        "Egy **hűtő mellett** volt."
+      ]
+    },
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "adam",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Adamtól délre** volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "D1",
+    "barry": "A2",
+    "vickie": "B3",
+    "carl": "C4",
+    "derek": "E5"
+  },
+  "murderer": "barry",
+  "rev": 1,
+  "floors": {
+    "R": "carpet",
+    "T": "wood",
+    "K": "tile",
+    "S": "carpet"
+  }
+}

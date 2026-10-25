@@ -1,0 +1,146 @@
+{
+  "v": 1,
+  "id": "classic-1-20-office",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az iroda – hétvégén",
+  "story": "Zárás után az irodában az osztályvezető holtan feküdt. Csak páran voltak ma bent.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "N": "Nyitott iroda",
+    "T": "Tárgyaló",
+    "K": "Konyha",
+    "R": "Raktár"
+  },
+  "layout": [
+    "RRRRR",
+    "TTTTT",
+    "KKKKT",
+    "KKKKN",
+    "NNNNN"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": "A5"
+    },
+    {
+      "type": "shelf",
+      "at": [
+        "C1",
+        "A1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": [
+        "D2",
+        "C2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "rug",
+      "at": [
+        "A2",
+        "E3"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 4
+        }
+      ],
+      "clueText": [
+        "A **4. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. sorban** volt."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "A Nyitott irodában egy **széken** ült."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "D1",
+    "bruno": "B2",
+    "carl": "C3",
+    "vlad": "E4",
+    "daniel": "A5"
+  },
+  "murderer": "daniel",
+  "rev": 1,
+  "floors": {
+    "N": "carpet",
+    "T": "wood",
+    "K": "tile",
+    "R": "stone"
+  }
+}

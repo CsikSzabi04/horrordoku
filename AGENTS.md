@@ -4,14 +4,24 @@ Ezen a repón **két AI** dolgozik párhuzamosan: **AI-A** (a játék) és **AI-
 
 > **v0.4 döntés: web először.** A játék Vite + React webalkalmazás (`npm run dev` → localhost); nincs Electron, `memory` mappa, híd — az asztali csomag később jön. A **Klasszikus mód sima Murdoku** (nincs Erő-szabály, jumpscare, extra), az extrák az Esemény/Random/co-op módokban vannak. Lásd a GDD „v0.4 — döntések" részét.
 
-## Első lépés — saját munkakönyvtár (klónozni NEM kell)
+## Munkamód (felhasználói döntés, 2026-10-25) — minden a fő mappában
 
-```bash
-bash scripts/ai-setup.sh A      # ha te vagy AI-A   (AI-B: bash scripts/ai-setup.sh B)
-```
-Ez létrehoz egy **külön `git worktree`-t a projektmappán belül** (`.work/A` vagy `.work/B`, saját ággal: `ai-a` / `ai-b`), átmásolja a `.env`-et, és kiírja az útját. **Innentől minden fájlművelet, git- és npm-parancs abban a mappában történik** (abszolút úttal vagy `cd`-vel); a fő mappába (`D:\Projectss\HorrorDoku`) **nem írsz**, mert ott a másik AI és a felhasználó dolgozik.
+- **Mindent a fő mappába írsz:** `D:\Projectss\HorrorDoku`. **Nincs `git worktree`, nincs `.work/…`, nincs külön dev-szerver más mappából** — a felhasználó a fő mappában futtatja az `npm run dev`-et, és ott akarja látni a változást.
+- **A két AI egy mappában dolgozik**, ezért a **tulajdonlási táblát** (alább) szigorúan tartsd: csak a saját fájljaidat szerkeszd; közös fájlnál (`package.json`, `App.tsx`, `docs/CONTRACTS.md`) kicsi, célzott módosítás, és szólj a HANDOFF-ban.
+- **Nem commitolsz és nem pusholsz folyamatosan.** A commit egyetlen dolog: amikor a felhasználó azt mondja, hogy mindennel kész vagyunk (vagy kifejezetten kéri). Addig a munka a munkafában marad; a haladást a feladat-tábla (`docs/tasks/`) és a kimenő levelek (`docs/handoff/`) rögzítik.
+- A `scripts/ai-setup.sh` / `ai-sync.sh` a régi, worktree-s módhoz való — **ne használd**.
 
-Szinkron a közös `main`-nel: `bash scripts/ai-sync.sh pull` (frissítés) és `bash scripts/ai-sync.sh push` (commitjaid felvitele; force nélkül, ütközésnél újrapróbál). Részletek: [docs/AI_SPLIT.md](docs/AI_SPLIT.md) 6. fejezet.
+## Játékképernyő-elrendezés — MINDEN játékban, MINDEN pályán ugyanaz (felhasználói döntés, 2026-10-25)
+
+Mint a murdoku.com: **három oszlop**, balról jobbra.
+
+1. **Bal oszlop:** felül a **logó**, a **vissza-nyíl**, a **Magyar / English váltó** és az **idő**; alatta a pálya címe + a bevezető szöveg; alatta a **karakterek** (arckép + alatta a színes nyomkártya).
+2. **Középső (a legnagyobb) oszlop:** a **térkép**.
+3. **Jobb szélső, keskenyebb oszlop (eszközök):** ✕ (kizár), radír (nyomva tartva: teljes törlés), **visszavonás**, újra, **tipp**, **beküldés**, „hogyan kell játszani", ?, megosztás, **mentés**, **hang**, beállítások.
+
+A közös keret a `src/components/GameFrame.tsx` — **új játékmód (Együtt, Gyilkos stb.) is ezt használja**, nem épít saját elrendezést. **Kinézet:** az oldal háttere **fekete** (mint az app többi része), a három oszlop **fehér lap**, rajta a játék. A fejlécben egy **🌙 sötét mód** gomb a lapokat is sötétre váltja (ugyanaz a kinézet, fekete háttérrel). A **Klasszikus** „normális" murdoku-kinézetű (hétköznapi helyszínek és nevek, rajzolt arcképek, nincs horror); az Esemény/Random/co-op mindig sötét, horror-témájú — de a három oszlop ugyanaz.
+
+**Mindenhol ugyanaz a viselkedés:** egy karakter kiválasztása után a mezőre koppintás csak a **kezdőbetűjét** teszi le (jegyzet); a karakter **~1 mp nyomva tartásra** kerül le, a mező körül **megtelő gyűrű** jelzi. A pálya betöltésekor a térkép darabjai és a kártyák **fentről zuhannak le** (a Nyugodt mód ezt kikapcsolja).
 
 ## Ki mit csinál (v0.5 — felhasználói döntés)
 
@@ -40,10 +50,12 @@ Szinkron a közös `main`-nel: `bash scripts/ai-sync.sh pull` (frissítés) és 
 3. **Titok nem kerül a repóba.** A kliensben csak a publikus Supabase URL és a `sb_publishable_…` kulcs használható (`.env`, gitignore-olt).
    Secret / `service_role` kulcs, adatbázis-jelszó, connection string, `CRON_SECRET` soha — se kódban, se dokumentumban, se commitban.
 4. **A szerződések szentek.** A `docs/CONTRACTS.md`-t és a `src/shared/` alatti fájlokat csak a HANDOFF-ban egyeztetett módon változtasd (AI_SPLIT.md, 7. fejezet).
-5. **Zöld teszttel pusholsz.** `npm test` (és ahol releváns: `npm run test:sql`, `npm run test:e2e`) hibátlan, `typecheck` és `lint` tiszta.
+5. **Zöld teszttel zársz le** (commit előtt): `npm test` (és ahol releváns: `npm run test:sql`, `npm run test:e2e`) hibátlan, `typecheck` és `lint` tiszta.
 6. **Ne találj ki követelményt.** Ha a GDD és a szerződés nem mond valamit, kérdezz a HANDOFF-ban (`DECISION`), ne találgass hosszú munkát rá.
 7. **Kimenő műveletek csak a felhasználó jóváhagyásával:** nyilvános kiadás, Vercel-beállítás, éles adatbázis-írás, force-push, repó-láthatóság.
-8. **A fő mappába nem írsz** — csak a saját `.work/<A|B>` munkakönyvtáradba. A `docs/handoff/PLANNER.md`-t csak olvasod.
+8. **Mindent a fő mappába írsz, commit csak a végén** (lásd „Munkamód"). A `docs/handoff/PLANNER.md`-t csak olvasod.
+
+9. **Minden pálya játszható — ez kritikus.** Nyom csak olyan tárgyra / helyiségre / szereplőre utalhat, ami tényleg ott van a pályán, a szöveg ki is mondja, a megoldás pontosan egy, és a játékos által LÁTOTT információból is megoldható (kitakart nyomnál is). Ezt a `src/engine/audit.test.ts` ellenőrzi egy FÜGGETLEN referencia-értelmezővel (`src/engine/reference.ts`) a teljes katalógusra és Random-mintákra (`npm run audit`). Új tárgyat, nyomfajtát vagy világ-szabályt a `reference.ts`-ben, a `text.ts`-ben és a `Legend`-ben is fel kell venni; **minden tárgynak egyedi jele** van (a `vocab.test.ts` ellenőrzi, és csak Unicode ≤ 12 emoji lehet — az újabbak Windows 10-en üres négyzetként jelennek meg; ahol az emoji nem azt ábrázolja, aminek a neve — pl. a torta nem „party-asztal" —, rajzolt SVG jel kell: `components/drawn.tsx` / `ObjectIcon.tsx`; a `FAITHFUL` lista csak a tényleg találó emojikat tartalmazza, és a teszt új tárgyat jóváhagyás nélkül nem enged be). A térkép a tárgy nevét a mezőre is kiírja. Pálya módosítása után: `AUTHOR=1 npx vitest run src/content/author.test.ts`, majd `npm run validate:puzzles` és `npm run audit`.
 
 ## Konvenciók
 

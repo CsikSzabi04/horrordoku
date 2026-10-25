@@ -1,0 +1,216 @@
+{
+  "v": 1,
+  "id": "event-08-silent-hill-2-1",
+  "mode": "event",
+  "world": "silent-hill",
+  "title": "Pyramid Head",
+  "story": "A ködben Pyramid Head holtteste fekszik. A rádió sistereg: a nyomok néhány szava kitakarva marad.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "L": "Lépcsőház",
+    "A": "Apartman",
+    "B": "Bowlingpálya",
+    "T": "Tóparti szálló",
+    "M": "Másik világ"
+  },
+  "layout": [
+    "BBBMMMM",
+    "TBBBMMM",
+    "TBBBAAA",
+    "TTAAAAA",
+    "TTAALLL",
+    "TTTLLLL",
+    "TTLLLLL"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "C2",
+        "D6",
+        "F3"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": "F7"
+    },
+    {
+      "type": "wheelchair",
+      "at": [
+        "E1",
+        "B5",
+        "A1",
+        "B7"
+      ]
+    },
+    {
+      "type": "radio",
+      "at": [
+        "D4",
+        "G5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "hospbed",
+      "at": [
+        "A2",
+        "E4",
+        "D2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "doll",
+      "at": "C4",
+      "blocking": true
+    },
+    {
+      "type": "window",
+      "at": "B2",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "eddie-dombrowski",
+      "name": "Eddie Dombrowski",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "wheelchair",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "A Másik világban egy **kerekesszéken** ült."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "angela-orosco",
+      "name": "Angela Orosco",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "B"
+        }
+      ],
+      "clueText": [
+        "A Bowlingpályán egy **███** volt."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "mary",
+      "name": "Mary",
+      "race": "ghost",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "laura",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Laurától északra** volt."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "maria",
+      "name": "Maria",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "pyramid-head",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Pyramidtól keletre** volt."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "laura",
+      "name": "Laura",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "a-hazug-alak",
+      "name": "A Hazug Alak",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "A Lépcsőházban egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "pyramid-head",
+      "name": "Pyramid Head",
+      "race": "ghoul",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Lépcsőházban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "eddie-dombrowski": "E1",
+    "angela-orosco": "C2",
+    "mary": "A3",
+    "maria": "G4",
+    "laura": "B5",
+    "a-hazug-alak": "D6",
+    "pyramid-head": "F7"
+  },
+  "murderer": "a-hazug-alak",
+  "rev": 1,
+  "worldRule": "radio"
+}

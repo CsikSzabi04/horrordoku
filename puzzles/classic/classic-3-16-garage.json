@@ -1,0 +1,196 @@
+{
+  "v": 1,
+  "id": "classic-3-16-garage",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az autószerelő – este",
+  "story": "Az autószerelőnél reggel a műhelyvezetőt holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "V": "Várószoba",
+    "R": "Raktár",
+    "U": "Udvar",
+    "M": "Műhely",
+    "I": "Iroda"
+  },
+  "layout": [
+    "VVVVVVV",
+    "VVVVUVU",
+    "RRRMUUU",
+    "RIIMUUU",
+    "RIIMUUU",
+    "RIIMMUU",
+    "IIIMMMM"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "E5",
+        "A2",
+        "G5"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": "G1"
+    },
+    {
+      "type": "shelf",
+      "at": [
+        "C3",
+        "A6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "toolbox",
+      "at": "F7",
+      "blocking": true
+    },
+    {
+      "type": "computer",
+      "at": "B6",
+      "blocking": true
+    },
+    {
+      "type": "car",
+      "at": "G6",
+      "blocking": true
+    },
+    {
+      "type": "rug",
+      "at": [
+        "A1",
+        "E1"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "furniture"
+        }
+      ],
+      "clueText": [
+        "Egy **bútor mellett** volt."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "terrain",
+          "style": "grass"
+        }
+      ],
+      "clueText": [
+        "**Fűben** volt."
+      ]
+    },
+    {
+      "id": "deborah",
+      "name": "Deborah",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "U"
+        }
+      ],
+      "clueText": [
+        "Az Udvaron egy **padon** ült."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "bianca",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Biancától délre** volt."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "terrain",
+          "style": "stone"
+        }
+      ],
+      "clueText": [
+        "**Köves talajon** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "G1",
+    "vera": "A2",
+    "bianca": "B3",
+    "cody": "F4",
+    "deborah": "E5",
+    "ervin": "C6",
+    "felicia": "D7"
+  },
+  "murderer": "adam",
+  "rev": 1,
+  "floors": {
+    "R": "stone",
+    "U": "grass",
+    "M": "stone"
+  }
+}

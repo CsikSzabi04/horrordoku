@@ -1,0 +1,241 @@
+{
+  "v": 1,
+  "id": "classic-4-19-camping",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A kemping – ünnepnap",
+  "story": "A kempingben reggel az egyik túrázót holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 9,
+  "difficulty": 4,
+  "rooms": {
+    "F": "Fürdőház",
+    "S": "Sátortábor",
+    "T": "Tó",
+    "Z": "Tűzrakóhely",
+    "E": "Erdő"
+  },
+  "layout": [
+    "FFFFFFSSS",
+    "FFFFFFSSS",
+    "EFFFFFSSS",
+    "EZZFFTSSS",
+    "EZZZZTTTS",
+    "EEEZZZTTS",
+    "EEEZZZTTT",
+    "EEZZZZTTT",
+    "EEEEETTTT"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "G3",
+        "F6",
+        "H3"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "E5",
+        "D8",
+        "E6"
+      ]
+    },
+    {
+      "type": "tent",
+      "at": "I1",
+      "blocking": true
+    },
+    {
+      "type": "bush",
+      "at": "A3",
+      "blocking": true
+    },
+    {
+      "type": "campfire",
+      "at": [
+        "B4",
+        "F7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "I4",
+      "blocking": true
+    },
+    {
+      "type": "canoe",
+      "at": "H6",
+      "blocking": true
+    },
+    {
+      "type": "lounger",
+      "at": [
+        "G7",
+        "G8"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "carl",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Carltól északra** volt."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 7
+        }
+      ],
+      "clueText": [
+        "A **7. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "carl"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Carllal**."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "fred"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Freddel**."
+      ]
+    },
+    {
+      "id": "fred",
+      "name": "Fred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "Z"
+        }
+      ],
+      "clueText": [
+        "A Tűzrakóhelyen egy **széken** ült."
+      ]
+    },
+    {
+      "id": "gabriel",
+      "name": "Gabriel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ]
+    },
+    {
+      "id": "hugo",
+      "name": "Hugo",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "C1",
+    "bella": "I2",
+    "carl": "G3",
+    "derek": "H4",
+    "elena": "E5",
+    "fred": "F6",
+    "gabriel": "B7",
+    "hugo": "D8",
+    "victor": "A9"
+  },
+  "murderer": "gabriel",
+  "rev": 1,
+  "floors": {
+    "F": "tile",
+    "S": "grass",
+    "T": "water",
+    "Z": "dirt",
+    "E": "grass"
+  }
+}

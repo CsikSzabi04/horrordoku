@@ -39,7 +39,7 @@ A projektet **rétegek mentén** vágtuk ketté, nem funkciók mentén — így 
 | Belépés / Profil / Fiók képernyők | **B** | 14.6, 14.7, 18.5 |
 | Barátok, profil-keresés, meghívás, lobby, szoba-szolgáltatás, chat | **B** | 14.9, 14.10, 23 |
 | Co-op „Együtt": Realtime-protokoll, közös tábla-szinkron, újracsatlakozás, overlay | **B** | 22.1, 22.2, 14.11 |
-| Co-op „Gyilkos": szerepek, képességek, Gyűlés/Szimat/Epilógus, `0005` migráció | **B** | 22.3–22.5 |
+| Co-op „Gyilkos": szerepek, képességek, Gyűlés/Szimat/Epilógus, `0007` migráció | **B** | 22.3–22.5 |
 | Ranglista, online-állapot, nyilvános profil-kártya, moderáció | **B** | 19.6, 23.1, 23.2 |
 | Supabase-séma, migrációk, SQL-tesztek | **B** | 18.4 |
 | Weboldal (`web/`), Vercel, keep-alive, kiadás (GitHub Releases), CI-kiadás | **B** | 24 |

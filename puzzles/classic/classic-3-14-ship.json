@@ -1,0 +1,193 @@
+{
+  "v": 1,
+  "id": "classic-3-14-ship",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A hajó",
+  "story": "Ünnepnap volt a hajón, és a kapitány többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "K": "Kabin",
+    "G": "Gépház",
+    "M": "Medence",
+    "F": "Fedélzet",
+    "T": "Étkező"
+  },
+  "layout": [
+    "TTTFFFK",
+    "TTTTFKK",
+    "TFFFFKK",
+    "TTFFKKG",
+    "TMMMMMG",
+    "TMMMMMG",
+    "GGGGGGG"
+  ],
+  "objects": [
+    {
+      "type": "lounger",
+      "at": [
+        "E5",
+        "E6"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "D2",
+        "D3",
+        "F1"
+      ]
+    },
+    {
+      "type": "barrel",
+      "at": "E7",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": [
+        "B1",
+        "A4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "sink",
+      "at": [
+        "F3",
+        "G3"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "carl"
+        }
+      ],
+      "clueText": [
+        "**Carllal** egy helyiségben volt."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "Az Étkezőben egy **széken** ült."
+      ]
+    },
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "sink"
+        }
+      ],
+      "clueText": [
+        "Egy **mosdókagyló mellett** volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "lounger",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "A Medencében egy **nyugágyon** volt."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 6
+        }
+      ],
+      "clueText": [
+        "A **6. sorban** volt."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "ne",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "**Nem** a **2. oszlopban** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "G1",
+    "bella": "D2",
+    "vickie": "A3",
+    "carl": "F4",
+    "daniel": "E5",
+    "emmett": "B6",
+    "felicia": "C7"
+  },
+  "murderer": "bella",
+  "rev": 1,
+  "floors": {
+    "K": "carpet",
+    "M": "water",
+    "F": "wood",
+    "T": "wood"
+  }
+}

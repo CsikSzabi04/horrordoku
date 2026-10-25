@@ -1,0 +1,165 @@
+{
+  "v": 1,
+  "id": "classic-2-06-garage",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az autószerelő – reggel",
+  "story": "Szombat este az autószerelőnél a műhelyvezető nem tért haza. Valaki egyedül maradt vele.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "M": "Műhely",
+    "I": "Iroda",
+    "V": "Várószoba",
+    "R": "Raktár"
+  },
+  "layout": [
+    "MMIIII",
+    "MMMIIV",
+    "MMRIVV",
+    "MRRIVV",
+    "MRRRVV",
+    "RRRRVV"
+  ],
+  "objects": [
+    {
+      "type": "rug",
+      "at": [
+        "E5",
+        "F4",
+        "E6"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": "D2"
+    },
+    {
+      "type": "car",
+      "at": [
+        "B1",
+        "A4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "computer",
+      "at": "D4",
+      "blocking": true
+    },
+    {
+      "type": "shelf",
+      "at": "C5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "carl",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Carltól északra** volt."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "Az Irodában egy **széken** ült."
+      ]
+    },
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "roomAlone"
+        }
+      ],
+      "clueText": [
+        "**Egyedül** volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "carl",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Carltól délre** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "A1",
+    "bella": "D2",
+    "vickie": "B3",
+    "carl": "C4",
+    "daniel": "E5",
+    "eva": "F6"
+  },
+  "murderer": "amir",
+  "rev": 1,
+  "floors": {
+    "M": "stone",
+    "R": "stone"
+  }
+}

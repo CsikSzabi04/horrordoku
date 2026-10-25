@@ -1,0 +1,174 @@
+{
+  "v": 1,
+  "id": "classic-1-13-museum",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A múzeum – ünnepnap",
+  "story": "A múzeumban reggel a teremőrt holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 6,
+  "difficulty": 1,
+  "rooms": {
+    "K": "Kiállítóterem",
+    "A": "Ajándékbolt",
+    "R": "Raktár",
+    "I": "Iroda"
+  },
+  "layout": [
+    "AARRRR",
+    "ARRRRR",
+    "KKRRKK",
+    "KKKKKK",
+    "IIIIII",
+    "IIIIII"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "D5",
+        "C6"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "E4",
+        "F4"
+      ]
+    },
+    {
+      "type": "plant",
+      "at": "A1",
+      "blocking": true
+    },
+    {
+      "type": "armor",
+      "at": "B3",
+      "blocking": true
+    },
+    {
+      "type": "painting",
+      "at": "C4",
+      "blocking": true
+    },
+    {
+      "type": "shelf",
+      "at": "D1",
+      "blocking": true
+    },
+    {
+      "type": "rug",
+      "at": "B4"
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 1
+        }
+      ],
+      "clueText": [
+        "Az **első sorban** volt."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 6
+        }
+      ],
+      "clueText": [
+        "A **6. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Kiállítóteremben egy **padon** ült."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "barry",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Barrytől délre** volt."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "B1",
+    "vera": "A2",
+    "barry": "F3",
+    "clara": "E4",
+    "dora": "D5",
+    "emmett": "C6"
+  },
+  "murderer": "alfred",
+  "rev": 1,
+  "floors": {
+    "K": "carpet",
+    "A": "wood",
+    "R": "stone"
+  }
+}

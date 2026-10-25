@@ -63,6 +63,32 @@ describe('barátok', () => {
     expect(f.rpcCalls[0]).toEqual({ fn: 'search_profiles', args: { p_prefix: '50%_' } })
     expect(r).toEqual({ ok: true, value: [{ id: OTHER, username: 'Vlad_01', avatar: 'vlad', xp: 5 }] })
   })
+  it('a keresés a saját találatot jelöli (isMe), és 10 karakteres bevitelnél a barát-azonosítót is megnézi', async () => {
+    const f = fake({
+      rpc: {
+        search_profiles: { data: [{ id: ME, username: 'Bius', avatar: 'vlad', xp: 0, is_me: true }], error: null },
+        find_by_code: { data: [{ id: OTHER, username: 'Vlad', avatar: 'vlad', xp: 5, is_me: false }], error: null },
+      },
+    })
+    const api = createFriends(f.client)
+    const byName = await api.search('Bius')
+    expect(byName).toEqual({ ok: true, value: [{ id: ME, username: 'Bius', avatar: 'vlad', xp: 0, isMe: true }] })
+    expect(f.rpcCalls.map((c) => c.fn)).toEqual(['search_profiles']) // rövid bevitel: nincs kód-keresés
+    const byCode = await api.search('Ab3$kL9#xZ')
+    expect(f.rpcCalls.map((c) => c.fn)).toEqual(['search_profiles', 'search_profiles', 'find_by_code'])
+    expect(byCode.ok && byCode.value.map((p) => p.id)).toEqual([OTHER, ME]) // a pontos kód-találat elöl
+  })
+  it('myCode a saját kódot adja; findByCode csak 10 karakteres kódra kérdez, ismeretlen kódra null', async () => {
+    const f = fake({ rpc: { my_friend_code: { data: 'Ab3$kL9#xZ', error: null }, find_by_code: { data: [], error: null } } })
+    const api = createFriends(f.client)
+    expect(await api.myCode()).toEqual({ ok: true, value: 'Ab3$kL9#xZ' })
+    expect(await api.findByCode('rövid')).toEqual({ ok: true, value: null })
+    expect(f.rpcCalls.map((c) => c.fn)).toEqual(['my_friend_code']) // a rövid kódnál nem ment hívás
+    expect(await api.findByCode(' Ab3$kL9#xZ ')).toEqual({ ok: true, value: null })
+    expect(f.rpcCalls[1]).toEqual({ fn: 'find_by_code', args: { p_code: 'Ab3$kL9#xZ' } })
+    const missing = await createFriends(fake({ rpc: { my_friend_code: { data: null, error: { code: 'PGRST202', message: 'Could not find the function' } } } }).client).myCode()
+    expect(missing.ok).toBe(false) // a 0006 migráció nélkül nincs kód: a felület elrejti
+  })
   it('a lista a requested_by alapján mondja meg, ki küldte a kérést', async () => {
     const rows = [
       { friend_id: OTHER, username: 'Silas', avatar: 'silas', xp: 1, status: 'pending', requested_by: ME, online: true },
@@ -109,7 +135,7 @@ describe('szobák', () => {
   it('létrehozás: argumentumok + RoomInfo', async () => {
     const f = fake({ rpc: { create_room: { data: roomRow, error: null } } })
     const r = await createRooms(f.client, auth(f)).create({ mode: 'together', puzzleRef: 'classic-01', maxPlayers: 3 })
-    expect(f.rpcCalls[0]).toEqual({ fn: 'create_room', args: { p_mode: 'together', p_puzzle_ref: 'classic-01', p_max_players: 3, p_settings: {} } })
+    expect(f.rpcCalls[0]).toEqual({ fn: 'create_room', args: { p_mode: 'together', p_puzzle_ref: 'classic-01', p_max_players: 3, p_settings: {}, p_name: '' } })
     expect(r).toMatchObject({ ok: true, value: { id: ROOM, code: 'AB12CD', hostId: ME, status: 'lobby', maxPlayers: 4 } })
   })
   it('belépés: nincs ilyen szoba → not_found, teli szoba → conflict', async () => {

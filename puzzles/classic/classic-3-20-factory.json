@@ -1,0 +1,200 @@
+{
+  "v": 1,
+  "id": "classic-3-20-factory",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A gyár – nyitás előtt",
+  "story": "A gyárban reggel a műszakvezetőt holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "I": "Iroda",
+    "B": "Büfé",
+    "U": "Udvar",
+    "L": "Öltöző",
+    "G": "Gyártósor"
+  },
+  "layout": [
+    "IIIGGGG",
+    "IIIIIGG",
+    "IIIILLL",
+    "IBBLLLL",
+    "BBBUUUL",
+    "BBBBUUU",
+    "BBBUUUU"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "C6",
+        "A4",
+        "D2"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "G5",
+        "F3",
+        "E7",
+        "C7"
+      ]
+    },
+    {
+      "type": "locker",
+      "at": [
+        "G4",
+        "E4",
+        "E3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "barrel",
+      "at": "F5",
+      "blocking": true
+    },
+    {
+      "type": "computer",
+      "at": "E2",
+      "blocking": true
+    },
+    {
+      "type": "crate",
+      "at": [
+        "D1",
+        "G1"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. oszloptól balra** volt."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "computer"
+        }
+      ],
+      "clueText": [
+        "Egy **számítógép mellett** volt."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "daniel",
+          "dir": "N"
+        }
+      ],
+      "clueText": [
+        "**Danieltől északra** volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "felicia",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Feliciától északra** volt."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "U"
+        }
+      ],
+      "clueText": [
+        "Az Udvaron egy **padon** ült."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "B1",
+    "barry": "D2",
+    "cody": "F3",
+    "daniel": "A4",
+    "vlad": "G5",
+    "emmett": "C6",
+    "felicia": "E7"
+  },
+  "murderer": "cody",
+  "rev": 1,
+  "floors": {
+    "B": "wood",
+    "U": "grass",
+    "L": "tile"
+  }
+}

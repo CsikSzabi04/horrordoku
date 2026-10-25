@@ -2,8 +2,11 @@ import { useEffect, useState } from 'react'
 import { useNav } from '../../app/nav'
 import type { Route } from '../../app/routes'
 import { cloud } from '../../cloud'
+import { useCloudUser } from '../../cloud/hooks'
+import { SignOutButton } from '../../components/SignOutButton'
 import { t } from '../../i18n'
 import type { I18nKey } from '../../i18n'
+import { getStorage } from '../../storage'
 import { Button, Chip } from '../../ui'
 import './menu.css'
 
@@ -24,6 +27,14 @@ function useCloudStatus() {
 export default function MenuScreen() {
   const { go } = useNav()
   const status = useCloudStatus()
+  const user = useCloudUser()
+  const [last, setLast] = useState<string | null>(null)
+  useEffect(() => {
+    void getStorage().getSessions().then((s) => {
+      const newest = Object.entries(s.sessions).sort((a, b) => b[1].updatedAt.localeCompare(a[1].updatedAt))[0]
+      setLast(newest?.[0] ?? null)
+    })
+  }, [])
   return (
     <main className="menu">
       <header>
@@ -45,7 +56,7 @@ export default function MenuScreen() {
         <a className="nd-btn ghost sm" href="/">
           ⌂ {t('menu.home')}
         </a>
-        <Button variant="ghost" size="sm" disabled>
+        <Button variant="ghost" size="sm" disabled={!last} onClick={() => last && go({ name: 'game', ref: last })} data-act="continue">
           ▶ {t('menu.continue')}
         </Button>
         <Button variant="ghost" size="sm" onClick={() => go({ name: 'friends' })}>
@@ -63,9 +74,13 @@ export default function MenuScreen() {
       </div>
       <footer>
         <Chip dot={status === 'idle' || status === 'syncing'}>{t(`status.${status}` as I18nKey)}</Chip>
-        <button type="button" className="link" onClick={() => go({ name: 'login' })}>
-          {cloud.auth.current() ? cloud.auth.current()!.username : 'Bejelentkezés'}
-        </button>
+        <span className="acct">
+          {/* belépve a névre koppintva egyből a profil, kilépve a bejelentkezés nyílik */}
+          <button type="button" className="link" data-act="account" onClick={() => go({ name: user ? 'profile' : 'login' })}>
+            {user ? user.username : 'Bejelentkezés'}
+          </button>
+          {user && <SignOutButton />}
+        </span>
       </footer>
     </main>
   )

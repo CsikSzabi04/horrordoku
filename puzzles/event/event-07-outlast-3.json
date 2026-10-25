@@ -1,0 +1,231 @@
+{
+  "v": 1,
+  "id": "event-07-outlast-3",
+  "mode": "event",
+  "world": "outlast",
+  "title": "Elnémult harang",
+  "story": "Father Martin imája félbeszakadt, a padok üresek. A sötétben csak a kurzorod fénye mutat utat.",
+  "size": 8,
+  "difficulty": 5,
+  "rooms": {
+    "F": "Fogadócsarnok",
+    "K": "Kórterem-szárny",
+    "P": "Pincebörtön",
+    "O": "Kápolna",
+    "C": "Csatorna",
+    "R": "Őrszoba",
+    "V": "Villamos-terem"
+  },
+  "layout": [
+    "KKPRRRRR",
+    "KVPOORRR",
+    "VVPPOOOR",
+    "VVPPOOFF",
+    "VVPFFFFF",
+    "VVPFCFCC",
+    "VVPFCCCC",
+    "VVPFFCCC"
+  ],
+  "objects": [
+    {
+      "type": "wheelchair",
+      "at": "H1"
+    },
+    {
+      "type": "batterybox",
+      "at": [
+        "C5",
+        "A6",
+        "A4",
+        "G2"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "E3",
+        "F8"
+      ]
+    },
+    {
+      "type": "locker",
+      "at": [
+        "A8",
+        "B4",
+        "A7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "hospbed",
+      "at": [
+        "C7",
+        "E6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "switch",
+      "at": "F3",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "waylon-park",
+      "name": "Waylon Park",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "wheelchair",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "Az Őrszobában egy **kerekesszéken** ült."
+      ],
+      "source": {
+        "game": "Outlast"
+      }
+    },
+    {
+      "id": "father-martin",
+      "name": "Father Martin",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Az Őrszobában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Outlast"
+      }
+    },
+    {
+      "id": "richard-trager",
+      "name": "Richard Trager",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "chris-walker",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Christől északra** volt."
+      ],
+      "source": {
+        "game": "Outlast"
+      }
+    },
+    {
+      "id": "dr-wernicke",
+      "name": "Dr. Wernicke",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "father-martin",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Father Martintól keletre** volt."
+      ],
+      "source": {
+        "game": "Outlast"
+      }
+    },
+    {
+      "id": "eddie-gluskin",
+      "name": "Eddie Gluskin",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "batterybox",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Pincebörtönben egy **elemdobozon** volt."
+      ],
+      "source": {
+        "game": "Outlast"
+      }
+    },
+    {
+      "id": "chris-walker",
+      "name": "Chris Walker",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "notSameRoom",
+          "with": "jeremy-blaire"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt egy helyiségben **Jeremyvel**."
+      ],
+      "source": {
+        "game": "Outlast"
+      }
+    },
+    {
+      "id": "jeremy-blaire",
+      "name": "Jeremy Blaire",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "aloneWith",
+          "with": "dr-wernicke"
+        }
+      ],
+      "clueText": [
+        "**Egyedül** volt **Dr. Wernickével**."
+      ],
+      "source": {
+        "game": "Outlast"
+      }
+    },
+    {
+      "id": "miles-upshur",
+      "name": "Miles Upshur",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "eddie-gluskin",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Eddiétől délre** volt."
+      ],
+      "source": {
+        "game": "Outlast"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "waylon-park": "H1",
+    "father-martin": "F2",
+    "richard-trager": "E3",
+    "dr-wernicke": "G4",
+    "eddie-gluskin": "C5",
+    "chris-walker": "A6",
+    "jeremy-blaire": "D7",
+    "miles-upshur": "B8"
+  },
+  "murderer": "waylon-park",
+  "rev": 1,
+  "worldRule": "nightvision"
+}

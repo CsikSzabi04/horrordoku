@@ -1,0 +1,213 @@
+{
+  "v": 1,
+  "id": "event-16-twilight-1",
+  "mode": "event",
+  "world": "twilight",
+  "title": "A vámpír-követő",
+  "story": "Forks, az örök eső városa. James, a követő vámpír az erdei tisztáson fekszik. A totemek mellett Alice látomásai feltárulnak: az ott álló szereplők plusz nyomot kapnak.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "F": "Forks Gimnázium",
+    "E": "Erdei tisztás",
+    "L": "La Push part",
+    "S": "Swan-ház",
+    "O": "Forks kórház",
+    "V": "Volturi-torony"
+  },
+  "layout": [
+    "ESSSSS",
+    "EEOOVV",
+    "FEOOVV",
+    "FFFFLV",
+    "FFLLLL",
+    "FLLLLL"
+  ],
+  "objects": [
+    {
+      "type": "sofa",
+      "at": [
+        "F4",
+        "B5"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "C2",
+        "D2"
+      ]
+    },
+    {
+      "type": "totem",
+      "at": [
+        "B6",
+        "C5",
+        "C3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "rock",
+      "at": "A4",
+      "blocking": true
+    },
+    {
+      "type": "fireplace",
+      "at": "E4",
+      "blocking": true
+    },
+    {
+      "type": "bush",
+      "at": "B3",
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "A2",
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": "D3"
+    }
+  ],
+  "characters": [
+    {
+      "id": "alice-cullen",
+      "name": "Alice Cullen",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **növény mellett** volt."
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    },
+    {
+      "id": "jacob-black",
+      "name": "Jacob Black",
+      "race": "werewolf",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "jasper-hale",
+          "dir": "W"
+        }
+      ],
+      "clueText": [
+        "**Jaspertől nyugatra** volt."
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    },
+    {
+      "id": "charlie-swan",
+      "name": "Charlie Swan",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "jacob-black",
+          "rows": 1
+        },
+        {
+          "kind": "in",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Jacobtól délre** volt.",
+        "A Volturi-toronyban volt."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    },
+    {
+      "id": "james",
+      "name": "James",
+      "race": "vampire",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Volturi-toronyban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    },
+    {
+      "id": "rosalie-hale",
+      "name": "Rosalie Hale",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Forks Gimnáziumban egy **kanapén** ült."
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    },
+    {
+      "id": "jasper-hale",
+      "name": "Jasper Hale",
+      "race": "vampire",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "sofa"
+        },
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "gt",
+          "n": 5
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **kanapé mellett**.",
+        "Az **5. sor alatt** volt."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Alkonyat (Twilight)"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alice-cullen": "A1",
+    "jacob-black": "C2",
+    "charlie-swan": "E3",
+    "james": "F4",
+    "rosalie-hale": "B5",
+    "jasper-hale": "D6"
+  },
+  "murderer": "charlie-swan",
+  "rev": 1,
+  "worldRule": "totems"
+}

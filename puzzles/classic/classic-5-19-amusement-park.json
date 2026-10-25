@@ -1,0 +1,270 @@
+{
+  "v": 1,
+  "id": "classic-5-19-amusement-park",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A vidámpark – hétvégén",
+  "story": "Szombat este a vidámparkban az üzemeltető nem tért haza. Valaki egyedül maradt vele.",
+  "size": 10,
+  "difficulty": 5,
+  "rooms": {
+    "J": "Jegypénztár",
+    "T": "Játékterem",
+    "K": "Körhinta",
+    "S": "Szellemvasút",
+    "H": "Hullámvasút",
+    "C": "Céllövölde",
+    "F": "Főtér"
+  },
+  "layout": [
+    "TTTTTJJJJJ",
+    "TTTTTJJJJH",
+    "STFFFJJJHH",
+    "SSSFFFFHHH",
+    "SSSFFCFHHH",
+    "SSSFCCCHHH",
+    "SKSFCCCHHH",
+    "KKKKCCCCHH",
+    "KKKKCCCCCH",
+    "KKKKCCCCCH"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "E8",
+        "C4"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "H7",
+        "C3",
+        "G2",
+        "H2",
+        "C8",
+        "A8"
+      ]
+    },
+    {
+      "type": "rug",
+      "at": "A1"
+    },
+    {
+      "type": "coaster",
+      "at": [
+        "J6",
+        "I5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "popcorn",
+      "at": "E4",
+      "blocking": true
+    },
+    {
+      "type": "target",
+      "at": [
+        "E7",
+        "I9"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "carousel",
+      "at": "B8",
+      "blocking": true
+    },
+    {
+      "type": "ticket",
+      "at": "H1",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A Játékteremben egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "J"
+        }
+      ],
+      "clueText": [
+        "A Jegypénztárnál egy **padon** ült."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Főtéren egy **padon** ült."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "emmett"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Emmettel**."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "frank",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Franktól északra** volt."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Hullámvasútnál egy **padon** ült."
+      ]
+    },
+    {
+      "id": "gabriel",
+      "name": "Gabriel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "C"
+        }
+      ],
+      "clueText": [
+        "A Céllövöldében egy **széken** ült."
+      ]
+    },
+    {
+      "id": "henry",
+      "name": "Henry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "gabriel"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Gabriellel**."
+      ]
+    },
+    {
+      "id": "ivan",
+      "name": "Ivan",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 10
+        }
+      ],
+      "clueText": [
+        "A **10. oszloptól balra** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "A1",
+    "bianca": "G2",
+    "clara": "C3",
+    "vera": "D4",
+    "derek": "J5",
+    "emmett": "I6",
+    "frank": "H7",
+    "gabriel": "E8",
+    "henry": "F9",
+    "ivan": "B10"
+  },
+  "murderer": "clara",
+  "rev": 1,
+  "floors": {
+    "J": "brick",
+    "T": "carpet",
+    "K": "carpet",
+    "S": "stone",
+    "H": "dirt",
+    "C": "wood",
+    "F": "checker"
+  }
+}

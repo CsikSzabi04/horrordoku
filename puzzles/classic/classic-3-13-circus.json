@@ -1,0 +1,222 @@
+{
+  "v": 1,
+  "id": "classic-3-13-circus",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A cirkusz – esős napon",
+  "story": "Szombat este a cirkuszban a zsonglőr nem tért haza. Valaki egyedül maradt vele.",
+  "size": 8,
+  "difficulty": 3,
+  "rooms": {
+    "L": "Állatketrecek",
+    "T": "Öltözők",
+    "B": "Büfé",
+    "P": "Porond",
+    "N": "Nagysátor"
+  },
+  "layout": [
+    "LLLLTTTT",
+    "LNNNNTTT",
+    "NNNNNTTT",
+    "NNNNNTTP",
+    "BBBBNPPP",
+    "BBBBPPPP",
+    "BBBBPPPP",
+    "BBBBBBPP"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "H2",
+        "F1"
+      ]
+    },
+    {
+      "type": "rug",
+      "at": [
+        "E1",
+        "G1",
+        "G3"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": "C3"
+    },
+    {
+      "type": "balloon",
+      "at": [
+        "D8",
+        "A5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tent",
+      "at": "C4",
+      "blocking": true
+    },
+    {
+      "type": "barrel",
+      "at": "D3",
+      "blocking": true
+    },
+    {
+      "type": "popcorn",
+      "at": "A6",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "E8",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "Egy **ülőhely mellett** volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "Az Öltözőkben egy **széken** ült."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "A Nagysátorban egy **padon** ült."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszloptól balra** volt."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "popcorn"
+        }
+      ],
+      "clueText": [
+        "Egy **popcorn-gép mellett** volt."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "balloon",
+            "popcorn"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **lufi vagy popcorn-gép mellett** volt."
+      ]
+    },
+    {
+      "id": "gabriel",
+      "name": "Gabriel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 7
+        }
+      ],
+      "clueText": [
+        "A **7. oszlopban** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "E1",
+    "bianca": "H2",
+    "cody": "C3",
+    "daniel": "A4",
+    "victor": "F5",
+    "eva": "B6",
+    "felicia": "D7",
+    "gabriel": "G8"
+  },
+  "murderer": "gabriel",
+  "rev": 1,
+  "floors": {
+    "B": "wood",
+    "N": "sand"
+  }
+}

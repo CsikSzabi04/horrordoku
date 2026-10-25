@@ -1,0 +1,246 @@
+{
+  "v": 1,
+  "id": "classic-4-01-flower-store",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A virágbolt – este",
+  "story": "Ünnepnap volt a virágboltban, és az egyik alkalmazott többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 9,
+  "difficulty": 4,
+  "rooms": {
+    "V": "Üvegház",
+    "E": "Eladótér",
+    "L": "Előkészítés",
+    "P": "Pénztár",
+    "R": "Raktár"
+  },
+  "layout": [
+    "RRPPPPPPP",
+    "RRRRPPPPP",
+    "RRRRPPPVV",
+    "RRRVVPVVV",
+    "RRRVVVVVV",
+    "EEEEVVLVV",
+    "EEEEELLLL",
+    "EEEEELLLL",
+    "EEELLLLLL"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "F2",
+        "E8",
+        "H1"
+      ]
+    },
+    {
+      "type": "rug",
+      "at": [
+        "D6",
+        "H4",
+        "D5"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "I5",
+        "C8",
+        "E6"
+      ]
+    },
+    {
+      "type": "register",
+      "at": "F3",
+      "blocking": true
+    },
+    {
+      "type": "bonsai",
+      "at": [
+        "E2",
+        "A9"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "flowers",
+      "at": "F5",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": [
+        "A7",
+        "D7"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "register"
+        }
+      ],
+      "clueText": [
+        "Egy **pénztárgép mellett** volt."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "ne",
+          "n": 1
+        }
+      ],
+      "clueText": [
+        "**Nem** az **első oszlopban** volt."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "derek"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Derekkel**."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "Az Üvegházban egy **padon** ült."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Eladótérben egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 7
+        }
+      ],
+      "clueText": [
+        "A **7. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "gordon",
+      "name": "Gordon",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Eladótérben egy **széken** ült."
+      ]
+    },
+    {
+      "id": "hugo",
+      "name": "Hugo",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "bonsai",
+            "flowers"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **bonszaj vagy virágcserje mellett** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "vera": "A1",
+    "alfred": "F2",
+    "bella": "C3",
+    "cody": "H4",
+    "derek": "I5",
+    "eva": "D6",
+    "flavia": "G7",
+    "gordon": "E8",
+    "hugo": "B9"
+  },
+  "murderer": "bella",
+  "rev": 1,
+  "floors": {
+    "V": "tile",
+    "E": "checker",
+    "L": "brick",
+    "P": "brick",
+    "R": "stone"
+  }
+}

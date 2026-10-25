@@ -1,0 +1,218 @@
+{
+  "v": 1,
+  "id": "event-04-alien-isolation-3",
+  "mode": "event",
+  "world": "alien-isolation",
+  "title": "Riasztás után",
+  "story": "Waits ott maradt, ahol a riasztás megszólalt. A szállítókocsi még mindig az ajtó előtt áll.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "H": "Híd",
+    "O": "Orvosi szárny",
+    "A": "Hangár",
+    "G": "Gépház",
+    "S": "Szellőzőrendszer",
+    "L": "Légzsilip"
+  },
+  "layout": [
+    "LSSSSGG",
+    "LSSSSGG",
+    "LOOSSGG",
+    "LOOOAHG",
+    "LLOAAHH",
+    "LOOAAHH",
+    "LLLAAAH"
+  ],
+  "objects": [
+    {
+      "type": "cryopod",
+      "at": [
+        "G6",
+        "E1",
+        "A5",
+        "B3",
+        "F4",
+        "C6"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "D2",
+        "F7"
+      ]
+    },
+    {
+      "type": "airlock",
+      "at": "B4",
+      "blocking": true
+    },
+    {
+      "type": "tracker",
+      "at": "G2",
+      "blocking": true
+    },
+    {
+      "type": "flamer",
+      "at": [
+        "D3",
+        "A6",
+        "C5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "cardreader",
+      "at": [
+        "B5",
+        "D1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "vent",
+      "at": "F1"
+    }
+  ],
+  "characters": [
+    {
+      "id": "ricardo",
+      "name": "Ricardo",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "waits",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Waitstól északra** volt."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "waits",
+      "name": "Waits",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Szellőzőrendszerben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "samuels",
+      "name": "Samuels",
+      "race": "ghost",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "ricardo",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Ricardótól délre** volt."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "marlow",
+      "name": "Marlow",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "vent",
+          "cells": 3
+        }
+      ],
+      "clueText": [
+        "Mozgás 3 mezőre a szellőzőrácstól."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "a-xenomorph",
+      "name": "A Xenomorph",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "leftOf",
+          "of": "nina-taylor"
+        }
+      ],
+      "clueText": [
+        "**Ninától balra** volt."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "axel",
+      "name": "Axel",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "cardreader",
+          "cells": 6
+        }
+      ],
+      "clueText": [
+        "Mozgás 6 mezőre a kártyaolvasótól."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    },
+    {
+      "id": "nina-taylor",
+      "name": "Nina Taylor",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "vent",
+          "cells": 9
+        }
+      ],
+      "clueText": [
+        "Mozgás 9 mezőre a szellőzőrácstól."
+      ],
+      "source": {
+        "game": "Alien: Isolation"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "ricardo": "E1",
+    "waits": "D2",
+    "samuels": "B3",
+    "marlow": "F4",
+    "a-xenomorph": "A5",
+    "axel": "G6",
+    "nina-taylor": "C7"
+  },
+  "murderer": "ricardo",
+  "rev": 1,
+  "worldRule": "motion"
+}

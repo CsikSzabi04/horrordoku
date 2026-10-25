@@ -1,0 +1,178 @@
+{
+  "v": 1,
+  "id": "classic-2-10-factory",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A gyár – zárás után",
+  "story": "Szombat este a gyárban a műszakvezető nem tért haza. Valaki egyedül maradt vele.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "G": "Gyártósor",
+    "R": "Raktár",
+    "I": "Iroda",
+    "B": "Büfé"
+  },
+  "layout": [
+    "IIIGGG",
+    "IIGGGG",
+    "IBGGRR",
+    "BBBRRR",
+    "BBBRRR",
+    "BBBRRR"
+  ],
+  "objects": [
+    {
+      "type": "crate",
+      "at": [
+        "C3",
+        "F2",
+        "D6"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "B1",
+        "A4",
+        "A5"
+      ]
+    },
+    {
+      "type": "machine",
+      "at": "F1",
+      "blocking": true
+    },
+    {
+      "type": "barrel",
+      "at": "F3",
+      "blocking": true
+    },
+    {
+      "type": "conveyor",
+      "at": "E1",
+      "blocking": true
+    },
+    {
+      "type": "computer",
+      "at": "A1",
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": "C5"
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "Az Irodában egy **széken** ült."
+      ]
+    },
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "amir",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Amirtól délre** volt."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "ne",
+          "n": 6
+        }
+      ],
+      "clueText": [
+        "**Nem** a **6. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "elena"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Elenával**."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "A Raktárban egy **ládán** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "B1",
+    "vickie": "F2",
+    "barry": "C3",
+    "carly": "A4",
+    "daniel": "E5",
+    "elena": "D6"
+  },
+  "murderer": "barry",
+  "rev": 1,
+  "floors": {
+    "R": "stone",
+    "B": "wood"
+  }
+}

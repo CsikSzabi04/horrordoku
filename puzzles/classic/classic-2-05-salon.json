@@ -1,0 +1,200 @@
+{
+  "v": 1,
+  "id": "classic-2-05-salon",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A szépségszalon",
+  "story": "A szépségszalonban reggel a fodrászt holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 7,
+  "difficulty": 2,
+  "rooms": {
+    "V": "Várakozó",
+    "F": "Fodrászat",
+    "K": "Kozmetika",
+    "R": "Raktár",
+    "M": "Mosdó"
+  },
+  "layout": [
+    "KKKKKRR",
+    "KKKKVRR",
+    "KMMVVRR",
+    "KMMVVVR",
+    "KMMVVFF",
+    "MMMFFFF",
+    "MMMMFFF"
+  ],
+  "objects": [
+    {
+      "type": "hairchair",
+      "at": [
+        "G7",
+        "D2",
+        "A1",
+        "G5"
+      ]
+    },
+    {
+      "type": "sofa",
+      "at": "E5"
+    },
+    {
+      "type": "sink",
+      "at": [
+        "C6",
+        "G6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "shelf",
+      "at": "F3",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "E3",
+      "blocking": true
+    },
+    {
+      "type": "mirror",
+      "at": "F6",
+      "blocking": true
+    },
+    {
+      "type": "chair",
+      "at": "D5"
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "derek",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Derektől északra** volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "hairchair",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Kozmetikában egy **fodrászszéken** ült."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "anna",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Annától délre** volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszloptól balra** volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "A Várakozóban egy **kanapén** ült."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "hairchair"
+        }
+      ],
+      "clueText": [
+        "Egy **fodrászszéken** ült."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "F1",
+    "bianca": "D2",
+    "carly": "C3",
+    "derek": "A4",
+    "eva": "E5",
+    "victor": "B6",
+    "flavia": "G7"
+  },
+  "murderer": "carly",
+  "rev": 1,
+  "floors": {
+    "V": "carpet",
+    "F": "checker",
+    "K": "tile",
+    "R": "stone",
+    "M": "tile"
+  }
+}

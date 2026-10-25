@@ -1,0 +1,214 @@
+{
+  "v": 1,
+  "id": "event-03-resident-evil-2-3",
+  "mode": "event",
+  "world": "resident-evil",
+  "title": "Az utolsó rádióüzenet",
+  "story": "Marvin Branagh az utolsó üzenetét rádión adta le, aztán csend lett. A rendőrség folyosói éjszaka másként néznek ki.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "F": "Főcsarnok",
+    "N": "Nyugati iroda",
+    "S": "Sötétkamra",
+    "K": "Könyvtár",
+    "M": "Mentőszoba",
+    "A": "Kapitányi iroda",
+    "L": "Lőtér"
+  },
+  "layout": [
+    "NNNNSSS",
+    "NNNNSSS",
+    "KLLLLSS",
+    "KFLLMMM",
+    "KFLAMMM",
+    "KFFAMMA",
+    "KKKAAAA"
+  ],
+  "objects": [
+    {
+      "type": "herb",
+      "at": [
+        "A5",
+        "F2",
+        "B3",
+        "E2",
+        "D6",
+        "B2"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": "E7"
+    },
+    {
+      "type": "doorSpade",
+      "at": "D3",
+      "blocking": true
+    },
+    {
+      "type": "doorDiamond",
+      "at": "D2",
+      "blocking": true
+    },
+    {
+      "type": "doorCircle",
+      "at": "G6",
+      "blocking": true
+    },
+    {
+      "type": "typewriter",
+      "at": [
+        "B1",
+        "A3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": [
+        "E4",
+        "E5",
+        "G5"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "claire-redfield",
+      "name": "Claire Redfield",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "aloneWith",
+          "with": "brian-irons"
+        }
+      ],
+      "clueText": [
+        "**Egyedül** volt **Briannal**."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "brian-irons",
+      "name": "Brian Irons",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "marvin-branagh",
+      "name": "Marvin Branagh",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Lőtéren **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "annette-birkin",
+      "name": "Annette Birkin",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "doorSpade"
+        }
+      ],
+      "clueText": [
+        "Egy **pikk ajtó mellett** volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "sherry-birkin",
+      "name": "Sherry Birkin",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "leftOf",
+          "of": "brian-irons"
+        }
+      ],
+      "clueText": [
+        "**Briantól balra** volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "leon-s-kennedy",
+      "name": "Leon S. Kennedy",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "marvin-branagh",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Marvintól keletre** volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "mr-x",
+      "name": "Mr. X",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "A"
+        }
+      ],
+      "clueText": [
+        "A Kapitányi irodában egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "claire-redfield": "G1",
+    "brian-irons": "F2",
+    "marvin-branagh": "B3",
+    "annette-birkin": "D4",
+    "sherry-birkin": "A5",
+    "leon-s-kennedy": "C6",
+    "mr-x": "E7"
+  },
+  "murderer": "annette-birkin",
+  "rev": 1,
+  "worldRule": "doors"
+}

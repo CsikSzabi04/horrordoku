@@ -122,6 +122,8 @@ console.log('\n[szobák + chat]');
 r = await as(u1, `select * from public.create_room('together', 'classic-01-midnight-mass', 2::smallint, '{"timeLimit":600}')`);
 const room = r.rows[0]; ok('szoba létrejött, 6 jegyű kód, lobby', /^[0-9A-F]{6}$/.test(room.code) && room.status === 'lobby' && room.host_id === u1);
 r = await as(u1, `select count(*)::int n from public.room_members where room_id = '${room.id}'`); ok('a létrehozó automatikusan tag', r.rows[0].n === 1);
+ok('új szoba ajtaja zárva indul', room.is_open === false);
+await as(u1, `select public.set_room_open('${room.id}', true)`); // a régi tesztek nyitott szobával dolgoznak
 r = await as(u3, 'select * from public.rooms'); ok('kívülálló nem látja a szobát', r.rows.length === 0);
 await as(u2, `select * from public.join_room('${room.code.toLowerCase()}')`); ok('belépés (kis/nagybetű mindegy)', true);
 r = await as(u2, 'select * from public.rooms'); ok('tag látja a szobát', r.rows.length === 1);
@@ -143,10 +145,11 @@ r = await as(u2, 'select room_id from public.room_invites'); ok('meghívó megé
 await as(u2, `delete from public.room_invites where to_user = '${u2}'`);
 r = await as(u2, 'select 1 from public.room_invites'); ok('meghívó elutasítható', r.rows.length === 0);
 ok('nem baráttal nem hívható', (await fails(u1, `select public.invite_friend('${room.id}', '44444444-4444-4444-4444-444444444444')`)) !== null);
-await as(u1, `select public.leave_room('${room.id}')`);
-r = await as('postgres', `select host_id from public.rooms where id = '${room.id}'`); ok('host kilép -> a másik tag lesz a host', r.rows[0].host_id === u2);
+ok('a tulajdonos nem léphet ki (törölnie kell)', (await fails(u1, `select public.leave_room('${room.id}')`)) !== null);
 await as(u2, `select public.leave_room('${room.id}')`);
-r = await as('postgres', `select status from public.rooms where id = '${room.id}'`); ok('az utolsó tag kilép -> a szoba lezárul', r.rows[0].status === 'closed');
+r = await as('postgres', `select (select count(*)::int from public.room_members where room_id = '${room.id}') m, (select host_id from public.rooms where id = '${room.id}') h`); ok('tag kilép -> a szoba és a tulajdonos megmarad', r.rows[0].m === 1 && r.rows[0].h === u1);
+await as(u1, `select public.delete_room('${room.id}')`);
+r = await as('postgres', `select (select count(*)::int from public.rooms where id = '${room.id}') n, (select count(*)::int from public.room_messages where room_id = '${room.id}') c`); ok('a tulajdonos törli a szobát: a chat is törlődik', r.rows[0].n === 0 && r.rows[0].c === 0);
 r = await as('postgres', `select public.cleanup_old_rooms() as n`); ok('cleanup_old_rooms lefut', typeof r.rows[0].n === 'number');
 ok('anon nem hívhat szoba-függvényt', (await fails('anon', `select * from public.create_room('together','x',2::smallint,'{}')`)) !== null);
 ok('kliens nem hívhatja a cleanup-ot', (await fails(u1, `select public.cleanup_old_rooms()`)) !== null);
@@ -170,7 +173,10 @@ ok('kliens nem hívhatja a cleanup-ot', (await fails(u1, `select public.cleanup_
   const name = async (u) => (await as('postgres', `select username from public.profiles where id = '${u}'`)).rows[0].username;
   const [n2, n3] = [await name(u2), await name(u3)];
   r = await as(u1, `select * from public.search_profiles('${n2.slice(0, 3)}')`); ok('search_profiles: megtalálja a kereshető profilt', r.rows.some(x => x.id === u2));
-  ok('search_profiles: saját magamat nem adja', !(await as(u2, `select * from public.search_profiles('${n2.slice(0, 3)}')`)).rows.some(x => x.id === u2));
+  r = await as(u2, `select * from public.search_profiles('${n2.slice(0, 3)}')`);
+  ok('search_profiles: a saját profilt is megmutatja, jelölve (is_me)', r.rows.some(x => x.id === u2 && x.is_me === true) && (await as(u1, `select * from public.search_profiles('${n2.slice(0, 3)}')`)).rows.every(x => x.is_me === false));
+  r = await as(u1, `select * from public.search_profiles('${n2.slice(1, 4)}')`); ok('search_profiles: a név közepén is keres (nem csak az elején)', r.rows.some(x => x.id === u2));
+  r = await as(u1, `select * from public.search_profiles('${n2.slice(0, 3).toUpperCase()}')`); ok('search_profiles: kis/nagybetűre nem érzékeny', r.rows.some(x => x.id === u2));
   r = await as(u1, `select * from public.search_profiles('%%')`); ok('search_profiles: a % nem joker', r.rows.length === 0);
   r = await as(u1, `select * from public.search_profiles('${n2.slice(0, 1)}')`); ok('search_profiles: 1 karakternél üres', r.rows.length === 0);
   await as(u3, `update public.profiles set searchable = false where id = '${u3}'`);
@@ -208,6 +214,7 @@ ok('kliens nem hívhatja a cleanup-ot', (await fails(u1, `select public.cleanup_
   // moderáció
   r = await as(u1, `select * from public.create_room('together','classic-01',4::smallint,'{}')`);
   const room3 = r.rows[0];
+  await as(u1, `select public.set_room_open('${room3.id}', true)`);
   await as(u2, `select * from public.join_room('${room3.code}')`);
   r = await as(u2, `insert into public.room_messages (room_id, user_id, body) values ('${room3.id}', '${u2}', 'csúnya szó') returning id`);
   const msg = r.rows[0].id;
@@ -228,6 +235,98 @@ ok('kliens nem hívhatja a cleanup-ot', (await fails(u1, `select public.cleanup_
   r = await as('postgres', `select count(*)::int n from public.friendships where '${u1}' in (user_a, user_b)`);
   ok('barát-limit: a teszt-előkészítés 100+ kapcsolatot hozott létre', r.rows[0].n >= 100);
   ok('barát-limit: a limit felett nem küldhető új kérés', (await fails(u1, `select public.send_friend_request('${u3}')`)) !== null);
+}
+
+// --- 0005: tartós szobák (név, nyitott/zárt ajtó, törlés, követés, statisztika) ---
+{
+  r = await as(u1, `select * from public.create_room('together', 'classic-01', 3::smallint, '{}', '  A mi szobánk  ')`);
+  const R = r.rows[0];
+  ok('create_room: név levágva, ajtó zárva', R.name === 'A mi szobánk' && R.is_open === false);
+  r = await as(u2, `select * from public.room_peek('${R.code.toLowerCase()}')`);
+  ok('room_peek: a zárt szoba létezése látszik (név, gazda, zárt), belépés nélkül', r.rows.length === 1 && r.rows[0].is_open === false && r.rows[0].is_member === false && r.rows[0].name === 'A mi szobánk');
+  r = await as(u2, `select * from public.rooms where id = '${R.id}'`); ok('a zárt szoba tartalma nem olvasható', r.rows.length === 0);
+  const closedErr = await fails(u2, `select * from public.join_room('${R.code}')`);
+  ok('zárt szobába nem lehet belépni (a létrehozó nem nyitotta meg)', closedErr !== null && /closed/.test(closedErr), String(closedErr));
+  await as(u2, `select public.follow_room('${R.code}')`);
+  r = await as(u2, `select * from public.my_rooms() where room_id = '${R.id}'`);
+  ok('my_rooms: a követett zárt szoba látszik (nem saját, nem tag)', r.rows.length === 1 && r.rows[0].is_owner === false && r.rows[0].is_member === false && r.rows[0].is_open === false);
+  r = await as(u1, `select * from public.my_rooms() where room_id = '${R.id}'`);
+  ok('my_rooms: a saját szoba tulajdonosként, 1 taggal', r.rows[0].is_owner === true && r.rows[0].owner_id === u1 && Number(r.rows[0].member_count) === 1);
+  ok('csak a tulajdonos nyithatja meg', (await fails(u2, `select public.set_room_open('${R.id}', true)`)) !== null);
+  await as(u1, `select public.set_room_open('${R.id}', true)`);
+  await as(u2, `select * from public.join_room('${R.code}')`);
+  r = await as(u2, `select * from public.my_rooms() where room_id = '${R.id}'`);
+  const follows = (await as('postgres', `select count(*)::int n from public.room_follows where room_id = '${R.id}'`)).rows[0].n;
+  ok('megnyitás után belép; a követés tagsággá válik', r.rows.length === 1 && r.rows[0].is_member === true && follows === 0);
+  await as(u1, `select public.set_room_open('${R.id}', false)`);
+  r = await as(u2, `select * from public.rooms where id = '${R.id}'`); ok('az ajtó bezárása után a tag sem éri el a szoba tartalmát', r.rows.length === 0);
+  r = await as(u1, `select * from public.rooms where id = '${R.id}'`); ok('a tulajdonos zárt ajtónál is eléri', r.rows.length === 1);
+  r = await as(u2, `select * from public.my_rooms() where room_id = '${R.id}'`); ok('a tag a zárt szobát a listában még látja', r.rows.length === 1 && r.rows[0].is_open === false);
+  await as(u1, `select public.set_room_open('${R.id}', true)`);
+
+  // beállítás két játék között
+  ok('nem tulajdonos nem állíthatja át', (await fails(u2, `select * from public.configure_room('${R.id}', 'x', null, null, null)`)) !== null);
+  r = await as(u1, `select * from public.configure_room('${R.id}', 'Új név', 'classic-02', null, '{"timeLimit":300}')`);
+  ok('configure_room: név + pálya átállítva, a többi marad', r.rows[0].name === 'Új név' && r.rows[0].puzzle_ref === 'classic-02' && r.rows[0].max_players === 3);
+
+  // játék + statisztika
+  ok('nem tulajdonos nem indíthat', (await fails(u2, `select * from public.start_room('${R.id}')`)) !== null);
+  await as(u1, `select * from public.start_room('${R.id}')`);
+  ok('játék közben nem zárható az ajtó', (await fails(u1, `select public.set_room_open('${R.id}', false)`)) !== null);
+  ok('játék közben nem állítható át', (await fails(u1, `select * from public.configure_room('${R.id}', 'x', null, null, null)`)) !== null);
+  await as(u1, `select * from public.finish_game('${R.id}', true, 90000)`);
+  r = await as('postgres', `select status from public.rooms where id = '${R.id}'`); ok('finish_game: a szoba visszatér a lobbyba', r.rows[0].status === 'lobby');
+  ok('nem futó játékot nem lehet lezárni', (await fails(u1, `select * from public.finish_game('${R.id}', true, 1000)`)) !== null);
+  await as(u1, `select * from public.start_room('${R.id}')`);
+  await as(u1, `select * from public.finish_game('${R.id}', false, 50000)`);
+  await as(u1, `select * from public.start_room('${R.id}')`);
+  await as(u1, `select * from public.finish_game('${R.id}', true, 70000)`);
+  r = await as(u2, `select games_played::int gp, games_solved::int gs, best_ms, avg_ms, total_ms::int tm from public.room_stats('${R.id}')`);
+  ok('room_stats: 3 játék, 2 megoldva, legjobb 70 mp, átlag 80 mp, összes 210 mp', r.rows[0].gp === 3 && r.rows[0].gs === 2 && r.rows[0].best_ms === 70000 && r.rows[0].avg_ms === 80000 && r.rows[0].tm === 210000);
+  r = await as(u3, `select games_played::int gp from public.room_stats('${R.id}')`); ok('room_stats: kívülálló csupa nullát kap', r.rows[0].gp === 0);
+  r = await as(u2, `select * from public.room_recent_games('${R.id}', 2)`); ok('room_recent_games: a legutóbbi 2, újabb elöl', r.rows.length === 2 && r.rows[0].ms === 70000 && r.rows[0].players === 2);
+  r = await as(u1, `select games_played::int gp, games_solved::int gs from public.my_rooms() where room_id = '${R.id}'`); ok('my_rooms: játék-számláló', r.rows[0].gp === 3 && r.rows[0].gs === 2);
+
+  // limit, törlés
+  const have = (await as('postgres', `select count(*)::int n from public.rooms where host_id = '${u1}'`)).rows[0].n;
+  for (let i = have; i < 5; i++) await as(u1, `select * from public.create_room('killer', 'classic-01')`);
+  ok('legfeljebb 5 saját szoba', (await fails(u1, `select * from public.create_room('together', 'classic-01')`)) !== null);
+  ok('nem tulajdonos nem törölhet', (await fails(u2, `select public.delete_room('${R.id}')`)) !== null);
+  await as(u1, `select public.delete_room('${R.id}')`);
+  r = await as('postgres', `select (select count(*)::int from public.rooms where id = '${R.id}') a, (select count(*)::int from public.room_games where room_id = '${R.id}') b, (select count(*)::int from public.room_members where room_id = '${R.id}') c`);
+  ok('delete_room: a szoba, a naplója és a tagjai is törlődnek', r.rows[0].a === 0 && r.rows[0].b === 0 && r.rows[0].c === 0);
+  r = await as(u2, `select * from public.my_rooms() where room_id = '${R.id}'`); ok('törlés után a tagnál is eltűnik a listából', r.rows.length === 0);
+  ok('anon nem hívhatja a szoba-függvényeket', (await fails('anon', 'select * from public.my_rooms()')) !== null);
+
+  // takarítás: csak a 90 napnál régebbi szoba törlődik
+  await as('postgres', "update public.rooms set updated_at = now() - interval '91 days' where id = (select id from public.rooms where mode = 'killer' order by created_at limit 1)");
+  r = await as('postgres', 'select public.cleanup_old_rooms() as n'); ok('cleanup_old_rooms: csak a 90 napnál régebbit törli', r.rows[0].n === 1);
+}
+
+// --- 0006: barát-kód + keresés ---
+{
+  const codes = (await as('postgres', 'select user_id, code from public.profile_codes')).rows;
+  ok('0006: minden meglévő profil kapott kódot', codes.length === (await as('postgres', 'select count(*)::int n from public.profiles')).rows[0].n);
+  ok('0006: a kód 10 karakter, a félreolvasható karakterek nélkül', codes.every(c => c.code.length === 10 && !/[IlO01]/.test(c.code)));
+  ok('0006: a kódok egyediek', new Set(codes.map(c => c.code)).size === codes.length);
+  ok('0006: a kódokban betű, szám és írásjel is előfordul', codes.some(c => /[a-z]/.test(c.code)) && codes.some(c => /[0-9]/.test(c.code)) && (await as('postgres', "select string_agg(public.new_friend_code(), '') s from generate_series(1, 30)")).rows[0].s.match(/[!@#$%&*+=?]/));
+  ok('0006: közvetlenül senki nem olvassa a kód-táblát', (await fails(u1, 'select * from public.profile_codes')) !== null && (await fails('anon', 'select * from public.profile_codes')) !== null);
+  const mine = (await as(u1, 'select public.my_friend_code() as c')).rows[0].c;
+  ok('0006: my_friend_code: a saját kódomat adja, stabilan', mine === codes.find(c => c.user_id === u1).code && (await as(u1, 'select public.my_friend_code() as c')).rows[0].c === mine);
+  ok('0006: my_friend_code: anon nem hívhatja', (await fails('anon', 'select public.my_friend_code()')) !== null);
+  // új felhasználó a triggerből kap kódot
+  await db.exec("insert into auth.users (id, email, raw_user_meta_data) values ('55555555-5555-5555-5555-555555555555', 'e@x.hu', '{\"username\":\"Ujonc\"}')");
+  ok('0006: az új profil automatikusan kódot kap', (await as('postgres', "select count(*)::int n from public.profile_codes where user_id = '55555555-5555-5555-5555-555555555555'")).rows[0].n === 1);
+  // keresés kóddal
+  const code2 = codes.find(c => c.user_id === u2).code;
+  r = await as(u1, `select * from public.find_by_code('${code2.replaceAll("'", "''")}')`); ok('0006: find_by_code: megtalálja a profilt, nem saját', r.rows.length === 1 && r.rows[0].id === u2 && r.rows[0].is_me === false);
+  r = await as(u2, `select * from public.find_by_code('${code2.replaceAll("'", "''")}')`); ok('0006: find_by_code: a saját kódomnál is_me', r.rows.length === 1 && r.rows[0].is_me === true);
+  r = await as(u1, `select * from public.find_by_code('${code2.toLowerCase().replaceAll("'", "''")}')`); ok('0006: find_by_code: a kis/nagybetű számít', code2 === code2.toLowerCase() || r.rows.length === 0);
+  r = await as(u1, "select * from public.find_by_code('rövid')"); ok('0006: find_by_code: rossz hosszúságú kódra üres', r.rows.length === 0);
+  const code3 = codes.find(c => c.user_id === u3).code;
+  r = await as(u1, `select * from public.find_by_code('${code3.replaceAll("'", "''")}')`); ok('0006: find_by_code: a nem kereshető profilt is megtalálja (aki a kódot adja, azt akarja)', r.rows.length === 1 && r.rows[0].id === u3);
+  ok('0006: find_by_code: anon nem hívhatja', (await fails('anon', "select * from public.find_by_code('x')")) !== null);
+  ok('0006: a profil törlésekor a kódja is törlődik', await (async () => { await db.exec("delete from public.profiles where id = '55555555-5555-5555-5555-555555555555'"); return (await as('postgres', "select count(*)::int n from public.profile_codes where user_id = '55555555-5555-5555-5555-555555555555'")).rows[0].n === 0 })());
 }
 
 {

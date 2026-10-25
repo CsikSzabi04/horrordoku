@@ -1,0 +1,238 @@
+{
+  "v": 1,
+  "id": "classic-5-20-hotel",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A hotel – ünnepnap",
+  "story": "Ünnepnap volt a hotelben, és az igazgató többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "K": "Kert",
+    "B": "Bár",
+    "R": "Recepció",
+    "T": "Étterem",
+    "O": "Konyha",
+    "S": "Szoba"
+  },
+  "layout": [
+    "OOOOSSSSS",
+    "OOOOSSSSS",
+    "ROOOOKSSS",
+    "RRROOKKKS",
+    "RRRRKKKKS",
+    "RRTTTKKKK",
+    "BTTTTKKKK",
+    "BBTTTTBBB",
+    "BBBBBBBBB"
+  ],
+  "objects": [
+    {
+      "type": "stool",
+      "at": [
+        "C9",
+        "B9"
+      ]
+    },
+    {
+      "type": "bed",
+      "at": "G3"
+    },
+    {
+      "type": "chair",
+      "at": [
+        "D6",
+        "D9",
+        "I9",
+        "B8"
+      ]
+    },
+    {
+      "type": "fridge",
+      "at": "D4",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": [
+        "F6",
+        "F4",
+        "A3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "reception",
+      "at": "B4",
+      "blocking": true
+    },
+    {
+      "type": "stove",
+      "at": "B3",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "carl"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Carllal**."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "ne",
+          "n": 6
+        }
+      ],
+      "clueText": [
+        "**Nem** a **6. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 4
+        }
+      ],
+      "clueText": [
+        "A **4. sorban** volt."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "Az Étteremben egy **széken** ült."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A helyiségében **hárman** voltak."
+      ]
+    },
+    {
+      "id": "gordon",
+      "name": "Gordon",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "felicia",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Feliciától délre** volt."
+      ]
+    },
+    {
+      "id": "hanna",
+      "name": "Hanna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "stool"
+        }
+      ],
+      "clueText": [
+        "Egy **bárszéken** ült."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "B1",
+    "bella": "F2",
+    "carl": "G3",
+    "derek": "H4",
+    "vera": "E5",
+    "ervin": "D6",
+    "felicia": "A7",
+    "gordon": "I8",
+    "hanna": "C9"
+  },
+  "murderer": "derek",
+  "rev": 1,
+  "floors": {
+    "K": "grass",
+    "B": "checker",
+    "R": "carpet",
+    "T": "wood",
+    "O": "tile",
+    "S": "carpet"
+  }
+}

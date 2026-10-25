@@ -1,9 +1,11 @@
 // FriendsApi (B4): profil-keresés, barátlista, kérés/elfogadás/törlés (0002 függvényei), Realtime-értesítés a változásról.
 import type { SupabaseClient } from '@supabase/supabase-js'
-import type { FriendRow, FriendsApi } from '../shared/cloud'
+import type { FriendRow, FriendsApi, PersonRef } from '../shared/cloud'
 import { fail, fromError, guard, ok } from './result'
 
-interface PersonRow { id: string; username: string; avatar: string; xp: number }
+interface PersonRow { id: string; username: string; avatar: string; xp: number; is_me?: boolean }
+const CODE_LENGTH = 10
+const person = (p: PersonRow): PersonRef => ({ id: p.id, username: p.username, avatar: p.avatar, xp: p.xp, ...(p.is_me ? { isMe: true } : {}) })
 interface FriendViewRow { friend_id: string; username: string; avatar: string; xp: number; status: 'pending' | 'accepted'; requested_by: string; online?: boolean }
 
 export function createFriends(client: SupabaseClient): FriendsApi {
@@ -15,13 +17,34 @@ export function createFriends(client: SupabaseClient): FriendsApi {
     })
 
   return {
-    search: (prefix) =>
+    search: (query) =>
       guard(async () => {
-        const q = prefix.trim()
+        const q = query.trim()
         if (q.length < 2) return ok([]) // min. 2 karakter (GDD 14.9)
-        const { data, error } = await client.rpc('search_profiles', { p_prefix: q }) // csak a kereshető profilokat adja (0004)
+        const { data, error } = await client.rpc('search_profiles', { p_prefix: q }) // becenév: bárhol a névben (0006)
         if (error) return fromError(error)
-        return ok(((data ?? []) as PersonRow[]).map((p) => ({ id: p.id, username: p.username, avatar: p.avatar, xp: p.xp })))
+        const found = ((data ?? []) as PersonRow[]).map(person)
+        // 10 karakteres bevitel: lehet barát-azonosító is — a pontos egyezést előre tesszük
+        if (q.length === CODE_LENGTH) {
+          const byCode = await client.rpc('find_by_code', { p_code: q })
+          if (!byCode.error) for (const p of ((byCode.data ?? []) as PersonRow[]).reverse()) if (!found.some((x) => x.id === p.id)) found.unshift(person(p))
+        }
+        return ok(found)
+      }),
+    myCode: () =>
+      guard(async () => {
+        const { data, error } = await client.rpc('my_friend_code')
+        if (error) return fromError(error)
+        return typeof data === 'string' && data ? ok(data) : fail('unknown', 'no_code')
+      }),
+    findByCode: (code) =>
+      guard(async () => {
+        const c = code.trim()
+        if (c.length !== CODE_LENGTH) return ok(null)
+        const { data, error } = await client.rpc('find_by_code', { p_code: c })
+        if (error) return fromError(error)
+        const row = ((data ?? []) as PersonRow[])[0]
+        return ok(row ? person(row) : null)
       }),
     list: () =>
       guard(async () => {

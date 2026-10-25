@@ -25,9 +25,26 @@ export type Clue =
   | { kind: 'diagonal'; of: CharId }                               // átlósan Y mellett (közepestől)
   | { kind: 'corner' }
   | { kind: 'distance'; fromObject: string; cells: number }        // szakértő szint / Alien-szabály
-  | { kind: 'aloneWithKiller'; room: string }                      // az ÁLDOZAT kártyája
+  | { kind: 'aloneWithKiller'; room?: string }                     // az ÁLDOZAT kártyája; `room` nélkül (Murdoku) a helyiség a lerakás helyétől függ
   | { kind: 'roomAlone' }                                          // "a helyiségében senki más nem volt"
   | { kind: 'liar' }                                               // Démon: egy másik nyom hazudik (a pálya `liarOf`-ban jelöli)
+  | { kind: 'lit' }                                                 // Alan Wake: fényes mezőn állt (villanyoszlop / töltő körül)
+  | { kind: 'dark' }                                                // Alan Wake: sötét mezőn állt (a Birtokoltak)
+  | { kind: 'col'; n: number }                                      // Murdoku: „A 2. oszlopban volt." (1 = balról az első)
+  | { kind: 'row'; n: number }                                      // Murdoku: „A 3. sorban volt." (1 = fentről az első)
+  | { kind: 'northOf'; of: CharId; rows: number }                   // Murdoku: „Pontosan egy sorral X-től északra volt." (északra = feljebb)
+  | { kind: 'southOf'; of: CharId; rows: number }                   // …délre (lejjebb)
+  | { kind: 'aloneWith'; with: CharId }                             // Murdoku: „Egyedül volt Marával." (a helyiségben csak ők ketten)
+  | { kind: 'dir'; of: CharId; dir: 'N' | 'E' | 'S' | 'W' }          // „X-től északra volt": szigorúan feljebb (N) / jobbra (E) / lejjebb (S) / balra (W)
+  | { kind: 'notBeside'; object: string }                           // „Nem volt medve mellett."
+  | { kind: 'besideCat'; cat: string }                              // „Egy állat mellett volt." (kategória: `CATEGORIES`)
+  | { kind: 'notBesideCat'; cat: string }                           // „Nem volt állat mellett."
+  | { kind: 'terrain'; style: string; not?: boolean }               // „Vízben / mocsárban / fűben volt." — a helyiség padlója (`Puzzle.floors`)
+  | { kind: 'line'; axis: 'row' | 'col'; op: 'lt' | 'gt' | 'ne'; n: number } // „Az 5. sor fölött / az 2. oszloptól balra / nem a 3. sorban volt."
+  | { kind: 'withGender'; gender: 'm' | 'f' }                       // „A helyiségében volt egy férfi." (rajta kívül legalább egy ilyen nemű)
+  | { kind: 'notSameRoom'; with: CharId }                           // „Nem volt egy helyiségben Marával."
+  | { kind: 'edge'; inner?: boolean }                               // „A pálya szélén volt." / `inner`: nem a szélén
+  | { kind: 'roomCount'; n: number }                                // „A helyiségében hárman voltak." (vele együtt, az áldozatot is beleértve)
 
 export interface PuzzleCharacter {
   id: CharId
@@ -37,6 +54,9 @@ export interface PuzzleCharacter {
   source?: { game?: string; film?: string }   // Esemény-pályáknál a forrás-játék
   clues: Clue[]                   // 1 db; Alakváltónál 2 (a játékosnak kell kitalálnia, melyik az igaz)
   clueText: string[]              // ugyanannyi, mint a `clues` — a kártyán látott magyar szöveg (kézzel írt vagy sablonból generált)
+  gender?: 'm' | 'f'              // arckép / ♂♀ jelvény (Klasszikus: hétköznapi nevek)
+  armored?: boolean               // Dead Space (`vacuumRooms`): csak páncélos állhat nyomásmentes helyiségben
+  hidden?: number[]               // Until Dawn: a `clues` itt felsorolt indexű elemei zároltak, amíg a karakter totem mellé nem kerül
 }
 
 export interface Puzzle {
@@ -56,6 +76,8 @@ export interface Puzzle {
   activePowers: Race[]            // a pályán aktív Erő-szabályok
   worldRule?: string              // az Esemény-világ saját szabálya ("cameras", "vacuum", …)
   liarOf?: CharId                 // Démon-szabálynál: melyik karakter nyoma hazudik (a megoldásba tartozik, a játékos nem látja)
+  vacuumRooms?: string[]          // Dead Space: a nyomásmentes helyiségek betűi
+  floors?: Record<string, string> // helyiség-betű → padló-osztály (water, swamp, grass, sand, ice, stone, dirt, wood, carpet, checker, brick, tile): a `terrain` nyomokhoz
   solution: Record<CharId, CellId>
   murderer: CharId
   rev: number                     // javításkor nő; a Supabase `puzzles.rev` tükre

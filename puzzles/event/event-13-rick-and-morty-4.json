@@ -1,0 +1,253 @@
+{
+  "v": 1,
+  "id": "event-13-rick-and-morty-4",
+  "mode": "event",
+  "world": "rick-and-morty",
+  "title": "Squanch!",
+  "story": "Squanchy a garázsban squanchelt, aztán csend lett. A portálok mindkét oldalra átlátnak.",
+  "size": 8,
+  "difficulty": 4,
+  "rooms": {
+    "G": "Garázs",
+    "N": "Nappali",
+    "K": "Konyha",
+    "M": "Morty szobája",
+    "R": "Űrhajó",
+    "C": "Citadella",
+    "S": "Csőlakás-dimenzió"
+  },
+  "layout": [
+    "GNNRRRRR",
+    "GNNNMMRR",
+    "GNNNMMRR",
+    "GGCCMMMR",
+    "GKKCMMMM",
+    "SSKCCCCC",
+    "SSKCCCCK",
+    "SSKKKKKK"
+  ],
+  "objects": [
+    {
+      "type": "crate",
+      "at": [
+        "B7",
+        "A8"
+      ]
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "G8",
+        "D3",
+        "C1",
+        "E8"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "H6",
+        "E2",
+        "A5",
+        "F4",
+        "B4"
+      ]
+    },
+    {
+      "type": "doorGreen",
+      "at": "E5",
+      "blocking": true
+    },
+    {
+      "type": "doorBlue",
+      "at": "F6",
+      "blocking": true
+    },
+    {
+      "type": "doorOrange",
+      "at": "D5",
+      "blocking": true
+    },
+    {
+      "type": "toolbox",
+      "at": [
+        "H2",
+        "H8",
+        "A1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "machine",
+      "at": "G4",
+      "blocking": true
+    },
+    {
+      "type": "fridge",
+      "at": "C7",
+      "blocking": true
+    },
+    {
+      "type": "tv",
+      "at": "F5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "beth-smith",
+      "name": "Beth Smith",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "squanchy",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Squanchytől északra** volt."
+      ],
+      "source": {
+        "game": "Rick and Morty"
+      }
+    },
+    {
+      "id": "rick-sanchez",
+      "name": "Rick Sanchez",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "Morty szobájában egy **padon** ült."
+      ],
+      "source": {
+        "game": "Rick and Morty"
+      }
+    },
+    {
+      "id": "squanchy",
+      "name": "Squanchy",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Nappaliban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Rick and Morty"
+      }
+    },
+    {
+      "id": "evil-morty",
+      "name": "Evil Morty",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "jerry-smith",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Jerrytől északra** volt."
+      ],
+      "source": {
+        "game": "Rick and Morty"
+      }
+    },
+    {
+      "id": "morty-smith",
+      "name": "Morty Smith",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "A Garázsban egy **padon** ült."
+      ],
+      "source": {
+        "game": "Rick and Morty"
+      }
+    },
+    {
+      "id": "mr-poopybutthole",
+      "name": "Mr. Poopybutthole",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ],
+      "source": {
+        "game": "Rick and Morty"
+      }
+    },
+    {
+      "id": "jerry-smith",
+      "name": "Jerry Smith",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "notSameRoom",
+          "with": "mr-poopybutthole"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt egy helyiségben **Mr. Poopybuttholével**."
+      ],
+      "source": {
+        "game": "Rick and Morty"
+      }
+    },
+    {
+      "id": "mr-meeseeks",
+      "name": "Mr. Meeseeks",
+      "race": "ghost",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "mr-poopybutthole",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Mr. Poopybuttholétől délre** volt."
+      ],
+      "source": {
+        "game": "Rick and Morty"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "beth-smith": "C1",
+    "rick-sanchez": "E2",
+    "squanchy": "D3",
+    "evil-morty": "F4",
+    "morty-smith": "A5",
+    "mr-poopybutthole": "H6",
+    "jerry-smith": "B7",
+    "mr-meeseeks": "G8"
+  },
+  "murderer": "beth-smith",
+  "rev": 1,
+  "worldRule": "doors"
+}

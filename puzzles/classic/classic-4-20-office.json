@@ -1,0 +1,222 @@
+{
+  "v": 1,
+  "id": "classic-4-20-office",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az iroda – zárás után",
+  "story": "Szombat este az irodában az osztályvezető nem tért haza. Valaki egyedül maradt vele.",
+  "size": 8,
+  "difficulty": 4,
+  "rooms": {
+    "F": "Főnöki iroda",
+    "N": "Nyitott iroda",
+    "T": "Tárgyaló",
+    "K": "Konyha",
+    "R": "Raktár"
+  },
+  "layout": [
+    "KKKKKKKN",
+    "KFFFFKKN",
+    "KFFFNNNN",
+    "KFFFNNNN",
+    "KKFFNNNN",
+    "KKFFNNNT",
+    "KKRFTTTT",
+    "RRRTTTTT"
+  ],
+  "objects": [
+    {
+      "type": "rug",
+      "at": [
+        "D6",
+        "G7"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "H3",
+        "E4"
+      ]
+    },
+    {
+      "type": "coffeemaker",
+      "at": "G2",
+      "blocking": true
+    },
+    {
+      "type": "shelf",
+      "at": [
+        "B4",
+        "C8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "computer",
+      "at": "E3",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "E7",
+      "blocking": true
+    },
+    {
+      "type": "printer",
+      "at": "G4",
+      "blocking": true
+    },
+    {
+      "type": "sofa",
+      "at": "D2"
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "bianca",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Biancától északra** volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "coffeemaker",
+            "computer"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **kávéfőző vagy számítógép mellett** volt."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "bianca",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Biancától délre** volt."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **szék mellett** volt."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Főnöki irodában egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "gordon",
+      "name": "Gordon",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "G1",
+    "bianca": "F2",
+    "cody": "H3",
+    "daniel": "A4",
+    "elena": "E5",
+    "frank": "D6",
+    "vera": "C7",
+    "gordon": "B8"
+  },
+  "murderer": "gordon",
+  "rev": 1,
+  "floors": {
+    "F": "wood",
+    "N": "carpet",
+    "T": "wood",
+    "K": "tile",
+    "R": "stone"
+  }
+}

@@ -27,23 +27,52 @@ async function within<T>(p: PromiseLike<T>, ms: number): Promise<T> {
 
 type DbResult = { error: { code?: string; message?: string; status?: number } | null }
 
-function send(client: SupabaseClient, uid: string, op: Pick<SyncOp, 'table' | 'kind' | 'key' | 'payload'>): PromiseLike<DbResult> {
+const ts = (t: string | null | undefined) => (t ? Date.parse(t) : 0)
+
+/**
+ * Egy sor-elem feltöltése. FONTOS: a felhős sort nem írjuk felül vakon — előbb összefésüljük a távoli értékkel (GDD 17.5), különben a
+ * később feltöltő gép felülírná a másik gép eredményét (pl. a nagyobb wrongSubmits, a korábbi firstSolvedAt, a solved elveszne a felhőben).
+ * Mentés/beállítás/profil: ha a felhős változat újabb, a helyit nem töltjük fel (a letöltés úgyis behozza).
+ */
+async function sendOp(client: SupabaseClient, uid: string, op: Pick<SyncOp, 'table' | 'kind' | 'key' | 'payload'>): Promise<DbResult> {
   const p = op.payload
   switch (op.table) {
-    case 'progress':
-      return client.from('progress').upsert(rows.progressRow(uid, op.key, p as ProgressEntry), { onConflict: 'user_id,puzzle_id' })
-    case 'saves':
-      return op.kind === 'delete'
-        ? client.from('saves').delete().eq('user_id', uid).eq('puzzle_ref', op.key)
-        : client.from('saves').upsert(rows.saveRow(uid, op.key, p as SessionState), { onConflict: 'user_id,puzzle_ref' })
+    case 'progress': {
+      const cur = await client.from('progress').select('*').eq('user_id', uid).eq('puzzle_id', op.key).maybeSingle()
+      if (cur.error) return { error: cur.error }
+      let entry = p as ProgressEntry
+      if (cur.data) {
+        const remote = rows.progressFromRows([cur.data as rows.ProgressDbRow], []).puzzles[op.key]
+        if (remote) entry = merge.mergeEntry(entry, remote)
+      }
+      return client.from('progress').upsert(rows.progressRow(uid, op.key, entry), { onConflict: 'user_id,puzzle_id' })
+    }
+    case 'saves': {
+      if (op.kind === 'delete') return client.from('saves').delete().eq('user_id', uid).eq('puzzle_ref', op.key)
+      const local = p as SessionState
+      const cur = await client.from('saves').select('updated_at').eq('user_id', uid).eq('puzzle_ref', op.key).maybeSingle()
+      if (cur.error) return { error: cur.error }
+      if (cur.data && ts((cur.data as { updated_at: string }).updated_at) > ts(local.updatedAt)) return { error: null } // a felhős játék újabb
+      return client.from('saves').upsert(rows.saveRow(uid, op.key, local), { onConflict: 'user_id,puzzle_ref' })
+    }
     case 'runs':
       return client.from('runs').upsert(rows.runRow(uid, p as Parameters<typeof rows.runRow>[1]), { onConflict: 'id', ignoreDuplicates: true })
     case 'unlocks':
       return client.from('unlocks').upsert(rows.unlockRow(uid, p as Parameters<typeof rows.unlockRow>[1]), { onConflict: 'user_id,kind,item_id', ignoreDuplicates: true })
-    case 'user_settings':
-      return client.from('user_settings').upsert(rows.settingsRow(uid, p as Settings), { onConflict: 'user_id' })
-    case 'profiles':
-      return client.from('profiles').update(rows.profilePatch(p as ProfileSnapshot)).eq('id', uid)
+    case 'user_settings': {
+      const local = p as Settings
+      const cur = await client.from('user_settings').select('updated_at').eq('user_id', uid).maybeSingle()
+      if (cur.error) return { error: cur.error }
+      if (cur.data && ts((cur.data as { updated_at: string }).updated_at) > ts(local.updatedAt)) return { error: null }
+      return client.from('user_settings').upsert(rows.settingsRow(uid, local), { onConflict: 'user_id' })
+    }
+    case 'profiles': {
+      const local = p as ProfileSnapshot
+      const cur = await client.from('profiles').select('updated_at').eq('id', uid).maybeSingle()
+      if (cur.error) return { error: cur.error }
+      if (cur.data && ts((cur.data as { updated_at: string }).updated_at) > ts(local.updatedAt)) return { error: null }
+      return client.from('profiles').update(rows.profilePatch(local)).eq('id', uid)
+    }
   }
 }
 
@@ -54,7 +83,7 @@ export async function pushOps(client: SupabaseClient, uid: string, ops: Pick<Syn
   const rep: PushReport = { done: [], deferred: [], failed: [], offline: false }
   for (const op of ops) {
     try {
-      const { error } = await within(send(client, uid, op), OP_TIMEOUT_MS)
+      const { error } = await within(sendOp(client, uid, op), OP_TIMEOUT_MS)
       if (!error) rep.done.push(op.id)
       else if (isNetworkError(error)) {
         rep.offline = true

@@ -1,0 +1,220 @@
+{
+  "v": 1,
+  "id": "classic-4-14-cinema",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A mozi – esős napon",
+  "story": "Zárás után a moziban a jegyszedő holtan feküdt. Csak páran voltak ma bent.",
+  "size": 8,
+  "difficulty": 4,
+  "rooms": {
+    "P": "Pénztár",
+    "R": "Raktár",
+    "E": "Előcsarnok",
+    "N": "Nézőtér",
+    "B": "Büfé",
+    "V": "Vetítő"
+  },
+  "layout": [
+    "BBBBVNNN",
+    "BBBBVVNN",
+    "BBBBVVNN",
+    "EEVVVVNN",
+    "EEEPPVPN",
+    "EEEPPPPP",
+    "EERPPRRR",
+    "EERRRRRR"
+  ],
+  "objects": [
+    {
+      "type": "rug",
+      "at": "H4"
+    },
+    {
+      "type": "chair",
+      "at": [
+        "G2",
+        "H5",
+        "F1"
+      ]
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "C6",
+        "B7"
+      ]
+    },
+    {
+      "type": "shelf",
+      "at": [
+        "F2",
+        "E2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "popcorn",
+      "at": "B2",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": [
+        "A5",
+        "C5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "D5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 1
+        }
+      ],
+      "clueText": [
+        "Az **első sorban** volt."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "A Nézőtéren egy **széken** ült."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 4
+        }
+      ],
+      "clueText": [
+        "A **4. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **növény mellett** volt."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Előcsarnokban egy **kanapén** ült."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "gabriel",
+      "name": "Gabriel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "vlad",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Vladtól délre** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "A1",
+    "bella": "G2",
+    "clara": "D3",
+    "dora": "H4",
+    "emmett": "B5",
+    "felicia": "C6",
+    "vlad": "F7",
+    "gabriel": "E8"
+  },
+  "murderer": "gabriel",
+  "rev": 1,
+  "floors": {
+    "P": "brick",
+    "R": "stone",
+    "N": "carpet",
+    "B": "wood",
+    "V": "stone"
+  }
+}

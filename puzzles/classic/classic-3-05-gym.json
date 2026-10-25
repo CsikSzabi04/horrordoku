@@ -1,0 +1,224 @@
+{
+  "v": 1,
+  "id": "classic-3-05-gym",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az edzőterem – esős napon",
+  "story": "Szombat este az edzőteremben az edző nem tért haza. Valaki egyedül maradt vele.",
+  "size": 8,
+  "difficulty": 3,
+  "rooms": {
+    "U": "Uszoda",
+    "B": "Büfé",
+    "R": "Recepció",
+    "E": "Edzőterem",
+    "L": "Öltöző"
+  },
+  "layout": [
+    "RRRUUUUU",
+    "RRRUUUUU",
+    "RRRRUUUU",
+    "BBBEEUUU",
+    "BEEEELLL",
+    "BBEEELLL",
+    "BBBEELLL",
+    "BBBEELLL"
+  ],
+  "objects": [
+    {
+      "type": "ball",
+      "at": [
+        "F3",
+        "E1",
+        "D2"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "C8",
+        "A7",
+        "A8",
+        "C1"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "G6",
+        "D8"
+      ]
+    },
+    {
+      "type": "weights",
+      "at": [
+        "C5",
+        "E4",
+        "E6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "reception",
+      "at": "A3",
+      "blocking": true
+    },
+    {
+      "type": "locker",
+      "at": "H6",
+      "blocking": true
+    },
+    {
+      "type": "sink",
+      "at": "H7",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 1
+        }
+      ],
+      "clueText": [
+        "Az **első sorban** volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "ball"
+        }
+      ],
+      "clueText": [
+        "Egy **labdán** volt."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 6
+        }
+      ],
+      "clueText": [
+        "A **6. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "carly",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Carlytől délre** volt."
+      ]
+    },
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "gabriel",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Gabrieltől északra** volt."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszloptól balra** volt."
+      ]
+    },
+    {
+      "id": "gabriel",
+      "name": "Gabriel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "B"
+        }
+      ],
+      "clueText": [
+        "A Büfében egy **széken** ült."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "E1",
+    "bianca": "D2",
+    "carly": "F3",
+    "daniel": "B4",
+    "vickie": "H5",
+    "eva": "G6",
+    "felicia": "A7",
+    "gabriel": "C8"
+  },
+  "murderer": "eva",
+  "rev": 1,
+  "floors": {
+    "U": "water",
+    "B": "wood",
+    "R": "carpet",
+    "E": "tile",
+    "L": "tile"
+  }
+}

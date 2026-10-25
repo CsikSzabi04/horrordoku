@@ -1,0 +1,163 @@
+{
+  "v": 1,
+  "id": "classic-2-20-hotel",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A hotel – este",
+  "story": "A hotelben reggel az igazgatót holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "K": "Konyha",
+    "S": "Szoba",
+    "F": "Fürdő",
+    "W": "Wellness"
+  },
+  "layout": [
+    "KKSSSS",
+    "KSSWWS",
+    "KSSSWW",
+    "KFFWWW",
+    "FFFWWW",
+    "FFFFWW"
+  ],
+  "objects": [
+    {
+      "type": "stove",
+      "at": [
+        "A4",
+        "A1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "minibar",
+      "at": "C1",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "D4",
+      "blocking": true
+    },
+    {
+      "type": "sofa",
+      "at": "C2"
+    },
+    {
+      "type": "rug",
+      "at": "F1"
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "bella",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Bellától északra** volt."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "aloneWith",
+          "with": "clara"
+        }
+      ],
+      "clueText": [
+        "**Egyedül** volt **Clarával**."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "sofa"
+        }
+      ],
+      "clueText": [
+        "Egy **kanapé mellett** volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "bella",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Bellától délre** volt."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "notSameRoom",
+          "with": "vera"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt egy helyiségben **Verával**."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "B1",
+    "bella": "F2",
+    "clara": "C3",
+    "derek": "E4",
+    "vera": "D5",
+    "eva": "A6"
+  },
+  "murderer": "derek",
+  "rev": 1,
+  "floors": {
+    "K": "tile",
+    "S": "carpet",
+    "F": "tile",
+    "W": "water"
+  }
+}

@@ -1,0 +1,242 @@
+{
+  "v": 1,
+  "id": "event-03-resident-evil-2-5",
+  "mode": "event",
+  "world": "resident-evil",
+  "title": "A kampós kötél",
+  "story": "Ada Wong kampós kötele a korláton lóg, ő maga viszont a földön fekszik. Senki sem tudja, kinek dolgozott valójában.",
+  "size": 8,
+  "difficulty": 5,
+  "rooms": {
+    "F": "Főcsarnok",
+    "N": "Nyugati iroda",
+    "S": "Sötétkamra",
+    "K": "Könyvtár",
+    "M": "Mentőszoba",
+    "A": "Kapitányi iroda",
+    "L": "Lőtér"
+  },
+  "layout": [
+    "SSSKKKKK",
+    "SSAAFKKK",
+    "SAAAFFFF",
+    "SAAAFFLF",
+    "SMMMMLLF",
+    "MMMNLLLL",
+    "NMMNNLLL",
+    "NNNNNLLL"
+  ],
+  "objects": [
+    {
+      "type": "itembox",
+      "at": [
+        "H1",
+        "F4",
+        "A5"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "E2",
+        "F8",
+        "G1"
+      ]
+    },
+    {
+      "type": "doorSpade",
+      "at": "A6",
+      "blocking": true
+    },
+    {
+      "type": "doorDiamond",
+      "at": "G4",
+      "blocking": true
+    },
+    {
+      "type": "doorCircle",
+      "at": "C2",
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": [
+        "D6",
+        "G7",
+        "B1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "typewriter",
+      "at": [
+        "F6",
+        "A4",
+        "F5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "herb",
+      "at": "B7"
+    }
+  ],
+  "characters": [
+    {
+      "id": "annette-birkin",
+      "name": "Annette Birkin",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "mr-x",
+          "dir": "N"
+        }
+      ],
+      "clueText": [
+        "**Mr. X-től északra** volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "marvin-branagh",
+      "name": "Marvin Branagh",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "claire-redfield"
+        }
+      ],
+      "clueText": [
+        "**Clairével** egy helyiségben volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "sherry-birkin",
+      "name": "Sherry Birkin",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "claire-redfield"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Clairével**."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "claire-redfield",
+      "name": "Claire Redfield",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "itembox",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Főcsarnokban egy **tárolódobozon** volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "mr-x",
+      "name": "Mr. X",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "itembox",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "A Sötétkamrában egy **tárolódobozon** volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "brian-irons",
+      "name": "Brian Irons",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "leon-s-kennedy",
+          "dir": "W"
+        }
+      ],
+      "clueText": [
+        "**Leontól nyugatra** volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "ada-wong",
+      "name": "Ada Wong",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Nyugati irodában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "leon-s-kennedy",
+      "name": "Leon S. Kennedy",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "brian-irons",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Briantól délre** volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "annette-birkin": "H1",
+    "marvin-branagh": "E2",
+    "sherry-birkin": "G3",
+    "claire-redfield": "F4",
+    "mr-x": "A5",
+    "brian-irons": "B6",
+    "ada-wong": "D7",
+    "leon-s-kennedy": "C8"
+  },
+  "murderer": "leon-s-kennedy",
+  "rev": 1,
+  "worldRule": "doors"
+}

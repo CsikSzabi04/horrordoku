@@ -1,0 +1,166 @@
+{
+  "v": 1,
+  "id": "classic-1-11-bakery",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A pékség – este",
+  "story": "Ünnepnap volt a pékségben, és a pék többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 6,
+  "difficulty": 1,
+  "rooms": {
+    "E": "Eladótér",
+    "S": "Sütöde",
+    "R": "Raktár",
+    "I": "Iroda"
+  },
+  "layout": [
+    "EEEEII",
+    "EEEEII",
+    "SSEEII",
+    "SSRRRR",
+    "SSSRRR",
+    "SSSRRR"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": "D2"
+    },
+    {
+      "type": "barrel",
+      "at": "F4",
+      "blocking": true
+    },
+    {
+      "type": "bakeoven",
+      "at": [
+        "A3",
+        "A6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "A2",
+      "blocking": true
+    },
+    {
+      "type": "rug",
+      "at": "C2"
+    },
+    {
+      "type": "chair",
+      "at": "D1"
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "furniture"
+        }
+      ],
+      "clueText": [
+        "Egy **bútor mellett** volt."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "bakeoven"
+        }
+      ],
+      "clueText": [
+        "Egy **kemence mellett** volt."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "aloneWith",
+          "with": "eva"
+        }
+      ],
+      "clueText": [
+        "**Egyedül** volt **Evával**."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "gt",
+          "n": 5
+        }
+      ],
+      "clueText": [
+        "Az **5. sor alatt** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "A1",
+    "vera": "D2",
+    "bella": "B3",
+    "carly": "E4",
+    "derek": "C5",
+    "eva": "F6"
+  },
+  "murderer": "adam",
+  "rev": 1,
+  "floors": {
+    "E": "checker",
+    "S": "brick",
+    "R": "stone"
+  }
+}

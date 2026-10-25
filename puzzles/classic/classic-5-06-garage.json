@@ -1,0 +1,241 @@
+{
+  "v": 1,
+  "id": "classic-5-06-garage",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az autószerelő – hétvégén",
+  "story": "Zárás után az autószerelőnél a műhelyvezető holtan feküdt. Csak páran voltak ma bent.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "U": "Udvar",
+    "M": "Műhely",
+    "I": "Iroda",
+    "V": "Várószoba",
+    "R": "Raktár"
+  },
+  "layout": [
+    "RRRRRRRRI",
+    "RRRRRRIII",
+    "VRRRRIIII",
+    "VVVVVVVII",
+    "UUVVVVVII",
+    "UUUUVVMII",
+    "UUUUVVMMM",
+    "UUUUMMMMM",
+    "UUUUMMMMM"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "C4",
+        "B8",
+        "A9"
+      ]
+    },
+    {
+      "type": "computer",
+      "at": "I1",
+      "blocking": true
+    },
+    {
+      "type": "barrel",
+      "at": "H1",
+      "blocking": true
+    },
+    {
+      "type": "car",
+      "at": "C9",
+      "blocking": true
+    },
+    {
+      "type": "locker",
+      "at": "E3",
+      "blocking": true
+    },
+    {
+      "type": "shelf",
+      "at": "G7",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "H6",
+      "blocking": true
+    },
+    {
+      "type": "chair",
+      "at": [
+        "C5",
+        "F5"
+      ]
+    },
+    {
+      "type": "rug",
+      "at": "E7"
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 4
+        }
+      ],
+      "clueText": [
+        "A **4. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "vera",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Verától északra** volt."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "A Várószobában volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "A Várószobában egy **padon** ült."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "gordon",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Gordontól északra** volt."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "computer",
+            "rug"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **számítógép vagy szőnyeg mellett** volt."
+      ]
+    },
+    {
+      "id": "gordon",
+      "name": "Gordon",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ]
+    },
+    {
+      "id": "henry",
+      "name": "Henry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 9
+        }
+      ],
+      "clueText": [
+        "A **9. oszlopban** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "D1",
+    "bianca": "G2",
+    "carly": "A3",
+    "daniel": "C4",
+    "vera": "H5",
+    "ervin": "E6",
+    "flavia": "F7",
+    "gordon": "B8",
+    "henry": "I9"
+  },
+  "murderer": "bianca",
+  "rev": 1,
+  "floors": {
+    "U": "grass",
+    "M": "stone",
+    "R": "stone"
+  }
+}

@@ -1,0 +1,208 @@
+{
+  "v": 1,
+  "id": "event-07-outlast-1",
+  "mode": "event",
+  "world": "outlast",
+  "title": "Elemhiány",
+  "story": "Sötét van, az elem fogy. Chris Walker a pincebörtönben végezte — de csak a kurzorod körül látsz.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "K": "Kórterem-szárny",
+    "P": "Pincebörtön",
+    "O": "Kápolna",
+    "C": "Csatorna",
+    "R": "Őrszoba",
+    "V": "Villamos-terem"
+  },
+  "layout": [
+    "PCCCVVV",
+    "PCCCVVV",
+    "PCCKVVV",
+    "POOKKVV",
+    "OOKKKKR",
+    "OOOKKRR",
+    "OORRRRR"
+  ],
+  "objects": [
+    {
+      "type": "batterybox",
+      "at": [
+        "G7",
+        "E1"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "E3",
+        "B7"
+      ]
+    },
+    {
+      "type": "wheelchair",
+      "at": [
+        "B1",
+        "C5",
+        "B2"
+      ]
+    },
+    {
+      "type": "switch",
+      "at": [
+        "B6",
+        "D2",
+        "F1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "locker",
+      "at": [
+        "D3",
+        "F4"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "miles-upshur",
+      "name": "Miles Upshur",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "Egy **ülőhely mellett** volt."
+      ],
+      "source": {
+        "game": "Outlast"
+      }
+    },
+    {
+      "id": "father-martin",
+      "name": "Father Martin",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "miles-upshur",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Milestől délre** volt."
+      ],
+      "source": {
+        "game": "Outlast"
+      }
+    },
+    {
+      "id": "richard-trager",
+      "name": "Richard Trager",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "A Villamos-teremben egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Outlast"
+      }
+    },
+    {
+      "id": "eddie-gluskin",
+      "name": "Eddie Gluskin",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "chris-walker",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Christől északra** volt."
+      ],
+      "source": {
+        "game": "Outlast"
+      }
+    },
+    {
+      "id": "dr-wernicke",
+      "name": "Dr. Wernicke",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "chris-walker",
+          "dir": "W"
+        }
+      ],
+      "clueText": [
+        "**Christől nyugatra** volt."
+      ],
+      "source": {
+        "game": "Outlast"
+      }
+    },
+    {
+      "id": "chris-walker",
+      "name": "Chris Walker",
+      "race": "ghoul",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Kórterem-szárnyban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Outlast"
+      }
+    },
+    {
+      "id": "jeremy-blaire",
+      "name": "Jeremy Blaire",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "batterybox",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "Az Őrszobában egy **elemdobozon** volt."
+      ],
+      "source": {
+        "game": "Outlast"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "miles-upshur": "B1",
+    "father-martin": "F2",
+    "richard-trager": "E3",
+    "eddie-gluskin": "A4",
+    "dr-wernicke": "C5",
+    "chris-walker": "D6",
+    "jeremy-blaire": "G7"
+  },
+  "murderer": "dr-wernicke",
+  "rev": 1,
+  "worldRule": "nightvision"
+}

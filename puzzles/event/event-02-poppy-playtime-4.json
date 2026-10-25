@@ -1,0 +1,213 @@
+{
+  "v": 1,
+  "id": "event-02-poppy-playtime-4",
+  "mode": "event",
+  "world": "poppy-playtime",
+  "title": "Nappali álom",
+  "story": "CatNap elaludt, de nem ébredt fel többé. A gáz szaga még a szellőzőben lebeg, a játékok pedig hallgatnak.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "E": "Előcsarnok",
+    "G": "Gyártósor",
+    "J": "Játékbolt",
+    "T": "Játszószoba",
+    "R": "Raktár",
+    "S": "Szellőzőrendszer"
+  },
+  "layout": [
+    "RJJJJJJ",
+    "RJEJJJJ",
+    "GJEEEEE",
+    "GGEEESE",
+    "TTEEESS",
+    "TTTSSSS",
+    "SSSSSSS"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "C6",
+        "B4",
+        "E3",
+        "B2",
+        "G1"
+      ]
+    },
+    {
+      "type": "toybox",
+      "at": [
+        "A5",
+        "B5"
+      ]
+    },
+    {
+      "type": "panel",
+      "at": [
+        "G4",
+        "A1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "conveyor",
+      "at": [
+        "A6",
+        "G3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "blocks",
+      "at": [
+        "B7",
+        "F3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "speaker",
+      "at": "C1",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "poppy",
+      "name": "Poppy",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "speaker"
+        }
+      ],
+      "clueText": [
+        "Egy **hangszóró mellett** volt."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "catnap",
+      "name": "CatNap",
+      "race": "ghoul",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "J"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Játékboltban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "pj-pug-a-pillar",
+      "name": "PJ Pug-a-Pillar",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Raktárban volt."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "mommy-long-legs",
+      "name": "Mommy Long Legs",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "A Gyártósoron egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "bunzo-bunny",
+      "name": "Bunzo Bunny",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "kissy-missy",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Kissytől északra** volt."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "kissy-missy",
+      "name": "Kissy Missy",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "aloneWith",
+          "with": "bunzo-bunny"
+        }
+      ],
+      "clueText": [
+        "**Egyedül** volt **Bunzóval**."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    },
+    {
+      "id": "huggy-wuggy",
+      "name": "Huggy Wuggy",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "catnap",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**CatNaptól keletre** volt."
+      ],
+      "source": {
+        "game": "Poppy Playtime"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "poppy": "D1",
+    "catnap": "F2",
+    "pj-pug-a-pillar": "E3",
+    "mommy-long-legs": "B4",
+    "bunzo-bunny": "A5",
+    "kissy-missy": "C6",
+    "huggy-wuggy": "G7"
+  },
+  "murderer": "poppy",
+  "rev": 1,
+  "worldRule": "grab"
+}

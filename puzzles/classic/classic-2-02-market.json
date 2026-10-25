@@ -1,0 +1,175 @@
+{
+  "v": 1,
+  "id": "classic-2-02-market",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A piac – zárás után",
+  "story": "Szombat este a piacon az egyik árus nem tért haza. Valaki egyedül maradt vele.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "Z": "Zöldséges",
+    "H": "Halas",
+    "P": "Pékes",
+    "V": "Virágos"
+  },
+  "layout": [
+    "HHHZZZ",
+    "HHZZZZ",
+    "HHHZZZ",
+    "VHVPPP",
+    "VVVPPP",
+    "VVVPPP"
+  ],
+  "objects": [
+    {
+      "type": "crate",
+      "at": [
+        "B2",
+        "D3",
+        "E4"
+      ]
+    },
+    {
+      "type": "flowers",
+      "at": "B5",
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "C5",
+      "blocking": true
+    },
+    {
+      "type": "bakeoven",
+      "at": "F4",
+      "blocking": true
+    },
+    {
+      "type": "barrel",
+      "at": "F3",
+      "blocking": true
+    },
+    {
+      "type": "chair",
+      "at": [
+        "E5",
+        "F5"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Halasnál egy **ládán** volt."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "Z"
+        }
+      ],
+      "clueText": [
+        "A Zöldségesnél egy **ládán** volt."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Pékesnél egy **ládán** volt."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "ne",
+          "n": 6
+        }
+      ],
+      "clueText": [
+        "**Nem** a **6. sorban** volt."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "dora"
+        }
+      ],
+      "clueText": [
+        "**Dorával** egy helyiségben volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "vickie": "F1",
+    "amir": "B2",
+    "barry": "D3",
+    "carly": "E4",
+    "dora": "A5",
+    "elena": "C6"
+  },
+  "murderer": "barry",
+  "rev": 1,
+  "floors": {
+    "Z": "dirt",
+    "H": "tile",
+    "P": "brick",
+    "V": "grass"
+  }
+}

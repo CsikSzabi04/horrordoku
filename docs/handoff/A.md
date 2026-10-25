@@ -44,3 +44,47 @@
 - **Viselkedés:** egy kulcsra csak a legutolsó `SyncOp` marad; max. 500 op (a `runs` esik ki először); max. 3 random félbehagyott ügy (a legrégebbi törlődik + `delete` SyncOp); `applyMerged` nem tesz SyncOp-ot; `patchSettings({ photosensitive })` az `nd_calm` kulcsot és a `html.calm` osztályt is állítja; a scope-váltás `setScope()`; a guest scope is enqueue-ol (a vendég→fiók átvitel a te dolgod B2-ben).
 - Következő nálam: **A3** (motor).
 
+
+## A-007 · 2026-10-25 · → B · INFO · A3 kész — `src/engine/` (a `BoardEngine` a co-op-hoz)
+- `import { boardEngine, solve, generate, generateFromRef, makeRef } from '../engine'`. `boardEngine` = CONTRACTS 3. `BoardEngine` (tiszta függvények; hibák: `row_col_conflict`, `blocked_object`, `cell_occupied`, `unknown_*`).
+- `generate(seed, difficulty)` determinisztikus, mindig pontosan 1 megoldású (ref: `gen:1:<nehézség>:<seed>`); `generateFromRef(ref)` → `Puzzle | null`.
+- Munkamód-változás (felhasználó kérése): **nincs több worktree, minden a fő mappában, commit csak a végén** — az AGENTS.md „Első lépés" ennek megfelelően frissítendő a lezáráskor.
+
+## A-008 · 2026-10-25 · → B · INFO · A4 kész — a `BoardController` él (B5 indulhat)
+- `import { createBoardController } from '../game/controller'` → `GameBoard` = CONTRACTS 8. `BoardController` + `act(op)` (helyi művelet: ellenőriz, alkalmaz, `onLocalOp`-ot hív), `undo/redo` (a visszavonás is sugárzott, sima művelet), `subscribe/view` (React: `useSyncExternalStore`), `setSelf(userId)`, `requestSubmit()`, `moveCursor(cell)`, `destroy()`.
+- `applyRemote(e)` idempotens (`e.id`) és **nem sugároz vissza**. A Fx-ek (`clue_override`, `object_vanish`, `silenced`, `meeting`, `exposed`) a nézetben jelennek meg; a hatások logikáját B szerveroldala adja.
+- A játékképernyő `src/screens/game/index.tsx` — a co-op képernyő (B5) a `Board` / `SuspectCard` / `Toolbar` komponenseket és a `GameBoard`-ot használhatja újra (`src/components/**`).
+
+## A-009 · 2026-10-25 · → B · INFO · A5–A8 kész; additív szerződés-bővítés
+- **Szerződés (additív):** `Clue` + `lit` / `dark` (Alan Wake); `Puzzle.vacuumRooms?`, `PuzzleCharacter.armored?`, `PuzzleCharacter.hidden?` (Dead Space / Until Dawn). A `src/shared/puzzle.ts` és a CONTRACTS 2. frissítve.
+- **Pályák:** `findPuzzle(ref)` (`src/content/catalog.ts`) — katalógus-azonosító vagy `gen:…` ref → `Puzzle`. Minden kliens ugyanabból a seedből ugyanazt a pályát kapja (determinisztikus), ezért a szobában elég a `ref`-et megosztani.
+- **`content.characters()`** mostantól tartalmazza a Hollowmere-szereplőket, a Random-mód szereplőit és az Esemény-pályák szereplőit (forrás-játékkal). A Gyűjtemény (B10) ebből épül; az első szereplés `addUnlock('character', id)`.
+- **`src/fx`:** `audio.sfx(...)`, `scheduleScare(world)`; a beállításokat (`jumpscare`, `photosensitive`, `screenShake`, `streamerMode`, `audio.volumeCap`) a `StorageService`-ből olvassák, a Beállítások képernyő (B9) csak a `patchSettings`-et hívja.
+- **e2e:** `npm run e2e` (puppeteer-core + Brave; futó `npm run dev` kell). Új devDependency: `puppeteer-core`.
+
+## A-010 · 2026-10-25 · → B · INFO · Közös játékkeret + Klasszikus átdolgozás — TEENDŐ nálad
+- **A Klasszikus pályák új azonosítói:** `classic-01-flower-store` … `classic-10-hotel`, `bonus-01-last-call`, `bonus-02-sunken-mill`. A régi `classic-01-midnight-mass` megszűnt (teszt-fixtúra lett: `src/engine/fixtures/`). **A `src/screens/lobby/index.tsx` 50. sorában az alapértelmezett pálya még a régi azonosító → cseréld `classic-01-flower-store`-ra** (a `findPuzzle` ismeretlen ref-re `null`-t ad).
+- **Elrendezés (felhasználói döntés, AGENTS.md):** minden játékmód a `src/components/GameFrame.tsx`-et használja: `GameFrame` + `GameHeader` (bal oszlop: logó, nyelv, idő, kártyák), `Board` (közép), `Tools` (jobb szél). Az Együtt/Gyilkos képernyő **ezt** építse újra, ne saját elrendezést. A régi `Toolbar` megszűnt; a `Tools` `extra` slotja viszi a mód-specifikus gombokat (pl. képességek). `theme="horror"` a co-op alapja (mindig sötét).
+- **Interakció:** koppintás = kezdőbetű (jegyzet, `note` művelet), ~1 mp nyomva tartás = `place` (`HOLD_MS`, `Board`), radír nyomva tartva = `clearAll()`. A `GameBoard` új metódusai: `actMany(ops)`, `clearAll()`; a visszavonás egy lépésként kezeli a csoportot. Az `onLocalOp` minden egyes elemi műveletet külön sugároz.
+- **Szerződés (additív):** `Clue` + `col`, `row`, `northOf`, `southOf`, `aloneWith`; `aloneWithKiller.room` opcionális (Klasszikus: az áldozat helyisége a lerakásától függ); `PuzzleCharacter.gender?`. `src/shared/puzzle.ts` és CONTRACTS 2. frissítve.
+- A játék nyelvváltója (Magyar/English) a `settings.language`-et írja (`patchSettings`); a kezelőfelület két nyelvű, a nyomkártyák szövege egyelőre magyar.
+
+## A-011 · 2026-10-25 · → B · INFO · Klasszikus: 5 szint × 20 pálya, lusta betöltés
+- **Új azonosítók:** `classic-<szint 1–5>-<01–20>-<helyszín>` (pl. `classic-1-01-flower-store`), a bónusz változatlan (`bonus-01-…`, `bonus-02-…`). A korábbi `classic-01-…` azonosítók megszűntek (az A-010-ben írtak helyett ezek érvényesek). A lobby alapértelmezettje már nem okoz gondot (visszaesik az első pályára), de érdemes a `classic-1-01-flower-store`-t megadni.
+- **Katalógus API:** `listPuzzles(mode?)` (szinkron, csak listaadat: id, cím, méret, nehézség, ikon), `loadPuzzle(ref)` és `loadAll(mode?)` (aszinkron, teljes pálya). A `content.puzzles(mode?)` változatlanul `Promise<Puzzle[]>`, de most mind a ~100 pályát betölti — a lobby listájához érdemes `listPuzzles`-t használni és csak a kiválasztottat `loadPuzzle`-lel.
+- **Szintek:** `src/game/levels.ts` (`LEVELS`: Gyakornok, Járőr, Nyomozó, Főnyomozó, Felügyelő ↔ difficulty 1–5).
+
+## A-012 · 2026-10-25 · → B · INFO · Új nyomfajták, padlók, kategóriák; játszhatósági audit
+- **Szerződés (additív):** `Clue` + `dir`, `notBeside`, `besideCat`, `notBesideCat`, `terrain`, `line`, `withGender`, `notSameRoom`, `edge`, `roomCount`; `Puzzle.floors?` (helyiség-betű → padló-osztály). CONTRACTS 2. és `src/shared/puzzle.ts` frissítve.
+- **Audit:** `npm run audit` — független referencia-értelmező (`src/engine/reference.ts`) ellenőrzi az egész katalógust + generált mintákat (megoldás érvényes, pontosan 1 megoldás, a nyomok csak létező tárgyra/helyiségre utalnak, kitakart nyomnál is egyértelmű). **Aki új Esemény-pályát / világ-szabályt / tárgyat ad hozzá, futtassa** (`AUTHOR=1 npx vitest run src/content/author.test.ts` után). Egy talált hiba: a `doorbtn` (FNAF ajtógomb) „door" előtagja miatt az RE „zárt ajtók" szabálya érvényesült — javítva (`rules.ts`: csak `worldRule === 'doors'`).
+- **Jelek:** minden tárgy jele egyedi és ≤ Unicode 12 (Windows 10); rajzolt SVG: pad, csúszda, cserepes növény, tükör, rácsos ablak, sírkő (`ObjectIcon.tsx`).
+
+## A-013 · 2026-10-25 · → B · INFO · Esemény: 19 világ × 5 ügy; mentés-ujjlenyomat
+- **Új azonosítók:** az Esemény-pályák `event-NN-<világ>-K` (K = 1–5), pl. `event-01-fnaf-1` … `-5`; a régi `event-01-fnaf` (stb.) megszűnt. Összesen 95 pálya; listázás: `listPuzzles('event')` (`id, title, size, difficulty, world, worldRule, no, fp`, az `event-index.json`-ból). Az Esemény-pályák mostantól **lustán** töltődnek (`loadPuzzle(ref)`); a szinkron `catalog('event')` megszűnt. A `content.characters()` az `event-characters.json`-ból épül (ugyanazok a karakterek).
+- **Szerződés (additív):** `SessionState.meta.fp?: string` — a pálya ujjlenyomata (`puzzleFingerprint`, `src/game/fingerprint.ts`). Visszatöltéskor eltérő vagy hiányzó `fp` esetén a mentést eldobjuk (nem tesszük a megváltozott pályára). Ha a felhő-szinkron a `saves.meta`-t tükrözi, az új mező vele megy (jsonb, séma-változás nem kell). Útvonal: `{ name: 'event'; world?: string }` (additív).
+- **Miért:** a pálya tartalma fejlesztés közben változhat; a régi lerakások ilyenkor „ottmaradtak" az átalakult térképen.
+
+## A-014 · 2026-10-25 · → B · INFO · Átfogó hibakeresés a push előtt
+- **Nyomszövegek:** az előtagos / közszavas nevek ragozása javítva (`Mr. X-szel`, `Dr. Wernickével`, `Father Martintól`, `Rágógumi hercegnővel` — korábban „Mr..al”), a semleges „i” a hátrébb álló magánhangzót követi (Martintól, Robintól); a pályák újra legyártva (azonosítók és megoldások változatlanok, csak a szöveg / ujjlenyomat).
+- **Játék:** a vákuum-helyiségek piros csíkozása újra látszik (a sötét téma inline `background`-ja elnyomta), a helyiség-felirat nem takarja a tárgyak feliratát, a helyiség-tipp rendes magyar mondat, a zárolt (totemes) nyomot a tipp sem árulja el; a főmenü kártyái tableten sem csordulnak ki; iOS-en a hosszú nyomás nem nyit menüt a táblán.
+- **Új:** `README.md`; tesztek: `hints.test.ts`, kibővített `hu.test.ts`, `puzzles.test.ts` (Esemény: 19 × 5, index-ujjlenyomatok).

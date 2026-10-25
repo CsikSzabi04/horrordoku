@@ -1,0 +1,254 @@
+{
+  "v": 1,
+  "id": "classic-4-07-beach",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A strand",
+  "story": "A strandon reggel a mentőőrt holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 9,
+  "difficulty": 4,
+  "rooms": {
+    "M": "Móló",
+    "P": "Pálmaliget",
+    "H": "Homokos part",
+    "E": "Medence",
+    "B": "Büfé",
+    "L": "Öltöző"
+  },
+  "layout": [
+    "MMMLLLHHH",
+    "MPLLLLHHH",
+    "MPPPLLLHH",
+    "MPPPBLHHH",
+    "MPBBBBHHH",
+    "EPBBBBBHH",
+    "EEEBBBBBH",
+    "EEEEBBEEH",
+    "EEEEEEEEH"
+  ],
+  "objects": [
+    {
+      "type": "ball",
+      "at": [
+        "A8",
+        "A9"
+      ]
+    },
+    {
+      "type": "lounger",
+      "at": [
+        "I2",
+        "C3",
+        "H5",
+        "G5"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "D6",
+        "A4"
+      ]
+    },
+    {
+      "type": "parasol",
+      "at": [
+        "I4",
+        "H1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": [
+        "E8",
+        "E6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "boat",
+      "at": "G9",
+      "blocking": true
+    },
+    {
+      "type": "palm",
+      "at": "C4",
+      "blocking": true
+    },
+    {
+      "type": "chair",
+      "at": "G7"
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 7
+        }
+      ],
+      "clueText": [
+        "A **7. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "lounger",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Homokos parton egy **nyugágyon** volt."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "lounger",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Pálmaligetben egy **nyugágyon** volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "boat",
+            "palm"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **csónak vagy pálmafa mellett** volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 8
+        }
+      ],
+      "clueText": [
+        "A **8. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "B"
+        }
+      ],
+      "clueText": [
+        "A Büfében egy **padon** ült."
+      ]
+    },
+    {
+      "id": "greg",
+      "name": "Greg",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "boat",
+            "chair"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **csónak vagy szék mellett** volt."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "henry",
+      "name": "Henry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "gt",
+          "n": 8
+        }
+      ],
+      "clueText": [
+        "A **8. sor alatt** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "G1",
+    "bella": "I2",
+    "carl": "C3",
+    "derek": "B4",
+    "eva": "H5",
+    "frank": "D6",
+    "greg": "F7",
+    "victor": "A8",
+    "henry": "E9"
+  },
+  "murderer": "henry",
+  "rev": 1,
+  "floors": {
+    "M": "wood",
+    "P": "grass",
+    "H": "sand",
+    "E": "water",
+    "B": "wood",
+    "L": "tile"
+  }
+}

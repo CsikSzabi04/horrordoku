@@ -1,6 +1,7 @@
 .menu {
   min-height: 100%;
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
   grid-template-rows: auto 1fr auto auto;
   gap: 1.4rem;
   padding: 2.5rem clamp(1rem, 4vw, 3rem) 1.5rem;
@@ -68,6 +69,11 @@
   gap: 1rem;
   justify-content: space-between;
   align-items: center;
+}
+.menu .acct {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
 }
 .menu .link {
   background: none;

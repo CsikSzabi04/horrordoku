@@ -1,0 +1,257 @@
+{
+  "v": 1,
+  "id": "classic-5-01-stadium",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A stadion – nyitás előtt",
+  "story": "Ünnepnap volt a stadionban, és a pályamester többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 10,
+  "difficulty": 5,
+  "rooms": {
+    "E": "Edzőterem",
+    "P": "Pálya",
+    "L": "Lelátó",
+    "T": "Öltöző",
+    "B": "Büfé"
+  },
+  "layout": [
+    "ELLLLLTTTT",
+    "ELLLLLTTTT",
+    "EELLTTTTBB",
+    "EELLBBBBBB",
+    "EEEEBBBBBB",
+    "PEEEEEBBBB",
+    "PEEEPEBBBB",
+    "PPPPPPBBBB",
+    "PPPPPPBBBP",
+    "PPPPPPPPPP"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "A9",
+        "F2",
+        "G1",
+        "F8",
+        "E3"
+      ]
+    },
+    {
+      "type": "ball",
+      "at": [
+        "H10",
+        "A7",
+        "C8"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": "I8"
+    },
+    {
+      "type": "counter",
+      "at": [
+        "I3",
+        "G5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": [
+        "E4",
+        "I6",
+        "H8",
+        "I7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "weights",
+      "at": "C6",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "Az Öltözőben egy **padon** ült."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "A Lelátón egy **padon** ült."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "elena",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Elenától északra** volt."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "elena"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Elenával**."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "gt",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. oszloptól jobbra** volt."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "iris"
+        }
+      ],
+      "clueText": [
+        "**Irisszel** egy helyiségben volt."
+      ]
+    },
+    {
+      "id": "gina",
+      "name": "Gina",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "holly",
+      "name": "Holly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Pályán egy **padon** ült."
+      ]
+    },
+    {
+      "id": "iris",
+      "name": "Iris",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "ball",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Pályán egy **labdán** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "G1",
+    "barry": "F2",
+    "vlad": "J3",
+    "clara": "B4",
+    "dora": "C5",
+    "elena": "D6",
+    "frank": "E7",
+    "gina": "I8",
+    "holly": "A9",
+    "iris": "H10"
+  },
+  "murderer": "gina",
+  "rev": 1,
+  "floors": {
+    "E": "tile",
+    "P": "grass",
+    "L": "stone",
+    "T": "tile",
+    "B": "wood"
+  }
+}

@@ -1,0 +1,197 @@
+{
+  "v": 1,
+  "id": "event-03-resident-evil-2-1",
+  "mode": "event",
+  "world": "resident-evil",
+  "title": "Mr. X kalapja",
+  "story": "1998 szeptembere. Mr. X a kalapja mellett fekszik, a kulcsos ajtók pedig mindkét oldalról figyelnek.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "N": "Nyugati iroda",
+    "S": "Sötétkamra",
+    "K": "Könyvtár",
+    "M": "Mentőszoba",
+    "A": "Kapitányi iroda",
+    "L": "Lőtér"
+  },
+  "layout": [
+    "MKKKKK",
+    "MLLLAA",
+    "MLSSAA",
+    "MNNNNA",
+    "MNNNAA",
+    "MMMMAA"
+  ],
+  "objects": [
+    {
+      "type": "herb",
+      "at": [
+        "D2",
+        "F1"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": "E4"
+    },
+    {
+      "type": "doorSpade",
+      "at": "D6",
+      "blocking": true
+    },
+    {
+      "type": "doorDiamond",
+      "at": "E5",
+      "blocking": true
+    },
+    {
+      "type": "doorCircle",
+      "at": "F4",
+      "blocking": true
+    },
+    {
+      "type": "typewriter",
+      "at": [
+        "B1",
+        "C1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": [
+        "A2",
+        "C2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "carpet",
+      "at": "F5"
+    },
+    {
+      "type": "itembox",
+      "at": "B4"
+    }
+  ],
+  "characters": [
+    {
+      "id": "annette-birkin",
+      "name": "Annette Birkin",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Mentőszobában volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "leon-s-kennedy",
+      "name": "Leon S. Kennedy",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "herb",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "A Lőtéren egy **gyógynövényen** volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "brian-irons",
+      "name": "Brian Irons",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "leon-s-kennedy",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Leontól délre** volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "mr-x",
+      "name": "Mr. X",
+      "race": "ghoul",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Nyugati irodában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "marvin-branagh",
+      "name": "Marvin Branagh",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "itembox"
+        }
+      ],
+      "clueText": [
+        "Egy **tárolódoboz mellett** volt."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    },
+    {
+      "id": "claire-redfield",
+      "name": "Claire Redfield",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A helyiségében **ketten** voltak."
+      ],
+      "source": {
+        "game": "Resident Evil"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "annette-birkin": "F1",
+    "leon-s-kennedy": "D2",
+    "brian-irons": "A3",
+    "mr-x": "E4",
+    "marvin-branagh": "B5",
+    "claire-redfield": "C6"
+  },
+  "murderer": "marvin-branagh",
+  "rev": 1,
+  "worldRule": "doors"
+}

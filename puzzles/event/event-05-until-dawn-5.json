@@ -1,0 +1,258 @@
+{
+  "v": 1,
+  "id": "event-05-until-dawn-5",
+  "mode": "event",
+  "world": "until-dawn",
+  "title": "A rejtett hang",
+  "story": "Josh a kabinban maradt, amikor kialudt a villany. A hajnal közeledik — és vele az igazság.",
+  "size": 8,
+  "difficulty": 5,
+  "rooms": {
+    "N": "Nappali",
+    "K": "Konyha",
+    "F": "Fürdő",
+    "P": "Pince",
+    "H": "Hálók",
+    "T": "Tisztás",
+    "E": "Felvonó"
+  },
+  "layout": [
+    "FFKKKKKK",
+    "FFFKPKKH",
+    "FPPPPHHH",
+    "NNPPHHHH",
+    "NNNPEHHT",
+    "NNPPEETT",
+    "NNPPEEET",
+    "NNEEEEET"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "D8",
+        "A2",
+        "B3",
+        "C6"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": "C5"
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "H7",
+        "G6",
+        "A7",
+        "B6"
+      ]
+    },
+    {
+      "type": "totem",
+      "at": [
+        "B8",
+        "A8",
+        "E7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "gunrack",
+      "at": [
+        "D7",
+        "F6",
+        "C8",
+        "C7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "fireplace",
+      "at": [
+        "D5",
+        "B7"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "sam",
+      "name": "Sam",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "emily",
+          "rows": 3
+        },
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Emilytől északra** volt.",
+        "A **2. sor fölött** volt."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Until Dawn"
+      }
+    },
+    {
+      "id": "jessica",
+      "name": "Jessica",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "leftOf",
+          "of": "ashley"
+        }
+      ],
+      "clueText": [
+        "**Ashleytől balra** volt."
+      ],
+      "source": {
+        "game": "Until Dawn"
+      }
+    },
+    {
+      "id": "ashley",
+      "name": "Ashley",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Pincében egy **padon** ült."
+      ],
+      "source": {
+        "game": "Until Dawn"
+      }
+    },
+    {
+      "id": "emily",
+      "name": "Emily",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "sam",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Samtól keletre** volt."
+      ],
+      "source": {
+        "game": "Until Dawn"
+      }
+    },
+    {
+      "id": "chris",
+      "name": "Chris",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "ashley",
+          "rows": 2
+        },
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Ashleytől délre** volt.",
+        "A Nappaliban egy **vörös szőnyegen** volt."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Until Dawn"
+      }
+    },
+    {
+      "id": "mike",
+      "name": "Mike",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "a-wendigo",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **a Wendigótól északra** volt."
+      ],
+      "source": {
+        "game": "Until Dawn"
+      }
+    },
+    {
+      "id": "josh",
+      "name": "Josh",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Tisztáson **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Until Dawn"
+      }
+    },
+    {
+      "id": "a-wendigo",
+      "name": "A Wendigo",
+      "race": "werewolf",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "sam",
+          "dir": "W"
+        }
+      ],
+      "clueText": [
+        "**Samtól nyugatra** volt."
+      ],
+      "source": {
+        "game": "Until Dawn"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "sam": "E1",
+    "jessica": "A2",
+    "ashley": "B3",
+    "emily": "F4",
+    "chris": "C5",
+    "mike": "G6",
+    "josh": "H7",
+    "a-wendigo": "D8"
+  },
+  "murderer": "mike",
+  "rev": 1,
+  "worldRule": "totems"
+}

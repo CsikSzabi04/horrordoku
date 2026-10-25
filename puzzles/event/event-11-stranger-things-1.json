@@ -1,0 +1,170 @@
+{
+  "v": 1,
+  "id": "event-11-stranger-things-1",
+  "mode": "event",
+  "world": "stranger-things",
+  "title": "Starcourt, július 4.",
+  "story": "1985. július 4., Starcourt Mall. Vecna a Titkos labor liftjében hever. Az áramszünet sötétjében csak a zseblámpád fénye marad: a Fejjel lefelé világban csak azt látod, ami a kurzorod körül van.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "F": "Food court",
+    "M": "Mozi",
+    "J": "Játékbolt",
+    "S": "Szökőkút-tér",
+    "Z": "Szolgálati folyosó",
+    "T": "Titkos labor"
+  },
+  "layout": [
+    "MMZZZJ",
+    "FMZZTJ",
+    "FMMTTJ",
+    "FMSTTJ",
+    "FSSSTJ",
+    "FFSSJJ"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "E2",
+        "A1",
+        "F6",
+        "E1"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": "D6"
+    },
+    {
+      "type": "arcade",
+      "at": [
+        "E4",
+        "B5",
+        "F1",
+        "C2"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "mike-wheeler",
+      "name": "Mike Wheeler",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "vecna",
+          "dir": "W"
+        }
+      ],
+      "clueText": [
+        "**Vecnától nyugatra** volt."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    },
+    {
+      "id": "max-mayfield",
+      "name": "Max Mayfield",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "arcade"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **arcade-gép mellett**."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    },
+    {
+      "id": "vecna",
+      "name": "Vecna",
+      "race": "ghoul",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Moziban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    },
+    {
+      "id": "steve-harrington",
+      "name": "Steve Harrington",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "lucas-sinclair",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Lucastól északra** volt."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    },
+    {
+      "id": "jim-hopper",
+      "name": "Jim Hopper",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "lucas-sinclair"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Lucasszal**."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    },
+    {
+      "id": "lucas-sinclair",
+      "name": "Lucas Sinclair",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Stranger Things"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "mike-wheeler": "A1",
+    "max-mayfield": "E2",
+    "vecna": "B3",
+    "steve-harrington": "F4",
+    "jim-hopper": "C5",
+    "lucas-sinclair": "D6"
+  },
+  "murderer": "mike-wheeler",
+  "rev": 1,
+  "worldRule": "nightvision"
+}

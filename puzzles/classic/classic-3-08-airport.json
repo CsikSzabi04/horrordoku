@@ -1,0 +1,196 @@
+{
+  "v": 1,
+  "id": "classic-3-08-airport",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A reptér – este",
+  "story": "A repülőtéren reggel az egyik utast holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "B": "Beszállókapu",
+    "F": "Büfé",
+    "I": "Iroda",
+    "T": "Terminál",
+    "P": "Poggyászkezelő"
+  },
+  "layout": [
+    "TTTPPPP",
+    "BTBPPPP",
+    "BBBPPPP",
+    "IIIPPPP",
+    "IIFFFFF",
+    "IFFFFFF",
+    "IFFFFFF"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "C2",
+        "D5",
+        "G5"
+      ]
+    },
+    {
+      "type": "luggage",
+      "at": "E1"
+    },
+    {
+      "type": "bench",
+      "at": [
+        "A3",
+        "B2",
+        "B3"
+      ]
+    },
+    {
+      "type": "computer",
+      "at": [
+        "B1",
+        "A7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "conveyor",
+      "at": "F3",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": [
+        "B7",
+        "F5"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "luggage"
+        }
+      ],
+      "clueText": [
+        "Egy **bőrönd tetején** volt."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "B"
+        }
+      ],
+      "clueText": [
+        "A Beszállókapunál egy **széken** ült."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **növény mellett** volt."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "anna",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Annától keletre** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "E1",
+    "bruno": "C2",
+    "vlad": "A3",
+    "carly": "B4",
+    "daniel": "D5",
+    "emmett": "F6",
+    "flavia": "G7"
+  },
+  "murderer": "bruno",
+  "rev": 1,
+  "floors": {
+    "B": "carpet",
+    "F": "wood",
+    "T": "tile",
+    "P": "stone"
+  }
+}

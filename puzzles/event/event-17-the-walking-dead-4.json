@@ -1,0 +1,270 @@
+{
+  "v": 1,
+  "id": "event-17-the-walking-dead-4",
+  "mode": "event",
+  "world": "walking-dead",
+  "title": "A futár",
+  "story": "Glenn Rhee a kapuig sosem jutott. A generátorok zaja odavonzza a sétálókat — a gyilkos nem állhat mellettük.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "B": "Börtön-cellablokk",
+    "F": "Farm",
+    "A": "Alexandria főtér",
+    "H": "Hilltop",
+    "E": "Fegyvertár",
+    "T": "Templom",
+    "R": "Erdei út"
+  },
+  "layout": [
+    "BBHHHHHHR",
+    "BHHHHHHHR",
+    "TTHHHHHRR",
+    "TTTHAAARR",
+    "TTAAAAERR",
+    "TTAAAAERR",
+    "TFFFFEERR",
+    "FFFFEEERR",
+    "FFEEERRRR"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "I5",
+        "A3",
+        "F1",
+        "E1"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "D4",
+        "I3"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "E2",
+        "H6",
+        "D7",
+        "A7"
+      ]
+    },
+    {
+      "type": "generator",
+      "at": [
+        "F5",
+        "F7",
+        "A8",
+        "D5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "barrel",
+      "at": "H4",
+      "blocking": true
+    },
+    {
+      "type": "tent",
+      "at": [
+        "F3",
+        "D8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "car",
+      "at": [
+        "D3",
+        "H8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "campfire",
+      "at": "D2",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "carol-peletier",
+      "name": "Carol Peletier",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "negan"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Negannal**."
+      ],
+      "source": {
+        "game": "The Walking Dead"
+      }
+    },
+    {
+      "id": "negan",
+      "name": "Negan",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Hilltopon egy **ládán** volt."
+      ],
+      "source": {
+        "game": "The Walking Dead"
+      }
+    },
+    {
+      "id": "maggie-greene",
+      "name": "Maggie Greene",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "carol-peletier",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Caroltól délre** volt."
+      ],
+      "source": {
+        "game": "The Walking Dead"
+      }
+    },
+    {
+      "id": "daryl-dixon",
+      "name": "Daryl Dixon",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "negan"
+        }
+      ],
+      "clueText": [
+        "**Negannal** egy helyiségben volt."
+      ],
+      "source": {
+        "game": "The Walking Dead"
+      }
+    },
+    {
+      "id": "a-kormanyzo",
+      "name": "A Kormányzó",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "rick-grimes",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Ricktől keletre** volt."
+      ],
+      "source": {
+        "game": "The Walking Dead"
+      }
+    },
+    {
+      "id": "rick-grimes",
+      "name": "Rick Grimes",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A helyiségében **hárman** voltak."
+      ],
+      "source": {
+        "game": "The Walking Dead"
+      }
+    },
+    {
+      "id": "carl-grimes",
+      "name": "Carl Grimes",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. oszloptól balra** volt."
+      ],
+      "source": {
+        "game": "The Walking Dead"
+      }
+    },
+    {
+      "id": "glenn-rhee",
+      "name": "Glenn Rhee",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Farmon **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "The Walking Dead"
+      }
+    },
+    {
+      "id": "michonne",
+      "name": "Michonne",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "rick-grimes",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Ricktől délre** volt."
+      ],
+      "source": {
+        "game": "The Walking Dead"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "carol-peletier": "F1",
+    "negan": "E2",
+    "maggie-greene": "A3",
+    "daryl-dixon": "D4",
+    "a-kormanyzo": "I5",
+    "rick-grimes": "H6",
+    "carl-grimes": "B7",
+    "glenn-rhee": "C8",
+    "michonne": "G9"
+  },
+  "murderer": "carl-grimes",
+  "rev": 1,
+  "worldRule": "generators"
+}

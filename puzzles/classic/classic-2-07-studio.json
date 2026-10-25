@@ -1,0 +1,204 @@
+{
+  "v": 1,
+  "id": "classic-2-07-studio",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A tévéstúdió – este",
+  "story": "Ünnepnap volt a tévéstúdióban, és a műsorvezető többé nem szólalt meg. Nyom alig maradt, de a jelenlévők emlékeznek.",
+  "size": 7,
+  "difficulty": 2,
+  "rooms": {
+    "S": "Stúdió",
+    "M": "Maszk",
+    "V": "Vágószoba",
+    "B": "Büfé",
+    "E": "Előtér"
+  },
+  "layout": [
+    "EBBBBSS",
+    "EBBBBSS",
+    "EEMBBSS",
+    "EMMVVSS",
+    "EMMMVVS",
+    "EMMMVVV",
+    "EEEEVVV"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "B4",
+        "E6"
+      ]
+    },
+    {
+      "type": "rug",
+      "at": [
+        "F2",
+        "D7"
+      ]
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "G3",
+        "A5",
+        "A2",
+        "F3",
+        "A7"
+      ]
+    },
+    {
+      "type": "camera",
+      "at": [
+        "G4",
+        "F1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tv",
+      "at": [
+        "A6",
+        "B3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "C7",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "B"
+        }
+      ],
+      "clueText": [
+        "A Büfében volt."
+      ]
+    },
+    {
+      "id": "barry",
+      "name": "Barry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "ne",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "**Nem** a **3. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Előtérben egy **kanapén** ült."
+      ]
+    },
+    {
+      "id": "ervin",
+      "name": "Ervin",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "A Vágószobában egy **széken** ült."
+      ]
+    },
+    {
+      "id": "fred",
+      "name": "Fred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Előtérben egy **szőnyegen** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "C1",
+    "barry": "F2",
+    "vlad": "G3",
+    "clara": "B4",
+    "dora": "A5",
+    "ervin": "E6",
+    "fred": "D7"
+  },
+  "murderer": "barry",
+  "rev": 1,
+  "floors": {
+    "S": "carpet",
+    "M": "checker",
+    "V": "tile",
+    "B": "wood",
+    "E": "wood"
+  }
+}

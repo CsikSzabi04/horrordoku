@@ -12,7 +12,10 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write .",
-    "test": "vitest run"
+    "test": "vitest run",
+    "validate:puzzles": "vitest run src/content/puzzles.test.ts",
+    "audit": "vitest run src/engine/audit.test.ts",
+    "e2e": "node scripts/e2e/classic.mjs && node scripts/e2e/random.mjs && node scripts/e2e/events.mjs && node scripts/e2e/scare.mjs"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -22,6 +25,7 @@
     "@vitejs/plugin-react": "^6.1.2",
     "eslint": "^10.13.0",
     "prettier": "^3.9.10",
+    "puppeteer-core": "^25.16.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
     "typescript": "^6.0.3",

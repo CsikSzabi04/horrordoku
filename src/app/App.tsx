@@ -2,25 +2,28 @@ import type { ComponentType } from 'react'
 import { ToastProvider } from '../ui'
 import { NavProvider, useNav } from './nav'
 import type { RouteName } from './routes'
-import { Stub } from './Stub'
 import MenuScreen from '../screens/menu'
+import GameScreen from '../screens/game'
+import ClassicScreen from '../screens/classic'
+import RandomScreen from '../screens/random'
+import EventScreen from '../screens/event'
 // AI-B tulajdona (A1 csak csonkot hozott létre):
 import LoginScreen from '../screens/login'
 import ProfileScreen from '../screens/profile'
 import FriendsScreen from '../screens/friends'
+import { AddLinkHandler } from '../screens/friends/addLink'
 import LobbyScreen from '../screens/lobby'
 import CoopScreen from '../screens/coop'
 import CollectionScreen from '../screens/collection'
 import SettingsScreen from '../screens/settings'
 
-const stub = (title: string, task: string): ComponentType => function StubScreen() { return <Stub title={title} task={task} /> }
 
 const screens: Record<RouteName, ComponentType> = {
   menu: MenuScreen,
-  classic: stub('Klasszikus mód', 'A5'),
-  event: stub('Esemény mód', 'A8'),
-  random: stub('Random mód', 'A6'),
-  game: stub('Játékképernyő', 'A4'),
+  classic: ClassicScreen,
+  event: EventScreen,
+  random: RandomScreen,
+  game: GameScreen,
   collection: CollectionScreen,
   settings: SettingsScreen,
   login: LoginScreen,
@@ -40,6 +43,7 @@ export default function App() {
   return (
     <ToastProvider>
       <NavProvider>
+        <AddLinkHandler />
         <Shell />
       </NavProvider>
     </ToastProvider>

@@ -1,0 +1,245 @@
+{
+  "v": 1,
+  "id": "classic-4-11-bakery",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A pékség – ünnepnap",
+  "story": "A pékségben reggel a péket holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 9,
+  "difficulty": 4,
+  "rooms": {
+    "U": "Udvar",
+    "E": "Eladótér",
+    "S": "Sütöde",
+    "R": "Raktár",
+    "I": "Iroda"
+  },
+  "layout": [
+    "IIIIUUUUU",
+    "IIIIUUUUU",
+    "IIIIRUUUU",
+    "IIIRRSSUU",
+    "IIRRRSSSS",
+    "EEEERRSSS",
+    "EEEEERRSS",
+    "EEEEERRSS",
+    "EEEEERRSS"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "H4",
+        "G1",
+        "D7",
+        "I2",
+        "I1",
+        "B8",
+        "I4"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "B5",
+        "A8",
+        "C4"
+      ]
+    },
+    {
+      "type": "table",
+      "at": [
+        "I8",
+        "I7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "A1",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": [
+        "B9",
+        "A6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "bakeoven",
+      "at": "F5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "anna",
+      "name": "Anna",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. sor fölött** volt."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "gt",
+          "n": 8
+        }
+      ],
+      "clueText": [
+        "A **8. oszloptól jobbra** volt."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "U"
+        }
+      ],
+      "clueText": [
+        "Az Udvaron egy **padon** ült."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "ne",
+          "n": 5
+        }
+      ],
+      "clueText": [
+        "**Nem** az **5. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Eladótérben egy **padon** ült."
+      ]
+    },
+    {
+      "id": "gina",
+      "name": "Gina",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Eladótérben egy **széken** ült."
+      ]
+    },
+    {
+      "id": "henry",
+      "name": "Henry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "bakeoven",
+            "counter"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **kemence vagy pult mellett** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "anna": "G1",
+    "bella": "I2",
+    "vlad": "E3",
+    "clara": "H4",
+    "derek": "B5",
+    "emmett": "F6",
+    "flavia": "D7",
+    "gina": "A8",
+    "henry": "C9"
+  },
+  "murderer": "emmett",
+  "rev": 1,
+  "floors": {
+    "U": "grass",
+    "E": "checker",
+    "S": "brick",
+    "R": "stone"
+  }
+}

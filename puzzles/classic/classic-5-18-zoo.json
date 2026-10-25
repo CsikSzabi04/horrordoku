@@ -1,0 +1,235 @@
+{
+  "v": 1,
+  "id": "classic-5-18-zoo",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "Az állatkert – este",
+  "story": "Az állatkertben reggel az egyik gondozót holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "B": "Büfé",
+    "E": "Bejárat",
+    "O": "Oroszlán élőhely",
+    "P": "Pingvin élőhely",
+    "M": "Medve élőhely",
+    "K": "Krokodil élőhely"
+  },
+  "layout": [
+    "OOOOOOOMB",
+    "OOOOOOOMM",
+    "KOOOPPMMM",
+    "KKPPPPMMM",
+    "KKPPPPEME",
+    "KKKKKPEEE",
+    "KKKKKPEEE",
+    "KKKEEEEEE",
+    "KKKEEEEEE"
+  ],
+  "objects": [
+    {
+      "type": "lion",
+      "at": "G2",
+      "blocking": true
+    },
+    {
+      "type": "rock",
+      "at": "A7",
+      "blocking": true
+    },
+    {
+      "type": "bush",
+      "at": [
+        "E2",
+        "B1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "penguin",
+      "at": "E4",
+      "blocking": true
+    },
+    {
+      "type": "croc",
+      "at": "A6",
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": [
+        "F8",
+        "G8",
+        "F9"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": "I1"
+    }
+  ],
+  "characters": [
+    {
+      "id": "amir",
+      "name": "Amir",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "bruno"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Brunóval**."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "clara",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Clarától északra** volt."
+      ]
+    },
+    {
+      "id": "clara",
+      "name": "Clara",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "eva",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Evától északra** volt."
+      ]
+    },
+    {
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "clara"
+        }
+      ],
+      "clueText": [
+        "**Clarával** egy helyiségben volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "animal"
+        }
+      ],
+      "clueText": [
+        "Egy **állat mellett** volt."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "chair",
+            "croc"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **szék vagy krokodil mellett** volt."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "gordon",
+      "name": "Gordon",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "rock"
+        }
+      ],
+      "clueText": [
+        "Egy **szikla mellett** volt."
+      ]
+    },
+    {
+      "id": "hugo",
+      "name": "Hugo",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 4
+        }
+      ],
+      "clueText": [
+        "A **4. oszlopban** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "amir": "H1",
+    "bruno": "I2",
+    "clara": "F3",
+    "daniel": "C4",
+    "eva": "E5",
+    "felicia": "B6",
+    "vlad": "G7",
+    "gordon": "A8",
+    "hugo": "D9"
+  },
+  "murderer": "hugo",
+  "rev": 1,
+  "floors": {
+    "B": "wood",
+    "E": "wood",
+    "O": "sand",
+    "P": "ice",
+    "M": "stone",
+    "K": "swamp"
+  }
+}

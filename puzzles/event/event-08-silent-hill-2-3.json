@@ -1,0 +1,238 @@
+{
+  "v": 1,
+  "id": "event-08-silent-hill-2-3",
+  "mode": "event",
+  "world": "silent-hill",
+  "title": "Tükörszoba",
+  "story": "A Hazug Alak sosem mutatta az arcát — most sem látjuk, ki vele végzett. A rádió egyes szavakat kitakar.",
+  "size": 8,
+  "difficulty": 5,
+  "rooms": {
+    "K": "Kórterem",
+    "L": "Lépcsőház",
+    "A": "Apartman",
+    "B": "Bowlingpálya",
+    "T": "Tóparti szálló",
+    "M": "Másik világ"
+  },
+  "layout": [
+    "AAAAKKKK",
+    "AAAAKLLK",
+    "TAAAKLLL",
+    "TTTTTTLL",
+    "TTTBBBLL",
+    "MMBBBLLL",
+    "MMBBBBBL",
+    "MMMBBBBL"
+  ],
+  "objects": [
+    {
+      "type": "wheelchair",
+      "at": [
+        "E5",
+        "D8",
+        "G6",
+        "F1",
+        "E7"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "B3",
+        "G4",
+        "C2"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": "H2"
+    },
+    {
+      "type": "radio",
+      "at": [
+        "D2",
+        "F5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "window",
+      "at": [
+        "A3",
+        "G3",
+        "H3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "doll",
+      "at": [
+        "G1",
+        "C1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "hospbed",
+      "at": "D3",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "a-hazug-alak",
+      "name": "A Hazug Alak",
+      "race": "ghoul",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Kórteremben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "mary",
+      "name": "Mary",
+      "race": "ghost",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "a-buborekfeju-apolono",
+      "name": "A Buborékfejű Ápolónő",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "A"
+        }
+      ],
+      "clueText": [
+        "Az Apartmanban egy **███** volt."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "maria",
+      "name": "Maria",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "radio"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **rádió mellett**."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "pyramid-head",
+      "name": "Pyramid Head",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A helyiségében **hárman** voltak."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "james-sunderland",
+      "name": "James Sunderland",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "wheelchair",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "A Lépcsőházban egy **kerekesszéken** ült."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "eddie-dombrowski",
+      "name": "Eddie Dombrowski",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "angela-orosco"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Angelával**."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    },
+    {
+      "id": "angela-orosco",
+      "name": "Angela Orosco",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "wheelchair",
+          "room": "B"
+        }
+      ],
+      "clueText": [
+        "A Bowlingpályán egy **kerekesszéken** ült."
+      ],
+      "source": {
+        "game": "Silent Hill"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "a-hazug-alak": "F1",
+    "mary": "H2",
+    "a-buborekfeju-apolono": "B3",
+    "maria": "A4",
+    "pyramid-head": "E5",
+    "james-sunderland": "G6",
+    "eddie-dombrowski": "C7",
+    "angela-orosco": "D8"
+  },
+  "murderer": "mary",
+  "rev": 1,
+  "worldRule": "radio"
+}

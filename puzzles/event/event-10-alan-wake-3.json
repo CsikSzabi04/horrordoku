@@ -1,0 +1,287 @@
+{
+  "v": 1,
+  "id": "event-10-alan-wake-3",
+  "mode": "event",
+  "world": "alan-wake",
+  "title": "Barry utolsó vicce",
+  "story": "Barry Wheeler nem nevetett, amikor a lámpák kialudtak. A Birtokoltak csak sötét mezőn állhatnak.",
+  "size": 10,
+  "difficulty": 5,
+  "rooms": {
+    "F": "Fűrésztelep",
+    "V": "Vendégház",
+    "R": "Rádióállomás",
+    "E": "Rendőrség",
+    "D": "Erdei ösvény",
+    "T": "Tóparti stég",
+    "Z": "Zane kunyhója",
+    "L": "Elme-kórház"
+  },
+  "layout": [
+    "LLLLLLVVTT",
+    "LLLLLLVTTT",
+    "DLLLLLVVTT",
+    "DDVVLVVTTT",
+    "DDVVVVTTTT",
+    "DDDVVVTTTT",
+    "DFDZZVZRRR",
+    "DFFZZZZRRR",
+    "DFFZZZZRRR",
+    "FFEEEEERRR"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "C5",
+        "J8",
+        "E9",
+        "A10"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "G6",
+        "F1",
+        "D9",
+        "B6"
+      ]
+    },
+    {
+      "type": "lamp",
+      "at": [
+        "A7",
+        "G3",
+        "E2",
+        "B7",
+        "C3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "charger",
+      "at": [
+        "A5",
+        "D3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "coffeemaker",
+      "at": [
+        "B2",
+        "C6",
+        "A3",
+        "G1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "typewriter",
+      "at": [
+        "E3",
+        "I6",
+        "H9"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "crate",
+      "at": "G8"
+    }
+  ],
+  "characters": [
+    {
+      "id": "rose-marigold",
+      "name": "Rose Marigold",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "alice-wake",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Alicétől északra** volt."
+      ],
+      "source": {
+        "game": "Alan Wake"
+      }
+    },
+    {
+      "id": "alan-wake",
+      "name": "Alan Wake",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "leftOf",
+          "of": "sarah-breaker"
+        }
+      ],
+      "clueText": [
+        "**Sarahtól balra** volt."
+      ],
+      "source": {
+        "game": "Alan Wake"
+      }
+    },
+    {
+      "id": "alice-wake",
+      "name": "Alice Wake",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "aloneWith",
+          "with": "tor-anderson"
+        }
+      ],
+      "clueText": [
+        "**Egyedül** volt **Torral**."
+      ],
+      "source": {
+        "game": "Alan Wake"
+      }
+    },
+    {
+      "id": "cynthia-weaver",
+      "name": "Cynthia Weaver",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dark"
+        }
+      ],
+      "clueText": [
+        "Sötét mezőn állt — a Sötétség megszállta."
+      ],
+      "source": {
+        "game": "Alan Wake"
+      }
+    },
+    {
+      "id": "tor-anderson",
+      "name": "Tor Anderson",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "A Vendégházban egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Alan Wake"
+      }
+    },
+    {
+      "id": "dr-emil-hartman",
+      "name": "Dr. Emil Hartman",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "sarah-breaker",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Sarahtól északra** volt."
+      ],
+      "source": {
+        "game": "Alan Wake"
+      }
+    },
+    {
+      "id": "barry-wheeler",
+      "name": "Barry Wheeler",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Rádióállomáson **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Alan Wake"
+      }
+    },
+    {
+      "id": "odin-anderson",
+      "name": "Odin Anderson",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "A Rádióállomáson egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Alan Wake"
+      }
+    },
+    {
+      "id": "sarah-breaker",
+      "name": "Sarah Breaker",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "Z"
+        }
+      ],
+      "clueText": [
+        "Zane kunyhójában egy **padon** ült."
+      ],
+      "source": {
+        "game": "Alan Wake"
+      }
+    },
+    {
+      "id": "thomas-zane",
+      "name": "Thomas Zane",
+      "race": "ghost",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Fűrésztelepen volt."
+      ],
+      "source": {
+        "game": "Alan Wake"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "rose-marigold": "F1",
+    "alan-wake": "A2",
+    "alice-wake": "H3",
+    "cynthia-weaver": "E4",
+    "tor-anderson": "C5",
+    "dr-emil-hartman": "G6",
+    "barry-wheeler": "I7",
+    "odin-anderson": "J8",
+    "sarah-breaker": "D9",
+    "thomas-zane": "B10"
+  },
+  "murderer": "odin-anderson",
+  "rev": 1,
+  "worldRule": "light"
+}

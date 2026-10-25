@@ -1,0 +1,228 @@
+{
+  "v": 1,
+  "id": "classic-4-18-airport",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A reptér – hétvégén",
+  "story": "Zárás után a repülőtéren az egyik utas holtan feküdt. Csak páran voltak ma bent.",
+  "size": 8,
+  "difficulty": 4,
+  "rooms": {
+    "I": "Iroda",
+    "T": "Terminál",
+    "P": "Poggyászkezelő",
+    "B": "Beszállókapu",
+    "F": "Büfé"
+  },
+  "layout": [
+    "BFFFFFTT",
+    "BBBFFFTT",
+    "BBBFFTTT",
+    "BBBFFTTT",
+    "BBBFTTTP",
+    "IIIIPTPP",
+    "IIIIPPPP",
+    "IIIIPPPP"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "F1",
+        "B2",
+        "D4",
+        "B1"
+      ]
+    },
+    {
+      "type": "luggage",
+      "at": [
+        "E8",
+        "G5",
+        "H6",
+        "H4"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "C3",
+        "A1"
+      ]
+    },
+    {
+      "type": "ticket",
+      "at": [
+        "F6",
+        "E5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "conveyor",
+      "at": "F8",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "F2",
+      "blocking": true
+    },
+    {
+      "type": "clock",
+      "at": "G1",
+      "blocking": true
+    },
+    {
+      "type": "plane",
+      "at": "B4",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **növény mellett** volt."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "B"
+        }
+      ],
+      "clueText": [
+        "A Beszállókapunál egy **széken** ült."
+      ]
+    },
+    {
+      "id": "victor",
+      "name": "Victor",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "carl",
+      "name": "Carl",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Büfében egy **széken** ült."
+      ]
+    },
+    {
+      "id": "deborah",
+      "name": "Deborah",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "fred",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Fredtől északra** volt."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "aloneWith",
+          "with": "gabriel"
+        }
+      ],
+      "clueText": [
+        "**Egyedül** volt **Gabriellel**."
+      ]
+    },
+    {
+      "id": "fred",
+      "name": "Fred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszloptól balra** volt."
+      ]
+    },
+    {
+      "id": "gabriel",
+      "name": "Gabriel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "conveyor"
+        }
+      ],
+      "clueText": [
+        "Egy **futószalag mellett** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "F1",
+    "bruno": "B2",
+    "victor": "C3",
+    "carl": "D4",
+    "deborah": "G5",
+    "eva": "H6",
+    "fred": "A7",
+    "gabriel": "E8"
+  },
+  "murderer": "bruno",
+  "rev": 1,
+  "floors": {
+    "T": "tile",
+    "P": "stone",
+    "B": "carpet",
+    "F": "wood"
+  }
+}

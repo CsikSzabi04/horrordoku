@@ -1,0 +1,217 @@
+{
+  "v": 1,
+  "id": "classic-3-03-museum",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A múzeum – zárás után",
+  "story": "Zárás után a múzeumban a teremőr holtan feküdt. Csak páran voltak ma bent.",
+  "size": 8,
+  "difficulty": 3,
+  "rooms": {
+    "R": "Raktár",
+    "I": "Iroda",
+    "E": "Előcsarnok",
+    "U": "Udvar",
+    "K": "Kiállítóterem",
+    "A": "Ajándékbolt"
+  },
+  "layout": [
+    "RRRRRRRI",
+    "UUUUURAI",
+    "UUURRRAI",
+    "UUUUAAAI",
+    "UUUKAAAI",
+    "UUKKAEII",
+    "KKKKEEEE",
+    "KKKKKEEE"
+  ],
+  "objects": [
+    {
+      "type": "rug",
+      "at": [
+        "H8",
+        "H7"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "F7",
+        "G8"
+      ]
+    },
+    {
+      "type": "statue",
+      "at": [
+        "A5",
+        "D7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "exhibit",
+      "at": "B8",
+      "blocking": true
+    },
+    {
+      "type": "armor",
+      "at": [
+        "C6",
+        "B7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "G2",
+      "blocking": true
+    },
+    {
+      "type": "chair",
+      "at": "E7"
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "**Nem** az Irodában volt."
+      ]
+    },
+    {
+      "id": "bianca",
+      "name": "Bianca",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 5
+        }
+      ],
+      "clueText": [
+        "A helyiségében **öten** voltak."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. sorban** volt."
+      ]
+    },
+    {
+      "id": "dora",
+      "name": "Dora",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "cody"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Codyvel**."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "felicia",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Feliciától északra** volt."
+      ]
+    },
+    {
+      "id": "felicia",
+      "name": "Felicia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "cody",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Codytől délre** volt."
+      ]
+    },
+    {
+      "id": "gordon",
+      "name": "Gordon",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **szék mellett** volt."
+      ]
+    },
+    {
+      "id": "vickie",
+      "name": "Vickie",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "G1",
+    "bianca": "E2",
+    "cody": "C3",
+    "dora": "D4",
+    "eva": "B5",
+    "felicia": "A6",
+    "gordon": "F7",
+    "vickie": "H8"
+  },
+  "murderer": "gordon",
+  "rev": 1,
+  "floors": {
+    "R": "stone",
+    "U": "grass",
+    "K": "carpet",
+    "A": "wood"
+  }
+}

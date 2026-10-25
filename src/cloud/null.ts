@@ -14,6 +14,9 @@ export const NullCloud: CloudService = {
   sync: { start: noop, stop: noop, flush: off, onStatus: () => noop, guestData: async () => false, transferGuest: off },
   catalog: { refresh: off },
   leaderboard: { submit: off, top: off },
-  friends: { search: off, list: off, request: off, respond: off, remove: off, onChange: () => noop },
-  rooms: { create: off, join: off, invite: off, invites: off, onInvite: () => noop, open: off },
+  friends: { search: off, myCode: off, findByCode: off, list: off, request: off, respond: off, remove: off, onChange: () => noop },
+  rooms: {
+    create: off, join: off, invite: off, invites: off, onInvite: () => noop, open: off,
+    mine: off, peek: off, follow: off, unfollow: off, setOpen: off, configure: off, remove: off, leave: off, stats: off, recentGames: off,
+  },
 }

@@ -1,0 +1,178 @@
+{
+  "v": 1,
+  "id": "event-01-fnaf-2",
+  "mode": "event",
+  "world": "fnaf",
+  "title": "Hajnali hat óra",
+  "story": "Mike Schmidt nem lépett ki a pizzéria ajtaján, amikor hajnalban kisütött a nap. A kamerák az egész éjszakát felvették — de egyszerre csak egy szobát mutatnak.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "S": "Színpad",
+    "E": "Ebédlő",
+    "P": "Pirate Cove",
+    "K": "Konyha",
+    "I": "Iroda",
+    "N": "Nyugati folyosó"
+  },
+  "layout": [
+    "NNKKPP",
+    "NKKKPP",
+    "NKKKPP",
+    "NNNEEI",
+    "SSSEEI",
+    "SSEEEI"
+  ],
+  "objects": [
+    {
+      "type": "partytable",
+      "at": [
+        "F2",
+        "B6",
+        "E1",
+        "B1",
+        "E3"
+      ]
+    },
+    {
+      "type": "oven",
+      "at": [
+        "E2",
+        "C2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "doorbtn",
+      "at": "F1",
+      "blocking": true
+    },
+    {
+      "type": "camera",
+      "at": "F4",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "a-marionett",
+      "name": "A Marionett",
+      "race": "ghost",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Konyhában volt."
+      ],
+      "source": {
+        "game": "Five Nights at Freddy's"
+      }
+    },
+    {
+      "id": "chica",
+      "name": "Chica",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "golden-freddy",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Golden Freddytől északra** volt."
+      ],
+      "source": {
+        "game": "Five Nights at Freddy's"
+      }
+    },
+    {
+      "id": "foxy",
+      "name": "Foxy",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszloptól balra** volt."
+      ],
+      "source": {
+        "game": "Five Nights at Freddy's"
+      }
+    },
+    {
+      "id": "golden-freddy",
+      "name": "Golden Freddy",
+      "race": "ghost",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "a-marionett",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **a Marionetttől délre** volt."
+      ],
+      "source": {
+        "game": "Five Nights at Freddy's"
+      }
+    },
+    {
+      "id": "mike-schmidt",
+      "name": "Mike Schmidt",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Színpadon **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Five Nights at Freddy's"
+      }
+    },
+    {
+      "id": "bonnie",
+      "name": "Bonnie",
+      "race": "ghoul",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "mike-schmidt",
+          "dir": "S"
+        }
+      ],
+      "clueText": [
+        "**Mikétől délre** volt."
+      ],
+      "source": {
+        "game": "Five Nights at Freddy's"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "a-marionett": "E1",
+    "chica": "F2",
+    "foxy": "A3",
+    "golden-freddy": "D4",
+    "mike-schmidt": "C5",
+    "bonnie": "B6"
+  },
+  "murderer": "bonnie",
+  "rev": 1,
+  "worldRule": "cameras"
+}

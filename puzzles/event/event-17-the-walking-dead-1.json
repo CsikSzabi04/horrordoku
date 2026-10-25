@@ -1,0 +1,224 @@
+{
+  "v": 1,
+  "id": "event-17-the-walking-dead-1",
+  "mode": "event",
+  "world": "walking-dead",
+  "title": "A Kormányzó",
+  "story": "A világvége után Alexandria főtere elcsendesedett: A Kormányzó holtan hever a börtön cellablokkjában. A generátor zaja odacsalja a kóborló fertőzötteket — a gyilkos nem állhat generátor mellett.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "F": "Farm",
+    "A": "Alexandria főtér",
+    "H": "Hilltop",
+    "E": "Fegyvertár",
+    "T": "Templom",
+    "R": "Erdei út"
+  },
+  "layout": [
+    "EEEETTT",
+    "EEEFTTT",
+    "FFFFFFA",
+    "FFRRRAA",
+    "RRRRRAA",
+    "HHRRHAA",
+    "HHHHHHH"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "B2",
+        "E6",
+        "D5"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "A3",
+        "B1",
+        "E4"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "G1",
+        "F4"
+      ]
+    },
+    {
+      "type": "generator",
+      "at": [
+        "E2",
+        "C1",
+        "G3",
+        "B6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "barrel",
+      "at": [
+        "A1",
+        "E7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "campfire",
+      "at": "D2",
+      "blocking": true
+    },
+    {
+      "type": "car",
+      "at": "D7",
+      "blocking": true
+    },
+    {
+      "type": "tent",
+      "at": "B5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "maggie-greene",
+      "name": "Maggie Greene",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "glenn-rhee",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Glenntől keletre** volt."
+      ],
+      "source": {
+        "game": "The Walking Dead"
+      }
+    },
+    {
+      "id": "carol-peletier",
+      "name": "Carol Peletier",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "notBesideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **ülőhely mellett**."
+      ],
+      "source": {
+        "game": "The Walking Dead"
+      }
+    },
+    {
+      "id": "carl-grimes",
+      "name": "Carl Grimes",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Farmon egy **ládán** volt."
+      ],
+      "source": {
+        "game": "The Walking Dead"
+      }
+    },
+    {
+      "id": "negan",
+      "name": "Negan",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "aloneWith",
+          "with": "michonne"
+        }
+      ],
+      "clueText": [
+        "**Egyedül** volt **Michonnével**."
+      ],
+      "source": {
+        "game": "The Walking Dead"
+      }
+    },
+    {
+      "id": "michonne",
+      "name": "Michonne",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "Az Erdei úton egy **padon** ült."
+      ],
+      "source": {
+        "game": "The Walking Dead"
+      }
+    },
+    {
+      "id": "a-kormanyzo",
+      "name": "A Kormányzó",
+      "race": "human",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Hilltopon **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "The Walking Dead"
+      }
+    },
+    {
+      "id": "glenn-rhee",
+      "name": "Glenn Rhee",
+      "race": "human",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "michonne",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Michonnétől délre** volt."
+      ],
+      "source": {
+        "game": "The Walking Dead"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "maggie-greene": "G1",
+    "carol-peletier": "B2",
+    "carl-grimes": "A3",
+    "negan": "C4",
+    "michonne": "D5",
+    "a-kormanyzo": "E6",
+    "glenn-rhee": "F7"
+  },
+  "murderer": "glenn-rhee",
+  "rev": 1,
+  "worldRule": "generators"
+}

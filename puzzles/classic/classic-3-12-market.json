@@ -1,0 +1,194 @@
+{
+  "v": 1,
+  "id": "classic-3-12-market",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A piac – nyitás előtt",
+  "story": "A piacon reggel az egyik árust holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "P": "Pékes",
+    "V": "Virágos",
+    "F": "Főtér",
+    "Z": "Zöldséges",
+    "H": "Halas"
+  },
+  "layout": [
+    "PPPZZHH",
+    "PPPZZHH",
+    "FPPVVHH",
+    "FFVVVVH",
+    "FFFFVVH",
+    "FFFFVVV",
+    "FFFVVVV"
+  ],
+  "objects": [
+    {
+      "type": "crate",
+      "at": [
+        "B1",
+        "G3",
+        "G4"
+      ]
+    },
+    {
+      "type": "fountain",
+      "at": [
+        "C6",
+        "B6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "fish",
+      "at": "F3",
+      "blocking": true
+    },
+    {
+      "type": "apples",
+      "at": "D2",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": "A1",
+      "blocking": true
+    },
+    {
+      "type": "chair",
+      "at": [
+        "B4",
+        "B7"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "alfred",
+      "name": "Alfred",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "furniture"
+        }
+      ],
+      "clueText": [
+        "Egy **bútor mellett** volt."
+      ]
+    },
+    {
+      "id": "bella",
+      "name": "Bella",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "ne",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "**Nem** a **3. sorban** volt."
+      ]
+    },
+    {
+      "id": "cody",
+      "name": "Cody",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "bella"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Bellával**."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 4
+        }
+      ],
+      "clueText": [
+        "A **4. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "elena",
+      "name": "Elena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "derek"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Derekkel**."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "row",
+          "n": 6
+        }
+      ],
+      "clueText": [
+        "A **6. sorban** volt."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "alfred": "B1",
+    "bella": "F2",
+    "cody": "G3",
+    "derek": "D4",
+    "elena": "E5",
+    "frank": "A6",
+    "vera": "C7"
+  },
+  "murderer": "frank",
+  "rev": 1,
+  "floors": {
+    "P": "brick",
+    "V": "grass",
+    "F": "checker",
+    "Z": "dirt",
+    "H": "tile"
+  }
+}

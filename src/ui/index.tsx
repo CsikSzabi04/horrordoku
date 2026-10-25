@@ -1,5 +1,6 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import type { ButtonHTMLAttributes, ReactNode } from 'react'
+import { EventPortrait, hasLook } from '../components/EventPortrait'
 import './ui.css'
 
 const cx = (...a: (string | false | undefined)[]) => a.filter(Boolean).join(' ')
@@ -9,7 +10,7 @@ export function Button({
   size,
   className,
   ...p
-}: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'ghost'; size?: 'sm' }) {
+}: ButtonHTMLAttributes<HTMLButtonElement> & { variant?: 'ghost' | 'danger'; size?: 'sm' }) {
   return <button type="button" {...p} className={cx('nd-btn', variant, size, className)} />
 }
 
@@ -51,11 +52,11 @@ export function Chip({ children, dot }: { children: ReactNode; dot?: boolean }) 
   )
 }
 
-/** Avatár: amíg nincsenek portrék (assets/portraits/<CharId>.png), a karakter emoji-ja vagy kezdőbetűje. */
+/** Avatár: a karakter rajzolt portréja (ha van), különben az emoji-ja vagy a kezdőbetűje. */
 export function Avatar({ id, emoji, size }: { id: string; emoji?: string; size?: string }) {
   return (
     <span className="nd-avatar" style={size ? ({ '--s': size } as React.CSSProperties) : undefined} aria-label={id}>
-      {emoji ?? id.charAt(0).toUpperCase()}
+      {hasLook(id) ? <EventPortrait id={id} className="nd-avatar-art" crop="face" /> : (emoji ?? id.charAt(0).toUpperCase())}
     </span>
   )
 }
@@ -86,22 +87,25 @@ export function Modal({ open, onClose, children }: { open: boolean; onClose: () 
   )
 }
 
-const ToastCtx = createContext<(msg: string) => void>(() => undefined)
+/** Értesítés: `ms` = meddig látszik (alap 3,2 mp); azonos `key`-jű értesítés lecseréli az előzőt (pl. az új tipp a régit). */
+export type ToastFn = (msg: string, opts?: number | { ms?: number; key?: string }) => void
+const ToastCtx = createContext<ToastFn>(() => undefined)
 export const useToast = () => useContext(ToastCtx)
 
 export function ToastProvider({ children }: { children: ReactNode }) {
-  const [items, setItems] = useState<{ id: number; msg: string }[]>([])
-  const push = useCallback((msg: string) => {
+  const [items, setItems] = useState<{ id: number; msg: string; key?: string }[]>([])
+  const push = useCallback<ToastFn>((msg, opts) => {
+    const { ms = 3200, key } = typeof opts === 'number' ? { ms: opts } : (opts ?? {})
     const id = Date.now() + Math.random()
-    setItems((s) => [...s, { id, msg }])
-    setTimeout(() => setItems((s) => s.filter((x) => x.id !== id)), 3200)
+    setItems((s) => [...s.filter((x) => key === undefined || x.key !== key), { id, msg, key }])
+    setTimeout(() => setItems((s) => s.filter((x) => x.id !== id)), ms)
   }, [])
   return (
     <ToastCtx.Provider value={push}>
       {children}
       <div className="nd-toasts" role="status" aria-live="polite">
         {items.map((i) => (
-          <div key={i.id} className="nd-toast">
+          <div key={i.id} className="nd-toast" title="Kattints a bezáráshoz" onClick={() => setItems((s) => s.filter((x) => x.id !== i.id))}>
             {i.msg}
           </div>
         ))}

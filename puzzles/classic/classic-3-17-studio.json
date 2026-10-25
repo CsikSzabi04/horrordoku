@@ -1,0 +1,224 @@
+{
+  "v": 1,
+  "id": "classic-3-17-studio",
+  "mode": "classic",
+  "world": "everyday",
+  "title": "A tévéstúdió – hétvégén",
+  "story": "Szombat este a tévéstúdióban a műsorvezető nem tért haza. Valaki egyedül maradt vele.",
+  "size": 8,
+  "difficulty": 3,
+  "rooms": {
+    "V": "Vágószoba",
+    "B": "Büfé",
+    "E": "Előtér",
+    "S": "Stúdió",
+    "M": "Maszk"
+  },
+  "layout": [
+    "SSSSSMMM",
+    "SSSSEEMM",
+    "SSSEEEMM",
+    "VVBEEMMM",
+    "VVBBEEMM",
+    "VVBBEEEE",
+    "VVBBBBBB",
+    "VVVVBBBB"
+  ],
+  "objects": [
+    {
+      "type": "rug",
+      "at": [
+        "A2",
+        "F6",
+        "C3"
+      ]
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "B1",
+        "E4"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "G8",
+        "D7",
+        "C8",
+        "D8",
+        "C5"
+      ]
+    },
+    {
+      "type": "camera",
+      "at": [
+        "C1",
+        "D1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": [
+        "G7",
+        "H7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "mirror",
+      "at": [
+        "H3",
+        "H2"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "adam",
+      "name": "Adam",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "A Stúdióban egy **kanapén** ült."
+      ]
+    },
+    {
+      "id": "bruno",
+      "name": "Bruno",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "adam"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Adammal**."
+      ]
+    },
+    {
+      "id": "carly",
+      "name": "Carly",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "rug"
+        }
+      ],
+      "clueText": [
+        "Egy **szőnyegen** volt."
+      ]
+    },
+    {
+      "id": "derek",
+      "name": "Derek",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa"
+        }
+      ],
+      "clueText": [
+        "Egy **kanapén** ült."
+      ]
+    },
+    {
+      "id": "eva",
+      "name": "Eva",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "gt",
+          "n": 7
+        }
+      ],
+      "clueText": [
+        "A **7. oszloptól jobbra** volt."
+      ]
+    },
+    {
+      "id": "vera",
+      "name": "Vera",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
+      ]
+    },
+    {
+      "id": "flavia",
+      "name": "Flavia",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "eva",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Evától délre** volt."
+      ]
+    },
+    {
+      "id": "greg",
+      "name": "Greg",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **cserepes növény mellett** volt."
+      ]
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "adam": "B1",
+    "bruno": "A2",
+    "carly": "C3",
+    "derek": "E4",
+    "eva": "H5",
+    "vera": "F6",
+    "flavia": "D7",
+    "greg": "G8"
+  },
+  "murderer": "derek",
+  "rev": 1,
+  "floors": {
+    "V": "tile",
+    "B": "wood",
+    "E": "wood",
+    "S": "carpet",
+    "M": "checker"
+  }
+}
