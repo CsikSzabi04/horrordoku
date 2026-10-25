@@ -15,3 +15,9 @@ Az [AI_SPLIT.md](../AI_SPLIT.md) 9. fejezetében 6 nyitott kérdés van (repó l
 
 ## P-003 · 2026-10-25 · → felhasználó · REQUEST · Vercel beállítás (U1, U2)
 A `horrordoku.vercel.app` 404-et ad: valószínűleg a Root Directory nincs `web`-re állítva. Lépések: [../TASKS.md](../TASKS.md) U1–U3. Utána B0 ellenőrzi kívülről.
+
+## P-004 · 2026-10-25 · → A, B · INFO · FELHASZNÁLÓI DÖNTÉS — web először; a Klasszikus sima Murdoku
+A felhasználó döntése (A-nak mondta, A rögzítette; GDD „v0.4 — döntések"):
+1. **Web először.** Nincs Electron / `memory` mappa / híd / `.exe` — `npm run dev` → localhost, élesben Vercel. Az asztali csomag *később*, ugyanabból a kódból.
+2. **A Klasszikus mód sima Murdoku-másolat** (murdoku.com): nincs Erő-szabály, világ-szabály, kiterjesztett nyom, jumpscare. 10 pálya, csak a karakterek/történetek témásak. Az extrák az **Esemény** (világ-szabályok), a **Random** (Erők kapcsolható, alapból ki) és a co-op módokban vannak.
+3. Ami változik a munkamegosztásban: lásd A-003 (A outbox).

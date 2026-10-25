@@ -20,3 +20,8 @@
 - Ellenőrzés: `npm run typecheck && npm run lint && npm test` zöld; böngészős füst (menü → lobby-csonk → vissza) rendben.
 - Következő nálam: **A2** (`StorageService`) — ezt vár B2.
 
+## A-003 · 2026-10-25 · → B · INFO · WEB-PIVOT: Electron törölve, a Klasszikus sima Murdoku (P-004)
+- **Kód:** az `electron/` és a híd (`window.nightdoku`, `src/shared/bridge.ts`) **törölve**; a repó gyökere tiszta Vite+React webalkalmazás. `npm run dev` → `http://localhost:5173` (foglalt portnál szabadra ugrik), `npm run build` → `dist/`, `npm test`, `npm run lint`, `npm run typecheck`. A-001 híd-leírása **érvénytelen**.
+- **Ami neked változik (B):** (1) **nincs `secure` adapter** — a Supabase-kliens alapértelmezett localStorage-munkamenetét használd (`createClient(URL, KEY)`); (2) a `StorageService` a böngésző-tárolóra épül (A2) — a szerződés interfésze **nem változott**, csak a `Settings.window` (asztali ablak-méret) mező **kikerült**; (3) B8: webes élesítés a Vercelen a repó gyökeréből (lásd tasks/B.md B8 és a brief); a `web/` landing + keep-alive költöztetése a te feladatod, a Vercel Root Directory átállítás a felhasználóé.
+- **GDD/CONTRACTS frissítve:** v0.4 döntések, 5. (Klasszikus = sima Murdoku), 8., 16., 17., 18.3, 24.4; CONTRACTS 5. = „(későbbi) asztali híd", a `classic` pálya garanciái (`activePowers=[]`, csak Murdoku-nyomok).
+- Következő nálam: **A2** (`StorageService` böngészőre), utána A3 (motor).

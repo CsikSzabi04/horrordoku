@@ -2,13 +2,13 @@
 
 ## Indító-prompt (másold be az AI-nak)
 
-> Te vagy **AI-A** a NIGHTDOKU projektben (horror-gyilkossági logikai rejtvényjáték, letölthető Electron-alkalmazás, GitHub: `CsikSzabi04/horrordoku`; a saját munkakönyvtáradat a `bash scripts/ai-setup.sh A` hozza létre (klónozni nem kell), lásd AGENTS.md).
+> Te vagy **AI-A** a NIGHTDOKU projektben (horror-gyilkossági logikai rejtvényjáték, webes játék (Vite + React), GitHub: `CsikSzabi04/horrordoku`; a saját munkakönyvtáradat a `bash scripts/ai-setup.sh A` hozza létre (klónozni nem kell), lásd AGENTS.md).
 > Rajtad kívül **AI-B** dolgozik a repón párhuzamosan. Olvasd el sorrendben: `AGENTS.md`, `docs/AI_SPLIT.md`, `docs/CONTRACTS.md`, ezt a fájlt, `docs/tasks/A.md`, `docs/HANDOFF.md` (+ a másik AI outboxa: `docs/handoff/B.md`, és `docs/handoff/PLANNER.md`), végül a `NIGHTDOKU_jatekterv.md`-t.
 > **Első lépés:** `bash scripts/ai-setup.sh A` — ez létrehozza a saját `.work/A` munkakönyvtáradat; innentől **csak ott dolgozz** (a fő mappába ne írj), és `bash scripts/ai-sync.sh pull` után kezdj. Az első feladatod **A0**. Csak a saját útvonalaidra írj (AI_SPLIT.md 3. fejezet). Ne írj felhős szolgáltatásba összekötőn keresztül. Dolgozz kis, tesztelt lépésekben; a végén frissítsd a saját feladat-táblád (`docs/tasks/A.md`) és, ha kell, az outboxod (`docs/handoff/A.md`), majd `bash scripts/ai-sync.sh push`.
 
 ## Küldetés
 
-Te építed azt, amit a játékos *játszik*: az Electron-ablakot, a szabálymotort, a táblát, a helyi mentést és a három egyjátékos módot (Klasszikus, Esemény, Random) a hanggal, jumpscare-rel és a **pályák tartalmával**. **A felhőt nem ismered** — csak a `CloudService` interfészt, amihez `NullCloud` van, így minden offline működik.
+Te építed azt, amit a játékos *játszik*: a webes vázat (Vite), a szabálymotort, a táblát, a helyi mentést és a három egyjátékos módot (Klasszikus, Esemény, Random) a hanggal, jumpscare-rel és a **pályák tartalmával**. **A felhőt nem ismered** — csak a `CloudService` interfészt, amihez `NullCloud` van, így minden offline működik.
 
 ## Tulajdonolt útvonalak
 
@@ -17,17 +17,11 @@ Te építed azt, amit a játékos *játszik*: az Electron-ablakot, a szabálymot
 
 ## Feladatok (sorrendben)
 
-### A0 — Alap és híd ⚠ *B erre vár, ezt fejezd be elsőnek*
-- Electron + Vite + React + TypeScript (strict) váz; `npm run dev` **natív ablakot** nyit (nem böngészőt), `npm run build:win` portable `.exe`-t ad (`electron-builder` `portable` cél).
-- `vitest`, `eslint`, `prettier`, `typecheck`; `npm test`, `npm run lint`, `npm run typecheck`. CI: `.github/workflows/ci.yml` (lint + typecheck + test).
-- **Híd** a `docs/CONTRACTS.md` 5. fejezete szerint (`electron/preload.ts`): `memory.*` és — **elsőként** — a `secure.*` (Electron `safeStorage`). `contextIsolation: true`, `nodeIntegration: false`.
-- A `memory` mappa helye: az `.exe` mellett (`PORTABLE_EXECUTABLE_DIR`, ha portable; különben az `exe` mappája); ha nem írható → `%APPDATA%\NIGHTDOKU\memory` + figyelmeztetés; `--memory=<út>` kapcsoló külön adatmappához (ilyenkor **nincs** single-instance zár). GDD 16.5, 17.4.
-- Ablak: saját ikon, min. 1100×700, F11, méret/hely megjegyzése, single-instance.
-- **Fejlesztői példányok ne ütközzenek** (két AI, több worktree, több co-op-teszt példány): dev módban az Electron `userData` a munkakönyvtárban legyen (`.dev-userdata/`, gitignore-olt); a single-instance zár `--memory` kapcsolóval ki; a Vite `strictPort: false`; az e2e-tesztek szabad portot használnak; a lint/teszt/typecheck-glob **kizárja** a `.work/`, `memory*/` és `.dev-userdata/` mappákat.
-- **Kész, ha:** a `CONTRACTS.md` 5. szerinti API-t egy egység-teszt + egy kézi próba igazolja; `secure.set/get` kilépés után is megmarad; a CI zöld. → **HANDOFF: „G0-részleg: A0 kész, a híd él"** (B-nek).
+### A0 — Webes alap ✅ *(kész)*
+- Vite + React + TypeScript (strict) váz; `npm run dev` → localhost; `vitest`, `eslint`, `prettier`, `typecheck`; CI. *(Az Electron-os első változat törölve — v0.4: web először; az asztali csomag később, GDD 16.5.)*
 
 ### A1 — Közös típusok, UI-készlet, app-váz
-- A `docs/CONTRACTS.md` blokkjai **szó szerint** `src/shared/*.ts`-be (base, puzzle, board, storage, bridge, cloud, room, fx, boardController). `CONTRACT_VERSION` exportálva.
+- A `docs/CONTRACTS.md` blokkjai **szó szerint** `src/shared/*.ts`-be (base, puzzle, board, storage, cloud, room, fx, boardController). `CONTRACT_VERSION` exportálva.
 - `src/cloud/index.ts` *csonk*: exportálja a `CloudService` típust és egy `NullCloud` példányt (**B ezt átveszi és kitölti** — te csak azért hozod létre, hogy fordítson).
 - UI-készlet (`src/ui/`): design tokenek a [web/public/index.html](../../web/public/index.html) paletta- és betűkészletéből (Cinzel + Special Elite, vér-vörös, csont-fehér), komponensek: `Button`, `Panel/Dossier`, `Tabs`, `Toast`, `Modal`, `Chip`, `Avatar`, `ProgressBar`; Nyugodt mód támogatással.
 - App-váz: útvonal-tábla `src/app/routes.ts`, főmenü (GDD 14.1), állapot-sor (☁/📴/👤). **Csonk-képernyők B-nek:** `src/screens/{login,profile,friends,lobby,coop}/index.tsx` üres komponensek, a menüből elérhetők. Ezektől kezdve B tulajdona.
@@ -36,7 +30,7 @@ Te építed azt, amit a játékos *játszik*: az Electron-ablakot, a szabálymot
 - **Kész, ha:** `npm run dev` főmenüt mutat, a csonk-képernyők megnyílnak, a típusok fordulnak. → HANDOFF: „A1 kész: típusok + UI-készlet — B3 indulhat".
 
 ### A2 — `StorageService` (helyi mentés)
-- A `CONTRACTS.md` 4. fejezete szerint, a híd `memory.*`-ján át: atomikus írás, `.bak`, séma-verzió, sérült fájl → `.bak` → `*.corrupt`, **`scope`** (`guest` / `u_<id8>`), debounce-olt automatikus mentés (3 mp), méretkeret (< 100 KB tipikusan, 5 MB plafon + takarítás), `onChange` események, `SyncOp`-ok előállítása a `recordRun/putSession/addUnlock/patchSettings`-ból, `applyMerged` (SyncOp nélkül).
+- A `CONTRACTS.md` 4. fejezete szerint, **böngészős tárolón** (localStorage; kulcsok: `nd:v1:<scope>:<név>`): séma-verzió, másodpéldány (`…:bak`) és `…:corrupt` sérülés ellen, kvóta-hiba és tiltott tároló kezelése (memóriában fut tovább + figyelmeztetés), több fül (`storage` esemény), export / import (JSON-fájl), **`scope`** (`guest` / `u_<id8>`), debounce-olt mentés (3 mp, `visibilitychange`/`pagehide`-kor azonnal), méretkeret (tipikusan < 100 KB, 4 MB plafon), `onChange`, `SyncOp`-ok a `recordRun/putSession/addUnlock/patchSettings`-ból, `applyMerged` (SyncOp nélkül).
 - **Kész, ha:** egység-tesztek: sérült fájl visszaállítása, párhuzamos írás, scope-váltás, `applyMerged` nem generál sort, méretplafon. → HANDOFF: „A2 kész — B2 indulhat".
 
 ### A3 — Szabálymotor, megoldó, generátor
@@ -58,7 +52,7 @@ Te építed azt, amit a játékos *játszik*: az Electron-ablakot, a szabálymot
 - GDD 14.8, 19.1–19.6: „Új véletlen ügy" (nehézség + téma), ügykód megadása/megosztása, Napi ügy (dátum-seed), **Folytatás-lista** (≤ 3 random + megkezdett katalógus-pályák, mutatja: cím, nehézség, idő, mikor/melyik gépen), Elvetem (feladott futás a naplóba), 30 napos lejárat, az indulás pillanatában azonnali mentés, az óra csak aktív ablaknál jár (60 mp tétlenség után áll).
 - A „melyik gépen" információ a `SessionState`-ben `meta.deviceName`-ként utazhat → **ha kell, szerződés-bővítés** (opcionális mező, HANDOFF).
 - Karakter-„szerzés": az első szereplés `addUnlock('character', id)`.
-- **Kész, ha:** kilépés/összeomlás után a félbehagyott ügy pontosan ott folytatható (tesztelve a `memory` mappa újraolvasásával).
+- **Kész, ha:** kilépés/összeomlás után a félbehagyott ügy pontosan ott folytatható (tesztelve az oldal újratöltésével).
 
 ### A7 — Jumpscare, hang, beállítások, akadálymentesség
 - GDD 12 (fázisok, véletlen késleltetés 0,5–6 mp, 3–5 változat/világ, kamu-jumpscare, arany jumpscare), 13 (rétegzett zene, hangeffektek, Howler.js), 12.4 beállítások (jumpscare-mód, hangerő-plafon, fotoszenzitív mód, rázkódás, Streamer mód), színvak-mód, nagy betű, képernyőolvasó a kártyákhoz.
@@ -70,7 +64,7 @@ Te építed azt, amit a játékos *játszik*: az Electron-ablakot, a szabálymot
 - **Kész, ha:** mind a 10 pálya validált és végigjátszható.
 
 ### A9 — Keményítés
-- Teljesítmény (10×10 tábla animációkkal), e2e-tesztek, csomagolás B-vel (B8), hibanaplózás a `memory` mappába (kicsi, forgó), első indítás: életkor- és fotoszenzitív figyelmeztetés.
+- Teljesítmény (10×10 tábla animációkkal), e2e-tesztek, élesítés B-vel (B8), első indítás: életkor- és fotoszenzitív figyelmeztetés.
 
 ## Amire B-től számíthatsz (és mikor)
 
@@ -84,7 +78,7 @@ Te építed azt, amit a játékos *játszik*: az Electron-ablakot, a szabálymot
 
 ## Amit B-nek ígérsz
 
-- A0 után a `window.nightdoku.secure` **stabil**; az A1 után a `src/shared/**` típusok stabilak (a szerződés-folyamaton kívül nem változnak).
+- Az A1 óta a `src/shared/**` típusok stabilak (a szerződés-folyamaton kívül nem változnak).
 - A `StorageService` minden írása **atomikus**, és az `onChange` mindig tüzel.
 - A `BoardController` **nem sugároz vissza** a távoli műveleteket; a `BoardEngine.apply` tiszta függvény.
 
@@ -92,6 +86,7 @@ Te építed azt, amit a játékos *játszik*: az Electron-ablakot, a szabálymot
 
 - A **Nyugodt mód** és a `prefers-reduced-motion` mindig érvényesüljön — minden új animációnál.
 - Ne importálj `@supabase/*`-ot és ne hívj hálózatot. Ha kéne valami a felhőből, szerződés-kérés a HANDOFF-ban.
-- A `memory` mappa **adat-only** (nincs kép/hang benne), és `.gitignore`-olt.
+- A böngészős tároló csak adatot tart (nincs benne kép/hang; kvóta ~5 MB).
 - A pálya-JSON-ok megoldásokat tartalmaznak: a repó láthatósága döntésre vár (AI_SPLIT 9.2) — a `puzzles/` mappát tartsd külön, könnyen kiemelhetően.
 - Headless teszt: **Brave** + `puppeteer-core` (az Edge indítása ezen a gépen elhasal).
+- **A Klasszikus mód sima Murdoku:** nincs Erő-szabály, világ-szabály, kiterjesztett nyom, jumpscare — a motor ezeket külön, opcionális modulként kezeli, és a `classic` pálya nem aktiválhatja őket (CONTRACTS 2.). Ne szivárogjon be.

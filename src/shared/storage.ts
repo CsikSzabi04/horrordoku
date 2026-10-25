@@ -15,7 +15,6 @@ export interface Settings {                       // memory/settings.json — g�
   screenShake: boolean
   streamerMode: boolean
   invisible: boolean                              // „Láthatatlan mód" (online-állapot elrejtése)
-  window?: { w: number; h: number; x?: number; y?: number; maximized?: boolean }
   updatedAt: IsoTime
 }
 

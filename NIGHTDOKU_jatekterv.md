@@ -1,10 +1,18 @@
 # 🩸 NIGHTDOKU — *Ahol a sudoku vért ont*
 
-> **Játéktervezési dokumentum (GDD) — v0.3**
-> Horror-gyilkossági logikai rejtvényjáték **letölthető, önálló ablakos asztali alkalmazásként** (először Windowsra): 5 játékmód (Klasszikus, Esemény, Random, Co-op Együtt, Co-op Gyilkos), offline is játszható; a mentések a játék mappájának `memory` almappájába kerülnek, a fiók, a profil, a barátok és a felhős mentés pedig Supabase-ben van.
+> **Játéktervezési dokumentum (GDD) — v0.4**
+> Horror-gyilkossági logikai rejtvényjáték **webes játékként** (böngészőben; `npm run dev` → localhost): 5 játékmód (Klasszikus, Esemény, Random, Co-op Együtt, Co-op Gyilkos); a helyi mentés a böngészőben, a fiók, a profil, a barátok és a felhős mentés pedig Supabase-ben van. Az asztali csomag később jön.
 > Inspiráció: Manuel Garand *Murdoku* könyvei és a murdoku.com online változata.
 
 ---
+
+## v0.4 — döntések (felülírják az alábbi szöveget, ha ellentmondanak)
+
+1. **Web először.** A játék böngészős webalkalmazás (`npm run dev` → localhost; élesben Vercel). Az asztali (Electron) csomag **később** jön, ugyanabból a kódból, külön fázisban. Az alábbi „letölthető alkalmazás / `memory` mappa / saját ablak / portable `.exe`" kitételek a **későbbi asztali kiadásra** vonatkoznak; a webes verzióban a helyi mentés a **böngésző tárolója** (17. fejezet), a belépési tokent a Supabase-kliens alapértelmezett tárolója őrzi.
+2. **A Klasszikus mód sima Murdoku-másolat** (murdoku.com): ugyanaz a rács, nyomok, kezelés és nehézségi szintek. **Nincs benne** Erő-szabály, faj-szabály, világ-szabály, kiterjesztett nyom, jumpscare, szabotázs. Csak a pályák és a karakterek (név, kártya, történet) témásak. **10 pálya.**
+3. **Az „extrák" a többi módban vannak:** az Erő-szabályok (7.1) és a világ-szabályok az **Esemény** módban (10 horror-játékos pálya) és a **Random** módban (kapcsolható, alapból ki); a jumpscare az Esemény / Random / co-op módokban él (alapból ki). A Hollowmere-Erők külön, későbbi mód lehet.
+4. **Vercel:** a játék a repó gyökeréből épül (Vite → `dist/`); a `web/` mappa landing-oldala és keep-alive függvénye a gyökérbe költözik (B8). Addig a jelenlegi Vercel-beállítás (Root Directory: `web`) marad.
+5. Minden más (Esemény, Random, Együtt, Gyilkos, Supabase, barátok, chat, ranglista) változatlan.
 
 ## Tartalomjegyzék
 
@@ -12,7 +20,7 @@
 2. [Mit veszünk át a Murdokuból (alapmechanika)](#2-mit-veszünk-át-a-murdokuból-alapmechanika)
 3. [Mitől lesz más és jobb](#3-mitől-lesz-más-és-jobb)
 4. [Játékmódok áttekintése](#4-játékmódok-áttekintése)
-5. [KLASSZIKUS MÓD — Hollowmere ügyei](#5-klasszikus-mód--hollowmere-ügyei)
+5. [KLASSZIKUS MÓD — sima Murdoku (Hollowmere-témával)](#5-klasszikus-mód--sima-murdoku-hollowmere-témával)
 6. [A Hollowmere-univerzum lore-ja](#6-a-hollowmere-univerzum-lore-ja)
 7. [Karakterek, erők és fajok](#7-karakterek-erők-és-fajok)
 8. [A 10 pálya (Klasszikus mód)](#8-a-10-pálya-klasszikus-mód)
@@ -24,7 +32,7 @@
 14. [UI / UX — képernyőről képernyőre](#14-ui--ux--képernyőről-képernyőre)
 15. [Saját extra ötletek](#15-saját-extra-ötletek)
 16. [Technikai terv](#16-technikai-terv)
-17. [Helyi mentés — a `memory` mappa](#17-helyi-mentés--a-memory-mappa)
+17. [Helyi mentés (böngésző)](#17-helyi-mentés-böngésző)
 18. [Fiók, profil és felhő (Supabase)](#18-fiók-profil-és-felhő-supabase)
 19. [Random mód és a szabálykövető generátor](#19-random-mód-és-a-szabálykövető-generátor)
 20. [Pályaformátum (JSON) és pályagenerátor](#20-pályaformátum-json-és-pályagenerátor)
@@ -91,7 +99,7 @@ A képernyőképek alapján a Murdoku magja ez — ezt **1:1-ben megtartjuk**, m
 | Önálló pályák | **Kampány**: a pályák egy összefüggő rejtélyt bontanak ki |
 | ~41 pálya | Indulásra **10 kézzel készült klasszikus + 10 horror-játékos Esemény-pálya + végtelen Random mód**, folyamatos bővítés |
 | — | **Esemény mód**: ismert horror-játékok világai és karakterei |
-| Böngészős; a haladás csak Google-bejelentkezéssel mentődik | **Letölthető alkalmazás**: helyi mentés a `memory` mappában, fiók + **profil oldal** + felhős szinkron (Supabase), offline is játszható |
+| Böngészős; a haladás csak Google-bejelentkezéssel mentődik | **Webes játék**: helyi mentés a böngészőben + fiók, **profil oldal**, felhős szinkron (Supabase); az asztali csomag később |
 | Kevés, rögzített pálya | Előre megírt pályák **+ végtelen Random mód** (seedelt, szabálykövető generátor, félbehagyva is folytatható) |
 | Egyedül játszható | **Co-op módok**: közös tábla + chat (*Együtt*), és egy „Among Us"-szerű *Gyilkos* mód |
 
@@ -115,14 +123,14 @@ A NIGHTDOKU **öt fő játékmóddal** indul — a főmenüben ez az öt kártya
 
 | Mód | Pályák | Játékosok | Mentés | Részletek |
 |---|---|---|---|---|
-| 🕯️ **Klasszikus** | 10 előre megírt (+ bónuszügyek) | 1 | helyben + felhő | 5., 8., 9. fejezet |
+| 🕯️ **Klasszikus** | 10 előre megírt — *sima Murdoku, extra szabályok nélkül* | 1 | böngésző + felhő | 5., 8., 9. fejezet |
 | 🎬 **Esemény** | 10 előre megírt, horror-játékokból | 1 | helyben + felhő | 10–11. fejezet |
 | 🎲 **Random** | végtelen, seedelt generátorból | 1 | helyben + felhő, **félbehagyva is folytatható** | 19. fejezet |
 | 🤝 **Co-op: Együtt** | bármelyik pálya (katalógus vagy random) | 2–4 | a szoba állapota a felhőben | 22. fejezet |
 | 🔪 **Co-op: Gyilkos** | bármelyik pálya | 3–6 (kettővel is megy) | a szoba állapota a felhőben | 22. fejezet |
 
-- **Klasszikus:** a Hollowmere-kampány, kézzel tervezett pályákkal és történettel.
-- **Esemény:** minden pálya egy híres horror**játék** világa; a gyanúsítottak a játék karakterei közül vannak válogatva, az áldozat pedig a játék ikonikus főgonosza.
+- **Klasszikus:** **sima Murdoku** (mint a murdoku.com): rács, nyomok, X / jegyzet / tipp, semmi extra szabály; csak a pályák és a karakterek témásak (Hollowmere).
+- **Esemény:** minden pálya egy híres horror**játék** világa, **saját világ-szabállyal**; a gyanúsítottak a játék karakterei közül vannak válogatva, az áldozat pedig a játék ikonikus főgonosza.
 - **Random:** semmi nincs előre megírva — minden ügy véletlen (de a szabályoknak megfelelő, tehát mindig kivihető). A Hollowmere mellett a horror-játékok világaiból is húz karaktereket és helyszíneket, és az új karakterek bekerülnek a gyűjteményedbe. Minden a felhőbe mentődik, a félbehagyott ügy pedig bármelyik gépen folytatható.
 - **Co-op: Együtt:** ketten (vagy többen) ugyanazt a táblát látjátok és szerkeszthetitek, a másik lerakását is el lehet vinni; játékon belüli chat.
 - **Co-op: Gyilkos:** egy játékos titokban a **gyilkos** — ő is velünk nyomoz, de három titkos szabotázs-képességgel hátráltatja a többieket.
@@ -132,42 +140,40 @@ A NIGHTDOKU **öt fő játékmóddal** indul — a főmenüben ez az öt kártya
 
 ---
 
-## 5. KLASSZIKUS MÓD — Hollowmere ügyei
+## 5. KLASSZIKUS MÓD — sima Murdoku (Hollowmere-témával)
 
-A Klasszikus mód **szinte pontosan úgy játszik, mint a Murdoku** (ugyanaz a rács, ugyanazok a gombok, ugyanaz az X-elés), de:
+A Klasszikus mód **a murdoku.com egyszerű, hű másolata**: ugyanaz a rács, ugyanazok a nyomok, ugyanaz a kezelés és ugyanazok a nehézségi szintek. **Semmi más nincs benne** — nincs Erő-szabály, faj-szabály, világ-szabály, jumpscare, szabotázs. A „horror" itt csak díszlet: a pályák, a karakterek (nevek, kártyák) és a történetek Hollowmere-témájúak.
 
-- **10 pálya** indulásra, utána új pályák érkeznek a Supabase-ből (app-frissítés nélkül).
-- Minden pálya egy **„ügyirat"** (borítékos megjelenítés megmarad, de viaszpecsétes, vérfoltos dossziéként).
-- A pályák **fejezetekbe** rendeződnek; minden fejezet végén egy rövid képregény-panel mutatja, mi derült ki.
-- Nehézségtől függően bekapcsolnak az **Erő-szabályok** (lásd 7.2) — a „Nagyon könnyű" pályákon még nincsenek, a „Szakértő" szinten akár 3 is aktív.
+- **10 pálya** indulásra; később új pályák érkeznek (a Supabase-ből, kiadás nélkül).
+- Minden pálya egy **„ügyirat"** (a pályaválasztón borítékos / dossziés megjelenítés, mint a murdoku.com-on).
+- A pályák **fejezetekbe** rendeződnek, a fejezetek végén rövid történet-panel (csak szöveg).
+- **Mit tud a játékos:** karakter kiválasztása, lerakás (nyomva tartás), ceruzás jegyzet (koppintás), X, radír, visszavonás, tipp, beküldés, időmérő, bemutató az első pályán, nehézségi szűrő, haladás mentése (GDD 2. fejezet).
+- **Mit NEM:** Erő-szabály, világ-szabály, kiterjesztett nyomok, jumpscare, hang-effektes horror, co-op. (Ezek az Esemény, a Random és a co-op módokban élnek.)
 
 ### 5.1 Nehézségi szintek
 
-| Szint | Méret | Karakterek | Erő-szabályok | Becsült idő |
-|---|---|---|---|---|
-| 🟢 Nagyon könnyű („Gyertyafény") | 6×6 | 6 | 0 | 2–4 perc |
-| 🟡 Könnyű („Alkony") | 6×6 / 7×7 | 6–7 | 0–1 | 4–8 perc |
-| 🟠 Közepes („Éjfél") | 7×7 / 8×8 | 7–8 | 1 | 8–15 perc |
-| 🔴 Nehéz („Holdfogyatkozás") | 8×8 / 9×9 | 8–9 | 2 | 15–25 perc |
-| ⚫ Szakértő („Pokol kapuja") | 9×9 / 10×10 | 9–10 | 2–3 | 25+ perc |
+| Szint | Méret | Karakterek | Becsült idő |
+|---|---|---|---|
+| 🟢 Nagyon könnyű („Gyertyafény") | 6×6 | 6 | 2–4 perc |
+| 🟡 Könnyű („Alkony") | 6×6 / 7×7 | 6–7 | 4–8 perc |
+| 🟠 Közepes („Éjfél") | 7×7 / 8×8 | 7–8 | 8–15 perc |
+| 🔴 Nehéz („Holdfogyatkozás") | 8×8 / 9×9 | 8–9 | 15–25 perc |
+| ⚫ Szakértő („Pokol kapuja") | 9×9 / 10×10 | 9–10 | 25+ perc |
 
-### 5.2 Nyomtípusok (a Murdokuéi + újak)
+A nehézséget a méret és a nyomok **szerkezete** adja (kevesebb, közvetettebb nyom = nehezebb), nem külön szabályok.
 
-**Átvett nyomok:**
+### 5.2 Nyomtípusok
+
+**A Klasszikus mód nyomai (a Murdokuéi):**
 - „X egy **[tárgyon]** volt." (széken, szőnyegen)
 - „X a **[helyiségben]** volt."
-- „X **[tárgy] mellett** volt."
+- „X **[tárgy] mellett** volt." (közvetlenül szomszédos mezőn, ugyanabban a helyiségben)
 - „X volt az **egyetlen** [tárgyon]."
 - „X **vagy** [A] **vagy** [B] mellett volt."
+- Az áldozat kártyája: „A **[helyiségben]** volt, **egyedül a gyilkosával**."
 
-**Új nyomok:**
-- „X **nem** volt a [helyiségben]." (negatív nyom)
-- „X **egy sorban** volt Y-nal… nem, az lehetetlen — X **Y-tól balra** volt." (relatív irány)
-- „X **átlósan** volt Y mellett." (átló — csak közepestől)
-- „X és Y **ugyanabban a helyiségben** volt."
-- „X egy **sarokmezőn** volt."
-- „X **[N] mezőre** volt a gyertyától." (távolság, csak szakértő)
-- „X helyiségében **senki más** nem volt."
+**Kiterjesztett nyomok — csak a Random és az Esemény módban** (a szerződés `Clue` típusában megvannak, a Klasszikus pálya nem használhatja őket):
+- „X **nem** volt a [helyiségben]." · „X **Y-tól balra** volt." · „X **átlósan** volt Y mellett." · „X és Y **ugyanabban a helyiségben** volt." · „X egy **sarokmezőn** volt." · „X **[N] mezőre** volt a gyertyától." · „X helyiségében **senki más** nem volt."
 
 ---
 
@@ -196,6 +202,8 @@ A **Hollowmere-i Éjjeli Rend** (egy titkos, emberekből és „szelíd" lények
 ## 7. Karakterek, erők és fajok
 
 ### 7.1 Fajok és Erő-szabályaik
+
+> **Hol érvényesek?** **NEM a Klasszikus módban** (az sima Murdoku). Az Esemény mód világ-szabályaiban, a Random módban (kapcsolható, alapból ki), és egy későbbi „Hollowmere-Erők" módban.
 
 Az Erő-szabály a NIGHTDOKU legfontosabb újítása: **a karakter faja megváltoztatja, hogy hova állhat, és hogyan értelmezendő a nyoma.** A pálya elején mindig ki van írva, mely szabályok aktívak (ikonnal a karakterkártyán).
 
@@ -318,79 +326,70 @@ Az Erő-szabály a NIGHTDOKU legfontosabb újítása: **a karakter faja megvált
 
 ## 8. A 10 pálya (Klasszikus mód)
 
-> Mind a 10 pálya kézzel tervezett, **előre megírt megoldással** (a pálya JSON-jában benne van, ki hol volt), és egyértelműségre ellenőrizve (lásd 20. fejezet). A pályák az alkalmazással együtt települnek (offline is játszhatók), a Supabase `puzzles` táblájában pedig azért is ott vannak, hogy új pályák app-frissítés nélkül érkezhessenek (17–18. fejezet).
+> Mind a 10 pálya kézzel tervezett **sima Murdoku-rejtvény**, **előre megírt megoldással** (a pálya JSON-jában benne van, ki hol volt), egyértelműségre ellenőrizve (lásd 20. fejezet). **Nincs rajtuk Erő-szabály, világ-szabály vagy bármilyen extra** (`activePowers = []`); a nehézséget a méret és a nyomok szerkezete adja. A karakterek és helyszínek Hollowmere-témájúak.
 >
-> **Miért 10?** A fő történetben tíz ügyet oldasz meg. Az eredeti tervből két ügy („Utolsó Pohár", „Az Elsüllyedt Malom") **bónuszügy** lett — a lore-ban ezek a Rend archívumának „hiányzó aktái", így a 12 gyilkosságból 10 a fő sztori, 2 pedig feloldható extra. Minden Erő-szabály továbbra is a fő történetben kap bevezetést.
+> Két ügy az eredeti tervből („Utolsó Pohár", „Az Elsüllyedt Malom") **bónuszügy**: a Rend archívumának hiányzó aktái, így a 12 gyilkosságból 10 a fő sztori, 2 feloldható extra.
 
-| # | Pálya | Méret | Nehézség | Új Erő-szabály | Azonosító |
-|---|---|---|---|---|---|
-| 1 | Éjféli Mise | 6×6 | 🟢 Nagyon könnyű | — (bemutató) | `classic-01-midnight-mass` |
-| 2 | Gyógytea | 6×6 | 🟡 Könnyű | Boszorkány | `classic-02-herbal-tea` |
-| 3 | Holdfény-galéria | 7×7 | 🟡 Könnyű | Vámpír | `classic-03-moonlight-gallery` |
-| 4 | A Blackwood-kúria | 7×7 | 🟠 Közepes | Szellem | `classic-04-blackwood-manor` |
-| 5 | Vadászház | 8×8 | 🟠 Közepes | Vérfarkas | `classic-05-hunting-lodge` |
-| 6 | Hideg Asztal | 8×8 | 🟠 Közepes | Élőhalott | `classic-06-cold-table` |
-| 7 | Alku a keresztútnál | 8×8 | 🔴 Nehéz | Démon | `classic-07-crossroads-deal` |
-| 8 | Tükrök Terme | 9×9 | 🔴 Nehéz | Alakváltó | `classic-08-hall-of-mirrors` |
-| 9 | A Rend Levéltára | 10×10 | ⚫ Szakértő | — (Démon + Szellem + Boszorkány együtt) | `classic-09-order-archive` |
-| 10 | Vörös Hold | 10×10 | ⚫ Szakértő | — (mind) | `classic-10-red-moon` |
+| # | Pálya | Méret | Nehézség | Azonosító |
+|---|---|---|---|---|
+| 1 | Éjféli Mise | 6×6 | 🟢 Nagyon könnyű | `classic-01-midnight-mass` |
+| 2 | Gyógytea | 6×6 | 🟡 Könnyű | `classic-02-herbal-tea` |
+| 3 | Holdfény-galéria | 7×7 | 🟡 Könnyű | `classic-03-moonlight-gallery` |
+| 4 | A Blackwood-kúria | 7×7 | 🟠 Közepes | `classic-04-blackwood-manor` |
+| 5 | Vadászház | 8×8 | 🟠 Közepes | `classic-05-hunting-lodge` |
+| 6 | Hideg Asztal | 8×8 | 🟠 Közepes | `classic-06-cold-table` |
+| 7 | Alku a keresztútnál | 8×8 | 🔴 Nehéz | `classic-07-crossroads-deal` |
+| 8 | Tükrök Terme | 9×9 | 🔴 Nehéz | `classic-08-hall-of-mirrors` |
+| 9 | A Rend Levéltára | 10×10 | ⚫ Szakértő | `classic-09-order-archive` |
+| 10 | Vörös Hold | 10×10 | ⚫ Szakértő | `classic-10-red-moon` |
 
 ### I. FEJEZET — „Az első vér"
 
 **1. 🟢 „Éjféli Mise" — Szent Bertalan-kápolna (6×6, Nagyon könnyű)**
 Helyiségek: Kripta, Sekrestye, Oltár, Harangláb, Temetőkert. Tárgyak: koporsók, padok, gyertyák, sírkövek, szőnyeg, harang.
-Áldozat: **Ábel, a Rend írnoka**. Erő-szabályok: nincsenek (bemutató pálya).
-→ *Ez a pálya részletesen ki van dolgozva a 9. fejezetben.*
+Áldozat: **Ábel, a Rend írnoka**. Bemutató pálya. → *Részletesen kidolgozva a 9. fejezetben.*
 
 **2. 🟡 „Gyógytea" — Morrigan füvesboltja (6×6, Könnyű)**
-Helyiségek: Bolt, Üvegház, Lepárló, Lakás, Kert. Tárgyak: cserepes növények, üst (foglalt), pentagramma-szőnyeg.
-Áldozat: a Rend egy fiatal tagja, Mira. **Első Erő-szabály: Boszorkány (pentagramma).**
+Helyiségek: Bolt, Üvegház, Lepárló, Lakás, Kert. Tárgyak: cserepes növények, üst (foglalt), szőnyeg.
+Áldozat: a Rend egy fiatal tagja, Mira.
 
 **3. 🟡 „Holdfény-galéria" — Vlad régiségboltja (7×7, Könnyű)**
-Helyiségek: Bemutatóterem, Raktár, Iroda, Pince, Kirakat. Tárgyak: tükrök, páncélok (foglalt), festmények, ládák. A kirakat mezői **holdfényesek**.
-Áldozat: egy műgyűjtő. **Erő-szabály: Vámpír (holdfény + tükör).**
+Helyiségek: Bemutatóterem, Raktár, Iroda, Pince, Kirakat. Tárgyak: tükrök, páncélok (foglalt), festmények, ládák.
+Áldozat: egy műgyűjtő.
 
 ### II. FEJEZET — „A Rend árulója"
 
 **4. 🟠 „A Blackwood-kúria" (7×7, Közepes)**
-Helyiségek: Előcsarnok, Könyvtár, Ebédlő, Lépcsőház, Cselédszoba, Télikert, Padlás.
-Áldozat: a kúria örököse. **Erő-szabály: Szellem** (Silas először játszható gyanúsítottként; a „mellette" falon át is érvényes rá).
+Helyiségek: Előcsarnok, Könyvtár, Ebédlő, Lépcsőház, Cselédszoba, Télikert, Padlás. Áldozat: a kúria örököse.
 
 **5. 🟠 „Vadászház" — Az erdő mélyén (8×8, Közepes)**
-Helyiségek: Nappali, Trófeaterem, Kamra, Veranda, Tisztás, Patak, Fenyves.
-Áldozat: Bram Kessler, a vadász. **Erő-szabály: Vérfarkas** (a Hold „fent van" — Ezekiel csak kültéren lehet).
+Helyiségek: Nappali, Trófeaterem, Kamra, Veranda, Tisztás, Patak, Fenyves. Áldozat: Bram Kessler, a vadász.
 
 **6. 🟠 „Hideg Asztal" — A városi hullaház (8×8, Közepes)**
-Helyiségek: Boncterem, Hűtőkamra, Iroda, Várószoba, Rakodó, Krematórium.
-Áldozat: egy ápoló. **Erő-szabály: Élőhalott** (Dr. Moss nem lehet szomszédos élővel, 8 irányban sem).
+Helyiségek: Boncterem, Hűtőkamra, Iroda, Várószoba, Rakodó, Krematórium. Áldozat: egy ápoló.
 
 **7. 🔴 „Alku a keresztútnál" (8×8, Nehéz)**
-Helyszín: négy út kereszteződése egy kihalt benzinkúttal, motellel, kukoricással és egy kápolnaromokkal.
-Áldozat: Sister Agatha. **Erő-szabályok: Démon (egy nyom hazudik) + Vámpír.**
+Helyszín: négy út kereszteződése egy kihalt benzinkúttal, motellel, kukoricással és egy kápolnaromokkal. Áldozat: Sister Agatha.
 
 ### III. FEJEZET — „A Hold gyermeke"
 
 **8. 🔴 „Tükrök Terme" — A vándorcirkusz (9×9, Nehéz)**
-Helyiségek: Porond, Tükörlabirintus, Öltözők, Állatketrecek, Jóslósátor, Körhinta.
-Áldozat: a cirkuszigazgató. **Erő-szabályok: Alakváltó (két kártya) + Vámpír (tükrök mindenhol).**
+Helyiségek: Porond, Tükörlabirintus, Öltözők, Állatketrecek, Jóslósátor, Körhinta. Áldozat: a cirkuszigazgató.
 
 **9. ⚫ „A Rend Levéltára" (10×10, Szakértő)**
-Helyiségek: Olvasóterem, Tiltott szekció, Térképterem, Óratorony, Titkos átjáró, Kerengő, Kút.
-Áldozat: Seraphine, a bukott angyal. **Erő-szabályok: Démon + Szellem + Boszorkány.**
-Itt találja meg a játékos Ábel naplójában a „tizenharmadik nevet".
+Helyiségek: Olvasóterem, Tiltott szekció, Térképterem, Óratorony, Titkos átjáró, Kerengő, Kút. Áldozat: Seraphine, a bukott angyal.
+Itt találja meg a játékos Ábel naplójában a „tizenharmadik nevet" (a történet része, nem szabály).
 
 **10. ⚫ „Vörös Hold" — A Varjúherceg trónterme (10×10, Szakértő)**
-A Fátyol túloldala: egy kifordított, lebegő katedrális, ahol a helyiségek a korábbi 9 pálya egy-egy darabjából állnak össze.
-Áldozat: **Malachar, a Varjúherceg**. Gyanúsítottak: a kampány összes túlélője.
-**Erő-szabályok: mind a 7 faj szabálya egyszerre — de minden karakterre csak a sajátja.**
-A megoldás után jön az igazi befejezés (két végkifejlet attól függően, hány pályát oldottál meg tipp nélkül).
+A Fátyol túloldala: egy kifordított, lebegő katedrális, a helyiségek a korábbi pályák egy-egy darabjából állnak össze. Áldozat: **Malachar, a Varjúherceg**. Gyanúsítottak: a kampány összes túlélője.
+A megoldás után jön a befejezés (két végkifejlet attól függően, hány pályát oldottál meg tipp nélkül).
 
 ### Bónuszpályák (feloldhatók — nem részei a 10 pályás fő kiadásnak)
-- **„Utolsó Pohár" — A Crossroads bár (6×6, Nagyon könnyű)** — *a Rend archívumának hiányzó aktája.* Helyiségek: Söntés, Bokszok, Raktár, Mosdó, Hátsó sikátor. Tárgyak: bárszékek, hordók (foglaltak), biliárdasztal (foglalt), wurlitzer. Áldozat: egy csapos, aki Lilithnek tartozott. Azonosító: `bonus-01-last-call`.
-- **„Az Elsüllyedt Malom" (9×9, Nehéz)** — *a Rend archívumának hiányzó aktája.* Helyiségek: Malomkerék, Őrlőterem, Gabonapadlás, Molnárház, Stég, Mocsár, Fűzfás. Áldozat: Old Tobias, a temetőőr (aki tényleg 200 éves volt). Erő-szabályok: Szellem + Vérfarkas. Azonosító: `bonus-02-sunken-mill`.
-- **„Silas zuhanása" (1931)** — fekete-fehér, szépia stílusú pálya, Silas halálának rejtélye.
-- **„Vlad első éjszakája" (1612)** — erdélyi kastély, gyertyafénnyel, régi magyar/román feliratokkal.
-- **„Pip & Poppy babaháza"** — egy mini 5×5-ös pálya egy babaházban, ahol a szereplők játékbabák.
+- **„Utolsó Pohár" — A Crossroads bár (6×6, Nagyon könnyű)** — Helyiségek: Söntés, Bokszok, Raktár, Mosdó, Hátsó sikátor. Tárgyak: bárszékek, hordók (foglaltak), biliárdasztal (foglalt). Áldozat: egy csapos. Azonosító: `bonus-01-last-call`.
+- **„Az Elsüllyedt Malom" (9×9, Nehéz)** — Helyiségek: Malomkerék, Őrlőterem, Gabonapadlás, Molnárház, Stég, Mocsár, Fűzfás. Áldozat: Old Tobias, a temetőőr. Azonosító: `bonus-02-sunken-mill`.
+- **„Silas zuhanása" (1931)** — fekete-fehér, szépia stílusú pálya.
+- **„Vlad első éjszakája" (1612)** — erdélyi kastély, régi magyar/román feliratokkal.
+- **„Pip & Poppy babaháza"** — mini 5×5-ös pálya egy babaházban.
 
 ---
 
@@ -788,8 +787,8 @@ Hereditary · The Conjuring (Annabelle) · Evil Dead · Poltergeist · The Ring 
 [5] Visszatérés          →  „Próbáld újra, nyomozó…" + a rács változatlanul ott marad
 ```
 
-### 12.3 Klasszikus mód jumpscare-jei
-A Klasszikus módban is van, a saját lényekkel: Vlad denevérfelhőből tör elő; Lilith szeme izzik fel a sötétben; Silas az üveg mögül néz ki; Ezekiel farkasüvöltéssel ugrik; Malachar varjúraj formájában borítja be a képernyőt.
+### 12.3 Jumpscare a módokban
+A **Klasszikus módban nincs jumpscare** (sima Murdoku). A jumpscare az **Esemény**, a **Random** és a **co-op** módokban él, alapból kikapcsolva. A Random mód Hollowmere-témájú ügyeiben a saját lények jumpscare-jei jönnek: Vlad denevérfelhőből tör elő; Lilith szeme izzik fel a sötétben; Silas az üveg mögül néz ki; Ezekiel farkasüvöltéssel ugrik; Malachar varjúraj formájában borítja be a képernyőt.
 
 ### 12.4 Biztonsági és kényelmi beállítások (kötelező!)
 | Beállítás | Opciók |
@@ -921,7 +920,7 @@ Minden tipp egy „💀 szellemérmébe" kerül — a játék során szerzel ér
 - **A belépés nem kötelező.** Vendégként minden játszható, csak nincs felhős mentés, profil-szinkron és ranglista.
 - **E-mail + jelszó** (Supabase Auth, lásd 18.2). A **becenév egyedi** (3–16 karakter, kis/nagybetű nélkül megkülönböztetve); a szabad-e ellenőrzés a „Regisztráció" gomb *előtt* fut le.
 - Első belépéskor, ha a gépen van vendég-haladás: *„Átvigyem a fiókodba?"* → igen esetén a 17.5 összefésülési szabályai szerint kerül át.
-- **Bejelentkezve maradás:** a munkamenet-token titkosítva a gépen van (17.4), így újraindításkor automatikusan belép. A Profil → Fiók oldalon van **Kijelentkezés**.
+- **Bejelentkezve maradás:** a munkamenet-token a böngésző tárolójában marad (a Supabase-kliens kezeli), így az oldal újratöltésekor automatikusan belép. A Profil → Fiók oldalon van **Kijelentkezés**.
 - Google/Discord belépés későbbi bővítés (asztali appnál böngészős átirányítás kell hozzá — nem az első verzió).
 
 ### 14.7 Profil oldal
@@ -1071,138 +1070,100 @@ Külön oldal (főmenü → **Profil**, vagy a jobb felső profil-chipre kattint
 
 ## 16. Technikai terv
 
-### 16.1 Javasolt stack
+### 16.1 Javasolt stack (web)
+
 | Réteg | Technológia | Miért |
 |---|---|---|
-| Alkalmazás-héj | **Electron** (először Windows; macOS/Linux ugyanabból a kódból) | letölthető, **saját, önálló ablakban** fut (nem böngészőben), offline működik, eléri a fájlrendszert a `memory` mappához (16.5). Alternatíva: Tauri (kisebb telepítő, de Rust-tudás kell) |
-| Frontend | **React + TypeScript + Vite** | gyors fejlesztés; a Next.js itt felesleges, mert nincs szerveroldali renderelés |
-| Tábla renderelés | **HTML Canvas / PixiJS** (vagy SVG kisebb pályákhoz) | sima animációk, jumpscare-effektek |
-| Animáció | Framer Motion (UI), GSAP (jumpscare) | |
-| Hang | **Howler.js** | rétegzett zene, crossfade, hangerő-plafon |
-| Helyi mentés | **JSON-fájlok a `memory` mappában** | kicsi, olvasható, atomikusan írható (17. fejezet) |
+| Alkalmazás | **Vite + React + TypeScript (strict)** — egyoldalas webalkalmazás | gyors fejlesztés; `npm run dev` → localhost; élesben statikus kiszolgálás |
+| Tábla renderelés | HTML/CSS rács (DOM); ha kell, Canvas / PixiJS | elég a 10×10-hez; hozzáférhető (billentyűzet, képernyőolvasó) |
+| Animáció | CSS + Framer Motion (UI), GSAP (jumpscare) | |
+| Hang | **Howler.js** | rétegzett zene, crossfade, hangerő-plafon (Esemény/Random módban) |
+| Helyi mentés | **böngésző-tároló** (localStorage; ha nő: IndexedDB) | kicsi, azonnali, offline is megvan (17. fejezet) |
 | Felhő / Auth / Realtime | **Supabase** (e-mail + jelszó, Postgres, RLS, Realtime a co-op módokhoz) | fiók, profil, mentések, pályák, barátok, szobák, ranglista (18., 22–23. fejezet) |
-| Terjesztés és üzemeltetés | GitHub (forráskód, kiadások) + **Vercel** (`web/`: letöltőoldal és napi keep-alive) | zip / portable `.exe`, később telepítő + automatikus frissítés (24. fejezet) |
-| Mobil | később, külön döntés | a React-kód nagy része Capacitorral újrahasznosítható |
-| Pályagenerátor | TypeScript, **az appban fut** (offline), seedelt és verziózott | 19. fejezet |
+| Hosting | **Vercel** (a játék + a keep-alive függvény) | minden `main`-push új verziót telepít (24. fejezet) |
+| Asztali csomag | **később**: ugyanaz a webes kód Electron/Tauri burokban | saját ablak, `memory` mappa, portable `.exe` (16.5) |
+| Mobil | böngészőben már működik (reszponzív); natív csomag később | |
+| Pályagenerátor | TypeScript, **a böngészőben fut** (offline is), seedelt és verziózott | 19. fejezet |
 
 ### 16.2 Alapelvek
 
-1. **Offline-first:** minden változás előbb a gépen lévő `memory` mappába kerül (17. fejezet); a felhő másolat és kiegészítés, nem előfeltétel. Belépés nélkül és internet nélkül is minden játszható.
-2. **Az app sosem beszél közvetlenül a Postgres-szel.** Nincs benne adatbázis-jelszó vagy „connection string" — csak a Supabase HTTPS API-ja, **a publikus (publishable) kulccsal**; a védelmet az adatbázis sor-szintű szabályai (RLS, 18.4) adják. A titkos kulcsok soha nem kerülhetnek a letölthető programba, mert onnan bárki kinyerheti őket.
-3. **Az előre megírt pályák az app részei** (offline is megvannak), a `puzzles` táblában pedig azért is ott vannak, hogy új pályák **app-frissítés nélkül** érkezhessenek (így a későbbi pálya-bővítések nem igényelnek új kiadást).
-4. **A véletlen pályákból csak a seed mentődik** (kb. 20 byte), nem a teljes pálya — a generátor determinisztikus (19. fejezet). Ettől marad apró a `memory` mappa és az adatbázis is.
-5. **Egy közös tábla = egy szoba:** a co-op módok a Supabase Realtime-ra épülnek (privát csatornák, RLS); a titkos információt (a gyilkos kiléte) csak a szerver ismeri (22.3).
-6. **A titkok nem kerülnek a repóba:** a kliensbe csak a publikus kulcs jut; a GitHub / Vercel / keep-alive rendje a 24. fejezetben van.
+1. **Web először:** minden `npm run dev`-vel, böngészőben fut és tesztelhető. Az asztali csomag *később* jön, a webes kódra építve — semmi nem függhet Electron-API-tól.
+2. **A helyi mentés az első (offline-first):** minden változás előbb a böngésző-tárolóba kerül (17. fejezet); a felhő másolat és kiegészítés, nem előfeltétel. Belépés nélkül is minden játszható.
+3. **A kliens sosem beszél közvetlenül a Postgres-szel.** Nincs benne adatbázis-jelszó vagy „connection string" — csak a Supabase HTTPS API-ja, **a publikus (publishable) kulccsal**; a védelmet az adatbázis sor-szintű szabályai (RLS, 18.4) adják. A titkos kulcsok soha nem kerülhetnek a kliensbe (a webes csomagból bárki kiolvashatja őket).
+4. **Az előre megírt pályák a csomag részei** (offline is megvannak), a `puzzles` táblában pedig azért is ott vannak, hogy új pályák **új kiadás nélkül** érkezhessenek.
+5. **A véletlen pályákból csak a seed mentődik** (kb. 20 byte), nem a teljes pálya — a generátor determinisztikus (19. fejezet).
+6. **Egy közös tábla = egy szoba:** a co-op módok a Supabase Realtime-ra épülnek (privát csatornák, RLS); a titkos információt (a gyilkos kiléte) csak a szerver ismeri (22.3).
+7. **A titkok nem kerülnek a repóba** (24. fejezet).
+8. **A Klasszikus mód sima Murdoku:** a motor az Erő-szabályokat és a világ-szabályokat *külön, opcionális modulként* kezeli; a Klasszikus pálya nem aktiválhatja őket.
 
-### 16.3 Adatbázis és helyi fájlok
+### 16.3 Adatbázis és helyi tároló
 
-- **Helyi fájlok** (JSON, `memory` mappa): a **17. fejezetben**.
-- **Felhő** (Supabase / Postgres): a táblák, a jogosultságok és a szükséges adatok a **18. fejezetben**.
+- **Helyi tároló** (böngésző): a **17. fejezetben**. **Felhő** (Supabase / Postgres): a **18. fejezetben**.
 
 ### 16.4 Mappastruktúra (a forráskód)
 ```
 nightdoku/
-├─ electron/
-│  ├─ main.ts              # ablak, a memory mappa kezelése, safeStorage (token)
-│  └─ preload.ts           # biztonságos híd a felület és a fájlkezelés között
-├─ src/                    # React-felület
-│  ├─ screens/             # főmenü, pályaválasztó, játék, Random + Folytatás, profil, barátok, lobby, bejelentkezés
-│  ├─ components/
-│  │  ├─ Board/            # rács, mezők, falak, tárgyak
-│  │  ├─ SuspectCard/
-│  │  ├─ Toolbar/
-│  │  ├─ Tutorial/
-│  │  └─ Jumpscare/
-│  ├─ engine/
-│  │  ├─ rules.ts          # alapszabályok + Erő-szabályok
-│  │  ├─ solver.ts         # megoldó / egyértelműség-ellenőrző
-│  │  └─ generator.ts      # seedelt, verziózott generátor (Random mód, napi ügy)
-│  ├─ storage/
-│  │  ├─ memory.ts         # memory mappa: atomikus olvasás/írás, .bak, séma-verzió
-│  │  └─ sync.ts           # szinkron-sor + összefésülés a Supabase-szel (17.5)
-│  ├─ cloud/supabase.ts    # kliens (csak Project URL + publishable key)
-│  └─ coop/                # szoba-kliens: Realtime-csatornák, műveletek, chat, képességek (22. fejezet)
-├─ puzzles/                # az előre megírt pályák (a csomag része)
-│  ├─ classic/*.json
-│  ├─ event/*.json          # az Esemény-mód 10 pályája
-│  └─ bonus/*.json
-├─ assets/
-│  ├─ portraits/           # karakterportrék (SVG/PNG)
-│  ├─ tiles/               # tárgy-sprite-ok
-│  ├─ audio/music/<world>/
-│  └─ audio/jumpscares/<world>/
-├─ supabase/migrations/    # 0001_init.sql, 0002_social.sql, … — az adatbázis-séma (18.4)
-├─ web/                    # Vercel: napi keep-alive (api/keepalive.js) + letöltőoldal (24. fejezet)
-├─ .env.example            # a környezeti változók mintája (a .env NINCS a gitben)
-└─ .gitignore
+├─ index.html, vite.config.ts, tsconfig.json, package.json
+├─ src/
+│  ├─ app/                 # útvonalak, app-váz
+│  ├─ ui/                  # UI-készlet (gombok, panel, tabok…)
+│  ├─ i18n/                # magyar szövegek
+│  ├─ engine/              # rules.ts (alap + opcionális Erő-modul), solver.ts, generator.ts
+│  ├─ components/          # Board, SuspectCard, Toolbar, Tutorial, Jumpscare
+│  ├─ storage/             # StorageService (böngésző-tároló)
+│  ├─ cloud/               # CloudService (Supabase)
+│  ├─ coop/                # szoba-kliens: Realtime, műveletek, chat, képességek
+│  ├─ screens/             # menü, pályaválasztók, játék, profil, barátok, lobby…
+│  └─ shared/              # közös szerződés-típusok (docs/CONTRACTS.md)
+├─ puzzles/                # az előre megírt pályák (classic / event / bonus)
+├─ public/                 # statikus fájlok (portrék, hangok, betűk)
+├─ supabase/               # migrációk + SQL-tesztek
+├─ web/                    # a jelenlegi Vercel-projekt: landing + keep-alive (B8-ban a gyökérbe költözik)
+├─ docs/, scripts/         # munkamegosztás, szerződések; ai-setup / ai-sync szkriptek
+└─ .env.example, .gitignore
 ```
 
-### 16.5 Az alkalmazás saját ablaka
+### 16.5 Asztali csomag — később
 
-A játék **önálló, natív ablakban** nyílik meg — nem böngészőben és nem lapon —, ahogy az `ADVANCED_USE`-ban lévő programod is (saját `.exe`, saját ablak).
-
-- **Ablak:** Electron `BrowserWindow`, saját ikon és tálcaikon, cím: *NIGHTDOKU*, minimális méret 1100×700, **F11** teljes képernyő. Az ablak mérete és helye megmarad (`settings.json`).
-- **Nincs böngészőfelület:** se címsor, se lapok, se „vissza" gomb; a menü, a játék és a jumpscare is az ablakon belül fut.
-- **Egy példány:** a második indítás nem nyit új programot, hanem az első ablakot hozza előre (`requestSingleInstanceLock`) — kivéve, ha külön adatmappát kap (lásd az utolsó pontot).
-- **Indítás:** dupla kattintás a `NIGHTDOKU.exe`-n; nem kell szerver, nem kell böngésző. Fejlesztéskor az `npm run dev` ugyanígy Electron-ablakot nyit (a Vite fejlesztői szerver csak a tartalmát szolgálja ki).
-- **Egyedi címsor:** az első verzióban a rendszer ablakkerete marad (stabilabb); később lehet keret nélküli ablak saját sötét címsorral és ✕ / — / ▢ gombokkal.
-- **Biztonság:** `contextIsolation: true`, `nodeIntegration: false`; a fájlkezelés (a `memory` mappa, a titkosított token) csak a `preload.ts` által kiajánlott szűk API-n keresztül érhető el.
-- **Helyi co-op-teszt egy gépen:** a `NIGHTDOKU.exe --memory=./memory-b` kapcsolóval egy második példány külön `memory` mappával indul, így két ablakkal két játékos is kipróbálható egyedül.
+Ha a webes játék kész, ugyanabból a kódból Electron- (vagy Tauri-) burok készülhet: saját ablak, **`memory` mappa** a játék mellett (JSON-fájlok, atomikus írás), titkosított tokentár (`safeStorage`), portable `.exe`. Ehhez a `StorageService` mögé egy fájl-alapú háttér kerül, és a CONTRACTS.md-be egy „híd" fejezet. Az Electron-os első próbálkozás (v0.3) a git-történetben megvan (`1d4abda`), de **nem része a mostani kódnak**.
 
 ---
 
-## 17. Helyi mentés — a `memory` mappa
+## 17. Helyi mentés (böngésző)
 
-> A NIGHTDOKU **letölthető alkalmazás**, ezért **minden először a saját gépre mentődik**. A felhő (18. fejezet) ennek a másolata és kiegészítése — így internet nélkül is minden működik, és a haladás akkor sem vész el, ha a szerver épp nem elérhető.
+> A NIGHTDOKU webes játék, ezért **minden először a böngésző tárolójába mentődik**; a felhő (18. fejezet) ennek a másolata és kiegészítése — így a haladás akkor sem vész el, ha a szerver nem elérhető, és a játék belépés nélkül is teljes. *(Az asztali csomagban ugyanez a `memory` mappába kerül — 16.5.)*
 
 ### 17.1 Hol van és mi van benne
 
-A `memory` mappa **az alkalmazás mappájában** jön létre (ugyanott, ahová a játékot letöltöd / kicsomagolod). Az app **csak ebbe a mappába ír**, máshova semmit.
+A `StorageService` (CONTRACTS 4.) a böngésző `localStorage`-át használja; a kulcsok: `nd:v1:<scope>:<név>` (`scope` = `guest` | `u_<user-id első 8 jegye>`), a gépfüggő beállítások: `nd:v1:settings`.
 
-```
-NIGHTDOKU/                         ← a letöltött mappa
-├─ NIGHTDOKU.exe
-├─ resources/ …                    (maga az app + az előre megírt pályák — csak olvasható)
-└─ memory/                         ← az EGYETLEN írható mappa
-   ├─ settings.json                hang, jumpscare-mód, akadálymentesség, nyelv, téma
-   ├─ guest/                       vendég-adatok (ha nem vagy belépve)
-   └─ u_3f9a12bc/                  a belépett fiók adatai (a felhasználó-azonosító első 8 jegye)
-      ├─ profile.json              profil-pillanatkép: becenév, avatár, XP, szellemérmék, széria
-      ├─ progress.json             pályánkénti eredmény + az utolsó 20 véletlen futás
-      ├─ session.json              a félbehagyott játék(ok): lerakott karakterek, X-ek, jegyzetek, óra
-      ├─ unlocks.json              feloldott karakterek, napló, jelvények, skinek
-      ├─ sync-queue.json           még fel nem töltött változások (offline időszakra)
-      ├─ auth.bin                  titkosított bejelentkezési token (17.4)
-      └─ cache/                    csak ha kell: később érkezett új pályák, az aktuális esemény
-```
+| Kulcs | Tartalom | Méret |
+|---|---|---|
+| `nd:v1:settings` | hang, jumpscare-mód, akadálymentesség, nyelv, téma | ~1 KB |
+| `nd:v1:<scope>:profile` | profil-pillanatkép: becenév, avatár, XP, szellemérmék, széria | ~1 KB |
+| `nd:v1:<scope>:progress` | pályánkénti eredmény + az utolsó 20 futás | ~10–20 KB |
+| `nd:v1:<scope>:sessions` | a félbehagyott játék(ok): lerakott karakterek, X-ek, jegyzetek, óra | ~1 KB / játék |
+| `nd:v1:<scope>:unlocks` | feloldott karakterek, napló, jelvények, skinek | ~2 KB |
+| `nd:v1:<scope>:sync-queue` | még fel nem töltött változások (offline időszakra) | változó |
+| `nd:v1:<scope>:cache-puzzles` | később érkezett új pályák, az aktuális esemény | ≤ 300 KB |
 
-- **Fájlformátum: JSON.** Jegyzettömbbel is megnyitható és javítható, nagyon kicsi, és nem kell hozzá semmilyen extra program. Adatbázis-fájl (SQLite) ekkora adatmennyiséghez felesleges.
-- Minden `*.json` mellett ott van az előző jó állapota `*.json.bak` néven.
-- Minden fájl első mezője a séma-verzió (`"v": 1`), hogy egy későbbi frissítés biztonságosan átalakíthassa a régi mentéseket.
-- A `settings.json` **gépfüggő** (hangerő, jumpscare-mód stb.), de belépve a `user_settings` táblába is szinkronizálódik (18.4), hogy új gépen ugyanazt kapd.
+- **Formátum: JSON**, minden érték első mezője a séma-verzió (`"v": 1`), hogy egy későbbi frissítés átalakíthassa a régi mentéseket.
+- A `settings` **gépfüggő**, de belépve a `user_settings` táblába is szinkronizálódik (18.4).
+- A bejelentkezési tokent a Supabase-kliens a saját alapértelmezett (böngésző-)tárolójában őrzi — ezt nem mi kezeljük.
 
-### 17.2 Méretkeret — nagyon kevés tárhely
+### 17.2 Méretkeret
 
-| Mi | Becsült méret |
-|---|---|
-| `settings` + `profile` + `unlocks` | ~ 5 KB |
-| `progress` (48 klasszikus pálya + az utolsó 20 véletlen futás) | ~ 20 KB |
-| `session` (legfeljebb ~3 random ügy + a megkezdett pályák) | ~ 1 KB / játék |
-| `cache/` (új pályák ~2 KB/db + az aktuális esemény) | ≤ 500 KB |
-| **Összesen, tipikusan** | **< 100 KB** *(kemény plafon: 5 MB, fölötte takarítás)* |
-
-Hogyan marad ennyire kicsi:
-- A mappába **csak adat** kerül — soha kép, hang, portré vagy animáció (azok az app mappájában vannak, csak olvasható módon).
-- Az előre megírt pályák **az appban** vannak, nem a `memory` mappában. A `cache/` csak azt tartalmazza, ami az app kiadása *után* érkezett (új pályák, aktuális esemény); a régi, megoldott cache-elemeket a program törli.
-- Napi / véletlen / esemény-ügyből **csak a seed** mentődik, nem a teljes pálya (19.3).
-- A futás-történetből helyben csak az **utolsó 20** marad; a teljes napló a felhőben van.
-- A tábla-állapot tömör: a lerakott karakterek `{ "vlad": "E1" }`, az X-ek egyetlen szövegként (`"A1,A2,C5"`) — nem mezőnkénti objektumlista.
-- Az automatikus mentés **nem minden kattintásnál** fut: 3 mp-es késleltetéssel, ablakváltáskor és kilépéskor.
-- A `sync-queue.json` bejegyzése feltöltés után azonnal törlődik; egy pályára mindig csak a legutolsó állapot marad benne.
+A `localStorage` böngészőnként kb. 5 MB; a játék tipikusan **< 100 KB**-ot használ (plafon: 4 MB, fölötte takarítás, majd IndexedDB-re váltás). Hogyan marad kicsi:
+- **csak adat** kerül ide — kép, hang, portré a `public/` mappából jön, nem a tárolóból;
+- a **véletlen / napi / esemény-ügyből csak a seed** mentődik (19.3);
+- a futás-történetből helyben csak az **utolsó 20** marad, a teljes napló a felhőben van;
+- a tábla-állapot tömör (`placed` objektum, `marks` egyetlen szöveg);
+- az automatikus mentés **nem minden kattintásnál** fut: 3 mp-es késleltetéssel, fülváltáskor / bezáráskor (`visibilitychange`, `pagehide`);
+- a `sync-queue` bejegyzése feltöltés után törlődik; egy pályára mindig csak a legutolsó állapot marad benne.
 
 ### 17.3 Példa fájlok
 
-**`progress.json`**
+**`progress`** (kulcs: `nd:v1:<scope>:progress`)
 ```json
 {
   "v": 1,
@@ -1217,7 +1178,7 @@ Hogyan marad ennyire kicsi:
 }
 ```
 
-**`session.json`** (félbehagyott játékok — ügykódonként egy bejegyzés; legfeljebb 3 random ügy + a megkezdett katalógus-pályák, lásd 19.5)
+**`sessions`** (kulcs: `nd:v1:<scope>:sessions`; félbehagyott játékok — ügykódonként egy bejegyzés; legfeljebb 3 random ügy + a megkezdett katalógus-pályák, lásd 19.5)
 ```json
 {
   "v": 1,
@@ -1245,16 +1206,17 @@ Hogyan marad ennyire kicsi:
 
 ### 17.4 Megbízhatóság és biztonság
 
-- **Atomikus írás:** a program előbb egy ideiglenes fájlba ír, az előző állapotot `.bak`-ba másolja, majd átnevezi az újat — kilépés vagy áramszünet közben sem csonkulhat meg a mentés.
-- **Sérült fájl esetén:** automatikusan a `.bak`-ot tölti be; ha az is sérült, a felhőből tölti vissza (belépve), egyébként tiszta lappal indul, de **nem töröl** semmit — a sérült fájlt `*.corrupt` néven félreteszi.
-- **A bejelentkezési token nem sima szövegként van a mappában:** az Electron `safeStorage`-ével titkosítva (`auth.bin`; Windowson a felhasználói fiókhoz kötött titkosítás). Ha a `memory` mappát bezipped és elküldöd valakinek, a token nála nem használható.
-- **Írható-e a mappa?** Ha az app olyan helyen van, ahová a program nem írhat (pl. `Program Files`), automatikusan a `%APPDATA%\NIGHTDOKU\memory` mappát használja, és szól erről. *Portable `.exe` esetén* (electron-builder `portable`) a program ideiglenes mappába csomagolja ki magát, ezért a `memory` helyét a `PORTABLE_EXECUTABLE_DIR` környezeti változóból kell venni — különben kilépéskor minden mentés elveszne.
-- **Több fiók egy gépen:** mindenkinek külön almappája van (`u_xxxxxxxx`), a vendég-adatok is külön (`guest/`), így nem keverednek.
-- **Beállítások → Adatok:** „Mentés exportálása" (a mappa egyetlen fájlba), „Helyi adatok törlése" (megerősítéssel), és a mappa megnyitása a Fájlkezelőben.
+- **Írás:** minden érték egy kulcson, egy `setItem`-mel íródik (ez böngészőnként atomikus); az előző jó állapot a `…:bak` másolatban marad.
+- **Sérült érték esetén:** a `…:bak`-ot tölti be; ha az is sérült, a felhőből tölt vissza (belépve), egyébként tiszta lappal indul, de **nem töröl** — a sérült értéket `…:corrupt` kulcsra teszi félre.
+- **Kvóta betelt / tiltott tároló** (privát ablak, süti-tiltás): a játék memóriában fut tovább, **figyelmeztet** („a haladás csak erre a lapra mentődik"), és felajánlja az exportot.
+- **Több fül:** a `storage` esemény alapján a fülök szinkronban tartják magukat; ugyanazt a játékot csak egy fül szerkesztheti (a másik csak olvas, jelzéssel).
+- **Több fiók egy böngészőben:** külön `scope` (`u_xxxxxxxx`), a vendég-adatok is külön (`guest`) — nem keverednek.
+- **Adat-kontroll:** Beállítások → Adatok: **„Mentés exportálása"** (egyetlen JSON-fájl letöltése), **„Mentés betöltése"** (import), **„Helyi adatok törlése"** (megerősítéssel).
+- **Biztonság:** a tárolóban nincs titok; a bejelentkezési tokent a Supabase-kliens kezeli. A kliensben csak a publikus kulcs van (24. fejezet).
 
 ### 17.5 Szinkron-szabályok (offline-first)
 
-1. **Minden írás először a `memory` mappába megy.**
+1. **Minden írás először a helyi tárolóba megy.**
 2. Belépve és internettel: háttérben feltölti a Supabase-be (`upsert`); a futás-naplóban a bejegyzések **kliens oldalon generált azonosítót** kapnak, így a megismételt feltöltés nem hoz létre duplikátumot.
 3. Internet nélkül a változás a `sync-queue.json`-ba kerül, és induláskor / a hálózat visszatértekor feltöltődik.
 4. Induláskor a program letölti a felhős állapotot és **összefésüli** a helyivel — nem felülír:
@@ -1303,7 +1265,7 @@ Hogyan marad ennyire kicsi:
 - A **becenév** a regisztrációs adatokkal együtt megy (`username`), egyediségét előtte a `username_available()` függvény ellenőrzi (kis/nagybetű nélkül).
 - Fejlesztés alatt a Supabase-ben (*Authentication → Providers → Email*) a **„Confirm email" kikapcsolható** — a beépített levélküldőnek nagyon alacsony a limitje. Élesben saját SMTP kell (egyébként a visszaigazoló levelek nem érkeznek meg, és új regisztrálók órás keretbe ütköznek).
 - Elfelejtett jelszó: Supabase jelszó-visszaállító e-mail.
-- A munkamenet a gépen **titkosítva** marad meg (17.4), így az app újraindításkor automatikusan belép.
+- A munkamenet a böngésző tárolójában marad meg (a Supabase-kliens alapértelmezése), így az oldal újratöltésekor automatikusan belép.
 
 ### 18.3 A Supabase-projekt és a kulcsok
 
@@ -1319,21 +1281,19 @@ Hogyan marad ennyire kicsi:
 | **Adatbázis-jelszó, connection string** (`postgresql://…`) | **sehova** a kliensbe vagy a repóba | az app nem használja; csak a helyi `supabase` CLI-nek kellhet |
 | JWT secret | **sehova** | |
 
-> **Melyik mintát kell választani a Supabase „Connect" ablakában?** A *Framework* listában **nincs Electron** (a lista: Next.js, React Router, **React**, Nuxt, Vue, SvelteKit, Solid, Astro, Refine, TanStack Start, Flask, .NET, Expo, Flutter, Ionic, Swift, Android Kotlin) — és nem is kell, mert a játék felülete egy **React + Vite** alkalmazás, az Electron csak az ablakot adja köré. Válaszd a **React** mintát: ez a sima `@supabase/supabase-js` kliens, ugyanazokkal a változónevekkel (`VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`), mint a `.env`-ünk. A **Next.js** minta (`@supabase/ssr`, `next/headers`, middleware) szerveroldali Next.js-hez való, a játékban nem használjuk.
+> **Melyik mintát válaszd a Supabase „Connect" ablakában?** A **React** (Vite) mintát: sima `@supabase/supabase-js` kliens, a `VITE_SUPABASE_URL` / `VITE_SUPABASE_PUBLISHABLE_KEY` változókkal — a játék ilyen. A Next.js-es minta (`@supabase/ssr`) szerveroldali Next.js-hez való, nem használjuk.
 >
 > ```ts
-> // src/cloud/supabase.ts — a Supabase React-mintája + a tokenmentés
+> // src/cloud/supabase.ts
 > import { createClient } from '@supabase/supabase-js'
 >
 > export const supabase = createClient(
 >   import.meta.env.VITE_SUPABASE_URL,
 >   import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY,
->   { auth: { persistSession: true, autoRefreshToken: true, detectSessionInUrl: false,
->             storage: safeStorageAdapter } },   // SAJÁT kód, nem Supabase-beépített: a token a titkosított auth.bin-be megy (17.4)
-> )
+> ) // persistSession / autoRefreshToken alapból be van kapcsolva; a token a böngésző localStorage-ában marad
 > ```
 >
-> A `storage` opció a `supabase-js` hivatalos beállítása (egy `getItem` / `setItem` / `removeItem` objektumot vár); a `safeStorageAdapter` a mi kis segédünk, ami ezeket az Electron `safeStorage`-ére köti. Nélküle a kliens a böngésző `localStorage`-ába menti a tokent, ami az Electron-ablakban titkosítatlan fájlként a felhasználói profil-mappába kerülne.
+> *(Az asztali csomagban a token titkosított tárolása — Electron `safeStorage` — egy `storage` adapterrel jön, 16.5.)*
 
 ### 18.4 Séma és migrációk
 
@@ -1402,7 +1362,7 @@ Alapelvek:
   - **Hollowmere** — a saját univerzum szereplői és helyszínei;
   - **egy Esemény-világ** (pl. a Freddy-pizzéria, az Ishimura hajó) — a játék karaktereivel és tárgyaival, a világ saját szabályával;
   - **Rémálom-keverék** — 2–3 világ szereplői egy helyszínen („Vlad, Leon és Freddy ugyanabban a kocsmában"). A lore-ban: a Fátyol elvékonyodása más világokból is behúz lényeket.
-- A pálya mérete és az Erő-szabályok a **nehézségből** jönnek (5.1), mint a Klasszikus módban.
+- A pálya mérete a **nehézségből** jön (5.1). Az **Erő-szabályok** (7.1) opcionálisak: „Erők: ki / be" kapcsoló (alapból **ki**); kiterjesztett nyomok (5.2) csak itt és az Esemény módban fordulhatnak elő.
 - Minden eredmény és minden félbehagyott állapot a **felhőbe mentődik** (`runs`, `saves`), a profil statisztikájába is beleszámít.
 
 ### 19.2 A generátor kötelező szabályai
@@ -1423,7 +1383,7 @@ A generátor csak olyan pályát adhat ki, amely **mindegyik** feltételt teljes
 
 - Az **ügykód** a pálya teljes azonosítója, pl. `gen:1:2:7F3K92` = *generátor v1 · nehézség 2 · seed `7F3K92`*. (A témát a seed tartalmazza.) Ez kerül a `runs.puzzle_ref` és `saves.puzzle_ref` mezőbe, a helyi `progress.json`-ba, és ezt lehet barátnak elküldeni.
 - A seed **seedelhető PRNG-ből** jön (pl. mulberry32) — **nem** `Math.random()`, mert az nem reprodukálható. A seed kezdeti értékét `crypto.getRandomValues` adja.
-- Mivel a pálya a seedből bármikor újraállítható, **nem tároljuk le** — se helyben, se a felhőben. Ez tartja a `memory` mappát és az adatbázist aprónak.
+- Mivel a pálya a seedből bármikor újraállítható, **nem tároljuk le** — se helyben, se a felhőben. Ez tartja a helyi tárolót és az adatbázist aprónak.
 - A generátor **az appban fut** (TypeScript), nem a szerveren — így internet nélkül is van új ügy.
 
 ### 19.4 Készlet és „szerzés"
@@ -1768,12 +1728,12 @@ HorrorDoku/
 - **Hobby = nem kereskedelmi:** a Vercel Hobby csomag személyes, nem kereskedelmi használatra való. Ha a játék később bevételt hoz, ezt át kell gondolni (Pro csomag, vagy a keep-alive áthelyezése).
 - **Tartalék:** egy ütemezett GitHub Actions workflow is küldhet pinget; de a GitHub a nyilvános repók ütemezett futásait 60 nap inaktivitás után leállítja, ezért a Vercel-cron az elsődleges.
 
-### 24.4 A játék kiadása
+### 24.4 A játék élesítése (web)
 
-- **Build:** az Electron-csomag (portable `.exe` + zip) a `release/` mappába kerül (a `.gitignore` kizárja), a nyilvános letöltés a **GitHub Releases**-ről megy. A `web/public/index.html` letöltőoldal erre mutat.
-- A `memory` mappa **a letöltött mappában** jön létre (17. fejezet); portable `.exe`-nél a `PORTABLE_EXECUTABLE_DIR` a kiindulópont.
-- **Aláíratlan `.exe`:** a Windows SmartScreen az első indításkor „ismeretlen kiadó" figyelmeztetést mutat. Kódaláírás-tanúsítvány költséges, ezért az első verzióban ezt vállaljuk, és a letöltőoldalon jelezzük.
-- **Frissítés:** egyelőre kézi (új kiadás letöltése); az automatikus frissítés (`electron-updater`, GitHub Releases) később jön. Az új pályák ettől függetlenül a Supabase-ből érkeznek.
+- **Build:** `npm run build` → `dist/` (statikus egyoldalas alkalmazás); a Vercel a repó gyökeréből építi (Framework: Vite). A `web/` mappa landing-oldala és a keep-alive függvény (`api/keepalive.js` + `vercel.json`) a gyökérbe / egy aloldalra költözik (B8); addig a jelenlegi Vercel-beállítás (Root Directory: `web`) marad.
+- **Környezeti változók (Vercel):** `VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY` (publikusak, a build beégeti őket); a keep-alive-hoz `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY`, `CRON_SECRET`.
+- **Frissítés:** minden `main`-push új telepítést indít; nincs letöltés, a játékos mindig a legfrissebbet kapja.
+- **Asztali csomag (később):** Electron/Tauri burok ugyanabból a kódból (16.5); az aláíratlan `.exe`-nél a Windows SmartScreen figyelmeztet.
 
 ### 24.5 Migrációk kezelése
 
@@ -1798,13 +1758,13 @@ HorrorDoku/
 
 | Fázis | Időtartam | Tartalom |
 |---|---|---|
-| **0. Prototípus** | 2 hét | Electron-ablak (saját, önálló ablak), 6×6 rács, lerakás, X-elés, nyomok, beküldés, 1 pálya (Éjféli Mise); `memory` mappa (settings, progress, session) |
-| **1. Alfa** | +4 hét | A 10 Klasszikus pálya, bemutató, Erő-szabályok, megoldó/ellenőrző, alap hangok; **seedelt generátor v1 + Random mód egyjátékosban** (helyi mentés és **folytatás**) |
-| **2. Béta** | +4 hét | **Supabase-fiók (e-mail + jelszó), profil oldal, felhős szinkron, a Random folytatása a felhőből** (0001), jumpscare-rendszer + beállítások, rétegzett zene, az Esemény mód első 4 világa; **Vercel keep-alive üzemben** |
-| **3. Co-op: Együtt** | +4 hét | Barátok, profil-keresés, meghívások, lobby, szobán belüli chat (0002); az **Együtt** mód közös táblával |
-| **4. Co-op: Gyilkos** | +3 hét | Titkos szerepek, a három képesség, Gyűlés / Szimat / Epilógus, szerveroldali hitelesítés (0003), egyensúly-tesztek |
-| **5. 1.0 kiadás** | +4 hét | Mind a 10 Esemény-pálya, napi ügy + ranglista, bestiárium, **portable / zip build GitHub Releases-en + letöltőoldal** |
-| **6. Bővítések** | folyamatos | Pályaszerkesztő, párbaj, szezonális kihívások, filmes világok, automatikus frissítés, mobil app, ranglista-ellenőrzés (edge function) |
+| **0. Prototípus** | 2 hét | **Webes váz (`npm run dev`)**, 6×6 rács, lerakás / jegyzet / X, nyomok, beküldés, 1 pálya (Éjféli Mise); helyi mentés a böngészőben |
+| **1. Alfa** | +4 hét | A 10 Klasszikus pálya (**sima Murdoku**), megoldó/ellenőrző, seedelt generátor v1, **Random mód egyjátékosban** (helyi mentés és folytatás) |
+| **2. Béta** | +4 hét | **Supabase-fiók, profil oldal, felhős szinkron, a Random folytatása a felhőből**; jumpscare + hang (Esemény/Random), az Esemény mód első 4 világa; **Vercel-élesítés + keep-alive** |
+| **3. Co-op: Együtt** | +4 hét | Barátok, profil-keresés, meghívások, lobby, szobán belüli chat; az **Együtt** mód közös táblával |
+| **4. Co-op: Gyilkos** | +3 hét | Titkos szerepek, a három képesség, Gyűlés / Szimat / Epilógus, szerveroldali hitelesítés |
+| **5. 1.0 kiadás** | +4 hét | Mind a 10 Esemény-pálya, napi ügy + ranglista, bestiárium; **élő webes kiadás** |
+| **6. Asztali csomag + bővítések** | folyamatos | Electron/Tauri burok (`memory` mappa, portable `.exe`), pályaszerkesztő, párbaj, szezonális kihívások, mobil app |
 
 ---
 

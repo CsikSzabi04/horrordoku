@@ -14,4 +14,4 @@
 | B5 | Együtt mód (Realtime-protokoll, overlay) | B4, A3, A4 | ⬜ | |
 | B6 | Gyilkos mód (`0003`, képességek, Gyűlés/Epilógus) | B5, A7 | ⬜ | |
 | B7 | Ranglista, online-állapot, nyilvános profil, moderáció (`0004`) | B2 | ⬜ | |
-| B8 | Kiadás (`release.yml`, GitHub Releases, letöltőoldal) | A8, B6 | ⬜ | |
+| B8 | Webes élesítés (Vercel a gyökérből, keep-alive áthelyezés, deploy-ellenőrzés) | A8, B6 | ⬜ | Vercel Root Directory átállítás: 👤 (PLANNER) |

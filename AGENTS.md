@@ -2,6 +2,8 @@
 
 Ezen a repón **két AI** dolgozik párhuzamosan: **AI-A** (a játék) és **AI-B** (felhő, társas módok, kiadás).
 
+> **v0.4 döntés: web először.** A játék Vite + React webalkalmazás (`npm run dev` → localhost); nincs Electron, `memory` mappa, híd — az asztali csomag később jön. A **Klasszikus mód sima Murdoku** (nincs Erő-szabály, jumpscare, extra), az extrák az Esemény/Random/co-op módokban vannak. Lásd a GDD „v0.4 — döntések" részét.
+
 ## Első lépés — saját munkakönyvtár (klónozni NEM kell)
 
 ```bash

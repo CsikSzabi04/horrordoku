@@ -5,7 +5,7 @@
 > A kód-alakja a `src/shared/**` alatt él (A hozza létre az A1 feladatban, **szó szerint ezekből a blokkokból**). Eltérés esetén ez a dokumentum a mérvadó.
 > Változtatás: AI_SPLIT.md 7. fejezet.
 
-Tartalom: 1 Alapok · 2 Pálya · 3 Tábla-állapot és műveletek · 4 Helyi tároló · 5 Híd (preload) · 6 CloudService · 7 Szoba és co-op · 8 Hatások (képességek) · 9 Leképezés az adatbázisra
+Tartalom: 1 Alapok · 2 Pálya · 3 Tábla-állapot és műveletek · 4 Helyi tároló · 5 (Későbbi) asztali híd · 6 CloudService · 7 Szoba és co-op · 8 Hatások (képességek) · 9 Leképezés az adatbázisra
 
 ---
 
@@ -101,6 +101,8 @@ export interface Puzzle {
 
 **Garanciák (A-nak teljesítenie kell):** `layout` mérete = `size`; pontosan egy áldozat; a `solution` permutáció (soronként/oszloponként egy); a megoldó **pontosan 1** megoldást talál; minden `clueText` magyar és a `clues`-szal egyező hosszú. A katalógus-pályákat build-időben `npm run validate:puzzles` ellenőrzi.
 
+**`mode: 'classic'` (sima Murdoku):** `activePowers = []`, nincs `worldRule`, és a nyomok csak a Murdoku-fajták: `on`, `onlyOn`, `in`, `beside`, `besideAny`, `aloneWithKiller`. A többi `Clue`-fajta és az Erő/világ-szabályok csak `event` / `generated` pályán fordulhatnak elő.
+
 ---
 
 ## 3. Tábla-állapot és műveletek (a motor és a co-op közös nyelve)
@@ -150,13 +152,13 @@ export interface OpEnvelope {
 
 ## 4. Helyi tároló (`StorageService`) — GDD 17
 
-A fájlok a `memory/<scope>/` alatt vannak (`scope` = `guest` | `u_<user-id első 8 jegye>`). **A írja a megvalósítást** (A2), **B csak ezen az interfészen át olvas/ír.**
+Az adatok a **böngésző tárolójában** vannak (localStorage), a kulcsok: `nd:v1:<scope>:<név>` (`scope` = `guest` | `u_<user-id első 8 jegye>`; a gépfüggő beállítások: `nd:v1:settings`). Az alábbi `*.json` megnevezések a kulcsok nevei (`progress`, `sessions`, `profile`, `unlocks`, `sync-queue`, `cache-puzzles`). **A írja a megvalósítást** (A2), **B csak ezen az interfészen át olvas/ír.**
 
 ```ts
 // src/shared/storage.ts
 export type JumpscareMode = 'on' | 'soundOnly' | 'imageOnly' | 'soft' | 'off'
 
-export interface Settings {                       // memory/settings.json — gépfüggő (a user_settings.data tükre)
+export interface Settings {                       // kulcs settings — gépfüggő (a user_settings.data tükre)
   v: 1
   language: 'hu' | 'en'
   theme: 'dark' | 'bloodmoon'
@@ -166,7 +168,6 @@ export interface Settings {                       // memory/settings.json — g�
   screenShake: boolean
   streamerMode: boolean
   invisible: boolean                              // „Láthatatlan mód" (online-állapot elrejtése)
-  window?: { w: number; h: number; x?: number; y?: number; maximized?: boolean }
   updatedAt: IsoTime
 }
 
@@ -194,7 +195,7 @@ export interface RunRecord {                      // egy befejezett vagy feladot
   at: IsoTime
 }
 
-export interface ProgressFile {                   // memory/<scope>/progress.json
+export interface ProgressFile {                   // kulcs <scope>:progress
   v: 1
   updatedAt: IsoTime
   puzzles: Record<PuzzleRef, ProgressEntry>       // csak katalógus-pályák
@@ -211,7 +212,7 @@ export interface SessionState {                   // egy félbehagyott játék �
 }
 export interface SessionsFile { v: 1; sessions: Record<PuzzleRef, SessionState> }   // legfeljebb 3 random + a megkezdett katalógus-pályák
 
-export interface ProfileSnapshot {                // memory/<scope>/profile.json — a felhő tükre
+export interface ProfileSnapshot {                // kulcs <scope>:profile — a felhő tükre
   v: 1
   id: Uuid | null                                 // null = vendég
   username: string
@@ -224,7 +225,7 @@ export interface ProfileSnapshot {                // memory/<scope>/profile.json
 export type UnlockKind = 'character' | 'journal' | 'jumpscare' | 'skin' | 'badge'
 export interface UnlocksFile { v: 1; items: { kind: UnlockKind; id: string; at: IsoTime }[] }
 
-/** Feltöltésre váró változás (memory/<scope>/sync-queue.json). A tároló állítja elő, B üríti. */
+/** Feltöltésre váró változás (kulcs <scope>:sync-queue). A tároló állítja elő, B üríti. */
 export interface SyncOp {
   id: Uuid
   table: 'progress' | 'saves' | 'runs' | 'unlocks' | 'user_settings' | 'profiles'
@@ -260,7 +261,7 @@ export interface StorageService {
   getProfile(): Promise<ProfileSnapshot>
   putProfile(p: ProfileSnapshot): Promise<void>
 
-  /** Új/frissített katalógus-pályák (a Supabase-ből; `memory/<scope>/cache/puzzles.json`). */
+  /** Új/frissített katalógus-pályák (a Supabase-ből; `kulcs <scope>:cache-puzzles`). */
   getCachedPuzzles(): Promise<Puzzle[]>
   putCachedPuzzles(ps: Puzzle[]): Promise<void>
   getSyncMeta(): Promise<{ lastPullAt?: IsoTime; puzzleRevs: Record<string, number> }>
@@ -281,42 +282,9 @@ export interface StorageService {
 
 ---
 
-## 5. Híd (preload) — `window.nightdoku` — GDD 16.5, 17.4
+## 5. (Későbbi) asztali híd — jelenleg NINCS
 
-**A írja** (`electron/preload.ts`), **A0-ban, elsőként** — B ezen át éri el a titkosított tárolót. A renderer **nem** kap Node-hozzáférést (`contextIsolation: true`).
-
-```ts
-// src/shared/bridge.ts
-export interface NightdokuBridge {
-  version: string
-  platform: 'win32' | 'darwin' | 'linux'
-  memory: {
-    dir(): Promise<string>                                         // a memory mappa teljes útja (megjelenítésre)
-    status(): Promise<{ dir: string; fallback: boolean }>          // [bővítés, A0] fallback=true: az app mappája nem írható → %APPDATA%\NIGHTDOKU\memory; a UI figyelmeztet
-    readJson<T>(rel: string): Promise<T | null>                    // rel: "u_ab12cd34/progress.json" — csak a memory mappán belül
-    writeJson(rel: string, data: unknown): Promise<void>          // atomikus + .bak
-    remove(rel: string): Promise<void>
-    list(rel: string): Promise<string[]>
-    usage(): Promise<{ bytes: number }>
-    openInExplorer(): Promise<void>
-  }
-  /** Electron safeStorage (Windows: a felhasználói fiókhoz kötött titkosítás). Egyetlen fájl: memory/auth.bin; a kulcsok átlátszatlanok — a scope-előtag a hívó dolga (pl. "u_ab12cd34/sb-token"). */
-  secure: {
-    get(key: string): Promise<string | null>
-    set(key: string, value: string): Promise<void>
-    remove(key: string): Promise<void>
-  }
-  app: {
-    openExternal(url: string): Promise<void>                       // csak https://
-    quit(): void
-    onBeforeQuit(cb: () => Promise<void>): Unsubscribe             // végső mentés + szinkron-ürítés (max. ~2 mp)
-  }
-  window: { toggleFullscreen(): void }
-}
-declare global { interface Window { nightdoku: NightdokuBridge } }
-```
-
-A híd **minden** fájlútvonalat ellenőriz: `..`, abszolút út és a `memory/` mappán kívüli hivatkozás hiba.
+A játék **web először** (v0.4). Az Electron-híd (`window.nightdoku`: `memory` mappa, titkosított tokentár, ablak-vezérlés) az **asztali csomagban** jön, külön fázisban (GDD 16.5); a szerződése akkor kerül ide. Webes verzióban a helyi tároló a `StorageService` (4. fejezet), a belépési tokent a Supabase-kliens alapértelmezett (localStorage) tárolója őrzi. *(Az első, Electron-os változat a git-történetben van: `1d4abda`.)*
 
 ---
 
@@ -511,7 +479,7 @@ export interface BoardController {
 | `RunRecord.id / ref / kind / roomId / role / won / difficulty / size / solved / ms / hints / wrongSubmits / at` | `runs.id / puzzle_ref / kind / room_id / role / won / difficulty / size / solved / time_ms / hints_used / wrong_submits / played_at` |
 | `ProgressEntry.solved / bestMs / hints / wrongSubmits / firstSolvedAt` | `progress.solved / best_time_ms / hints_used / wrong_submits / first_solved_at` (kulcs: `puzzle_id` = `ref`) |
 | `SessionState` → | `saves.state` = `{ board, wrongSubmits }` · `saves.meta` = `meta` · `saves.elapsed_ms` = `elapsedMs` · `saves.hints_used` = `hintsUsed` (kulcs: `puzzle_ref`) |
-| `Settings` | `user_settings.data` (a gépfüggő `window` mező **nem** megy fel) |
+| `Settings` | `user_settings.data` |
 | `ProfileSnapshot` | `profiles` (`username, avatar, xp, coins, streak, best_streak, last_daily`) |
 | `UnlocksFile.items` | `unlocks (kind, item_id, unlocked_at)` |
 | `Puzzle` | `puzzles.data` (+ az oszlopok: `id, mode, world, chapter, title, difficulty, size, rev, published`) |

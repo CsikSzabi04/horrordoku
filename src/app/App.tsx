@@ -1,7 +1,5 @@
-import { useEffect } from 'react'
 import type { ComponentType } from 'react'
-import { t } from '../i18n'
-import { ToastProvider, useToast } from '../ui'
+import { ToastProvider } from '../ui'
 import { NavProvider, useNav } from './nav'
 import type { RouteName } from './routes'
 import { Stub } from './Stub'
@@ -32,10 +30,6 @@ const screens: Record<RouteName, ComponentType> = {
 
 function Shell() {
   const { route } = useNav()
-  const toast = useToast()
-  useEffect(() => {
-    void window.nightdoku?.memory.status().then((s) => s.fallback && toast(t('memory.fallback')))
-  }, [toast])
   const Screen = screens[route.name]
   return <Screen />
 }

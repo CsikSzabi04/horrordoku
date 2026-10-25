@@ -2,41 +2,17 @@
   "name": "nightdoku",
   "version": "0.0.1",
   "private": true,
-  "description": "NIGHTDOKU — horror-gyilkossági logikai rejtvényjáték",
+  "description": "NIGHTDOKU — horror-gyilkossági logikai rejtvényjáték (webes)",
   "author": "NIGHTDOKU",
-  "main": "dist-electron/main.cjs",
   "type": "module",
   "scripts": {
-    "dev": "node scripts/dev.mjs",
-    "build": "vite build && node scripts/build-electron.mjs",
-    "build:win": "npm run build && electron-builder --win portable",
-    "start": "electron .",
-    "smoke": "npm run build && node scripts/smoke.mjs",
+    "dev": "vite",
+    "build": "tsc --noEmit && vite build",
+    "preview": "vite preview",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "format": "prettier --write .",
     "test": "vitest run"
-  },
-  "build": {
-    "appId": "hu.nightdoku.game",
-    "productName": "NIGHTDOKU",
-    "directories": {
-      "output": "release"
-    },
-    "files": [
-      "dist/**",
-      "dist-electron/**",
-      "package.json"
-    ],
-    "win": {
-      "target": [
-        "portable"
-      ],
-      "signAndEditExecutable": false
-    },
-    "portable": {
-      "artifactName": "NIGHTDOKU-${version}-portable.exe"
-    }
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
@@ -44,9 +20,6 @@
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
-    "electron": "^45.0.0",
-    "electron-builder": "^26.18.0",
-    "esbuild": "^0.28.2",
     "eslint": "^10.13.0",
     "prettier": "^3.9.10",
     "react": "^19.3.1",

@@ -1,6 +1,5 @@
 // A közös szerződések (docs/CONTRACTS.md). Egyetlen belépési pont.
 export * from './base'
-export type * from './bridge'
 export type * from './puzzle'
 export type * from './board'
 export type * from './storage'

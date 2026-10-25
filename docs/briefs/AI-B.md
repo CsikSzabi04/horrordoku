@@ -2,14 +2,14 @@
 
 ## Indító-prompt (másold be az AI-nak)
 
-> Te vagy **AI-B** a NIGHTDOKU projektben (horror-gyilkossági logikai rejtvényjáték, letölthető Electron-alkalmazás, GitHub: `CsikSzabi04/horrordoku`; a saját munkakönyvtáradat a `bash scripts/ai-setup.sh B` hozza létre (klónozni nem kell), lásd AGENTS.md; Supabase-projekt: HorrorDoku, ref `mgmmrejyxdjjduxcwksv`).
+> Te vagy **AI-B** a NIGHTDOKU projektben (horror-gyilkossági logikai rejtvényjáték, webes játék (Vite + React), GitHub: `CsikSzabi04/horrordoku`; a saját munkakönyvtáradat a `bash scripts/ai-setup.sh B` hozza létre (klónozni nem kell), lásd AGENTS.md; Supabase-projekt: HorrorDoku, ref `mgmmrejyxdjjduxcwksv`).
 > Rajtad kívül **AI-A** dolgozik a repón párhuzamosan. Olvasd el sorrendben: `AGENTS.md`, `docs/AI_SPLIT.md`, `docs/CONTRACTS.md`, ezt a fájlt, `docs/tasks/B.md`, `docs/HANDOFF.md` (+ a másik AI outboxa: `docs/handoff/A.md`, és `docs/handoff/PLANNER.md`), végül a `NIGHTDOKU_jatekterv.md`-t.
 > **Első lépés:** `bash scripts/ai-setup.sh B` — ez létrehozza a saját `.work/B` munkakönyvtáradat; innentől **csak ott dolgozz** (a fő mappába ne írj), és `bash scripts/ai-sync.sh pull` után kezdj. Az első feladatod **B0**, majd B1 előkészítése *tiszta TypeScript-modulokként* (nem vársz az AI-A alapjára). Csak a saját útvonalaidra írj (AI_SPLIT.md 3. fejezet). A feladat-táblád: `docs/tasks/B.md`, az outboxod: `docs/handoff/B.md`; a munkád végén `bash scripts/ai-sync.sh push`.
 > **Soha ne írj Supabase-be vagy Vercelbe összekötőn/MCP-n keresztül** — az a felhasználó másik, éles fiókja. Séma-változás = új migrációs fájl + SQL-teszt; a felhasználó futtatja az SQL Editorban.
 
 ## Küldetés
 
-Te építed azt, amit a játékos *megoszt és szinkronizál*: a fiókot és profilt, a felhős mentést, a barátokat, a szobákat, a chatet és a két co-op módot (**Együtt**, **Gyilkos**), az adatbázist, a weboldalt és a kiadást. **A játék belsejét nem ismered** — a tábla, a motor és a helyi tároló A tulajdona; te a `StorageService`-en, a `BoardController`-en és a `window.nightdoku` hídon át csatlakozol hozzá.
+Te építed azt, amit a játékos *megoszt és szinkronizál*: a fiókot és profilt, a felhős mentést, a barátokat, a szobákat, a chatet és a két co-op módot (**Együtt**, **Gyilkos**), az adatbázist, a weboldalt és a kiadást. **A játék belsejét nem ismered** — a tábla, a motor és a helyi tároló A tulajdona; te a `StorageService`-en és a `BoardController`-en át csatlakozol hozzá.
 
 ## Tulajdonolt útvonalak
 
@@ -27,13 +27,12 @@ Te építed azt, amit a játékos *megoszt és szinkronizál*: a fiókot és pro
 ### B0 — Infra és alapok *(most indulhat)*
 - Ellenőrizd (olvasva) a repó állapotát, a `supabase/tests` zöld-e; vedd át a `supabase/migrations`-t. **Ne futtass SQL-t felhőben** — ha valami hiányzik, HANDOFF a felhasználónak.
 - Kövesd nyomon a Vercel 404-et: a felhasználó beállítása után ellenőrizd kívülről (`curl`): `/` → 200 és tartalmaz „NIGHTDOKU"-t; `/api/keepalive` → 401 (él, de token nélkül zárva). A lépéseket lásd GDD 24.2.
-- `web/` rendbetétele, ha kell (404-oldal, letöltő-gomb helye); `.github/workflows/` terv a kiadáshoz.
+- `web/` rendbetétele, ha kell (404-oldal); `.github/workflows/` terv a kiadáshoz.
 - **Kész, ha:** `docs/ops/RUNBOOK.md` (rövid): hogyan futtatunk migrációt, hogyan ellenőrizzük a keep-alive-ot, mi a teendő a Supabase-szüneteltetéskor.
 
-### B1 — Felhő-alap és belépés *(az `A0` hídra épül)*
-- `src/cloud/`: `supabase.ts` (`@supabase/supabase-js`, `createClient(URL, PUBLISHABLE_KEY)` a `VITE_…` változókból; **a token a `window.nightdoku.secure`-on át** tárolódik — `storage` adapter), a `CloudService` **teljes megvalósítása** a CONTRACTS 6. szerint: `auth` (`signUp` előtt `usernameAvailable`, `signIn`, `signOut`, `sendPasswordReset`), `profile` (`get/update/stats` a `profiles` és `profile_stats` alapján), hibakezelés `Result`-tal, időkorlátok (≤ 10 mp), a belépés/kilépés `StorageService.setScope()`-ot hív.
+### B1 — Felhő-alap és belépés *(webes: a Supabase-kliens alapértelmezett localStorage-tárolóját használja — nincs `secure` adapter)*
+- `src/cloud/`: `supabase.ts` (`@supabase/supabase-js`, `createClient(URL, PUBLISHABLE_KEY)` a `VITE_…` változókból; alapértelmezett localStorage-munkamenet), a `CloudService` **teljes megvalósítása** a CONTRACTS 6. szerint: `auth` (`signUp` előtt `usernameAvailable`, `signIn`, `signOut`, `sendPasswordReset`), `profile` (`get/update/stats` a `profiles` és `profile_stats` alapján), hibakezelés `Result`-tal, időkorlátok (≤ 10 mp), a belépés/kilépés `StorageService.setScope()`-ot hív.
 - `NullCloud` (csonk A1-ből) marad a vendég/offline alapértelmezés; a valódi példány csak belépve aktív; az `index.ts` exportja átáll.
-- Amíg A0 nincs kész: **tiszta modulokként** írd, a `secure` adaptert interfész mögé téve, egység-teszttel (kamu `bridge`).
 - **Kész, ha:** egység-tesztek a hibaágakra (hálózat nélkül, rossz jelszó, foglalt becenév); kézi próba éles projekttel (regisztráció + belépés + kilépés + újraindítás utáni automatikus belépés).
 
 ### B2 — Szinkron-motor
@@ -48,7 +47,7 @@ Te építed azt, amit a játékos *megoszt és szinkronizál*: a fiókot és pro
 
 ### B4 — Barátok, lobby, szoba-szolgáltatás, chat
 - `FriendsApi` (a `0002` függvényei: `send_friend_request`, `respond_friend_request`, `remove_friend`, `my_friends`), profil-keresés (előtag, min. 2 karakter, 300 ms debounce), Realtime-értesítés a kérésekről; `RoomsApi` (`create_room`, `join_room`, `leave_room`, `start_room`, `invite_friend`), `RoomSession` (tagok, chat a `room_messages` + `postgres_changes`-en, 0,7 mp-es kliens-oldali sebességkorlát); képernyők: Barátok (14.9), Lobby (14.10).
-- **Kész, ha:** két példány (`--memory` külön mappával) barátot jelöl, elfogad, meghív, a másik belép a szobába, chatelnek.
+- **Kész, ha:** két böngészőablak (külön profil / inkognitó) barátot jelöl, elfogad, meghív, a másik belép a szobába, chatelnek.
 
 ### B5 — Együtt mód
 - GDD 22.1–22.2: Broadcast `room:<id>` (privát) protokoll az `OpEnvelope`-pal, Lamport-`seq`, a konfliktus-szabály (CONTRACTS 3.), kurzorok (~10 Hz), 2 mp-es pillanatkép `save_room_state`-tel (verzió-ellenőrzés), újracsatlakozás (`loadState` + az azóta jött műveletek), 2 perc türelmi idő, host-átadás, beküldés-szavazás (10 mp, többség), közös tippkeret, a `runs` napló (`kind='together'`) minden tagnak.
@@ -66,14 +65,13 @@ Te építed azt, amit a játékos *megoszt és szinkronizál*: a fiókot és pro
 - Napi ranglista (`leaderboard`), `public_profile(uuid)` függvény (biztonságos statisztika másoknak), `profiles.searchable`, `profiles.last_seen` + „Láthatatlan mód", chat-jelentés (`reports` tábla) és némítás, barát-limit (100). Mind **új migrációban** (`0004_…`) teszttel.
 
 ### B8 — Kiadás és üzemeltetés
-- `release.yml`: `electron-builder` → GitHub Releases (portable `.exe` + zip), verziószám; a `web/public/index.html` letöltő-gombja a legfrissebb kiadásra mutat; keep-alive megfigyelés; (később) automatikus frissítés.
+- **Webes élesítés:** Vercel a repó gyökeréből (Framework: Vite, kimenet `dist/`); az `api/keepalive.js` + `vercel.json` a gyökérbe költözik, a `web/` landing aloldalra; GitHub Actions: build/deploy-ellenőrzés; keep-alive megfigyelés. Ehhez a felhasználónak át kell állítania a Vercel Root Directory-t (`web` → `.`) — előbb kérd a `handoff/PLANNER`-en át. **Az asztali csomag (Electron/Tauri) később, külön feladat.**
 - A kiadás előtti ellenőrzőlista: GDD 24.6; a `puzzles/` láthatóságának döntése (AI_SPLIT 9.2); a franchise-nevek cseréje (GDD 21).
 
 ## Amire A-tól számíthatsz (és mikor)
 
 | Mit | Mikor | Hogyan használod |
 |---|---|---|
-| `window.nightdoku.secure` / `memory` híd | **A0** után | a Supabase `storage` adapter és a fájl-hozzáférés |
 | `src/shared/**` típusok, `NullCloud` csonk | A1 után | `import` a szerződés-típusokból; az `index.ts` exportot te veszed át |
 | UI-készlet, csonk-képernyők | A1 után | a képernyőket a csonkok helyére építed |
 | `StorageService` | **A2** után | a szinkron-motor ezen át olvas/ír |

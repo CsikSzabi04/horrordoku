@@ -11,15 +11,15 @@ A projektet **rétegek mentén** vágtuk ketté, nem funkciók mentén — így 
 | **Felelős** | amit a játékos *játszik*: motor, tábla, mentés a gépen, minden egyjátékos mód, hang/jumpscare, a pályák tartalma | amit a játékos *megoszt és szinkronizál*: fiók, profil, felhős mentés, barátok, chat, co-op módok, adatbázis, weboldal, kiadás |
 | **Módok** | Klasszikus (10) · Esemény (10) · Random | Együtt · Gyilkos |
 | **GDD-fejezetek** | 5–15, 19.1–19.4, 20 | 16.2, 17.5, 18, 19.5–19.7, 22–24 |
-| **Fő nyelv/eszköz** | Electron, React, TypeScript, kézi tartalom-szerkesztés | TypeScript, SQL (Postgres/RLS), Supabase Realtime, Vercel, CI |
+| **Fő nyelv/eszköz** | Vite, React, TypeScript, kézi tartalom-szerkesztés | TypeScript, SQL (Postgres/RLS), Supabase Realtime, Vercel, CI |
 
-**Hogyan nem akadnak egymásba:** a két oldal csak a [CONTRACTS.md](CONTRACTS.md)-ben rögzített **szerződéseken** keresztül beszél. AI-A sosem hív Supabase-t (csak a `CloudService` interfészt, amihez van üres `NullCloud`), AI-B sosem olvas közvetlenül a `memory` mappába (csak a `StorageService`-en át). Ezért **mindkettő önállóan fejleszthető és tesztelhető**, és az összeillesztés a *kapuknál* (5. fejezet) történik.
+**Hogyan nem akadnak egymásba:** a két oldal csak a [CONTRACTS.md](CONTRACTS.md)-ben rögzített **szerződéseken** keresztül beszél. AI-A sosem hív Supabase-t (csak a `CloudService` interfészt, amihez van üres `NullCloud`), AI-B sosem olvassa közvetlenül a böngésző-tárolót (csak a `StorageService`-en át). Ezért **mindkettő önállóan fejleszthető és tesztelhető**, és az összeillesztés a *kapuknál* (5. fejezet) történik.
 
 ## 2. Ki mit visz (feature-térkép)
 
 | Terület | Tulajdonos | GDD |
 |---|---|---|
-| Electron-ablak, preload-híd, `memory` mappa helye, single-instance | **A** | 16.5, 17.1, 17.4 |
+| Webes váz (Vite), útvonalak, böngészős helyi tároló | **A** | 16, 17 |
 | Szabálymotor, megoldó (egyértelműség), seedelt generátor | **A** | 5.2, 19.2, 19.3, 20 |
 | Tábla, játékképernyő, eszköztár, tippek, bemutató | **A** | 2.4, 14.3–14.5 |
 | Helyi mentés (`StorageService`, JSON-fájlok, `.bak`, méretkeret) | **A** | 17.1–17.4 |
@@ -42,7 +42,6 @@ A projektet **rétegek mentén** vágtuk ketté, nem funkciók mentén — így 
 
 | Útvonal | Tulajdonos | Megjegyzés |
 |---|---|---|
-| `electron/**` | A | `main.ts`, `preload.ts`, a híd (CONTRACTS 5.) |
 | `src/app/**`, `src/ui/**`, `src/i18n/**` | A | app-váz, útvonal-tábla, UI-készlet, szövegek |
 | `src/engine/**`, `src/components/**` | A | motor és a tábla-komponensek |
 | `src/storage/**` | A | a `StorageService` implementációja |
@@ -65,7 +64,7 @@ A projektet **rétegek mentén** vágtuk ketté, nem funkciók mentén — így 
 
 ```mermaid
 flowchart LR
-  A0[A0 Alap + híd] --> A1[A1 Típusok + UI-készlet + váz]
+  A0[A0 Webes alap] --> A1[A1 Típusok + UI-készlet + váz]
   A1 --> A2[A2 StorageService]
   A1 --> A3[A3 Motor]
   A2 --> A4[A4 Tábla + játékképernyő]
@@ -93,19 +92,19 @@ flowchart LR
 ```
 
 **Mi indulhat azonnal, a másikra várás nélkül:**
-- **A:** A0 (alap és híd) — ez az *egyetlen* dolog, amire B várhat (a `secure` tároló miatt), ezért **A0-t kell elsőnek befejezni**.
+- **A:** A0 (webes alap) és A1 (típusok, UI-készlet, váz) ✅ kész; B következő függősége: A2 (`StorageService`) és A3 (motor).
 - **B:** B0 (infra), B1 előkészítés tiszta TypeScript-modulokként (szinkron-összefésülés, protokoll-reducer, mindez egység-tesztelve, a `CONTRACTS.md` típusaira építve), amíg A0 elkészül.
 
 ## 5. Mérföldkövek („kapuk") — itt illesztjük össze, ami addig külön élt
 
 | Kapu | Mikor | Ellenőrzés (mindkét AI aláírja a saját outboxában) |
 |---|---|---|
-| **G0 — Alap** | A0 + A1 + B0 kész | `npm run dev` natív ablakot nyit · `window.nightdoku.secure` működik · CI zöld · a `src/shared/` típusok bent vannak |
+| **G0 — Alap** | A0 + A1 + B0 kész | `npm run dev` localhoston főmenüt mutat · CI zöld · a `src/shared/` típusok bent vannak |
 | **G1 — Első játszható + belépés** | A4 + A5 (min. 3 pálya) + B1 + B2 + B3 kész | regisztráció → belépés → Klasszikus #1 megoldása → az eredmény a `progress.json`-ban **és** a Supabase `runs`/`progress` táblában · offline is játszható · másik gépen/mappában látszik a haladás |
 | **G2 — Folytatás** | A6 + B2 kész | Random ügy félbehagyása az egyik gépen → folytatás a másikon (`saves` szinkron) · kilépés közbeni mentés nem veszít |
-| **G3 — Együtt** | B4 + B5 kész | két példány (`NIGHTDOKU.exe --memory=./memory-b`) belép egy szobába, közös tábla, a másik lerakását el lehet vinni, chat, újracsatlakozás 2 percen belül |
+| **G3 — Együtt** | B4 + B5 kész | két böngészőablak (külön profil vagy inkognitó) belép egy szobába, közös tábla, a másik lerakását el lehet vinni, chat, újracsatlakozás 2 percen belül |
 | **G4 — Gyilkos** | B6 + A7 kész | 3 példány · a szerep **nem szivárog** a hálózati forgalomból · 3 képesség hűtéssel, értesítés nélkül · Gyűlés, Szimat, Epilógus · döntetlen/győzelem helyesen kerül a `runs`-ba |
-| **G5 — 1.0** | A8 + B7 + B8 kész | mind a 10+10 pálya · ranglista · kiadási build a GitHub Releases-en · letöltőoldal |
+| **G5 — 1.0** | A8 + B7 + B8 kész | mind a 10+10 pálya · ranglista · élő webes kiadás a Vercelen (az asztali csomag később) |
 
 Minden kapunál **az integrátor** az, aki a *fogyasztó* oldalon van (G1: A, mert A hívja a CloudService-t; G3/G4: B, mert B tolja a BoardController-t), de a **kapu lezárása közös**: mindketten aláírják a saját outboxukban (`G1 — aláírom`).
 
@@ -120,7 +119,7 @@ bash scripts/ai-setup.sh B      # AI-B  ->  .work/B  (ág: ai-b)
 - A szkript **idempotens**, és a `.env`-et átmásolja (gitignore-olt). A munkakönyvtár a projektmappán **belül** van (`.work/`, gitignore-olt), így az AI-eszközök külön engedély nélkül írhatnak bele.
 - Az alap a helyi `main`, ha az előrébb jár az `origin/main`-nél (még nem pusholt commitok); különben az `origin/main`.
 - A `node_modules` worktree-nként külön van (`npm install` a saját mappában). A fő mappa (`D:\Projectss\HorrorDoku`) a felhasználó / tervező saját példánya — **az AI-k oda nem írnak.**
-- **Fejlesztői példányok ne ütközzenek** (A0 követelménye): dev módban az Electron `userData` a munkakönyvtárban van (`.dev-userdata/`), ezért az A és B egyszerre futó fejlesztői példányai nem tiltják ki egymást a single-instance zárral; a Vite-szerver portja szabadon választott (`strictPort: false`); az e2e-tesztek nem használnak fix portot; a lint/teszt/typecheck-glob kizárja a `.work/` és `memory*/` mappákat.
+- **Egyszerre futó fejlesztői szerverek ne ütközzenek:** a Vite portja szabadon választott (`strictPort: false` — A és B egyszerre futhat); az e2e-tesztek nem használnak fix portot; a lint/teszt/typecheck-glob kizárja a `.work/` mappát. Co-op teszthez két böngészőprofil / inkognitó ablak kell (külön localStorage).
 
 **Ágak és szinkron.** Szigorú útvonal-tulajdonlás mellett az ütközés ritka, ezért **trunk-based**: a saját munkád a saját ágadon (`ai-a` / `ai-b`) készül, kis, tesztelt commitokban, és a `main`-re így kerül fel:
 ```bash
@@ -156,7 +155,7 @@ bash scripts/ai-sync.sh push      # fetch -> rebase -> push a main-re; force NÉ
 | Generátor-tulajdonságok: 1000 seedre érvényes + pontosan 1 megoldás | `vitest` | A |
 | SQL: RLS, trigger, függvények | `cd supabase/tests && npm test` (PGlite) | B |
 | Böngészős füstteszt (játék, felület) | `puppeteer-core` + Brave | A (játék), B (belépés/profil/lobby) |
-| Több példányos co-op teszt | 2–3 példány, külön `--memory` mappával | B |
+| Több-játékos co-op teszt | 2–3 böngészőablak (külön profil / inkognitó) | B |
 
 ## 9. Kérdések a felhasználónak (nyitottak)
 

@@ -13,6 +13,6 @@
     "resolveJsonModule": true,
     "types": ["node"]
   },
-  "include": ["src", "electron", "vite.config.ts"],
+  "include": ["src", "vite.config.ts"],
   "exclude": ["node_modules", ".work", "memory*", ".dev-userdata", "dist", "dist-electron", "release"]
 }
