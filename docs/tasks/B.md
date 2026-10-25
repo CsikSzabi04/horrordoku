@@ -9,7 +9,7 @@
 | B0 | Infra: SQL-tesztek a repóban, Vercel-ellenőrzés, RUNBOOK | — | ✅ | SQL-tesztek 56/56 · RUNBOOK: `4d31799` ([ops/RUNBOOK.md](../ops/RUNBOOK.md)) · Vercel: `/` → 200 + „NIGHTDOKU", `/api/keepalive` → 401 (ellenőrizve 2026-10-25) |
 | B1 | Felhő-alap + belépés (`CloudService`, `auth`, `profile`) | B0, A0 | ✅ | `b4205fa` · 15 egység-teszt · éles projekten csak olvasó próba (`username_available`, `ping` ok) · regisztráció-próba a B3 képernyőn |
 | B2 | Szinkron-motor (`merge`, `sync`, `catalog`) | B1, A2 | ⬜ | |
-| B3 | Belépés / Profil / Fiók képernyők | B1, A1 | ⬜ | |
+| B3 | Belépés / Profil / Fiók képernyők | B1, A1 | 🟨 | `48b17fb` — kész: belépés/regisztráció/jelszó-reset, Profil (fejléc, rang, Áttekintés, Fiók: becenév/avatár/kilépés), böngészős füstteszt · hátra: adat-export, fiók-törlés (edge function), vendég→fiók átvitel (A2 után) |
 | B4 | Barátok, lobby, szoba-szolgáltatás, chat | B1, A1 | ⬜ | |
 | B5 | Együtt mód (Realtime-protokoll, overlay) | B4, A3, A4 | ⬜ | |
 | B6 | Gyilkos mód (`0003`, képességek, Gyűlés/Epilógus) | B5, A7 | ⬜ | |
