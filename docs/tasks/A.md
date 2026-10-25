@@ -8,7 +8,7 @@
 |---|---|---|---|---|
 | A0 | Webes alap (Vite+React+TS), CI, `npm run dev` | — | ✅ | az Electron-os első változat törölve (v0.4: web először) |
 | A1 | Közös típusok (`src/shared`), UI-készlet, app-váz, csonk-képernyők, i18n | A0 | ✅ | A1 commit · `src/shared/*` = CONTRACTS szó szerint · `src/ui` · `src/app` · `NullCloud` csonk |
-| A2 | `StorageService` (helyi mentés, scope, SyncOp) | A1 | ⬜ | |
+| A2 | `StorageService` (helyi mentés, scope, SyncOp) | A1 | ✅ | `src/storage` · 15 teszt · `getStorage()` |
 | A3 | Szabálymotor, megoldó, generátor | A1 | ⬜ | |
 | A4 | Tábla + játékképernyő + `BoardController` | A2, A3 | ⬜ | |
 | A5 | Klasszikus mód: 10 pálya (+2 bónusz), kampány-menü | A4 | ⬜ | G1-hez az első 3 elég |

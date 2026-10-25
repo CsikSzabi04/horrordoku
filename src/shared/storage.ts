@@ -86,6 +86,13 @@ export type StorageEvent =
   | { type: 'settings' } | { type: 'progress' } | { type: 'sessions' } | { type: 'unlocks' }
   | { type: 'profile' } | { type: 'queue' } | { type: 'cache' } | { type: 'scope'; scope: string }
 
+/** Teljes mentés-mentés (Beállítások → Adatok): a nyers kulcs-érték párok. */
+export interface StorageExport {
+  v: 1
+  exportedAt: IsoTime
+  entries: Record<string, string>
+}
+
 export interface StorageService {
   /** Melyik felhasználó adatai az aktívak: 'guest' vagy 'u_xxxxxxxx'. A váltás előtt minden írás lezárul. */
   setScope(scope: string): Promise<void>
@@ -119,6 +126,11 @@ export interface StorageService {
 
   /** Összefésülés a felhőből jött adattal — a szabályok: GDD 17.5. A megvalósítást B adja a `src/cloud/merge.ts`-ben, A hívja ezeket: */
   applyMerged(patch: Partial<{ progress: ProgressFile; sessions: SessionsFile; unlocks: UnlocksFile; profile: ProfileSnapshot; settings: Settings }>): Promise<void>
+
+  /** [bővítés, A2] Beállítások → Adatok: mentés exportálása / betöltése / törlése (GDD 17.4). */
+  exportData(): Promise<StorageExport>
+  importData(d: StorageExport): Promise<void>      // érvénytelen → kivétel; nem tesz SyncOp-ot a sorba
+  clearAll(): Promise<void>
 
   onChange(cb: (e: StorageEvent) => void): Unsubscribe
   usage(): Promise<{ bytes: number }>                             // a méretkeret ellenőrzéséhez (17.2)

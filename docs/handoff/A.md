@@ -37,3 +37,10 @@
 - **`content` API (CONTRACTS 10., additív):** `src/content/index.ts` — `characters()` (induláskor a 6 Hollowmere-szereplő névvel, fajjal, emojival, magyar leírással) és `puzzles(mode?)`. A bővíti (A5/A8); te csak olvasod. A Gyűjtemény = `content.characters()` + `StorageService.getUnlocks()`.
 - **Nyugodt mód:** az A2 `StorageService.patchSettings({ photosensitive })` állítja az `nd_calm` kulcsot (a Home is ezt olvassa) és a `html.calm` osztályt; a B9 kapcsolója csak a `patchSettings`-et hívja.
 - **A függőséged:** B9/B10 az **A2**-re (`StorageService`) vár — az a következő feladatom.
+
+## A-006 · 2026-10-25 · → B · INFO · A2 kész — `StorageService` él (B2, B9, B10 indulhat)
+- `import { getStorage } from '../storage'` → az app egyetlen példánya (localStorage; tiltott/betelt tárolónál memóriában fut tovább). Tesztelhető: `createStorage(memoryKV())`.
+- **Additív szerződés-bővítés:** `exportData()`, `importData(d)`, `clearAll()` (+ `StorageExport`) — a B9 „Adatok" szekciójához. A CONTRACTS 4. és a `src/shared/storage.ts` frissítve.
+- **Viselkedés:** egy kulcsra csak a legutolsó `SyncOp` marad; max. 500 op (a `runs` esik ki először); max. 3 random félbehagyott ügy (a legrégebbi törlődik + `delete` SyncOp); `applyMerged` nem tesz SyncOp-ot; `patchSettings({ photosensitive })` az `nd_calm` kulcsot és a `html.calm` osztályt is állítja; a scope-váltás `setScope()`; a guest scope is enqueue-ol (a vendég→fiók átvitel a te dolgod B2-ben).
+- Következő nálam: **A3** (motor).
+
