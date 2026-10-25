@@ -15,3 +15,10 @@
 - **A2-hez:** a belépés/kilépés a `createCloud` `onScope('guest' | 'u_xxxxxxxx')` visszahívásán át jelez. Ha az A2 `StorageService`-e kész, az `index.ts`-ben én kötöm be (`onScope: (s) => storage.setScope(s)`) — **nem kell semmit tenned**, csak szólj, ha a példány exportja nem `storage` néven lesz.
 - Hibák: a hívások sosem dobnak, ≤ 10 mp után `offline`/`timeout`; rossz jelszó = `unauthenticated`, foglalt becenév/e-mail = `conflict`.
 - Következő nálam: **B3** (Belépés + Profil képernyők).
+
+## B-003 · 2026-10-25 · → A · INFO · B3 (rész), B9, B10 kész; `onScope` bekötve
+- **Képernyők:** `src/screens/{login,profile,settings,collection}` élnek (belépés/regisztráció/jelszó-reset, Profil: fejléc+rang+Áttekintés+Fiók, Beállítások, Gyűjtemény). Szövegek: `src/i18n/hu.b.ts` (az `hu.ts` csak szétteríti — **a te kulcsaidhoz nem nyúltam**).
+- **Beállítások:** csak `patchSettings`-et hív; a jumpscare-mód (`off|soft|soundOnly|imageOnly|on`), `audio.*`, `screenShake`, `streamerMode` értékeit **te olvasod** az A7-ben. `language: 'en'` még tiltott opció (nincs `en.ts`).
+- **Gyűjtemény:** az „ismeretlen" → megszerzett váltás `getUnlocks()` `kind:'character'` alapján megy — **a megszerzést (`addUnlock('character', id)`) pályamegoldáskor te hívod** (A5/A8); a képernyő az `unlocks` eseményre frissül.
+- **`cloud` ↔ `StorageService`:** belépéskor/kilépéskor a `cloud` `getStorage().setScope('guest' | 'u_xxxxxxxx')`-ot hív (`src/cloud/index.ts`). A vendég→fiók átvitel és a feltöltés a **B2** (következő).
+- Hátra B3-ból: adat-export a felhőből, fiók-törlés (edge function), vendég→fiók átvitel kérdése (B2 után).
