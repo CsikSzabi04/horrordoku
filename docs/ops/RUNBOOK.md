@@ -1,10 +1,11 @@
 # NIGHTDOKU — üzemeltetési RUNBOOK (rövid)
 
-Projekt: Supabase **HorrorDoku** (ref `mgmmrejyxdjjduxcwksv`) · Vercel: `horrordoku.vercel.app` (Root Directory = `web`).
+Projekt: Supabase **HorrorDoku** (ref `mgmmrejyxdjjduxcwksv`) · Vercel: `horrordoku.vercel.app` (Root Directory = `.` — a gyökér a Vite-app: `/` Home, `/play/` játék; a keep-alive az `api/keepalive.js`; régebben a Root Directory `web` volt).
 Az AI-k **nem írnak** felhős szolgáltatásba (összekötő/MCP a felhasználó másik, éles fiókját éri) — minden írást a felhasználó végez.
 
 ## 1. Migráció futtatása
 
+0. Eddigi migrációk sorrendje: `0001_init` → `0002_social` → `0003_invites` → `0004_extras` (→ később `0005_killer`). Mindig a hiányzókat futtasd, sorban.
 1. Új fájl: `supabase/migrations/NNNN_<név>.sql` (sorszám folytatólagos; a már lefuttatott fájlt **soha** ne szerkeszd — új migráció kell).
 2. Minden új táblán `enable row level security` + szabályok; a séma-változás mellé teszt kerül a `supabase/tests`-be.
 3. Teszt (helyben, PGlite): `cd supabase/tests && npm install && npm test` — hibátlan, különben nem pusholunk.
@@ -13,6 +14,8 @@ Az AI-k **nem írnak** felhős szolgáltatásba (összekötő/MCP a felhasznál�
 6. A PGlite nem a valódi Supabase: a Realtime / `realtime.send` / privát csatornák viselkedését éles projekten kézzel kell kipróbálni (HANDOFF-kérés a felhasználónak).
 
 ## 2. A keep-alive ellenőrzése
+
+> Az `api/keepalive.js` **ESM** (a gyökér `package.json` `"type": "module"`); a régi `module.exports`-os változat ilyen környezetben `FUNCTION_INVOCATION_FAILED`-et (500) adna. Teszt: `src/cloud/keepalive.test.ts`.
 
 Cél: a Supabase free projekt ne szünetelődjön egy hét inaktivitás után. A Vercel cron naponta egyszer (06:17 UTC) hívja az `/api/keepalive`-ot, ami a `public.ping()`-et futtatja.
 
@@ -24,6 +27,10 @@ Cél: a Supabase free projekt ne szünetelődjön egy hét inaktivitás után. A
 
 Env-változók (Vercel → Production): `SUPABASE_URL`, `SUPABASE_PUBLISHABLE_KEY` (`sb_publishable_…`), `CRON_SECRET`. Secret / `service_role` kulcs sehová nem kell.
 Időnként (pl. hetente) nézd meg a Vercel *Logs / Cron Jobs* oldalát: a hiba (502) csak ott látszik.
+
+## 2b. Edge function telepítése (fiók-törlés)
+
+`supabase/functions/delete-account` — a felhasználó telepíti (`supabase functions deploy delete-account --project-ref <ref>` vagy Dashboard → Edge Functions). A service role kulcsot a Supabase adja a függvénynek; repóba/kliensbe nem kerülhet. Ellenőrzés: bejelentkezett teszt-fiókkal a Profil → Fiók → „Fiók törlése".
 
 ## 3. Ha a Supabase szüneteltette a projektet
 

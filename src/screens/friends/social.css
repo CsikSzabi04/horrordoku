@@ -1,0 +1,17 @@
+/* Barátok + Lobby — személy-sorok, chat (AI-B). */
+.nd-people { display: grid; gap: 0.5rem; margin: 0; padding: 0; list-style: none; }
+.nd-person { display: flex; align-items: center; gap: 0.7rem; padding: 0.45rem 0.6rem; border: 1px solid var(--line); border-radius: 8px; background: rgba(255, 255, 255, 0.03); }
+.nd-person-name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.nd-person-name small { color: var(--dim); margin-left: 0.4rem; }
+.nd-dot-on { display: inline-block; width: 0.55rem; height: 0.55rem; margin-right: 0.4rem; border-radius: 50%; background: var(--dim); }
+.nd-dot-on.on { background: #6fcf97; box-shadow: 0 0 8px #6fcf97; }
+.nd-code { font-family: var(--type); font-size: 1.8rem; letter-spacing: 0.3em; color: var(--gold); }
+.nd-chat { display: grid; gap: 0.6rem; }
+.nd-chat-log { height: 14rem; overflow-y: auto; padding: 0.6rem; border: 1px solid var(--line); border-radius: 8px; background: rgba(0, 0, 0, 0.25); display: grid; align-content: start; gap: 0.3rem; font-size: 0.92rem; }
+.nd-chat-log b { margin-right: 0.4rem; }
+.nd-chat form { display: flex; gap: 0.5rem; }
+.nd-chat form input { flex: 1; padding: 0.55rem 0.7rem; border: 1px solid var(--line); border-radius: 6px; background: rgba(255, 255, 255, 0.04); color: var(--ink); font: 400 0.95rem var(--ui); }
+.nd-cols { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; }
+.nd-msg { display: flex; justify-content: space-between; gap: 0.5rem; }
+.nd-msg-act { display: inline-flex; gap: 0.4rem; opacity: 0.5; }
+.nd-msg:hover .nd-msg-act { opacity: 1; }

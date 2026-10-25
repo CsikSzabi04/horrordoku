@@ -151,6 +151,85 @@ r = await as('postgres', `select public.cleanup_old_rooms() as n`); ok('cleanup_
 ok('anon nem hívhat szoba-függvényt', (await fails('anon', `select * from public.create_room('together','x',2::smallint,'{}')`)) !== null);
 ok('kliens nem hívhatja a cleanup-ot', (await fails(u1, `select public.cleanup_old_rooms()`)) !== null);
 
+// --- 0003: my_invites (a meghívott még nem tag, mégis látja a kódot / módot / meghívót) ---
+{
+  const n1 = (await as('postgres', `select username from public.profiles where id = '${u1}'`)).rows[0].username;
+  r = await as(u1, `select * from public.create_room('together','classic-01',4::smallint,'{}')`);
+  const room2 = r.rows[0];
+  await as(u1, `select public.invite_friend('${room2.id}', '${u2}')`);
+  r = await as(u2, 'select * from public.my_invites()');
+  ok('my_invites: a meghívott látja a kódot, módot és a meghívó nevét', r.rows.length === 1 && r.rows[0].code === room2.code && r.rows[0].mode === 'together' && r.rows[0].from_username === n1);
+  r = await as(u3, 'select * from public.my_invites()'); ok('my_invites: más meghívóját nem látja', r.rows.length === 0);
+  ok('my_invites: anon nem hívhatja', (await fails('anon', 'select * from public.my_invites()')) !== null);
+  await as(u1, `select public.start_room('${room2.id}')`);
+  r = await as(u2, 'select * from public.my_invites()'); ok('my_invites: elindult szobához már nincs meghívó a listában', r.rows.length === 0);
+}
+
+// --- 0004: kereshetőség, online-állapot, ranglista, nyilvános profil, moderáció, barát-limit ---
+{
+  const name = async (u) => (await as('postgres', `select username from public.profiles where id = '${u}'`)).rows[0].username;
+  const [n2, n3] = [await name(u2), await name(u3)];
+  r = await as(u1, `select * from public.search_profiles('${n2.slice(0, 3)}')`); ok('search_profiles: megtalálja a kereshető profilt', r.rows.some(x => x.id === u2));
+  ok('search_profiles: saját magamat nem adja', !(await as(u2, `select * from public.search_profiles('${n2.slice(0, 3)}')`)).rows.some(x => x.id === u2));
+  r = await as(u1, `select * from public.search_profiles('%%')`); ok('search_profiles: a % nem joker', r.rows.length === 0);
+  r = await as(u1, `select * from public.search_profiles('${n2.slice(0, 1)}')`); ok('search_profiles: 1 karakternél üres', r.rows.length === 0);
+  await as(u3, `update public.profiles set searchable = false where id = '${u3}'`);
+  r = await as(u1, `select * from public.search_profiles('${n3.slice(0, 3)}')`); ok('search_profiles: a nem kereshető profil rejtve marad', !r.rows.some(x => x.id === u3));
+
+  // online-állapot
+  r = await as(u1, `select online from public.my_friends where friend_id = '${u2}'`); ok('my_friends: szívverés nélkül offline', r.rows[0].online === false);
+  await as(u2, 'select public.touch_presence(false)');
+  r = await as(u1, `select online from public.my_friends where friend_id = '${u2}'`); ok('my_friends: szívverés után online', r.rows[0].online === true);
+  await as(u2, 'select public.touch_presence(true)');
+  r = await as(u1, `select online from public.my_friends where friend_id = '${u2}'`); ok('my_friends: láthatatlan módban offline-nak látszik', r.rows[0].online === false);
+
+  // ranglista
+  ok('submit_score: rossz tábla elutasítva', (await fails(u1, "select public.submit_score('bármi', 90000, 0::smallint)")) !== null);
+  ok('submit_score: irreálisan gyors idő elutasítva', (await fails(u1, "select public.submit_score('daily:2026-10-25', 500, 0::smallint)")) !== null);
+  ok('a ranglista közvetlenül nem írható', (await fails(u1, `insert into public.leaderboard (board, user_id, time_ms) values ('daily:2026-10-25','${u1}', 4000)`)) !== null);
+  await as(u1, "select public.submit_score('daily:2026-10-25', 90000, 1::smallint)");
+  await as(u2, "select public.submit_score('daily:2026-10-25', 80000, 0::smallint)");
+  await as(u1, "select public.submit_score('daily:2026-10-25', 95000, 0::smallint)");
+  r = await as('postgres', `select time_ms from public.leaderboard where user_id = '${u1}'`); ok('submit_score: a rosszabb idő nem írja felül a jobbat', r.rows[0].time_ms === 90000);
+  await as(u1, "select public.submit_score('daily:2026-10-25', 70000, 0::smallint)");
+  await as(u3, "select public.submit_score('daily:2026-10-25', 60000, 0::smallint)");
+  r = await as(u1, "select username, time_ms from public.leaderboard_top('daily:2026-10-25', 10)");
+  ok('leaderboard_top: javuló idő, sorrend, a nem kereshető profil rejtve', r.rows.map(x => x.time_ms).join() === '70000,80000');
+  r = await as(u3, "select time_ms from public.leaderboard_top('daily:2026-10-25', 10)"); ok('leaderboard_top: a nem kereshető a saját sorát látja', r.rows[0].time_ms === 60000);
+
+  // nyilvános profil
+  await as('postgres', `insert into public.runs (id, user_id, puzzle_ref, kind, solved, time_ms, hints_used) values (gen_random_uuid(), '${u2}', 'classic-01', 'catalog', true, 1000, 0)`);
+  r = await as(u1, `select solved_total::int as s, solved_no_hints::int as n from public.public_profile('${u2}')`); ok('public_profile: baráttól látszik a statisztika', r.rows.length === 1 && r.rows[0].s === 1 && r.rows[0].n === 1);
+  const stranger = (await as('postgres', "insert into auth.users (id, email) values (gen_random_uuid(), 'stranger@x.hu') returning id")).rows[0].id;
+  await as('postgres', `update public.profiles set searchable = false where id = '${stranger}'`);
+  r = await as(u1, `select * from public.public_profile('${stranger}')`); ok('public_profile: nem kereshető, nem barát → nincs adat', r.rows.length === 0);
+  r = await as(u3, `select * from public.public_profile('${u3}')`); ok('public_profile: a saját profil mindig látszik', r.rows.length === 1);
+
+  // moderáció
+  r = await as(u1, `select * from public.create_room('together','classic-01',4::smallint,'{}')`);
+  const room3 = r.rows[0];
+  await as(u2, `select * from public.join_room('${room3.code}')`);
+  r = await as(u2, `insert into public.room_messages (room_id, user_id, body) values ('${room3.id}', '${u2}', 'csúnya szó') returning id`);
+  const msg = r.rows[0].id;
+  await as(u1, `select public.report_message(${msg}, 'sértő')`);
+  await as(u1, `select public.report_message(${msg}, 'ismét')`);
+  r = await as('postgres', 'select count(*)::int n, min(reported::text) rep from public.chat_reports'); ok('report_message: egyszer rögzül, a jelentett a szerző', r.rows[0].n === 1 && r.rows[0].rep === u2);
+  ok('report_message: kívülálló nem jelenthet', (await fails(u3, `select public.report_message(${msg}, 'x')`)) !== null);
+  ok('report_message: saját üzenet nem jelenthető', (await fails(u2, `select public.report_message(${msg}, 'x')`)) !== null);
+  ok('a jelentéseket a kliens nem olvashatja', (await fails(u1, 'select * from public.chat_reports')) !== null);
+  await as(u1, `insert into public.chat_mutes (user_id, muted_id) values ('${u1}', '${u2}')`);
+  r = await as(u1, 'select * from public.chat_mutes'); ok('chat_mutes: a saját némítások látszanak', r.rows.length === 1);
+  r = await as(u2, 'select * from public.chat_mutes'); ok('chat_mutes: más némítása nem látszik', r.rows.length === 0);
+  ok('chat_mutes: magamat nem némíthatom', (await fails(u1, `insert into public.chat_mutes (user_id, muted_id) values ('${u1}', '${u1}')`)) !== null);
+
+  // barát-limit: 100 függő kérés után a 101. elutasítva
+  await as('postgres', "insert into auth.users (id, email) select gen_random_uuid(), 'limit' || g || '@x.hu' from generate_series(1, 100) g");
+  await as('postgres', `insert into public.friendships (user_a, user_b, requested_by) select least('${u1}'::uuid, x.id), greatest('${u1}'::uuid, x.id), '${u1}'::uuid from auth.users x where x.email like 'limit%@x.hu'`);
+  r = await as('postgres', `select count(*)::int n from public.friendships where '${u1}' in (user_a, user_b)`);
+  ok('barát-limit: a teszt-előkészítés 100+ kapcsolatot hozott létre', r.rows[0].n >= 100);
+  ok('barát-limit: a limit felett nem küldhető új kérés', (await fails(u1, `select public.send_friend_request('${u3}')`)) !== null);
+}
+
 {
   const pub = await as('postgres', "select tablename from pg_publication_tables where pubname = 'supabase_realtime' order by 1");
   const got = pub.rows.map(x => x.tablename).join(',');

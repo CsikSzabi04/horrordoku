@@ -6,11 +6,29 @@ import { cloud } from '../../cloud'
 import { errorText } from '../../cloud/errors'
 import { useCloudUser } from '../../cloud/hooks'
 import { t } from '../../i18n'
-import { Button, Panel, Tabs, useToast } from '../../ui'
+import { Button, Modal, Panel, Tabs, useToast } from '../../ui'
 import './form.css'
 
 type Mode = 'in' | 'up' | 'reset'
 type Avail = 'idle' | 'checking' | 'free' | 'taken'
+
+/** Melyik fiókoknál kérdeztük már meg, hogy átvigyük-e a vendég-haladást (egyszer kérdezünk). */
+const OFFERED = 'nd_guest_offered'
+const offeredIds = (): string[] => {
+  try {
+    return JSON.parse(localStorage.getItem(OFFERED) ?? '[]') as string[]
+  } catch {
+    return []
+  }
+}
+const wasOffered = (id: string) => offeredIds().includes(id)
+const markOffered = (id: string) => {
+  try {
+    localStorage.setItem(OFFERED, JSON.stringify([...new Set([...offeredIds(), id])]))
+  } catch {
+    /* tiltott tároló: legfeljebb újra megkérdezzük */
+  }
+}
 
 export default function LoginScreen() {
   const { back, go } = useNav()
@@ -24,6 +42,7 @@ export default function LoginScreen() {
   const [error, setError] = useState('')
   const [info, setInfo] = useState('')
   const [avail, setAvail] = useState<Avail>('idle')
+  const [ask, setAsk] = useState<string | null>(null) // a vendég-átvitel kérdése (a belépett fiók azonosítójával)
 
   // Becenév-ellenőrzés a „Regisztráció" gomb előtt (késleltetve, a lassan érkező válasz nem írja felül az újat).
   useEffect(() => {
@@ -77,7 +96,13 @@ export default function LoginScreen() {
       setError(errorText(r))
       return
     }
-    if (cloud.auth.current()) {
+    const me = cloud.auth.current()
+    if (me) {
+      // Van vendégként szerzett haladás? Egyszer megkérdezzük, hogy átvigye-e a fiókba (GDD 14.6).
+      if (!wasOffered(me.id) && (await cloud.sync.guestData())) {
+        setAsk(me.id)
+        return
+      }
       toast(t('login.welcome'))
       back()
     } else {
@@ -85,9 +110,39 @@ export default function LoginScreen() {
     }
   }
 
+  async function answer(yes: boolean) {
+    const id = ask
+    setAsk(null)
+    if (!id) return
+    markOffered(id)
+    if (yes) {
+      const r = await cloud.sync.transferGuest()
+      if (!r.ok) {
+        setError(errorText(r))
+        return
+      }
+      toast(t('login.transferred'))
+    } else toast(t('login.welcome'))
+    back()
+  }
+  const transferModal = (
+    <Modal open={ask !== null} onClose={() => void answer(false)}>
+      <p>{t('login.transfer.ask')}</p>
+      <div className="nd-row">
+        <Button size="sm" onClick={() => void answer(true)}>
+          {t('login.transfer.yes')}
+        </Button>
+        <Button size="sm" variant="ghost" onClick={() => void answer(false)}>
+          {t('login.transfer.no')}
+        </Button>
+      </div>
+    </Modal>
+  )
+
   if (user) {
     return (
       <main className="nd-page">
+        {transferModal}
         <Panel tag={t('login.tag')}>
           <p>
             {t('login.already')} <b>{user.username}</b>
@@ -106,6 +161,7 @@ export default function LoginScreen() {
   const hint = avail === 'checking' ? t('login.checking') : avail === 'free' ? t('login.free') : avail === 'taken' ? t('login.taken') : ''
   return (
     <main className="nd-page">
+      {transferModal}
       <Panel tag={t('login.tag')}>
         {mode === 'reset' ? (
           <h2 style={{ margin: '0 0 .8rem', fontFamily: 'var(--display)' }}>{t('login.reset.title')}</h2>

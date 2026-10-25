@@ -13,6 +13,11 @@ interface StatsRow {
   coop_games: number; wins_as_killer: number; wins_as_detective: number
 }
 
+interface PublicRow {
+  id: string; username: string; avatar: string; xp: number; best_streak: number
+  solved_total: number | string; solved_no_hints: number | string; coop_games: number | string; wins_as_detective: number | string; wins_as_killer: number | string
+}
+
 const iso = (t: string) => new Date(t).toISOString().replace(/\.\d{3}Z$/, 'Z')
 const toProfile = (r: ProfileRow): Profile => ({
   id: r.id, username: r.username, avatar: r.avatar, xp: r.xp, coins: r.coins, streak: r.streak, bestStreak: r.best_streak,
@@ -62,9 +67,47 @@ export function createProfile(client: SupabaseClient, hub: AuthHub): ProfileApi 
         const { data, error } = await client.from('profile_stats').select('*').eq('user_id', id).maybeSingle()
         return error ? fromError(error) : ok(toStats(data as StatsRow | null)) // még nincs futás → csupa nulla
       }),
-    // B3: adat-export és fiók-törlés (edge function) — addig nem elérhető.
-    exportData: async () => fail('unknown', 'not_implemented'),
-    deleteAccount: async () => fail('unknown', 'not_implemented'),
+    /** Az összes saját sor egy JSON-ban (GDD 18.5). Az RLS miatt minden lekérdezés csak a sajátjaidat adja vissza. */
+    exportData: () =>
+      guard(async () => {
+        const id = await uid()
+        if (!id) return needLogin()
+        const own = ['progress', 'saves', 'runs', 'unlocks', 'user_settings', 'leaderboard'] as const
+        const [prof, friends, ...rest] = await Promise.all([
+          client.from('profiles').select('*').eq('id', id).maybeSingle(),
+          client.from('my_friends').select('*'),
+          ...own.map((t) => client.from(t).select('*')),
+        ])
+        const bad = [prof, friends, ...rest].find((r) => r.error)
+        if (bad?.error) return fromError(bad.error)
+        const tables = Object.fromEntries(own.map((t, i) => [t, rest[i]?.data ?? []]))
+        return ok({ v: 1, exportedAt: new Date().toISOString(), profile: prof.data, friends: friends.data ?? [], ...tables })
+      }),
+    /** Más játékos nyilvános statisztikája (0004 `public_profile`); `null`, ha nem látható. */
+    publicProfile: (userId) =>
+      guard(async () => {
+        const { data, error } = await client.rpc('public_profile', { p_user: userId })
+        if (error) return fromError(error)
+        const r = ((data ?? []) as PublicRow[])[0]
+        if (!r) return ok(null)
+        return ok({
+          id: r.id, username: r.username, avatar: r.avatar, xp: r.xp, bestStreak: r.best_streak, solvedTotal: Number(r.solved_total),
+          solvedNoHints: Number(r.solved_no_hints), coopGames: Number(r.coop_games), winsAsDetective: Number(r.wins_as_detective), winsAsKiller: Number(r.wins_as_killer),
+        })
+      }),
+    /** Fiók törlése: a `delete-account` edge function (supabase/functions) törli az auth-felhasználót; a hozzá kötött sorok a külső kulcsokkal (on delete cascade) törlődnek. */
+    deleteAccount: () =>
+      guard(async () => {
+        const id = await uid()
+        if (!id) return needLogin()
+        const { error } = await client.functions.invoke('delete-account', { method: 'POST' })
+        if (error) {
+          const status = (error as { context?: { status?: number } }).context?.status
+          return fromError({ name: error.name, message: error.message, status })
+        }
+        await client.auth.signOut({ scope: 'local' }) // a munkamenet már érvénytelen; a helyi állapotot is tisztítjuk
+        return ok(undefined)
+      }),
   }
   return api
 }

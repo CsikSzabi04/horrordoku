@@ -20,11 +20,15 @@ export interface RoomSettings {                     // GDD 22.3 beállítás-tá
 export interface RoomMember { userId: Uuid; username: string; avatar: CharId; color: string; online: boolean }
 export interface ChatMessage { id: number; userId: Uuid; username: string; body: string; at: IsoTime; system?: boolean }
 
+export interface RoomInvite { roomId: Uuid; code: string; fromUsername: string; mode: RoomMode }
+
 export interface RoomsApi {
   create(i: { mode: RoomMode; puzzleRef: PuzzleRef; maxPlayers?: number; settings?: RoomSettings }): Promise<Result<RoomInfo>>
   join(code: string): Promise<Result<RoomInfo>>
   invite(roomId: Uuid, userId: Uuid): Promise<Result<void>>
-  onInvite(cb: (i: { roomId: Uuid; code: string; fromUsername: string; mode: RoomMode }) => void): Unsubscribe
+  onInvite(cb: (i: RoomInvite) => void): Unsubscribe
+  /** A nekem szóló, még lobby-állapotú szobák meghívói (0003 `my_invites`). Additív bővítés (B4). */
+  invites(): Promise<Result<RoomInvite[]>>
   /** Megnyit egy élő munkamenetet (Realtime-csatornák, tagok, chat). */
   open(roomId: Uuid): Promise<Result<RoomSession>>
 }
@@ -36,7 +40,7 @@ export interface RoomSession {
   onInfo(cb: (i: RoomInfo) => void): Unsubscribe                      // státusz-váltás (lobby → playing)
   start(): Promise<Result<RoomInfo>>                                  // csak a host
   leave(): Promise<Result<void>>
-  chat: { send(body: string): Promise<Result<void>>; history(): ChatMessage[]; onMessage(cb: (m: ChatMessage) => void): Unsubscribe }
+  chat: { send(body: string): Promise<Result<void>>; history(): ChatMessage[]; onMessage(cb: (m: ChatMessage) => void): Unsubscribe; report(messageId: number, reason?: string): Promise<Result<void>>; mute(userId: Uuid): Promise<Result<void>> }
   /** A közös tábla műveletei (Broadcast `room:<id>`). */
   ops: { send(op: Op): void; onOp(cb: (e: OpEnvelope) => void): Unsubscribe; saveState(rev: number, state: BoardState): Promise<Result<number>>; loadState(): Promise<Result<{ rev: number; state: BoardState }>> }
   cursors: { send(cell: CellId | null): void; onCursor(cb: (userId: Uuid, cell: CellId | null) => void): Unsubscribe }

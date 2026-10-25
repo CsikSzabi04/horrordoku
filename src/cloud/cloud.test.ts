@@ -13,6 +13,8 @@ interface Cfg {
   rpc?: Res | (() => Res | Promise<Res>)
   signIn?: Res | (() => Res | Promise<Res>)
   signUp?: Res
+  tables?: Record<string, Res>
+  fn?: Res
   profileRow?: Res
   statsRow?: Res
   updateRow?: Res
@@ -24,6 +26,7 @@ function chain(res: () => Res) {
   for (const k of ['select', 'eq', 'update']) c[k] = () => c
   c.single = () => Promise.resolve(res())
   c.maybeSingle = c.single
+  c.then = ((resolve: (v: Res) => unknown) => Promise.resolve(resolve(res()))) as unknown as () => unknown // `await client.from(..).select(..)`
   return c
 }
 
@@ -50,8 +53,10 @@ function fake(cfg: Cfg = {}) {
       resetPasswordForEmail: async () => ({ error: null }),
     },
     rpc: async () => val(cfg.rpc ?? { data: true, error: null }),
+    functions: { invoke: async () => cfg.fn ?? { data: { ok: true }, error: null } },
     from: (t: string) =>
       chain(() => {
+        if (cfg.tables?.[t]) return cfg.tables[t]!
         if (t === 'profile_stats') return cfg.statsRow ?? { data: null, error: null }
         return cfg.updateRow && cfg.updateRow !== cfg.profileRow ? cfg.updateRow : (cfg.profileRow ?? { data: { username: 'Vlad' }, error: null })
       }),
@@ -172,9 +177,23 @@ describe('profil', () => {
     expect(await cloud.profile.update({ username: 'Silas' })).toMatchObject({ ok: true })
     expect(cloud.auth.current()?.username).toBe('Silas')
   })
-  it('export és fiók-törlés még nem elérhető (B3)', async () => {
-    const p = createCloud(fake().client).profile
-    expect(await p.exportData()).toMatchObject({ ok: false, message: 'not_implemented' })
-    expect(await p.deleteAccount()).toMatchObject({ ok: false, message: 'not_implemented' })
+  it('adat-export: belépés nélkül unauthenticated; belépve az összes saját tábla egy JSON-ban', async () => {
+    expect(await createCloud(fake().client).profile.exportData()).toMatchObject({ ok: false, code: 'unauthenticated' })
+    const f = fake({
+      session: { user: { id: UID } },
+      tables: { my_friends: { data: [{ friend_id: 'x' }], error: null }, progress: { data: [{ puzzle_id: 'classic-01' }], error: null } },
+    })
+    const r = await createCloud(f.client).profile.exportData()
+    expect(r).toMatchObject({ ok: true, value: { v: 1, friends: [{ friend_id: 'x' }], progress: [{ puzzle_id: 'classic-01' }] } })
+    expect(r.ok && Object.keys(r.value as object).sort()).toEqual(['exportedAt', 'friends', 'leaderboard', 'profile', 'progress', 'runs', 'saves', 'unlocks', 'user_settings', 'v'])
+  })
+  it('fiók-törlés: belépés nélkül unauthenticated; belépve az edge function hívása után kilép; hiba esetén a hiba jön', async () => {
+    expect(await createCloud(fake().client).profile.deleteAccount()).toMatchObject({ ok: false, code: 'unauthenticated' })
+    const good = fake({ session: { user: { id: UID } } })
+    expect(await createCloud(good.client).profile.deleteAccount()).toEqual({ ok: true, value: undefined })
+    expect(good.calls.signOut).toEqual([{ scope: 'local' }])
+    const missing = fake({ session: { user: { id: UID } }, fn: { data: null, error: { name: 'FunctionsHttpError', message: 'Not Found', context: { status: 404 } } } })
+    expect(await createCloud(missing.client).profile.deleteAccount()).toMatchObject({ ok: false, code: 'not_found' })
+    expect(missing.calls.signOut).toEqual([])
   })
 })

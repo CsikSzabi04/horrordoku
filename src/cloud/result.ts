@@ -18,12 +18,24 @@ export function isNetworkError(e: ErrLike): boolean {
   )
 }
 
+export const iso = (t: string) => new Date(t).toISOString().replace(/\.\d{3}Z$/, 'Z')
+
+/** A SQL-függvények `raise exception '…'` üzenetei (0002/0003) → ErrorCode. */
+function fromRaise(msg: string): Result<never> {
+  if (/not authenticated/i.test(msg)) return fail('unauthenticated', msg)
+  if (/not found/i.test(msg)) return fail('not_found', msg)
+  if (/full|already|exists|rev_conflict/i.test(msg)) return fail('conflict', msg)
+  if (/only the host|not a member|not friends|forbidden/i.test(msg)) return fail('forbidden', msg)
+  return fail('invalid', msg)
+}
+
 /** Supabase (auth / PostgREST) hiba → ErrorCode. Rossz jelszó = `unauthenticated`, foglalt név/e-mail = `conflict`. */
 export function fromError(e: ErrLike): Result<never> {
   const status = e?.status
   const code = String(e?.code ?? '')
   const msg = e?.message ?? 'error'
   if (isNetworkError(e)) return fail('offline', msg)
+  if (code === 'P0001') return fromRaise(msg)
   if (code === '23505' || code === 'user_already_exists' || code === 'email_exists' || status === 409) return fail('conflict', msg)
   if (code === 'invalid_credentials' || code === 'PGRST301' || status === 401) return fail('unauthenticated', msg)
   if (code === '42501' || status === 403) return fail('forbidden', msg)

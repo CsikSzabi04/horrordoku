@@ -8,7 +8,7 @@ import { useCloudStatus, useCloudUser } from '../../cloud/hooks'
 import { content } from '../../content'
 import { t } from '../../i18n'
 import type { Profile, ProfileStats } from '../../shared/cloud'
-import { Avatar, Button, Chip, Panel, ProgressBar, Tabs, useToast } from '../../ui'
+import { Avatar, Button, Chip, Modal, Panel, ProgressBar, Tabs, useToast } from '../../ui'
 import '../login/form.css'
 import { hoursMinutes, rankOf } from './rank'
 
@@ -143,6 +143,7 @@ function Account({ profile, onProfile }: { profile: Profile; onProfile: (p: Prof
   const [name, setName] = useState(profile.username)
   const [busy, setBusy] = useState(false)
   const [error, setError] = useState('')
+  const [confirmDelete, setConfirmDelete] = useState(false)
 
   async function save(patch: { username?: string; avatar?: string }) {
     setBusy(true)
@@ -157,6 +158,29 @@ function Account({ profile, onProfile }: { profile: Profile; onProfile: (p: Prof
   const rename = (e: FormEvent) => {
     e.preventDefault()
     if (name.trim() !== profile.username) void save({ username: name.trim() })
+  }
+  /** A felhős adatok letöltése egy JSON-fájlban (GDD 18.5). */
+  async function exportCloud() {
+    setError('')
+    const r = await cloud.profile.exportData()
+    if (!r.ok) {
+      setError(errorText(r))
+      return
+    }
+    const url = URL.createObjectURL(new Blob([JSON.stringify(r.value, null, 2)], { type: 'application/json' }))
+    const a = document.createElement('a')
+    a.href = url
+    a.download = `nightdoku-fiok-${new Date().toISOString().slice(0, 10)}.json`
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+  async function removeAccount() {
+    setConfirmDelete(false)
+    setBusy(true)
+    const r = await cloud.profile.deleteAccount()
+    setBusy(false)
+    if (r.ok) toast(t('account.deleted'))
+    else setError(errorText(r))
   }
 
   return (
@@ -192,13 +216,24 @@ function Account({ profile, onProfile }: { profile: Profile; onProfile: (p: Prof
         <Button variant="ghost" size="sm" onClick={() => void cloud.auth.signOut().then(() => toast(t('account.signedout')))}>
           {t('account.signout')}
         </Button>
-        <Button variant="ghost" size="sm" disabled title={t('account.soon')}>
+        <Button variant="ghost" size="sm" disabled={busy} onClick={() => void exportCloud()}>
           {t('account.export')}
         </Button>
-        <Button variant="ghost" size="sm" disabled title={t('account.soon')}>
+        <Button variant="ghost" size="sm" disabled={busy} onClick={() => setConfirmDelete(true)}>
           {t('account.delete')}
         </Button>
       </div>
+      <Modal open={confirmDelete} onClose={() => setConfirmDelete(false)}>
+        <p>{t('account.delete.ask')}</p>
+        <div className="nd-row">
+          <Button size="sm" onClick={() => void removeAccount()}>
+            {t('account.delete.yes')}
+          </Button>
+          <Button variant="ghost" size="sm" onClick={() => setConfirmDelete(false)}>
+            {t('settings.clear.no')}
+          </Button>
+        </div>
+      </Modal>
     </div>
   )
 }

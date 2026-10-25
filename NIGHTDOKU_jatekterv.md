@@ -1305,7 +1305,9 @@ A séma **forrása az SQL-fájl**, nem ez a dokumentum — így nem csúszhat sz
 |---|---|---|
 | `0001_init.sql` | profil, beállítások, pályák, haladás, mentés, futás-napló, ranglista, feloldások, regisztráció-trigger, `username_available()`, `ping()` (keep-alive), RLS | kész, tesztelt |
 | `0002_social.sql` | barátok (`send_friend_request`, `respond_friend_request`, `remove_friend`, `my_friends` nézet), szobák (`create_room`, `join_room`, `leave_room`, `start_room`, `save_room_state`, `invite_friend`), chat, meghívók, takarítás (`cleanup_old_rooms`), RLS | kész, tesztelt |
-| `0003_killer.sql` | *(a Gyilkos mód megvalósításakor)* `room_roles`, szerepsorsolás az `start_room`-ban, `use_ability()`, a privát Realtime-csatornák jogosultságai, nyilvános profil-kártya | terv: 22.3, 23.5 |
+| `0003_invites.sql` | `my_invites()` — a meghívott (még nem tag) lássa a szoba kódját, módját és a meghívó nevét (a `rooms` tábla az RLS miatt számára nem olvasható) |
+| `0004_extras.sql` | `profiles.searchable / invisible / last_seen`, `touch_presence`, `my_friends.online`, `search_profiles`, `submit_score` + `leaderboard_top` (a ranglista csak a függvényen át írható), `public_profile`, `chat_reports` + `report_message`, `chat_mutes`, barát-limit (100) |
+| `0005_killer.sql` | *(a Gyilkos mód megvalósításakor)* `room_roles`, szerepsorsolás az `start_room`-ban, `use_ability()`, a privát Realtime-csatornák jogosultságai, nyilvános profil-kártya | terv: 22.3, 23.5 |
 
 Alapelvek:
 - **Minden táblán be van kapcsolva az RLS.** A kliens csak a saját sorait éri el; a barátság, szoba és meghívó írása **kizárólag a függvényeken** keresztül megy (hogy ne lehessen hamisítani).

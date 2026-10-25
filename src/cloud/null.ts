@@ -10,10 +10,10 @@ export const NullCloud: CloudService = {
   status: () => 'guest',
   onStatus: () => noop,
   auth: { current: () => null, onChange: () => noop, signUp: off, signIn: off, signOut: off, sendPasswordReset: off, usernameAvailable: off },
-  profile: { get: off, update: off, stats: off, exportData: off, deleteAccount: off },
-  sync: { start: noop, stop: noop, flush: off, onStatus: () => noop },
+  profile: { get: off, update: off, stats: off, exportData: off, deleteAccount: off, publicProfile: off },
+  sync: { start: noop, stop: noop, flush: off, onStatus: () => noop, guestData: async () => false, transferGuest: off },
   catalog: { refresh: off },
   leaderboard: { submit: off, top: off },
   friends: { search: off, list: off, request: off, respond: off, remove: off, onChange: () => noop },
-  rooms: { create: off, join: off, invite: off, onInvite: () => noop, open: off },
+  rooms: { create: off, join: off, invite: off, invites: off, onInvite: () => noop, open: off },
 }
