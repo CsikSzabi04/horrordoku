@@ -1,0 +1,8 @@
+/* Gyűjtemény — kártyarács (AI-B). */
+.nd-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 0.8rem; margin: 1rem 0 0; padding: 0; list-style: none; }
+.nd-card { display: flex; gap: 0.9rem; padding: 0.8rem; border: 1px solid var(--line); border-radius: 10px; background: rgba(255, 255, 255, 0.03); }
+.nd-card h4 { margin: 0 0 0.2rem; font-family: var(--display); letter-spacing: 0.05em; }
+.nd-card p { margin: 0.2rem 0 0; font-size: 0.9rem; color: var(--muted); }
+.nd-card.locked { opacity: 0.55; border-style: dashed; }
+.nd-card.locked .nd-avatar { filter: grayscale(1) brightness(0.6); }
+.nd-page select { padding: 0.45rem 0.6rem; border: 1px solid var(--line); border-radius: 6px; background: #1a1520; color: var(--ink); font: 400 0.9rem var(--ui); }
