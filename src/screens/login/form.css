@@ -1,0 +1,27 @@
+/* Űrlap- és profil-stílusok (AI-B képernyők). A tokeneket az `src/ui/ui.css` adja. */
+.nd-page { min-height: 100%; display: grid; place-content: center; gap: 1rem; padding: 2rem 1rem; }
+.nd-page.top { place-content: start center; }
+.nd-form { display: grid; gap: 0.9rem; margin-top: 0.8rem; width: min(92vw, 420px); }
+.nd-field { display: grid; gap: 0.25rem; font-family: var(--type); font-size: 0.85rem; color: var(--muted); }
+.nd-field input { padding: 0.65rem 0.8rem; border: 1px solid var(--line); border-radius: 6px; background: rgba(255, 255, 255, 0.04); color: var(--ink); font: 400 1rem var(--ui); }
+.nd-field input:focus-visible { outline: 2px solid var(--blood); outline-offset: 1px; }
+.nd-field small { min-height: 1.1em; }
+.nd-field small.ok { color: #6fcf97; }
+.nd-field small.bad { color: #ff8d9b; }
+.nd-err { min-height: 1.3em; margin: 0; color: #ff8d9b; font-family: var(--type); font-size: 0.9rem; }
+.nd-info { margin: 0; color: var(--gold); font-family: var(--type); font-size: 0.9rem; }
+.nd-row { display: flex; flex-wrap: wrap; align-items: center; gap: 0.6rem; }
+.nd-link { padding: 0; border: 0; background: none; color: var(--muted); font: inherit; font-size: 0.85rem; text-decoration: underline; cursor: pointer; }
+.nd-link:hover { color: var(--ink); }
+.nd-or { display: flex; align-items: center; gap: 0.8rem; color: var(--dim); font-size: 0.8rem; }
+.nd-or::before, .nd-or::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.nd-pf { width: min(94vw, 760px); display: grid; gap: 1rem; }
+.nd-pf-head { display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+.nd-pf-head h2 { margin: 0; font-family: var(--display); letter-spacing: 0.06em; }
+.nd-pf-head p { margin: 0; color: var(--muted); }
+.nd-pf-head .nd-bar { width: min(100%, 320px); }
+.nd-stats { display: grid; gap: 0.35rem; margin: 0; padding: 0; list-style: none; max-width: 420px; }
+.nd-stats li { display: flex; justify-content: space-between; gap: 1rem; padding-bottom: 0.2rem; border-bottom: 1px dashed var(--line); }
+.nd-avatars { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.nd-avatars button { padding: 0.2rem; border: 2px solid transparent; border-radius: 50%; background: none; cursor: pointer; }
+.nd-avatars button[aria-pressed='true'] { border-color: var(--blood); }

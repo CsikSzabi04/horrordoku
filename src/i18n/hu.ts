@@ -1,5 +1,8 @@
-// Magyar szövegek. Minden, amit a játékos lát, kulcsból jön (később: en.ts).
+import { huB } from './hu.b'
+
+// Magyar szövegek. Minden, amit a játékos lát, kulcsból jön (később: en.ts). Az AI-B kulcsai a `hu.b.ts`-ben vannak.
 export const hu = {
+  ...huB,
   'app.tagline': 'Ahol a sudoku vért ont.',
   'menu.classic': 'Klasszikus',
   'menu.classic.sub': '10 előre megírt pálya · Hollowmere',
