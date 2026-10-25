@@ -13,7 +13,7 @@ Te építed azt, amit a játékos *megoszt és szinkronizál*: a fiókot és pro
 
 ## Tulajdonolt útvonalak
 
-`src/cloud/**` · `src/coop/**` · `src/screens/{login,profile,friends,lobby,coop}/**` · `supabase/**` · `web/**` · `.github/workflows/release.yml` (és a Vercel/keep-alive üzemeltetés).
+`src/cloud/**` · `src/coop/**` · `src/screens/{login,profile,friends,collection,settings,lobby,coop}/**` · `supabase/**` · `web/**` · `.github/workflows/release.yml` (és a Vercel/keep-alive üzemeltetés).
 **Közös:** `src/shared/**`, `docs/CONTRACTS.md` (7. fejezet szerint). **Nem a tied:** `electron/**`, `src/engine/**`, `src/components/**`, `src/storage/**`, `src/ui/**`, `src/app/**`, `puzzles/**`, gyökér-konfigok — függőséget adhatsz hozzá `chore(deps):` commitban (`git pull --rebase` után), a többit kérd A-tól.
 
 ## Állapot a kezdéskor
@@ -44,6 +44,16 @@ Te építed azt, amit a játékos *megoszt és szinkronizál*: a fiókot és pro
 ### B3 — Belépés, Profil, Fiók képernyők *(az A1 UI-készletére épül)*
 - GDD 14.6 (belépés/regisztráció, vendég-átvitel kérdése), 14.7 (Profil: Áttekintés / Ügyek / Gyűjtemény / Eredmények / Fiók), 18.5 (honnan jön mi), rang- és XP-számítás, adatexport (JSON), fiók törlése (**edge function** — a függvény kódját megírhatod, a telepítést a felhasználó végzi).
 - **Kész, ha:** puppeteer-füstteszt: regisztráció → profil megjelenik → kilépés; a Nyugodt mód érvényesül.
+
+### B9 — Beállítások képernyő *(A1 UI-készlet + A2 `StorageService`)*
+- GDD 12.4, 14, 17.4: hang (zene / effekt / hangerő-plafon), jumpscare-mód (`on | soundOnly | imageOnly | soft | off`, alap: **ki**), **Nyugodt mód** (`photosensitive`), rázkódás, Streamer mód, nyelv (hu / en), Láthatatlan mód (belépve), **Adatok:** *Mentés exportálása / betöltése / Helyi adatok törlése* (17.4), a belépett fiók gyors-linkjei.
+- A képernyő csak a `Settings` objektumot írja (`StorageService.patchSettings`); a jumpscare/hang motort A írja (A7), ami olvassa a beállításokat. A Nyugodt módot az A2 `patchSettings`-e érvényesíti (`nd_calm` + `html.calm`).
+- **Kész, ha:** minden kapcsoló perzisztens (újratöltés után ugyanaz); a Nyugodt mód azonnal érvényesül a Home-on és a játékban; az export/import körbe-forog (export → törlés → import = ugyanaz).
+
+### B10 — Gyűjtemény / bestiárium képernyő *(A1 UI-készlet + A2 `getUnlocks` + A `content` API)*
+- GDD 14.7 („Gyűjtemény" fül tartalma), 19.4 („szerzés"): megszerzett karakterek kártyái (portré/emoji, név, faj, forrás-játék, leírás), a le nem szerzettek „ismeretlen" sziluettként, szűrés világ / faj szerint, számláló (pl. 6/60); később: bűnügyi napló, arany jumpscare-ek, skinek.
+- Adat: `content.characters()` (CONTRACTS 10.; induláskor a 6 Hollowmere-szereplő, A5/A8-cal bővül) + `StorageService.getUnlocks()` (`kind: 'character'`).
+- **Kész, ha:** új karakter megszerzésekor (unlock) a kártya felfedődik; üres és teljes állapot rendben.
 
 ### B4 — Barátok, lobby, szoba-szolgáltatás, chat
 - `FriendsApi` (a `0002` függvényei: `send_friend_request`, `respond_friend_request`, `remove_friend`, `my_friends`), profil-keresés (előtag, min. 2 karakter, 300 ms debounce), Realtime-értesítés a kérésekről; `RoomsApi` (`create_room`, `join_room`, `leave_room`, `start_room`, `invite_friend`), `RoomSession` (tagok, chat a `room_messages` + `postgres_changes`-en, 0,7 mp-es kliens-oldali sebességkorlát); képernyők: Barátok (14.9), Lobby (14.10).
@@ -78,6 +88,8 @@ Te építed azt, amit a játékos *megoszt és szinkronizál*: a fiókot és pro
 | `BoardEngine` (`apply/check/autoMarks`) | A3 után | a co-op művelet-ellenőrzés és a beküldés |
 | `BoardController` | **A4** után | a co-op overlay és a Gyilkos-hatások csatlakozása |
 | Jumpscare / hang | A7 után | a rossz beküldés közös jumpscare-e a `showSubmitResult`-on át |
+| `content` API (`src/content`) | **A1-től** (6 Hollowmere-karakter), bővül A5/A8-cal | a Gyűjtemény képernyő (B10) |
+| `StorageService` (`getSettings/patchSettings`, `getUnlocks`) | **A2** után | a Beállítások (B9) és a Gyűjtemény (B10), valamint a szinkron (B2) |
 
 ## Amit A-nak ígérsz
 

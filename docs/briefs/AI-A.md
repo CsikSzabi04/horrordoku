@@ -12,8 +12,8 @@ Te építed azt, amit a játékos *játszik*: a webes vázat (Vite), a szabálym
 
 ## Tulajdonolt útvonalak
 
-`electron/**` · `src/app/**` · `src/ui/**` · `src/i18n/**` · `src/engine/**` · `src/components/**` · `src/storage/**` · `src/screens/{menu,classic,event,random,game,collection,settings}/**` · `puzzles/**` · `assets/**` · gyökér-konfigok (`package.json`, `vite.config.*`, `tsconfig*`, `eslint*`, `electron-builder*`) · `.github/workflows/ci.yml`.
-**Közös:** `src/shared/**`, `docs/CONTRACTS.md` (7. fejezet szerint). **Nem a tied:** `src/cloud/**`, `src/coop/**`, `supabase/**`, `web/**`, `src/screens/{login,profile,friends,lobby,coop}/**` (ezekhez A1-ben csak üres csonkot hozol létre).
+`electron/**` · `src/app/**` · `src/ui/**` · `src/i18n/**` · `src/engine/**` · `src/components/**` · `src/storage/**` · `src/screens/{menu,classic,event,random,game}/**` · `puzzles/**` · `src/content/**` · `assets/**` · gyökér-konfigok (`package.json`, `vite.config.*`, `tsconfig*`, `eslint*`, `electron-builder*`) · `.github/workflows/ci.yml`.
+**Közös:** `src/shared/**`, `docs/CONTRACTS.md` (7. fejezet szerint). **Nem a tied:** `src/cloud/**`, `src/coop/**`, `supabase/**`, `web/**`, `src/screens/{login,profile,friends,collection,settings,lobby,coop}/**` (ezekhez A1-ben csak üres csonkot hozol létre).
 
 ## Feladatok (sorrendben)
 
@@ -24,13 +24,13 @@ Te építed azt, amit a játékos *játszik*: a webes vázat (Vite), a szabálym
 - A `docs/CONTRACTS.md` blokkjai **szó szerint** `src/shared/*.ts`-be (base, puzzle, board, storage, cloud, room, fx, boardController). `CONTRACT_VERSION` exportálva.
 - `src/cloud/index.ts` *csonk*: exportálja a `CloudService` típust és egy `NullCloud` példányt (**B ezt átveszi és kitölti** — te csak azért hozod létre, hogy fordítson).
 - UI-készlet (`src/ui/`): design tokenek a [web/public/index.html](../../web/public/index.html) paletta- és betűkészletéből (Cinzel + Special Elite, vér-vörös, csont-fehér), komponensek: `Button`, `Panel/Dossier`, `Tabs`, `Toast`, `Modal`, `Chip`, `Avatar`, `ProgressBar`; Nyugodt mód támogatással.
-- App-váz: útvonal-tábla `src/app/routes.ts`, főmenü (GDD 14.1), állapot-sor (☁/📴/👤). **Csonk-képernyők B-nek:** `src/screens/{login,profile,friends,lobby,coop}/index.tsx` üres komponensek, a menüből elérhetők. Ezektől kezdve B tulajdona.
+- App-váz: útvonal-tábla `src/app/routes.ts`, főmenü (GDD 14.1), állapot-sor (☁/📴/👤). **Csonk-képernyők B-nek:** `src/screens/{login,profile,friends,collection,settings,lobby,coop}/index.tsx` üres komponensek, a menüből elérhetők. Ezektől kezdve B tulajdona.
 - i18n-váz (`src/i18n/hu.ts`), első kulcsok.
 - A GDD 20.1 JSON-példáját igazítsd a `Puzzle` szerződéshez.
 - **Kész, ha:** `npm run dev` főmenüt mutat, a csonk-képernyők megnyílnak, a típusok fordulnak. → HANDOFF: „A1 kész: típusok + UI-készlet — B3 indulhat".
 
 ### A2 — `StorageService` (helyi mentés)
-- A `CONTRACTS.md` 4. fejezete szerint, **böngészős tárolón** (localStorage; kulcsok: `nd:v1:<scope>:<név>`): séma-verzió, másodpéldány (`…:bak`) és `…:corrupt` sérülés ellen, kvóta-hiba és tiltott tároló kezelése (memóriában fut tovább + figyelmeztetés), több fül (`storage` esemény), export / import (JSON-fájl), **`scope`** (`guest` / `u_<id8>`), debounce-olt mentés (3 mp, `visibilitychange`/`pagehide`-kor azonnal), méretkeret (tipikusan < 100 KB, 4 MB plafon), `onChange`, `SyncOp`-ok a `recordRun/putSession/addUnlock/patchSettings`-ból, `applyMerged` (SyncOp nélkül).
+- A `CONTRACTS.md` 4. fejezete szerint, **böngészős tárolón** (localStorage; kulcsok: `nd:v1:<scope>:<név>`): séma-verzió, másodpéldány (`…:bak`) és `…:corrupt` sérülés ellen, kvóta-hiba és tiltott tároló kezelése (memóriában fut tovább + figyelmeztetés), több fül (`storage` esemény), export / import (JSON-fájl), **`scope`** (`guest` / `u_<id8>`), debounce-olt mentés (3 mp, `visibilitychange`/`pagehide`-kor azonnal), méretkeret (tipikusan < 100 KB, 4 MB plafon), `onChange`, `SyncOp`-ok a `recordRun/putSession/addUnlock/patchSettings`-ból, `applyMerged` (SyncOp nélkül). A `photosensitive` beállítás változásakor az `nd_calm` kulcsot (a Home is ezt olvassa) és a `html.calm` osztályt is állítja — így B9 Nyugodt mód-kapcsolója azonnal érvényesül.
 - **Kész, ha:** egység-tesztek: sérült fájl visszaállítása, párhuzamos írás, scope-váltás, `applyMerged` nem generál sort, méretplafon. → HANDOFF: „A2 kész — B2 indulhat".
 
 ### A3 — Szabálymotor, megoldó, generátor
@@ -54,12 +54,12 @@ Te építed azt, amit a játékos *játszik*: a webes vázat (Vite), a szabálym
 - Karakter-„szerzés": az első szereplés `addUnlock('character', id)`.
 - **Kész, ha:** kilépés/összeomlás után a félbehagyott ügy pontosan ott folytatható (tesztelve az oldal újratöltésével).
 
-### A7 — Jumpscare, hang, beállítások, akadálymentesség
-- GDD 12 (fázisok, véletlen késleltetés 0,5–6 mp, 3–5 változat/világ, kamu-jumpscare, arany jumpscare), 13 (rétegzett zene, hangeffektek, Howler.js), 12.4 beállítások (jumpscare-mód, hangerő-plafon, fotoszenzitív mód, rázkódás, Streamer mód), színvak-mód, nagy betű, képernyőolvasó a kártyákhoz.
+### A7 — Jumpscare, hang, zene *(a motor-oldal; a Beállítások képernyő: B9)*
+- GDD 12 (fázisok, véletlen késleltetés 0,5–6 mp, 3–5 változat/világ, kamu-jumpscare, arany jumpscare), 13 (rétegzett zene, hangeffektek, Howler.js). A modulok a `StorageService.getSettings()` értékeit olvassák (jumpscare-mód, hangerő-plafon, `photosensitive`, rázkódás, Streamer mód) — **a kapcsolók képernyőjét (Beállítások) B építi (B9)**. Színvak-mód, nagy betű, képernyőolvasó a kártyákhoz (a játékképernyő része). *A Klasszikus módban nincs jumpscare (v0.4).*
 - **Kész, ha:** minden jumpscare-mód működik és kikapcsolható; a Nyugodt mód nem villog; a hangerő-plafon sosem hágható át (egység-teszt a hangerő-számításra).
 
-### A8 — Esemény mód: 10 pálya és Gyűjtemény
-- GDD 10–11: 10 pálya `puzzles/event/*.json` a világ-szabályokkal (kamerák, zárt ajtók, mozgásérzékelő, vákuum, éjjellátó…), világonkénti téma/zene/jumpscare; **Gyűjtemény / bestiárium** (14.7 „Gyűjtemény" fül), karakter-adatlapok.
+### A8 — Esemény mód: 10 pálya *(a Gyűjtemény képernyő: B10)*
+- GDD 10–11: 10 pálya `puzzles/event/*.json` a világ-szabályokkal (kamerák, zárt ajtók, mozgásérzékelő, vákuum, éjjellátó…), világonkénti téma/zene/jumpscare. A karakter-adatlapokat (`name`, `race`, `source`, `bio`) a `content` API-n át add át (CONTRACTS 10.) — ebből építi B a Gyűjteményt; a megszerzést (`addUnlock`) te hívod.
 - **Jogi:** a nyilvános kiadásig a valódi franchise-nevek **belső munkaneveknek** számítanak; a pálya-adatban a megjelenítendő név mezője legyen cserélhető (GDD 21, paródia-nevek).
 - **Kész, ha:** mind a 10 pálya validált és végigjátszható.
 
@@ -68,12 +68,14 @@ Te építed azt, amit a játékos *játszik*: a webes vázat (Vite), a szabálym
 
 ## Amire B-től számíthatsz (és mikor)
 
+> **Nem kell rájuk várnod.** A Klasszikus, az Esemény és a Random felhő nélkül (`NullCloud`) teljes; amit B ad (belépés, szinkron, profil, gyűjtemény, beállítások), az csak *hozzáad*.
+
 | Mit | Mikor | Hogyan használod |
 |---|---|---|
 | `CloudService` valódi megvalósítása | B1 után | A `src/cloud/index.ts` exportja átáll `NullCloud`-ról — **te nem módosítasz semmit** |
 | Szinkron a felhővel | B2 után | A `StorageService.onChange`-et B figyeli; te csak a `StorageService`-be írsz |
 | Új katalógus-pályák | B2 után | `StorageService.getCachedPuzzles()` — a pályabetöltőd olvassa a *csomagolt + cache* pályákat, a nagyobb `rev` nyer |
-| Belépés/Profil/Barátok/Lobby képernyők | B3–B4 után | A csonkok helyére B teszi a kész képernyőket; a menü már hivatkozik rájuk |
+| Belépés / Profil / Barátok / Gyűjtemény / Beállítások / Lobby képernyők | B3, B4, B9, B10 után | A csonkok helyére B teszi a kész képernyőket; a menü már hivatkozik rájuk |
 | Co-op overlay | B5 után | B a `BoardController`-en át csatlakozik a te játékképernyődhöz |
 
 ## Amit B-nek ígérsz

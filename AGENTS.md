@@ -13,6 +13,16 @@ Ez létrehoz egy **külön `git worktree`-t a projektmappán belül** (`.work/A`
 
 Szinkron a közös `main`-nel: `bash scripts/ai-sync.sh pull` (frissítés) és `bash scripts/ai-sync.sh push` (commitjaid felvitele; force nélkül, ütközésnél újrapróbál). Részletek: [docs/AI_SPLIT.md](docs/AI_SPLIT.md) 6. fejezet.
 
+## Ki mit csinál (v0.5 — felhasználói döntés)
+
+| | **AI-A — a játék** | **AI-B — fiók, társas módok, kiadás** |
+|---|---|---|
+| **Módok** | **Klasszikus** (sima Murdoku), **Esemény**, **Random** | **Együtt**, **Gyilkos** |
+| **Képernyők** | Home, főmenü, pályaválasztók, játékképernyő | **Bejelentkezés, Profil, Barátok, Gyűjtemény, Beállítások**, Lobby, co-op overlay |
+| **Alap** | motor, tábla, helyi mentés, jumpscare / hang / zene, a pályák tartalma | felhő (Supabase), szinkron, adatbázis, webes élesítés |
+
+**AI-A sosem vár AI-B-re:** a három egyjátékos mód felhő nélkül (`NullCloud`) teljes; amit B ad (belépés, szinkron, profil, gyűjtemény, beállítások), az csak *hozzáad*. **AI-B** az A2 (`StorageService`), A3 (motor) és A4 (tábla) után kapcsolódik: a Beállítások és a Gyűjtemény a `StorageService`-re és a `content` API-ra, az Együtt/Gyilkos a `BoardController`-re épül. Részletek: [docs/AI_SPLIT.md](docs/AI_SPLIT.md).
+
 ## Olvasd el (a saját munkakönyvtáradban), sorrendben
 
 1. [docs/AI_SPLIT.md](docs/AI_SPLIT.md) — ki mit csinál, ki melyik mappát szerkesztheti, a munkafolyamat

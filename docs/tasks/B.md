@@ -14,4 +14,8 @@
 | B5 | Együtt mód (Realtime-protokoll, overlay) | B4, A3, A4 | ⬜ | |
 | B6 | Gyilkos mód (`0003`, képességek, Gyűlés/Epilógus) | B5, A7 | ⬜ | |
 | B7 | Ranglista, online-állapot, nyilvános profil, moderáció (`0004`) | B2 | ⬜ | |
+| B9 | **Beállítások képernyő** (hang, jumpscare-mód, Nyugodt mód, nyelv, adat-export/import/törlés) | A1, A2 | ⬜ | A2 után indulhat |
+| B10 | **Gyűjtemény / bestiárium képernyő** (`content` API + unlocks) | A1, A2 | ⬜ | A2 után indulhat |
 | B8 | Webes élesítés (Vercel a gyökérből, keep-alive áthelyezés, deploy-ellenőrzés) | A8, B6 | ⬜ | Vercel Root Directory átállítás: 👤 (PLANNER) |
+
+> **Javasolt sorrend (v0.5):** B1 → B3 (belépés/profil) → B9 (beállítások) → B10 (gyűjtemény) → B4 (barátok, lobby, chat) → B2 (szinkron) → B5 (Együtt) → B6 (Gyilkos) → B7 → B8. A B9/B10 csak az A2-t várja, a B5/B6 az A3/A4-et.

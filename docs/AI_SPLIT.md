@@ -8,12 +8,15 @@ A projektet **rétegek mentén** vágtuk ketté, nem funkciók mentén — így 
 
 | | **AI-A — „A játék"** | **AI-B — „A felhő, a társas módok és a kiadás"** |
 |---|---|---|
-| **Felelős** | amit a játékos *játszik*: motor, tábla, mentés a gépen, minden egyjátékos mód, hang/jumpscare, a pályák tartalma | amit a játékos *megoszt és szinkronizál*: fiók, profil, felhős mentés, barátok, chat, co-op módok, adatbázis, weboldal, kiadás |
+| **Felelős** | amit a játékos *játszik*: motor, tábla, helyi mentés, a három egyjátékos mód (Klasszikus, Esemény, Random), hang/jumpscare, a pályák tartalma | amit a játékos *megoszt, szinkronizál, állít*: belépés, profil, barátok, **gyűjtemény, beállítások**, felhős mentés, chat, a két co-op mód, adatbázis, élesítés |
 | **Módok** | Klasszikus (10) · Esemény (10) · Random | Együtt · Gyilkos |
+| **Képernyők** | Home, főmenü, pályaválasztók, játékképernyő | **Belépés, Profil, Barátok, Gyűjtemény, Beállítások**, Lobby, co-op overlay |
 | **GDD-fejezetek** | 5–15, 19.1–19.4, 20 | 16.2, 17.5, 18, 19.5–19.7, 22–24 |
 | **Fő nyelv/eszköz** | Vite, React, TypeScript, kézi tartalom-szerkesztés | TypeScript, SQL (Postgres/RLS), Supabase Realtime, Vercel, CI |
 
 **Hogyan nem akadnak egymásba:** a két oldal csak a [CONTRACTS.md](CONTRACTS.md)-ben rögzített **szerződéseken** keresztül beszél. AI-A sosem hív Supabase-t (csak a `CloudService` interfészt, amihez van üres `NullCloud`), AI-B sosem olvassa közvetlenül a böngésző-tárolót (csak a `StorageService`-en át). Ezért **mindkettő önállóan fejleszthető és tesztelhető**, és az összeillesztés a *kapuknál* (5. fejezet) történik.
+
+> **Felosztás (v0.5, felhasználói döntés):** AI-A = Klasszikus + Esemény + Random (és minden, ami ehhez kell), **AI-A semmire nem vár AI-B-re**. AI-B = Bejelentkezés, Profil, Barátok, **Gyűjtemény, Beállítások**, valamint az **Együtt** és **Gyilkos** mód (+ felhő, adatbázis, élesítés).
 
 ## 2. Ki mit visz (feature-térkép)
 
@@ -26,7 +29,10 @@ A projektet **rétegek mentén** vágtuk ketté, nem funkciók mentén — így 
 | Klasszikus mód (10 pálya + 2 bónusz + kampány-panelek) | **A** | 5, 6, 8, 9 |
 | Esemény mód (10 pálya, világ-szabályok, gyűjtemény) | **A** | 10, 11 |
 | Random mód felület (Folytatás-lista, ügykód, napi ügy kliens-oldala) | **A** | 14.8, 19.1–19.6 |
-| Jumpscare, hang, zene, beállítások, akadálymentesség | **A** | 12, 13, 14.x |
+| Jumpscare, hang, zene (a motor-oldal; a kapcsolók a Beállításokban vannak) | **A** | 12, 13 |
+| **Beállítások** képernyő (hang, jumpscare-mód, Nyugodt mód, nyelv, adat-export / import / törlés) | **B** | 12.4, 14, 17.4 |
+| **Gyűjtemény / bestiárium** képernyő | **B** | 14.7, 19.4 |
+| `content` API (karakterek, pályák listája) | **A** | CONTRACTS 10. |
 | Felület-készlet (design tokenek, komponensek), app-váz, útvonalak | **A** | 14 |
 | Supabase-kliens, belépés/regisztráció, profil-szolgáltatás | **B** | 18.2, 18.3 |
 | Szinkron-motor (sor, összefésülés, idempotens feltöltés), katalógus-frissítés | **B** | 17.5, 18 |
@@ -45,11 +51,11 @@ A projektet **rétegek mentén** vágtuk ketté, nem funkciók mentén — így 
 | `index.html` (Home), `play/**`, `src/app/**`, `src/ui/**`, `src/i18n/**` | A | a Home (landing), a játék belépőoldala, app-váz, útvonal-tábla, UI-készlet, szövegek |
 | `src/engine/**`, `src/components/**` | A | motor és a tábla-komponensek |
 | `src/storage/**` | A | a `StorageService` implementációja |
-| `src/screens/{menu,classic,event,random,game,collection,settings}/**` | A | |
-| `puzzles/**`, `assets/**` | A | pálya-JSON-ok, portrék, hangok |
+| `src/screens/{menu,classic,event,random,game}/**` | A | |
+| `puzzles/**`, `assets/**`, `src/content/**` | A | pálya-JSON-ok, portrék, hangok, a `content` API |
 | `package.json`, `vite.config.*`, `tsconfig*`, `eslint*`, `electron-builder*`, `.github/workflows/ci.yml` | A | **B csak függőséget adhat hozzá** külön `chore(deps):` commitban, előtte `git pull --rebase` |
 | `src/cloud/**`, `src/coop/**` | B | a `CloudService` implementációja, szoba-kliens |
-| `src/screens/{login,profile,friends,lobby,coop}/**` | B | A az indulásnál csak üres csonkot hoz létre (A1) |
+| `src/screens/{login,profile,friends,collection,settings,lobby,coop}/**` | B | A az indulásnál csak üres csonkot hoz létre (A1) |
 | `supabase/**` | B | migrációk + SQL-tesztek |
 | `web/**`, `.github/workflows/release.yml` | B | Vercel-projekt, kiadás |
 | `src/shared/**`, `docs/CONTRACTS.md` | **közös** | csak a 7. fejezet szerint |
@@ -71,7 +77,7 @@ flowchart LR
   A3 --> A4
   A4 --> A5[A5 Klasszikus 10 pálya]
   A4 --> A6[A6 Random + Folytatás]
-  A4 --> A7[A7 Jumpscare / hang / a11y]
+  A4 --> A7[A7 Jumpscare / hang / zene]
   A5 --> A8[A8 Esemény 10 pálya]
   B0[B0 Infra + SQL-tesztek] --> B1[B1 Felhő-alap + belépés]
   A0 --> B1
@@ -88,6 +94,10 @@ flowchart LR
   A7 --> B6
   B2 --> B7[B7 Ranglista + online]
   A8 --> B8[B8 Kiadás]
+  A1 --> B9[B9 Beállítások képernyő]
+  A2 --> B9
+  A1 --> B10[B10 Gyűjtemény képernyő]
+  A2 --> B10
   B6 --> B8
 ```
 
@@ -104,7 +114,7 @@ flowchart LR
 | **G2 — Folytatás** | A6 + B2 kész | Random ügy félbehagyása az egyik gépen → folytatás a másikon (`saves` szinkron) · kilépés közbeni mentés nem veszít |
 | **G3 — Együtt** | B4 + B5 kész | két böngészőablak (külön profil vagy inkognitó) belép egy szobába, közös tábla, a másik lerakását el lehet vinni, chat, újracsatlakozás 2 percen belül |
 | **G4 — Gyilkos** | B6 + A7 kész | 3 példány · a szerep **nem szivárog** a hálózati forgalomból · 3 képesség hűtéssel, értesítés nélkül · Gyűlés, Szimat, Epilógus · döntetlen/győzelem helyesen kerül a `runs`-ba |
-| **G5 — 1.0** | A8 + B7 + B8 kész | mind a 10+10 pálya · ranglista · élő webes kiadás a Vercelen (az asztali csomag később) |
+| **G5 — 1.0** | A8 + B7 + B8 + B9 + B10 kész | mind a 10+10 pálya · ranglista · élő webes kiadás a Vercelen (az asztali csomag később) |
 
 Minden kapunál **az integrátor** az, aki a *fogyasztó* oldalon van (G1: A, mert A hívja a CloudService-t; G3/G4: B, mert B tolja a BoardController-t), de a **kapu lezárása közös**: mindketten aláírják a saját outboxukban (`G1 — aláírom`).
 

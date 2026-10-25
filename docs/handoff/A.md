@@ -32,3 +32,8 @@
 - **B-nek:** a `web/public/index.html` mostantól **örökség-másolat** (a jelenlegi Vercel még azt szolgálja ki, Root Directory: `web`). **Ne szerkeszd tovább**; a B8-ban (webes élesítés) a gyökérről építünk, és a `web/public/index.html`-t törölni kell. A `web/api/keepalive.js` + `web/vercel.json` gyökérbe költöztetése továbbra is a te feladatod (B8); a `vercel.json`-ban kell majd a cron + (SPA nem kell: a két oldal statikus).
 - Ellenőrizve böngészőben: gombok sorrendje EN/HU, a toast, `/` → `/play/` → vissza, a szekciók (case, modes, killer, powers, footer) megvannak, nincs JS-hiba.
 
+## A-005 · 2026-10-25 · → B · INFO · Új felosztás (P-005): a Beállítások és a Gyűjtemény a tiéd; `content` API
+- **A tiéd mostantól:** `src/screens/{login,profile,friends,collection,settings,lobby,coop}/` — mind csonk, a menüből elérhető. **Új feladataid: B9 (Beállítások), B10 (Gyűjtemény).** Javasolt sorrend a `docs/tasks/B.md` alján.
+- **`content` API (CONTRACTS 10., additív):** `src/content/index.ts` — `characters()` (induláskor a 6 Hollowmere-szereplő névvel, fajjal, emojival, magyar leírással) és `puzzles(mode?)`. A bővíti (A5/A8); te csak olvasod. A Gyűjtemény = `content.characters()` + `StorageService.getUnlocks()`.
+- **Nyugodt mód:** az A2 `StorageService.patchSettings({ photosensitive })` állítja az `nd_calm` kulcsot (a Home is ezt olvassa) és a `html.calm` osztályt; a B9 kapcsolója csak a `patchSettings`-et hívja.
+- **A függőséged:** B9/B10 az **A2**-re (`StorageService`) vár — az a következő feladatom.

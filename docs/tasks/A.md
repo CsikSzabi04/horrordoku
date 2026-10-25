@@ -13,7 +13,7 @@
 | A4 | Tábla + játékképernyő + `BoardController` | A2, A3 | ⬜ | |
 | A5 | Klasszikus mód: 10 pálya (+2 bónusz), kampány-menü | A4 | ⬜ | G1-hez az első 3 elég |
 | A6 | Random mód felület, Folytatás, napi ügy | A4 | ⬜ | |
-| A7 | Jumpscare, hang, beállítások, akadálymentesség | A4 | ⬜ | |
-| A8 | Esemény mód: 10 pálya, Gyűjtemény | A5 | ⬜ | |
+| A7 | Jumpscare, hang, zene (motor-oldal; a Beállítások képernyő: B9) | A4 | ⬜ | |
+| A8 | Esemény mód: 10 pálya + világ-szabályok (a Gyűjtemény képernyő: B10) | A5 | ⬜ | |
 | A9 | Keményítés, e2e, élesítés (B8-cal) | A8, B8 | ⬜ | |
 | A10 | Asztali csomag (Electron/Tauri) — **később** | A9 | ⬜ | v0.4: nem most |

@@ -1756,7 +1756,7 @@ HorrorDoku/
 
 ## 25. Ütemterv (roadmap)
 
-> **Munkamegosztás:** a projektet két AI viszi párhuzamosan — **AI-A** a játékot (motor, tábla, helyi mentés, Klasszikus / Esemény / Random mód), **AI-B** a felhőt, a társas módokat és a kiadást (fiók, szinkron, barátok, Együtt / Gyilkos mód, adatbázis, weboldal). A részletek, a feladat-sorrend és a közös szerződések: [docs/AI_SPLIT.md](docs/AI_SPLIT.md), [docs/CONTRACTS.md](docs/CONTRACTS.md), [docs/TASKS.md](docs/TASKS.md). Az alábbi fázisok *sorrendet* adnak, nem naptári időt.
+> **Munkamegosztás:** a projektet két AI viszi párhuzamosan — **AI-A** a Klasszikus, az Esemény és a Random módot (motor, tábla, helyi mentés, jumpscare/hang, pályák), **AI-B** a belépést, a profilt, a barátokat, a Gyűjteményt és a Beállításokat, valamint az Együtt és a Gyilkos módot (+ felhő, szinkron, adatbázis, élesítés). A részletek, a feladat-sorrend és a közös szerződések: [docs/AI_SPLIT.md](docs/AI_SPLIT.md), [docs/CONTRACTS.md](docs/CONTRACTS.md), [docs/TASKS.md](docs/TASKS.md). Az alábbi fázisok *sorrendet* adnak, nem naptári időt.
 
 | Fázis | Időtartam | Tartalom |
 |---|---|---|

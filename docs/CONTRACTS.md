@@ -5,7 +5,7 @@
 > A kód-alakja a `src/shared/**` alatt él (A hozza létre az A1 feladatban, **szó szerint ezekből a blokkokból**). Eltérés esetén ez a dokumentum a mérvadó.
 > Változtatás: AI_SPLIT.md 7. fejezet.
 
-Tartalom: 1 Alapok · 2 Pálya · 3 Tábla-állapot és műveletek · 4 Helyi tároló · 5 (Későbbi) asztali híd · 6 CloudService · 7 Szoba és co-op · 8 Hatások (képességek) · 9 Leképezés az adatbázisra
+Tartalom: 1 Alapok · 2 Pálya · 3 Tábla-állapot és műveletek · 4 Helyi tároló · 5 (Későbbi) asztali híd · 6 CloudService · 7 Szoba és co-op · 8 Hatások (képességek) · 9 Leképezés az adatbázisra · 10 Tartalom (karakterek, pályák)
 
 ---
 
@@ -487,3 +487,29 @@ export interface BoardController {
 | `ChatMessage` | `room_messages (id, user_id, body, created_at)` |
 
 **Az `updatedAt` mezőket a kliens állítja** (az összefésülés ezeken múlik, GDD 17.5).
+
+---
+
+## 10. Tartalom — karakterek és pályák (A adja, B olvassa)
+
+A **Gyűjtemény** képernyő (B10) és a **Profil** a karakterekről és a pályákról ezen az interfészen át tud, nem a pálya-JSON-okból. **A írja** (`src/content/index.ts`; az A1-ben a 6 Hollowmere-szereplővel indul, az A5/A8 bővíti).
+
+```ts
+// src/shared/content.ts
+export interface CharacterInfo {
+  id: CharId
+  name: string
+  race: Race
+  world: string                       // "hollowmere" | "fnaf" | … | "mix"
+  emoji?: string                      // amíg nincs portré (public/portraits/<id>.png)
+  source?: { game?: string; film?: string }
+  bio?: string                        // magyar leírás a Gyűjteményhez
+}
+
+export interface ContentApi {
+  /** Minden ismert karakter. A Gyűjtemény ebből és a `StorageService.getUnlocks()`-ból épül: amit még nem szereztél meg, az „ismeretlen". */
+  characters(): CharacterInfo[]
+  /** Pályák listája (csomagolt + cache), módra szűrhető. */
+  puzzles(mode?: PuzzleMode): Promise<Puzzle[]>
+}
+```

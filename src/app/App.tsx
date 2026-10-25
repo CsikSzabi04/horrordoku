@@ -10,6 +10,8 @@ import ProfileScreen from '../screens/profile'
 import FriendsScreen from '../screens/friends'
 import LobbyScreen from '../screens/lobby'
 import CoopScreen from '../screens/coop'
+import CollectionScreen from '../screens/collection'
+import SettingsScreen from '../screens/settings'
 
 const stub = (title: string, task: string): ComponentType => function StubScreen() { return <Stub title={title} task={task} /> }
 
@@ -19,8 +21,8 @@ const screens: Record<RouteName, ComponentType> = {
   event: stub('Esemény mód', 'A8'),
   random: stub('Random mód', 'A6'),
   game: stub('Játékképernyő', 'A4'),
-  collection: stub('Gyűjtemény', 'A8'),
-  settings: stub('Beállítások', 'A7'),
+  collection: CollectionScreen,
+  settings: SettingsScreen,
   login: LoginScreen,
   profile: ProfileScreen,
   friends: FriendsScreen,
