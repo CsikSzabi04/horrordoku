@@ -6,7 +6,7 @@
 
 | ID | Feladat | Függ | Állapot | Commit / megjegyzés |
 |---|---|---|---|---|
-| B0 | Infra: SQL-tesztek a repóban, Vercel-ellenőrzés, RUNBOOK | — | 🟨 | SQL-tesztek: ✅ (`supabase/tests`, 56/56) · RUNBOOK ⬜ · Vercel Root Directory: 👤 (lásd [TASKS.md](../TASKS.md) U1–U3) |
+| B0 | Infra: SQL-tesztek a repóban, Vercel-ellenőrzés, RUNBOOK | — | ✅ | SQL-tesztek 56/56 · RUNBOOK: `4d31799` ([ops/RUNBOOK.md](../ops/RUNBOOK.md)) · Vercel: `/` → 200 + „NIGHTDOKU", `/api/keepalive` → 401 (ellenőrizve 2026-10-25) |
 | B1 | Felhő-alap + belépés (`CloudService`, `auth`, `profile`) | B0, A0 | ⬜ | tiszta modulokként már indulhat |
 | B2 | Szinkron-motor (`merge`, `sync`, `catalog`) | B1, A2 | ⬜ | |
 | B3 | Belépés / Profil / Fiók képernyők | B1, A1 | ⬜ | |
