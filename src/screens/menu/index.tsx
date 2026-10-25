@@ -42,6 +42,9 @@ export default function MenuScreen() {
         ))}
       </nav>
       <div className="more">
+        <a className="nd-btn ghost sm" href="/">
+          ⌂ {t('menu.home')}
+        </a>
         <Button variant="ghost" size="sm" disabled>
           ▶ {t('menu.continue')}
         </Button>

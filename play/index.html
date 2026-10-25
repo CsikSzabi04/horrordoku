@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="hu">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>NIGHTDOKU</title>
+    <link rel="icon" href="data:," />
+    <script>
+      /* Nyugodt mód: ugyanaz a mentett beállítás, mint a Home-on (nd_calm) vagy a rendszer „kevesebb mozgás" kérése */
+      (function () {
+        var d = document.documentElement, r = false
+        try { r = matchMedia("(prefers-reduced-motion: reduce)").matches } catch (e) {}
+        try { var c = localStorage.getItem("nd_calm"); if (c === "1" || (c === null && r)) d.classList.add("calm") } catch (e) { if (r) d.classList.add("calm") }
+      })()
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -11,6 +11,7 @@ export const hu = {
   'menu.together.sub': 'közös tábla és chat · 2–4 játékos',
   'menu.killer': 'Gyilkos',
   'menu.killer.sub': 'egyikőtök áruló · 3–6 játékos',
+  'menu.home': 'Főoldal',
   'menu.continue': 'Folytatás',
   'menu.friends': 'Barátok',
   'menu.profile': 'Profil',

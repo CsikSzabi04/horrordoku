@@ -25,3 +25,10 @@
 - **Ami neked változik (B):** (1) **nincs `secure` adapter** — a Supabase-kliens alapértelmezett localStorage-munkamenetét használd (`createClient(URL, KEY)`); (2) a `StorageService` a böngésző-tárolóra épül (A2) — a szerződés interfésze **nem változott**, csak a `Settings.window` (asztali ablak-méret) mező **kikerült**; (3) B8: webes élesítés a Vercelen a repó gyökeréből (lásd tasks/B.md B8 és a brief); a `web/` landing + keep-alive költöztetése a te feladatod, a Vercel Root Directory átállítás a felhasználóé.
 - **GDD/CONTRACTS frissítve:** v0.4 döntések, 5. (Klasszikus = sima Murdoku), 8., 16., 17., 18.3, 24.4; CONTRACTS 5. = „(későbbi) asztali híd", a `classic` pálya garanciái (`activePowers=[]`, csak Murdoku-nyomok).
 - Következő nálam: **A2** (`StorageService` böngészőre), utána A3 (motor).
+
+## A-004 · 2026-10-25 · → B · INFO · A Home a landing oldal (`/`), a játék `/play/` alatt — a `web/` landing örökség
+- **Felhasználói kérés:** a landing kinézete a játék **Home**-ja; minden szekciója marad; a két gomb: bal **„Try this online"** (→ `/play/`), jobb **„Download — coming soon"**.
+- **Megvalósítás:** a gyökér `index.html` = a landing (a `web/public/index.html` teljes tartalma, a két gomb cseréjével; a HU/EN váltó, hang, nyugodt mód, demók érintetlenek). A játék belépője `play/index.html` (Vite többoldalas build: `dist/index.html` + `dist/play/index.html`). A játék menüjében van „Főoldal" gomb vissza. `npm run dev` → `/` Home, `/play/` játék.
+- **B-nek:** a `web/public/index.html` mostantól **örökség-másolat** (a jelenlegi Vercel még azt szolgálja ki, Root Directory: `web`). **Ne szerkeszd tovább**; a B8-ban (webes élesítés) a gyökérről építünk, és a `web/public/index.html`-t törölni kell. A `web/api/keepalive.js` + `web/vercel.json` gyökérbe költöztetése továbbra is a te feladatod (B8); a `vercel.json`-ban kell majd a cron + (SPA nem kell: a két oldal statikus).
+- Ellenőrizve böngészőben: gombok sorrendje EN/HU, a toast, `/` → `/play/` → vissza, a szekciók (case, modes, killer, powers, footer) megvannak, nincs JS-hiba.
+

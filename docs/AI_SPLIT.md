@@ -42,7 +42,7 @@ A projektet **rétegek mentén** vágtuk ketté, nem funkciók mentén — így 
 
 | Útvonal | Tulajdonos | Megjegyzés |
 |---|---|---|
-| `src/app/**`, `src/ui/**`, `src/i18n/**` | A | app-váz, útvonal-tábla, UI-készlet, szövegek |
+| `index.html` (Home), `play/**`, `src/app/**`, `src/ui/**`, `src/i18n/**` | A | a Home (landing), a játék belépőoldala, app-váz, útvonal-tábla, UI-készlet, szövegek |
 | `src/engine/**`, `src/components/**` | A | motor és a tábla-komponensek |
 | `src/storage/**` | A | a `StorageService` implementációja |
 | `src/screens/{menu,classic,event,random,game,collection,settings}/**` | A | |
