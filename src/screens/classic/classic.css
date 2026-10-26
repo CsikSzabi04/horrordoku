@@ -208,3 +208,33 @@
   background: #3a2f12;
   color: #fbe9b7;
 }
+
+/* világos mód: fehér oldal, sötét szöveg (a body hátterét a game-frame.css fehérre állítja) */
+.classic.plain[data-dark='0'] {
+  --ink: #121212;
+  --muted: #5b5b66;
+  --dim: #8a8a94;
+  --gold: #8a6a1c;
+  --line: rgba(0, 0, 0, 0.22);
+  color: #121212;
+}
+.classic.plain[data-dark='0'] .nd-btn {
+  background: #fff;
+  border-color: #121212;
+  color: #121212;
+}
+.classic.plain[data-dark='0'] .nd-chip,
+.classic.plain[data-dark='0'] .chip {
+  background: #fff;
+  border-color: #121212;
+  color: #121212;
+}
+.classic.plain[data-dark='0'] .case {
+  box-shadow: 4px 4px 0 rgba(0, 0, 0, 0.12);
+}
+.classic.plain[data-dark='0'] .pill {
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.12);
+}
+.classic.plain[data-dark='0'] .dm[aria-pressed='true'] {
+  color: #fff;
+}

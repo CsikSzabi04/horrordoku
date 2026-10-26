@@ -1,5 +1,6 @@
 import type { ComponentType } from 'react'
 import { ToastProvider } from '../ui'
+import { ErrorBoundary } from './ErrorBoundary'
 import { NavProvider, useNav } from './nav'
 import type { RouteName } from './routes'
 import MenuScreen from '../screens/menu'
@@ -41,11 +42,13 @@ function Shell() {
 
 export default function App() {
   return (
-    <ToastProvider>
-      <NavProvider>
-        <AddLinkHandler />
-        <Shell />
-      </NavProvider>
-    </ToastProvider>
+    <ErrorBoundary>
+      <ToastProvider>
+        <NavProvider>
+          <AddLinkHandler />
+          <Shell />
+        </NavProvider>
+      </ToastProvider>
+    </ErrorBoundary>
   )
 }

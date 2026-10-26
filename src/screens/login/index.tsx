@@ -102,6 +102,7 @@ export default function LoginScreen() {
         : await cloud.auth.signUp({ email: email.trim(), password, username: username.trim() })
     setBusy(false)
     if (!r.ok) {
+      inFlow.current = false
       setError(errorText(r))
       return
     }
@@ -149,7 +150,7 @@ export default function LoginScreen() {
   )
 
   // Belépés után nincs köztes „már be vagy lépve” oldal: a folyamat (vendég-átvitel kérdése, értesítés) a háttérben fut, a végén a `back()` visz tovább.
-  if (user) return <main className="nd-page">{transferModal}</main>
+  if (user && !error) return <main className="nd-page">{transferModal}</main>
 
   const hint = avail === 'checking' ? t('login.checking') : avail === 'free' ? t('login.free') : avail === 'taken' ? t('login.taken') : ''
   return (

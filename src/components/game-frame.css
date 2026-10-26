@@ -31,6 +31,19 @@
   color: var(--chrome-ink);
   font-family: var(--ui, system-ui);
 }
+/* világos Klasszikus: az oldal háttere is fehér, a lapokat vékony fekete szegély választja el */
+.gf[data-theme='classic'][data-dark='0'] {
+  --chrome-bg: #fff;
+  --chrome-panel: #fff;
+  --chrome-ink: #121212;
+  --chrome-muted: #5b5b66;
+  --chrome-line: rgba(0, 0, 0, 0.2);
+}
+.gf[data-theme='classic'][data-dark='0'] .gf-left,
+.gf[data-theme='classic'][data-dark='0'] .gf-board,
+.gf[data-theme='classic'][data-dark='0'] .gf-tools {
+  border: 2px solid #121212;
+}
 /* sötét játék-felület: a Klasszikus sötét módja és minden horror-mód */
 .gf[data-dark='1'],
 .gf[data-theme='horror'] {
@@ -480,6 +493,18 @@
   .gf-left {
     display: contents;
   }
+  /* világos Klasszikus, keskeny képernyőn: a külön lapokat (fejléc, kártyák) is szegély veszi körül */
+  .gf[data-theme='classic'][data-dark='0'] .gf-head,
+  .gf[data-theme='classic'][data-dark='0'] .cards-head,
+  .gf[data-theme='classic'][data-dark='0'] .cards {
+    border: 2px solid #121212;
+  }
+  .gf[data-theme='classic'][data-dark='0'] .cards-head {
+    border-bottom: 0;
+  }
+  .gf[data-theme='classic'][data-dark='0'] .cards {
+    border-top: 0;
+  }
   .gf-head {
     order: 1;
     padding: 10px 12px 6px;
@@ -630,4 +655,14 @@
 }
 .legend .note.compass {
   font-weight: 700;
+}
+
+/* a böngésző-oldal (body) háttere is fehér a világos Klasszikus listán és játékban */
+html:has(.gf[data-theme='classic'][data-dark='0']),
+html:has(.classic.plain[data-dark='0']) {
+  color-scheme: light;
+}
+body:has(.gf[data-theme='classic'][data-dark='0']),
+body:has(.classic.plain[data-dark='0']) {
+  background: #fff;
 }

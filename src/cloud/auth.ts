@@ -25,7 +25,12 @@ export function createAuth(client: SupabaseClient, opts: { redirectTo?: string }
   const emit = () => listeners.forEach((cb) => cb(user))
   const same = (a: CloudUser | null, b: CloudUser | null) => a?.id === b?.id && a?.username === b?.username && a?.email === b?.email
 
-  async function apply(su: User | null): Promise<CloudUser | null> {
+  // A legutóbb indított `apply` eredménye. A belépés két úton is `apply`-t indít (a `signIn` válasza és az `onAuthStateChange` esemény);
+  // az előbbi elavulttá válik, de nem `null`-t ad vissza (az „nincs felhasználó”-nak látszana), hanem megvárja a frissebbet.
+  let latest: Promise<CloudUser | null> = Promise.resolve(null)
+  const apply = (su: User | null): Promise<CloudUser | null> => (latest = run(su))
+
+  async function run(su: User | null): Promise<CloudUser | null> {
     const mine = ++seq
     let next: CloudUser | null = null
     if (su) {
@@ -39,7 +44,7 @@ export function createAuth(client: SupabaseClient, opts: { redirectTo?: string }
       const meta: unknown = su.user_metadata?.username
       next = { id: su.id, email: su.email ?? '', username: name || (typeof meta === 'string' ? meta : '') }
     }
-    if (mine !== seq) return user
+    if (mine !== seq) return latest
     if (!same(user, next)) {
       user = next
       emit()

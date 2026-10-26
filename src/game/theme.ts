@@ -1,15 +1,15 @@
 import { useSyncExternalStore } from 'react'
 
 /**
- * A Klasszikus játék „sötét mód" kapcsolója: alapból a keret fekete (mint az app többi része) és a játék maga fehér;
- * a kapcsolóval a játék is sötét lesz. Per-böngésző kényelmi érték (localStorage), a lista és a játékképernyő közös.
+ * A Klasszikus „sötét mód" kapcsolója: alapból SÖTÉT (fekete oldal, sötét lapok, mint az app többi része); a kapcsolóval világos lesz:
+ * fehér oldal, fehér lapok. Per-böngésző kényelmi érték (localStorage), a lista és a játékképernyő közös.
  */
 const KEY = 'nd_gamedark'
 const read = (): boolean => {
   try {
-    return localStorage.getItem(KEY) === '1'
+    return localStorage.getItem(KEY) !== '0'
   } catch {
-    return false
+    return true
   }
 }
 let dark = read()

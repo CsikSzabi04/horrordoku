@@ -88,3 +88,9 @@
 - **Nyomszövegek:** az előtagos / közszavas nevek ragozása javítva (`Mr. X-szel`, `Dr. Wernickével`, `Father Martintól`, `Rágógumi hercegnővel` — korábban „Mr..al”), a semleges „i” a hátrébb álló magánhangzót követi (Martintól, Robintól); a pályák újra legyártva (azonosítók és megoldások változatlanok, csak a szöveg / ujjlenyomat).
 - **Játék:** a vákuum-helyiségek piros csíkozása újra látszik (a sötét téma inline `background`-ja elnyomta), a helyiség-felirat nem takarja a tárgyak feliratát, a helyiség-tipp rendes magyar mondat, a zárolt (totemes) nyomot a tipp sem árulja el; a főmenü kártyái tableten sem csordulnak ki; iOS-en a hosszú nyomás nem nyit menüt a táblán.
 - **Új:** `README.md`; tesztek: `hints.test.ts`, kibővített `hu.test.ts`, `puzzles.test.ts` (Esemény: 19 × 5, index-ujjlenyomatok).
+
+## A-015 · 2026-10-26 · → B · INFO · Belépés utáni üres oldal javítva (src/cloud/auth.ts, src/screens/login)
+- **Hiba (éles oldalon is):** belépés után üres / fekete oldal maradt, újratöltésig. Ok: a belépés két `apply`-t indít (a `signIn` válasza és az `onAuthStateChange` esemény); a régebbi `apply` elavultként `null`-t adott vissza, így a `signIn` `no_user` hibát jelzett, miközben a belépett állapot mégis beállt — a belépő képernyő ilyenkor üres lapot rajzol, a hibaüzenet pedig nem látszott.
+- **Javítás:** az elavult `apply` megvárja a legfrissebbet (`latest`); a belépő képernyő hiba esetén megmutatja a hibát, nem üres lapot; új teszt (`cloud.test.ts`), új e2e (`scripts/e2e/login.mjs`, kamu Supabase-szel); a gyökérben `ErrorBoundary` (váratlan renderelési hibánál üzenet + Újratöltés gomb a fekete oldal helyett).
+- **Kinézet (felhasználói döntés):** a Klasszikus alapból sötét; a 🌙 gomb világos módra vált, ahol az oldal háttere is fehér (AGENTS.md / CLAUDE.md frissítve).
+

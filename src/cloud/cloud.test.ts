@@ -19,12 +19,14 @@ interface Cfg {
   statsRow?: Res
   updateRow?: Res
   session?: { user: { id: string } } | null
+  /** A profil-lekérdezés késleltetése (ms): a lassú hálózat, amikor a belépés két `apply`-ja egymásba fut. */
+  profileDelay?: number
 }
 
-function chain(res: () => Res) {
+function chain(res: () => Res, delay = 0) {
   const c: Record<string, () => unknown> = {}
   for (const k of ['select', 'eq', 'update']) c[k] = () => c
-  c.single = () => Promise.resolve(res())
+  c.single = () => (delay ? sleep(delay).then(() => res()) : Promise.resolve(res()))
   c.maybeSingle = c.single
   c.then = ((resolve: (v: Res) => unknown) => Promise.resolve(resolve(res()))) as unknown as () => unknown // `await client.from(..).select(..)`
   return c
@@ -59,7 +61,7 @@ function fake(cfg: Cfg = {}) {
         if (cfg.tables?.[t]) return cfg.tables[t]!
         if (t === 'profile_stats') return cfg.statsRow ?? { data: null, error: null }
         return cfg.updateRow && cfg.updateRow !== cfg.profileRow ? cfg.updateRow : (cfg.profileRow ?? { data: { username: 'Vlad' }, error: null })
-      }),
+      }, cfg.profileDelay),
   } as unknown as SupabaseClient
   return { client, calls, emit: (e: string, s: unknown) => authCb?.(e, s) }
 }
@@ -87,6 +89,19 @@ describe('hibaleképezés', () => {
 })
 
 describe('auth', () => {
+  it('belépés: a signIn válasza és az onAuthStateChange esemény egymásba fut — a belépés akkor is sikeres (nem „no_user”)', async () => {
+    const f: ReturnType<typeof fake> = fake({
+      profileDelay: 25,
+      signIn: () => {
+        f.emit('SIGNED_IN', { user: authUser }) // a supabase-js a válasz előtt jelez
+        return { data: { user: authUser }, error: null }
+      },
+    })
+    const cloud = createCloud(f.client)
+    const r = await cloud.auth.signIn({ email: 'a@b.hu', password: 'jelszo123' })
+    expect(r).toMatchObject({ ok: true, value: { id: UID, username: 'Vlad' } })
+    expect(cloud.auth.current()?.id).toBe(UID)
+  })
   it('rossz jelszó: unauthenticated, nincs bejelentkezett felhasználó', async () => {
     const f = fake({ signIn: { data: { user: null }, error: { status: 400, code: 'invalid_credentials', message: 'Invalid login credentials' } } })
     const cloud = createCloud(f.client)
