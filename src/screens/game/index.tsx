@@ -2,12 +2,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { useNav } from '../../app/nav'
 import { Board } from '../../components/Board/Board'
 import type { Tool } from '../../components/Board/Board'
+import { CoopPanel } from '../../components/CoopPanel'
 import { FinishModal } from '../../components/FinishModal'
 import { GameFrame, GameHeader } from '../../components/GameFrame'
 import { Legend } from '../../components/Legend'
 import { SuspectCard } from '../../components/SuspectCard'
 import { Tools } from '../../components/Tools'
 import { Tutorial } from '../../components/Tutorial'
+import { HINTS_PER_PLAYER } from '../../game/coop'
 import { boardEngine, CATEGORIES, codeOf, isBesideType, violations } from '../../engine'
 import { buildGrid, parseCell } from '../../engine/grid'
 import { isMuted, setMuted } from '../../fx/audio'
@@ -19,10 +21,13 @@ import { useGameDark } from '../../game/theme'
 import { plain } from '../../game/rich'
 import { tr, useLang } from '../../game/strings'
 import type { StrKey } from '../../game/strings'
+import type { Proposal } from '../../game/coop'
 import { useBoot, useRun, useView } from '../../game/useGame'
+import type { CoopRun } from '../../game/useGame'
 import { ruleInfo } from '../../game/worlds'
 import type { CellId, CharId } from '../../shared/base'
 import type { Puzzle } from '../../shared/puzzle'
+import type { RoomMember, RoomSession } from '../../shared/room'
 import type { SessionState } from '../../shared/storage'
 import { Button, Modal, Panel, useToast } from '../../ui'
 import './game.css'
@@ -64,11 +69,21 @@ export default function GameScreen() {
   return <Game key={boot.puzzle.id} puzzle={boot.puzzle} board={boot.board} restored={boot.session} refreshed={boot.refreshed} onExit={back} />
 }
 
-function Game({ puzzle, board, restored, refreshed, onExit }: { puzzle: Puzzle; board: GameBoard; restored?: SessionState; refreshed?: boolean; onExit: () => void }) {
+/** Együtt mód: a szoba közös játéka (a `screens/coop/CoopGame.tsx` állítja össze). */
+export interface CoopCtx {
+  run: CoopRun
+  session: RoomSession
+  meId: string
+  members: RoomMember[]
+  /** A szoba visszaállt lobbyba (a host lezárta a játékot). */
+  ended: boolean
+}
+
+export function Game({ puzzle, board, restored, refreshed, coop, onExit }: { puzzle: Puzzle; board: GameBoard; restored?: SessionState; refreshed?: boolean; coop?: CoopCtx; onExit: () => void }) {
   const { go, replace } = useNav()
   const toast = useToast()
   const view = useView(board)
-  const run = useRun(puzzle, board, restored)
+  const run = useRun(puzzle, board, restored, coop?.run)
   const fx = useFx(puzzle, Object.keys(view.state.placed).length)
   const [lang, setLang] = useLang()
   const [dark, setDark] = useGameDark()
@@ -167,10 +182,8 @@ function Game({ puzzle, board, restored, refreshed, onExit }: { puzzle: Puzzle; 
     setTimeout(() => setPulse(null), 2200)
   }
 
-  /** Beküldés (mint a murdoku.com-on): a jó helyen állók zöld, a rosszak piros karikát kapnak, és a játékos dönt: elölről kezdi, vagy megnézi úgy, ahogy hagyta. */
-  const doSubmit = () => {
-    const res = run.submit()
-    if (res === null) return
+  /** A beküldés eredménye (mint a murdoku.com-on): a jó helyen állók zöld, a rosszak piros karikát kapnak, és a játékos dönt: elölről kezdi, vagy megnézi úgy, ahogy hagyta. */
+  const showVerdict = (res: boolean) => {
     const { wrongChars } = boardEngine.check(puzzle, board.getState())
     setVerdict(Object.fromEntries(puzzle.characters.map((c) => [c.id, wrongChars.includes(c.id) ? 'bad' : 'ok'])) as Record<CharId, 'ok' | 'bad'>)
     if (res) fx.win()
@@ -180,6 +193,47 @@ function Game({ puzzle, board, restored, refreshed, onExit }: { puzzle: Puzzle; 
       fx.wrong()
     }
   }
+  const doSubmit = () => {
+    const res = run.submit()
+    if (res === null) {
+      if (coop) toast(t('coopWaiting')) // közös beküldés: az eredmény a jóváhagyás után érkezik
+      return
+    }
+    showVerdict(res)
+  }
+
+  // ---- Együtt: közös beküldés (szavazás), eredmény, a játék lezárása
+  const [proposal, setProposal] = useState<Proposal | null>(null)
+  const [voted, setVoted] = useState(false)
+  const latest = useRef({ applyResult: run.applyResult, showVerdict, giveUp: run.giveUp, finish: run.finish })
+  latest.current = { applyResult: run.applyResult, showVerdict, giveUp: run.giveUp, finish: run.finish }
+  useEffect(() => {
+    const sync = coop?.run.sync
+    if (!sync) return
+    const offs = [
+      sync.onProposal((p) => {
+        setProposal(p)
+        setVoted(sync.hasVoted())
+      }),
+      sync.onResult((r) => {
+        latest.current.applyResult(r.correct)
+        latest.current.showVerdict(r.correct)
+      }),
+      sync.onRejected(() => toast(tr(lang, 'coopRejected'))),
+    ]
+    return () => offs.forEach((off) => off())
+  }, [coop?.run.sync])
+  useEffect(() => {
+    if (!coop?.ended) return
+    // a szoba lezárása és a közös beküldés eredménye külön úton érkezik: egy kis türelem, hogy a győzelem ne feladásnak látsszon
+    const id = setTimeout(() => {
+      if (latest.current.finish === null) {
+        toast(tr(lang, 'coopEnded'))
+        latest.current.giveUp()
+      }
+    }, 1500)
+    return () => clearTimeout(id)
+  }, [coop?.ended])
   // a karikák addig maradnak, amíg a játékos a táblához nem nyúl
   useEffect(() => {
     if (verdict && !done && view.state !== verdictFor.current) setVerdict(null)
@@ -262,6 +316,21 @@ function Game({ puzzle, board, restored, refreshed, onExit }: { puzzle: Puzzle; 
       intro={
         <>
           {puzzle.story && <p className="gf-intro">{puzzle.story}</p>}
+          {coop && (
+            <CoopPanel
+              lang={lang}
+              session={coop.session}
+              meId={coop.meId}
+              members={coop.members}
+              proposal={proposal}
+              voted={voted}
+              hintsLeft={Math.max(0, coop.members.length * HINTS_PER_PLAYER - run.hints)}
+              onVote={(yes) => {
+                coop.run.sync.vote(yes)
+                setVoted(true)
+              }}
+            />
+          )}
           {rule && (
             <p className="gf-intro rule" data-rule={puzzle.worldRule}>
               <b>{rule.name}</b>
@@ -367,23 +436,30 @@ function Game({ puzzle, board, restored, refreshed, onExit }: { puzzle: Puzzle; 
           }}
           onHint={doHint}
           hints={run.hints}
-          canSubmit={complete && !done}
+          canSubmit={complete && !done && !proposal}
           onSubmit={doSubmit}
           onHow={() => setTut(true)}
           onHelp={() => setTut(true)}
-          onShare={doShare}
+          onShare={coop ? () => {
+            void navigator.clipboard?.writeText(coop.session.info().code)
+            toast(t('roomCopied'))
+          } : doShare}
           onSave={() => {
+            if (coop) return toast(t('coopSaved'))
             run.saveNow()
             toast(t('saved'))
           }}
           onSound={doSound}
           muted={muted}
           onSettings={() => go({ name: 'settings' })}
+          hideSettings={!!coop}
           disabled={done}
           extra={
-            <button type="button" className="tbtn" data-act="giveup" disabled={done} onClick={() => setConfirm(true)}>
-              {t('giveUp')}
-            </button>
+            !coop || coop.run.host ? (
+              <button type="button" className="tbtn" data-act="giveup" disabled={done} onClick={() => setConfirm(true)}>
+                {t('giveUp')}
+              </button>
+            ) : undefined
           }
         />
       }
@@ -408,7 +484,7 @@ function Game({ puzzle, board, restored, refreshed, onExit }: { puzzle: Puzzle; 
                 <span className="vok">✔ {Object.values(verdict ?? {}).filter((v) => v === 'ok').length} {t('correctN')}</span> · <span className="vbad">✘ {Object.values(verdict ?? {}).filter((v) => v === 'bad').length} {t('wrongN')}</span>
               </p>
               <div className="row">
-                <Button variant="ghost" size="sm" data-act="verdict-restart" onClick={() => { setVerdictOpen(false); setVerdict(null); board.clearAll() }}>{t('restart')}</Button>
+                {!coop && <Button variant="ghost" size="sm" data-act="verdict-restart" onClick={() => { setVerdictOpen(false); setVerdict(null); board.clearAll() }}>{t('restart')}</Button>}
                 <Button size="sm" data-act="verdict-look" onClick={() => setVerdictOpen(false)}>{t('keepLooking')}</Button>
               </div>
             </div>
@@ -423,7 +499,7 @@ function Game({ puzzle, board, restored, refreshed, onExit }: { puzzle: Puzzle; 
             wrong={run.wrong}
             reward={run.reward}
             lang={lang}
-            next={next}
+            next={coop ? null : next}
             onClose={() => setFinishOpen(false)}
             onMenu={onExit}
             onNext={(p) => replace({ name: 'game', ref: p.id })}

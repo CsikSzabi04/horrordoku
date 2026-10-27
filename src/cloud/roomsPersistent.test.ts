@@ -157,7 +157,7 @@ describe('szoba-munkamenet lezárása', () => {
     expect(await s.value.finish({ solved: true, ms: 91234.6 })).toEqual({ ok: true, value: undefined })
     expect(rpcCalls).toEqual(['finish_game'])
     s.value.close()
-    expect(removed).toHaveLength(1)
+    expect(removed).toHaveLength(2) // a lobby-csatorna és a közös tábla csatornája
     expect(rpcCalls).not.toContain('leave_room') // a tagság megmarad
   })
 })

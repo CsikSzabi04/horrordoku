@@ -479,7 +479,16 @@ export interface RoomSession {
   close(): void                                                       // [0005] csak a Realtime-kapcsolatot zárja le, a tagság marad
   chat: { send(body: string): Promise<Result<void>>; history(): ChatMessage[]; onMessage(cb: (m: ChatMessage) => void): Unsubscribe; report(messageId: number, reason?: string): Promise<Result<void>>; mute(userId: Uuid): Promise<Result<void>> }
   /** A közös tábla műveletei (Broadcast `room:<id>`). */
-  ops: { send(op: Op): void; onOp(cb: (e: OpEnvelope) => void): Unsubscribe; saveState(rev: number, state: BoardState): Promise<Result<number>>; loadState(): Promise<Result<{ rev: number; state: BoardState }>> }
+  ops: {
+    /** A saját műveletet sugározza; visszaadja a borítékot (id, seq), hogy a hívó a saját naplójába is felvehesse. [B5: void → OpEnvelope, visszafelé kompatibilis] */
+    send(op: Op): OpEnvelope
+    onOp(cb: (e: OpEnvelope) => void): Unsubscribe                     // csak a MÁSOK műveletei
+    saveState(rev: number, state: BoardState): Promise<Result<number>>
+    loadState(): Promise<Result<{ rev: number; state: BoardState }>>
+    /** [B5, additív] Alkalmazás-szintű üzenetek ugyanazon a csatornán (pillanatkép, kivonat, tipp, beküldés-szavazás…). */
+    broadcast(type: string, payload: Record<string, unknown>): void
+    onBroadcast(type: string, cb: (payload: Record<string, unknown>, by: Uuid) => void): Unsubscribe
+  }
   cursors: { send(cell: CellId | null): void; onCursor(cb: (userId: Uuid, cell: CellId | null) => void): Unsubscribe }
   /** Csak Gyilkos-módban. */
   killer?: KillerSession

@@ -1,16 +1,18 @@
 // Egy szoba belseje (lobby): tagok, chat, barátok meghívása; a tulajdonosnak ajtó-nyitás, beállítás, indítás, törlés, statisztika.
-// A közös tábla (Együtt) és a Gyilkos-szerepek a B5/B6-ban érkeznek; az indítás addig csak a szoba állapotát váltja `playing`-re.
+// Az Együtt mód közös táblája (B5) a `screens/coop/CoopGame`-ben él; a Gyilkos-szerepek (B6) még nincsenek meg, ezért a Gyilkos szoba nem indítható.
 import { useCallback, useEffect, useRef, useState } from 'react'
 import type { FormEvent } from 'react'
 import { cloud } from '../../cloud'
 import { errorText } from '../../cloud/errors'
 import { content } from '../../content'
+import { listPuzzles } from '../../content/catalog'
 import { t } from '../../i18n'
 import type { FriendRow } from '../../shared/cloud'
 import type { ChatMessage, RoomInfo, RoomMember, RoomSession } from '../../shared/room'
 import { Avatar, Button, Chip, Modal, Panel, useToast } from '../../ui'
 import '../login/form.css'
 import '../friends/social.css'
+import { CoopGame } from '../coop/CoopGame'
 import { StatsBlock } from './StatsBlock'
 
 const emoji = (id: string) => content.characters().find((c) => c.id === id)?.emoji
@@ -30,6 +32,12 @@ export function RoomView({ session, meId, onBack, onGone }: { session: RoomSessi
   const [confirmDelete, setConfirmDelete] = useState(false)
   const [statsKey, setStatsKey] = useState(0)
   const log = useRef<HTMLDivElement>(null)
+  const together = info.mode === 'together'
+  // az Együtt játék a szobából indul; a „← Vissza” csak a szoba nézetére visz, a játék a szobában marad
+  const [inGame, setInGame] = useState(info.status === 'playing' && together)
+  useEffect(() => {
+    if (info.status === 'playing' && together) setInGame(true)
+  }, [info.status, together])
 
   useEffect(() => {
     const offs = [
@@ -46,7 +54,8 @@ export function RoomView({ session, meId, onBack, onGone }: { session: RoomSessi
   const loadFriends = useCallback(() => void cloud.friends.list().then((r) => r.ok && setFriends(r.value.filter((f) => f.status === 'accepted'))), [])
   useEffect(loadFriends, [loadFriends])
   useEffect(() => {
-    void content.puzzles().then((p) => p.length > 0 && setRefs(p.map((x) => ({ id: x.id, title: x.title }))))
+    const p = listPuzzles()
+    if (p.length > 0) setRefs(p.map((x) => ({ id: x.id, title: `${x.title} · ${x.size}×${x.size} · ${'★'.repeat(x.difficulty)}` })))
   }, [])
   useEffect(() => {
     log.current?.scrollTo({ top: log.current.scrollHeight })
@@ -129,6 +138,8 @@ export function RoomView({ session, meId, onBack, onGone }: { session: RoomSessi
     else fail(r)
   }
 
+  if (inGame) return <CoopGame session={session} meId={meId} onExit={() => setInGame(false)} />
+
   return (
     <main className="nd-page top">
       <div className="nd-pf">
@@ -186,7 +197,10 @@ export function RoomView({ session, meId, onBack, onGone }: { session: RoomSessi
               </ul>
               {playing ? (
                 <>
-                  <p className="nd-info">{t('lobby.playing')}</p>
+                  <p className="nd-info">{together ? t('lobby.playing') : t('lobby.killerSoon')}</p>
+                  <div className="nd-row">
+                    {together && <Button size="sm" onClick={() => setInGame(true)}>{t('lobby.backToGame')}</Button>}
+                  </div>
                   {isOwner && (
                     <div className="nd-row">
                       <Button size="sm" variant="ghost" onClick={() => void endGame()}>
@@ -197,10 +211,10 @@ export function RoomView({ session, meId, onBack, onGone }: { session: RoomSessi
                 </>
               ) : isOwner ? (
                 <div className="nd-row" style={{ marginTop: '.8rem' }}>
-                  <Button disabled={members.length < 2} onClick={() => void start()}>
+                  <Button disabled={members.length < 2 || !together} onClick={() => void start()}>
                     {t('lobby.start')}
                   </Button>
-                  {members.length < 2 && <span className="nd-note">{t('lobby.needTwo')}</span>}
+                  {!together ? <span className="nd-note">{t('lobby.killerSoon')}</span> : members.length < 2 && <span className="nd-note">{t('lobby.needTwo')}</span>}
                 </div>
               ) : (
                 <p className="nd-note">{t('lobby.hostOnly')}</p>

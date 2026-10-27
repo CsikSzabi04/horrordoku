@@ -1,7 +1,9 @@
 // RoomSession (B4): tagok + online-állapot (Presence), a szoba állapota (lobby → playing) és a chat (postgres_changes).
-// A közös tábla műveletei (ops/cursors/submit — B5) és a Gyilkos-mód (killer — B6) itt még csonkok.
+// A közös tábla (ops / kurzorok / üzenetek — B5, Broadcast `room:<id>`) itt él; a beküldés-szavazás és a szinkron-logika a `game/coop.ts`-ben.
+// A Gyilkos-mód (killer — B6) és a `submit` itt még csonk.
 import type { SupabaseClient } from '@supabase/supabase-js'
-import type { Result, Unsubscribe } from '../shared/base'
+import type { CellId, Result, Unsubscribe, Uuid } from '../shared/base'
+import type { BoardState, Op, OpEnvelope } from '../shared/board'
 import type { ChatMessage, RoomInfo, RoomMember, RoomSession } from '../shared/room'
 import { fail, fromError, guard, iso, ok } from './result'
 import { toRoomInfo, type RoomRow } from './roomRow'
@@ -88,6 +90,53 @@ export async function openSession(client: SupabaseClient, roomId: string): Promi
       if (status === 'SUBSCRIBED') void channel.track({ at: Date.now() })
     })
 
+  // --- B5: a közös tábla Broadcast-csatornája (`room:<id>`). Egyetlen eseménynév (`m`), a típus a borítékban van.
+  // A szoba azonosítója egy kitalálhatatlan UUID; titkos adat (a Gyilkos-mód szerepei) erre nem megy — az a B6 szerver-oldali csatornája.
+  interface Msg { t: string; by: string; p: Record<string, unknown> }
+  const handlers = new Map<string, Set<(p: Record<string, unknown>, by: string) => void>>()
+  const on = (type: string, cb: (p: Record<string, unknown>, by: string) => void): Unsubscribe => {
+    const set = handlers.get(type) ?? new Set()
+    handlers.set(type, set)
+    set.add(cb)
+    return () => set.delete(cb)
+  }
+  let boardReady = false
+  const outbox: Msg[] = []
+  const boardCh = client.channel(`room:${roomId}`, { config: { broadcast: { self: false } } })
+  boardCh
+    .on('broadcast', { event: 'm' }, (msg: { payload?: unknown }) => {
+      const m = msg.payload as Msg | undefined
+      if (!m || typeof m.t !== 'string' || m.by === me) return
+      handlers.get(m.t)?.forEach((cb) => cb(m.p ?? {}, m.by))
+    })
+    .subscribe((status: string) => {
+      if (status !== 'SUBSCRIBED') return
+      boardReady = true
+      for (const m of outbox.splice(0)) void boardCh.send({ type: 'broadcast', event: 'm', payload: m })
+    })
+  const post = (t: string, p: Record<string, unknown> = {}) => {
+    const m: Msg = { t, by: me, p }
+    if (!boardReady) {
+      outbox.push(m) // a csatorna felépülése előtti üzenetek sorba állnak (a legrégebbiek esnek ki)
+      if (outbox.length > 300) outbox.shift()
+      return
+    }
+    void boardCh.send({ type: 'broadcast', event: 'm', payload: m })
+  }
+  let lamport = 0
+  const opCbs = new Set<(e: OpEnvelope) => void>()
+  on('op', (p) => {
+    const env = p.env as OpEnvelope | undefined
+    if (!env || typeof env.id !== 'string' || typeof env.seq !== 'number') return
+    lamport = Math.max(lamport, env.seq)
+    opCbs.forEach((cb) => cb(env))
+  })
+  const cursorCbs = new Set<(userId: Uuid, cell: CellId | null) => void>()
+  on('cur', (p, by) => cursorCbs.forEach((cb) => cb(by, (p.cell as CellId | null | undefined) ?? null)))
+  let lastCursor = 0
+  let cursorTimer: ReturnType<typeof setTimeout> | undefined
+  let cursorPending: CellId | null | undefined
+
   let lastSent = 0
   const session: RoomSession = {
     info: () => info,
@@ -107,6 +156,7 @@ export async function openSession(client: SupabaseClient, roomId: string): Promi
         const { error } = await client.rpc('leave_room', { p_room: roomId })
         if (error) return fromError(error)
         void client.removeChannel(channel)
+        void client.removeChannel(boardCh)
         return ok(undefined)
       }),
     chat: {
@@ -139,11 +189,55 @@ export async function openSession(client: SupabaseClient, roomId: string): Promi
         }),
       onMessage: sub(msgCbs),
     },
-    // B5 (Együtt mód) tölti fel:
-    ops: { send: noop, onOp: () => noop, saveState: async () => fail('unknown', 'not_implemented'), loadState: async () => fail('unknown', 'not_implemented') },
-    cursors: { send: noop, onCursor: () => noop },
-    submit: { propose: noop, vote: noop, onProposal: () => noop, onResult: () => noop },
-    close: () => void client.removeChannel(channel),
+    ops: {
+      send: (op: Op): OpEnvelope => {
+        const env: OpEnvelope = { id: crypto.randomUUID(), by: me, seq: ++lamport, at: Date.now(), op }
+        post('op', { env })
+        return env
+      },
+      onOp: sub(opCbs),
+      saveState: (rev: number, state: BoardState) =>
+        guard(async () => {
+          const { data, error } = await client.rpc('save_room_state', { p_room: roomId, p_rev: rev, p_state: state })
+          return error ? fromError(error) : ok(Number(data))
+        }),
+      loadState: () =>
+        guard(async () => {
+          const { data, error } = await client.from('rooms').select('state, state_rev').eq('id', roomId).single()
+          if (error) return fromError(error)
+          const row = data as { state: BoardState | null; state_rev: number }
+          return ok({ rev: row.state_rev ?? 0, state: (row.state ?? { placed: {}, marks: [], notes: {} }) as BoardState })
+        }),
+      broadcast: post,
+      onBroadcast: on,
+    },
+    cursors: {
+      send: (cell: CellId | null) => {
+        const now = Date.now()
+        if (now - lastCursor >= 100) {
+          lastCursor = now
+          post('cur', { cell })
+          return
+        }
+        cursorPending = cell // ~10 Hz: a köztes mozgásokból a legutolsó megy ki
+        cursorTimer ??= setTimeout(() => {
+          cursorTimer = undefined
+          lastCursor = Date.now()
+          if (cursorPending !== undefined) post('cur', { cell: cursorPending })
+          cursorPending = undefined
+        }, 100)
+      },
+      onCursor: (cb) => {
+        cursorCbs.add(cb)
+        return () => cursorCbs.delete(cb)
+      },
+    },
+    submit: { propose: noop, vote: noop, onProposal: () => noop, onResult: () => noop }, // a közös beküldés a `game/coop.ts`-ben (ops.broadcast-on)
+    close: () => {
+      clearTimeout(cursorTimer)
+      void client.removeChannel(channel)
+      void client.removeChannel(boardCh)
+    },
     finish: (res) =>
       guard(async () => {
         const { error } = await client.rpc('finish_game', { p_room: roomId, p_solved: res.solved, p_ms: Math.round(res.ms) })

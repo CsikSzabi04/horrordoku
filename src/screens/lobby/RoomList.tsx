@@ -5,7 +5,7 @@ import type { FormEvent } from 'react'
 import { useNav } from '../../app/nav'
 import { cloud } from '../../cloud'
 import { errorText } from '../../cloud/errors'
-import { content } from '../../content'
+import { listPuzzles } from '../../content/catalog'
 import { t } from '../../i18n'
 import type { ProfileStats } from '../../shared/cloud'
 import type { RoomInvite, RoomMode, RoomPeek, RoomSession, RoomSummary } from '../../shared/room'
@@ -81,7 +81,7 @@ export function RoomList({ mode, onOpen }: { mode: RoomMode; onOpen: (s: RoomSes
   const [profile, setProfile] = useState<ProfileStats | null>(null)
   const [refs, setRefs] = useState<{ id: string; title: string }[]>([])
   const [name, setName] = useState('')
-  const [puzzle, setPuzzle] = useState('classic-01')
+  const [puzzle, setPuzzle] = useState('classic-1-01-flower-store')
   const [max, setMax] = useState(mode === 'killer' ? 4 : 2)
   const [code, setCode] = useState('')
   const [peek, setPeek] = useState<RoomPeek | null | undefined>(undefined)
@@ -106,11 +106,12 @@ export function RoomList({ mode, onOpen }: { mode: RoomMode; onOpen: (s: RoomSes
       if (document.visibilityState !== 'hidden') void refresh()
     }, REFRESH_MS)
     void cloud.profile.stats().then((s) => alive.current && s.ok && setProfile(s.value))
-    void content.puzzles().then((p) => {
-      if (!alive.current || p.length === 0) return
-      setRefs(p.map((x) => ({ id: x.id, title: x.title })))
+    // a pálya-választó az indexből épül (nem töltjük be mind a ~200 pályát)
+    const p = listPuzzles()
+    if (p.length > 0) {
+      setRefs(p.map((x) => ({ id: x.id, title: `${x.title} · ${x.size}×${x.size} · ${'★'.repeat(x.difficulty)}` })))
       setPuzzle((cur) => (p.some((x) => x.id === cur) ? cur : p[0]!.id))
-    })
+    }
     const loadInvites = () => void cloud.rooms.invites().then((r) => alive.current && r.ok && setInvites(r.value.filter((i) => i.mode === mode)))
     loadInvites()
     const off = cloud.rooms.onInvite(loadInvites)
@@ -199,6 +200,21 @@ export function RoomList({ mode, onOpen }: { mode: RoomMode; onOpen: (s: RoomSes
     await openSession(j.value.id)
     setBusy(false)
   }
+  /** Meghívóból: a „Belépés" egyből bevisz a szobába (a kódot nem kell begépelni). Ha nem lehet (zárt / tele / elindult), a hibát és a szoba állapotát mutatjuk. */
+  async function joinInvite(i: RoomInvite) {
+    setBusy(true)
+    setError('')
+    const j = await cloud.rooms.join(i.code)
+    if (!j.ok) {
+      setBusy(false)
+      setError(errorText(j))
+      setCode(i.code)
+      void cloud.rooms.peek(i.code).then((p) => p.ok && setPeek(p.value))
+      return
+    }
+    await openSession(j.value.id)
+    setBusy(false)
+  }
   async function followPeeked() {
     if (!peek) return
     const res = await cloud.rooms.follow(peek.code)
@@ -268,14 +284,7 @@ export function RoomList({ mode, onOpen }: { mode: RoomMode; onOpen: (s: RoomSes
                     <span className="nd-person-name">
                       {i.fromUsername} <small>{t('lobby.invite.from')}</small>
                     </span>
-                    <Button
-                      size="sm"
-                      disabled={busy}
-                      onClick={() => {
-                        setCode(i.code)
-                        void cloud.rooms.peek(i.code).then((p) => p.ok && setPeek(p.value))
-                      }}
-                    >
+                    <Button size="sm" disabled={busy} onClick={() => void joinInvite(i)}>
                       {t('lobby.join')}
                     </Button>
                   </li>

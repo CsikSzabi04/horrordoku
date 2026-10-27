@@ -36,6 +36,8 @@ export interface GameBoard extends BoardController {
   clearAll(): OpError | null
   undo(): void
   redo(): void
+  /** Az állapot cseréje a visszavonási lépések megtartásával (a közös tábla újrajátszása / pillanatképe: `setState` törölné a saját visszavonásokat). */
+  syncState(s: BoardState): void
   /** A saját felhasználó (a némítás ellen). */
   setSelf(id: Uuid | null): void
   requestSubmit(): void
@@ -188,6 +190,10 @@ export function createBoardController(puzzle: Puzzle, initial?: BoardState): Gam
       state = s
       undoStack.length = 0
       redoStack.length = 0
+      publish()
+    },
+    syncState(s) {
+      state = s
       publish()
     },
     setPeers: (peers) => publish({ peers }),

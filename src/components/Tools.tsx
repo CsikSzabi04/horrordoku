@@ -24,6 +24,8 @@ export interface ToolsProps {
   onSound: () => void
   muted: boolean
   onSettings: () => void
+  /** Együtt módban a beállítások nem nyílnak meg a játékból (a szoba kapcsolata megszakadna). */
+  hideSettings?: boolean
   disabled?: boolean
   /** Mód-specifikus extra gombok (pl. Gyilkos-képességek) — az alsó sor fölé kerülnek. */
   extra?: ReactNode
@@ -104,7 +106,7 @@ export function Tools(p: ToolsProps) {
       </div>
       <div className="row2">
         <button type="button" className={`tbtn sq${p.muted ? ' on' : ''}`} data-act="sound" title={t('sound')} aria-label={t('sound')} aria-pressed={p.muted} onClick={p.onSound}>{p.muted ? '🔇' : '🔊'}</button>
-        <button type="button" className="tbtn sq" data-act="settings" title={t('settings')} aria-label={t('settings')} onClick={p.onSettings}>⚙</button>
+        {!p.hideSettings && <button type="button" className="tbtn sq" data-act="settings" title={t('settings')} aria-label={t('settings')} onClick={p.onSettings}>⚙</button>}
       </div>
     </div>
   )
