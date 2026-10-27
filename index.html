@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title data-i="meta.title">NIGHTDOKU — Where sudoku spills blood</title>
-<meta name="description" data-i-content="meta.desc" content="NIGHTDOKU: a horror murder-mystery logic puzzle. One grid, one killer, a single solution. Classic, Event, Random and two co-op modes — downloadable, playable offline.">
+<meta name="description" data-i-content="meta.desc" content="NIGHTDOKU: a horror murder-mystery logic puzzle. One grid, one killer, a single solution. Classic, Event, Random and two co-op modes — play it right in your browser.">
 <meta name="theme-color" content="#211a2d">
 <meta name="color-scheme" content="dark">
 <meta property="og:type" content="website">
@@ -152,8 +152,8 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
 :root[lang="hu"] .sus.victim .nm::after{content:" · ÁLDOZAT"}
 .dossier{position:relative;justify-self:center;width:100%;padding:1.2rem 1.1rem 1.1rem;border:1px solid rgba(244,238,240,.2);border-radius:6px;
   background:linear-gradient(160deg,#352b43,#271f33);box-shadow:0 24px 60px rgba(0,0,0,.4),inset 0 0 50px rgba(0,0,0,.22)}
-.dossier::before{content:"CASE FILE #001";position:absolute;left:1.1rem;top:-.75rem;padding:.1rem .7rem;background:var(--blood2);font-family:var(--type);font-size:.78rem;letter-spacing:.2em;color:#fff;transform:rotate(-2deg)}
-:root[lang="hu"] .dossier::before{content:"ÜGYIRAT #001"}
+.dossier::before{content:"LEVEL 1-01";position:absolute;left:1.1rem;top:-.75rem;padding:.1rem .7rem;background:var(--blood2);font-family:var(--type);font-size:.78rem;letter-spacing:.2em;color:#fff;transform:rotate(-2deg)}
+:root[lang="hu"] .dossier::before{content:"1-01. PÁLYA"}
 .seal{position:absolute;right:-14px;top:-18px;width:54px;height:54px;border-radius:50%;display:grid;place-items:center;font-family:var(--display);font-weight:900;font-size:1.35rem;color:#5c0a17;
   background:radial-gradient(circle at 35% 30%,#ff5a6a,#b3122d 55%,#6e0716);box-shadow:0 6px 16px rgba(0,0,0,.6),inset 0 0 0 4px rgba(0,0,0,.18);transform:rotate(12deg);z-index:2}
 .active{min-height:3.1rem;margin:.5rem 0 .8rem;font-family:var(--type);font-size:.95rem;color:var(--ink);line-height:1.4}
@@ -188,9 +188,6 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
 @keyframes stamp{0%{opacity:0;transform:translate(-50%,-50%) rotate(-14deg) scale(2.2)}60%{opacity:1;transform:translate(-50%,-50%) rotate(-14deg) scale(.92)}100%{opacity:.92;transform:translate(-50%,-50%) rotate(-14deg) scale(1)}}
 .dossier.hurt{animation:hurt .7s}
 @keyframes hurt{0%,100%{box-shadow:0 24px 60px rgba(0,0,0,.4),inset 0 0 50px rgba(0,0,0,.22)}30%{box-shadow:0 0 0 2px var(--blood),0 0 80px rgba(209,22,47,.8),inset 0 0 90px rgba(209,22,47,.5);transform:translateX(-5px)}60%{transform:translateX(5px)}}
-.scare-opt{display:flex;gap:.6rem;align-items:flex-start;margin-top:1rem;font-size:.82rem;color:var(--dim);cursor:pointer}
-.scare-opt input{accent-color:var(--blood);margin-top:.2rem}
-.scare-opt small{display:block}
 
 /* ---------- módok ---------- */
 .grid5{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,310px),1fr));gap:1.1rem}
@@ -210,9 +207,9 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
 @keyframes gl1{0%,92%,100%{transform:none;opacity:0}93%{transform:translate(-3px,1px);opacity:.85}96%{transform:translate(3px,-1px);opacity:.85}}
 @keyframes gl2{0%,90%,100%{transform:none;opacity:0}91%{transform:translate(3px,0);opacity:.85}95%{transform:translate(-4px,1px);opacity:.85}}
 .archive{margin-top:1.6rem;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:.9rem 0;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.rail{display:flex;width:max-content;gap:2.2rem;animation:rail 38s linear infinite;font-family:var(--type);letter-spacing:.12em;color:var(--dim);white-space:nowrap}
+.rail{display:flex;width:max-content;gap:2.2rem;animation:rail 90s linear infinite;font-family:var(--type);letter-spacing:.12em;color:var(--dim);white-space:nowrap}
 .rail span{display:inline-flex;align-items:center;gap:.7rem}
-.rail i{display:inline-block;height:1.05em;background:#443a52;border-radius:2px}
+.rail .e{font-size:1.15em}
 @keyframes rail{to{transform:translateX(-50%)}}
 
 /* ---------- gyilkos ---------- */
@@ -279,13 +276,6 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
 .lang:hover{border-color:var(--blood);box-shadow:0 0 18px rgba(209,22,47,.4);transform:translateY(-2px)}
 
 /* ---------- jumpscare + értesítés ---------- */
-#scare{position:fixed;inset:0;z-index:120;display:grid;place-items:center;background:#000;opacity:0;visibility:hidden;pointer-events:none}
-#scare.on{visibility:visible;pointer-events:auto;animation:scBg .95s steps(1) forwards}
-@keyframes scBg{0%{opacity:1;background:#fff}6%{background:#7a0010}14%{background:#000}100%{opacity:1;background:#000}}
-#scare svg{width:min(88vw,70vh);height:auto}
-#scare.on svg{animation:scFace .95s cubic-bezier(.1,1.2,.2,1) forwards,scShake .08s linear 8}
-@keyframes scFace{0%{transform:scale(.25)}18%{transform:scale(1.05)}100%{transform:scale(1.28)}}
-@keyframes scShake{25%{translate:-6px 3px}75%{translate:6px -3px}}
 .toast{position:fixed;left:50%;bottom:1.5rem;z-index:110;transform:translate(-50%,30px);padding:.7rem 1.2rem;border:1px solid var(--blood);border-radius:8px;background:rgba(40,31,54,.96);font-family:var(--type);font-size:.88rem;opacity:0;pointer-events:none;transition:.35s;max-width:calc(100vw - 32px)}
 .toast.on{opacity:1;transform:translate(-50%,0)}
 
@@ -348,9 +338,9 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
   <!-- ======================= THE CASE ======================= -->
   <section id="case">
     <div class="reveal">
-      <p class="eyebrow" data-i="case.eyebrow">Case file #001 · very easy</p>
-      <h2 data-i="case.title">Midnight Mass</h2>
-      <p class="lead" data-i="case.lead">Midnight. The bell of Saint Bartholomew’s Chapel rang by itself. Ábel, the Order’s scribe, was found at the foot of the belfry, a black raven feather in hand. <b>Five people were in the chapel that night.</b> Who killed Ábel?</p>
+      <p class="eyebrow" data-i="case.eyebrow">Classic · level 1-01 · very easy</p>
+      <h2 data-i="case.title">The Flower Shop</h2>
+      <p class="lead" data-i="case.lead">One of the employees was found dead in the flower shop this morning. Everyone acts as if they saw nothing. <b>Six people were in the shop.</b> Who killed Vlad?</p>
     </div>
     <div class="casegrid">
       <div class="reveal" style="--d:.1s">
@@ -371,12 +361,10 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
         <div class="ctrls">
           <button class="btn sm" id="submitBtn" type="button" disabled data-i="btn.submit">🩸 Submit</button>
           <button class="btn sm ghost" id="hintBtn" type="button" data-i="btn.hint">💡 Hint</button>
-          <button class="btn sm ghost" id="solveBtn" type="button" data-i="btn.solve">▶ Solve</button>
           <button class="btn sm ghost" id="resetBtn" type="button" data-i="btn.reset">↺ Reset</button>
           <span class="counters" id="counters">💀 0 · 💡 0</span>
         </div>
         <div class="verdict" id="verdict" hidden></div>
-        <label class="scare-opt"><input type="checkbox" id="scareOn"><span data-i="scare.l">Enable jumpscare <small>on a wrong submission: sudden image and sound · 16+ only · Calm mode turns it off</small></span></label>
       </div>
     </div>
   </section>
@@ -392,9 +380,9 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
     </div>
     <div class="grid5">
       <div class="reveal" style="--d:.05s"><article class="card tilt"><span class="no">01</span><span class="ic">🕯️</span><h3 data-i="m1.t">Classic</h3>
-        <p data-i="m1.p">Everyday cases: a flower shop, a playground, a zoo, a hotel… plain, honest logic puzzles with ordinary people. Hand-crafted levels, each with a single solution.</p><span class="badge" data-i="m1.b">10 levels</span></article></div>
+        <p data-i="m1.p">Everyday cases: a flower shop, a playground, a zoo, a hotel… plain, honest logic puzzles with ordinary people. Hand-crafted levels, each with a single solution.</p><span class="badge" data-i="m1.b">100 levels</span></article></div>
       <div class="reveal" style="--d:.12s"><article class="card tilt"><span class="no">02</span><span class="ic">🎬</span><h3 data-i="m2.t">Event</h3>
-        <p data-i="m2.p">Nineteen original horror worlds, each with its own characters and its own rule. The big bad is the victim — and you work out who killed them.</p><span class="badge" data-i="m2.b">19 levels · classified</span></article></div>
+        <p data-i="m2.p">Nineteen original horror worlds, five cases each, with their own characters and their own rule. The big bad is the victim — and you work out who killed them.</p><span class="badge" data-i="m2.b">19 worlds · 95 cases</span></article></div>
       <div class="reveal" style="--d:.19s"><article class="card tilt"><span class="no">03</span><span class="ic">🎲</span><h3 data-i="m3.t">Random</h3>
         <p data-i="m3.p">Never the same case twice. Always solvable, always new — and if you quit halfway, the cloud remembers where you were. Continue on any machine.</p><span class="badge" data-i="m3.b">endless</span></article></div>
       <div class="reveal" style="--d:.26s"><article class="card tilt"><span class="no">04</span><span class="ic">🤝</span><h3 data-i="m4.t">Together</h3>
@@ -402,7 +390,7 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
       <div class="reveal" style="--d:.33s"><article class="card tilt"><span class="no">05</span><span class="ic">🔪</span><h3><span class="glitch" data-i="m5.t" data-i-t="m5.t" data-t="Killer">Killer</span></h3>
         <p data-i="m5.p">One of you is a traitor. They investigate too — but secretly sabotage. No notification. No sign. Only suspicion.</p><span class="badge" data-i="m5.b">3–6 players</span></article></div>
     </div>
-    <div class="archive reveal" data-i-label="archive.aria" aria-label="The ten classified worlds of Event mode">
+    <div class="archive reveal" data-i-label="archive.aria" aria-label="The 19 worlds of Event mode">
       <div class="rail" id="rail"></div>
     </div>
   </section>
@@ -420,11 +408,11 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
       <div class="reveal" style="--d:.05s"><div class="ab">
         <h3><span class="e">⏱️</span><span data-i="ab1.t">Time Warp</span></h3>
         <div class="demo"><div class="clock" id="clk">12:40</div></div>
-        <p data-i="ab1.p">Takes 20 seconds off the clock. The clock just… jumps. Nobody knows why.</p>
-        <div class="cd" data-i="ab1.cd">cooldown: 90 s · 3× per game</div></div></div>
+        <p data-i="ab1.p">Steals 20 seconds from the clock — or runs it at triple speed for 10. The clock just… jumps. Nobody knows why.</p>
+        <div class="cd" data-i="ab1.cd">cooldown: 90 s · no sign</div></div></div>
       <div class="reveal" style="--d:.15s"><div class="ab">
         <h3><span class="e">✍️</span><span data-i="ab2.t">Text Swap</span></h3>
-        <div class="demo"><div class="clue" id="clue" data-i="demo.clueA">Vlad sat on a bench in the Sacristy.</div><span class="notif" data-i="demo.notif">notification: —</span></div>
+        <div class="demo"><div class="clue" id="clue" data-i="demo.clueA">Amir was next to a chair.</div><span class="notif" data-i="demo.notif">notification: —</span></div>
         <p data-i="ab2.p">For five seconds the clue card shows different text. Then it changes back. Who saw it? Who believed it?</p>
         <div class="cd" data-i="ab2.cd">cooldown: 45 s · no sign</div></div></div>
       <div class="reveal" style="--d:.25s"><div class="ab">
@@ -434,27 +422,30 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
         <div class="cd" data-i="ab3.cd">cooldown: 60 s · 8 s effect</div></div></div>
     </div>
     <div class="reveal" style="--d:.1s;margin-top:1.6rem">
-      <p class="lead" style="margin:0" data-i="killer.counter"><b>Counterplay:</b> 🔎 <b>Sniff</b> — “did anyone use an ability in the last 30 s?” · 🗳️ <b>Meeting</b> — discussion, then a vote: guess right and you expose them. Guess wrong… and they get the last laugh.</p>
+      <p class="lead" style="margin:0" data-i="killer.counter"><b>Counterplay:</b> 🔎 <b>Sniff</b> — “did anyone use an ability in the last 30 s?” · 🗳️ <b>Meeting</b> — 30 seconds of discussion, then a vote: guess right and you expose them. Guess wrong… and they get the last laugh.</p>
     </div>
   </section>
 
   <div class="slash" aria-hidden="true"></div>
 
   <!-- ======================= POWERS ======================= -->
-  <section id="powers">
+  <section id="worlds">
     <div class="reveal">
-      <p class="eyebrow" data-i="powers.eyebrow">Power rules</p>
-      <h2 data-i="powers.title">Species matter.</h2>
-      <p class="lead" data-i="powers.lead">A character’s species changes where they can stand — and how to read their clue. The rules are part of the puzzle.</p>
+      <p class="eyebrow" data-i="worlds.eyebrow">World rules</p>
+      <h2 data-i="worlds.title">Every world plays by its own rule.</h2>
+      <p class="lead" data-i="worlds.lead">In Event mode each of the 19 worlds twists the puzzle — a new way to read the clues, or to see the board. The rules are part of the puzzle.</p>
     </div>
     <div class="pw">
-      <div class="reveal" style="--d:.03s"><b><span class="e">🧛</span><span data-i="pw1.t">Vampire</span></b><p data-i="pw1.p">Can’t stand on a moonlit cell, nor next to a mirror.</p></div>
-      <div class="reveal" style="--d:.08s"><b><span class="e">👻</span><span data-i="pw2.t">Ghost</span></b><p data-i="pw2.p">“Next to” holds through walls for them, and they can stand on occupied objects.</p></div>
-      <div class="reveal" style="--d:.13s"><b><span class="e">😈</span><span data-i="pw3.t">Demon</span></b><p data-i="pw3.p">One clue lies. The question is: which one?</p></div>
-      <div class="reveal" style="--d:.18s"><b><span class="e">🐺</span><span data-i="pw4.t">Werewolf</span></b><p data-i="pw4.p">On a full moon they can only be outdoors — and the Moon is “up” right now.</p></div>
-      <div class="reveal" style="--d:.23s"><b><span class="e">🧙</span><span data-i="pw5.t">Witch</span></b><p data-i="pw5.p">Only the witch may stand on pentagram cells. Everyone else avoids them.</p></div>
-      <div class="reveal" style="--d:.28s"><b><span class="e">🧟</span><span data-i="pw6.t">Undead</span></b><p data-i="pw6.p">Can’t be adjacent to a living person — not even diagonally. They can smell them.</p></div>
-      <div class="reveal" style="--d:.33s"><b><span class="e">🕷️</span><span data-i="pw7.t">Shapeshifter</span></b><p data-i="pw7.p">Has two cards. You have to work out which one is real.</p></div>
+      <div class="reveal" style="--d:0.03s"><b><span class="e">📹</span><span data-i="wr1.t">Cameras</span></b><p data-i="wr1.p">Pick a camera: that room lights up and the other rooms’ clues fade.</p></div>
+      <div class="reveal" style="--d:0.08s"><b><span class="e">✋</span><span data-i="wr2.t">Grab It!</span></b><p data-i="wr2.p">A clue beside a hand switch reaches two cells, along a row or column.</p></div>
+      <div class="reveal" style="--d:0.13s"><b><span class="e">🚪</span><span data-i="wr3.t">Locked Doors</span></b><p data-i="wr3.p">Clues beside keyed doors also apply through the door, to the next room.</p></div>
+      <div class="reveal" style="--d:0.18s"><b><span class="e">📡</span><span data-i="wr4.t">Motion Sensor</span></b><p data-i="wr4.p">Some characters only have distance data: “exactly 3 cells from the airlock.” Walls are no obstacle.</p></div>
+      <div class="reveal" style="--d:0.23s"><b><span class="e">🗿</span><span data-i="wr5.t">Totem Vision</span></b><p data-i="wr5.p">Stand next to a totem and a locked, extra clue is revealed.</p></div>
+      <div class="reveal" style="--d:0.28s"><b><span class="e">🛡️</span><span data-i="wr6.t">Vacuum</span></b><p data-i="wr6.p">Only armored characters can stand in the airless rooms marked red.</p></div>
+      <div class="reveal" style="--d:0.03s"><b><span class="e">🔦</span><span data-i="wr7.t">Night Vision</span></b><p data-i="wr7.p">The board is dark — only the cells around your cursor are visible.</p></div>
+      <div class="reveal" style="--d:0.08s"><b><span class="e">📻</span><span data-i="wr8.t">Radio Noise</span></b><p data-i="wr8.p">Near the radio, one word of a clue is blacked out (███). Work it out from the others.</p></div>
+      <div class="reveal" style="--d:0.13s"><b><span class="e">⚡</span><span data-i="wr9.t">Generators</span></b><p data-i="wr9.p">A character next to a generator makes noise: the killer can’t stand there.</p></div>
+      <div class="reveal" style="--d:0.18s"><b><span class="e">💡</span><span data-i="wr10.t">Light and Darkness</span></b><p data-i="wr10.p">Light surrounds lamp posts and chargers. The Possessed can only stand on dark cells.</p></div>
     </div>
   </section>
 </main>
@@ -474,7 +465,7 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
         <a href="#case" data-i="foot.case">The case</a>
         <a href="#modes" data-i="foot.modes">Modes</a>
         <a href="#killer" data-i="foot.killer">Killer mode</a>
-        <a href="#powers" data-i="foot.powers">Powers</a>
+        <a href="#worlds" data-i="foot.worlds">World rules</a>
       </nav>
       <div class="foot-col">
         <h4 data-i="foot.project">Project</h4>
@@ -496,22 +487,6 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
 
 <button class="lang" id="langBtn" type="button" data-i-label="lang.aria" aria-label="Switch language to Hungarian">HU</button>
 
-<div id="scare" aria-hidden="true">
-  <svg viewBox="0 0 400 480" role="presentation">
-    <defs>
-      <radialGradient id="sk" cx="50%" cy="38%" r="70%"><stop offset="0" stop-color="#efe7e1"/><stop offset=".7" stop-color="#9c9088"/><stop offset="1" stop-color="#3c3438"/></radialGradient>
-      <radialGradient id="ey" cx="50%" cy="50%" r="50%"><stop offset="0" stop-color="#ff2a44"/><stop offset=".5" stop-color="#b3122d"/><stop offset="1" stop-color="#000" stop-opacity="0"/></radialGradient>
-    </defs>
-    <path d="M200 8c96 0 162 76 162 176 0 62-22 104-44 138-10 16-14 50-20 86-4 30-34 52-98 52s-94-22-98-52c-6-36-10-70-20-86C60 288 38 246 38 184 38 84 104 8 200 8z" fill="url(#sk)"/>
-    <ellipse cx="128" cy="176" rx="54" ry="64" fill="#050205" transform="rotate(-10 128 176)"/>
-    <ellipse cx="272" cy="176" rx="54" ry="64" fill="#050205" transform="rotate(10 272 176)"/>
-    <circle cx="132" cy="186" r="22" fill="url(#ey)"/><circle cx="268" cy="186" r="22" fill="url(#ey)"/>
-    <path d="M196 232l-12 54h32z" fill="#2a1f22"/>
-    <path d="M74 322q126 96 252 0q-10 128-126 136Q84 450 74 322z" fill="#050205"/>
-    <g fill="#e8dfd8"><path d="M96 340l14 42 14-36z"/><path d="M134 354l12 52 14-48z"/><path d="M176 360l10 58 12-58z"/><path d="M214 360l12 58 10-58z"/><path d="M252 352l14 48 12-52z"/><path d="M278 336l14 36 14-42z"/></g>
-    <path d="M70 322q130 100 260 0" fill="none" stroke="#6e0716" stroke-width="6" stroke-dasharray="14 10"/>
-  </svg>
-</div>
 <div class="toast" id="toast" role="status"></div>
 
 <script>
@@ -528,22 +503,22 @@ var rand=function(a,b){return a+Math.random()*(b-a)};
 var lang=root.lang==='hu'?'hu':'en',langHooks=[];
 var EN={
   'tag.text':'Where sudoku spills blood.',
-  'room.K':'Crypt','room.S':'Sacristy','room.O':'Altar','room.H':'Belfry','room.T':'Graveyard',
-  'obj.coffin':'coffin','obj.bench':'bench','obj.candle':'candle','obj.carpet':'carpet','obj.grave':'gravestone','obj.tree':'tree','obj.bell':'bell',
-  'ch.vlad.clue':'Sat on a bench in the Sacristy.','ch.vlad.why':'Sat on a bench in the Sacristy: E1.',
-  'ch.morrigan.clue':'Stood next to the bell.','ch.morrigan.why':'Next to the bell (A4), in the same room: A5.',
-  'ch.silas.clue':'Rested on a coffin.','ch.silas.why':'Rested on a coffin in the Crypt: B2.',
-  'ch.lilith.clue':'Knelt on the Altar carpet.','ch.lilith.why':'Knelt on the Altar carpet: D3.',
-  'ch.ezekiel.clue':'Was in the Graveyard.','ch.ezekiel.why':'In the Graveyard, in the gap left between the gravestones: F4.',
-  'ch.abel.clue':'Was in the Belfry, alone with the killer.','ch.abel.why':'In the Belfry, alone with the killer: C6.',
-  'g.intro':'Pick a card, then click the grid to place them. (Try the “▶ Solve” button if you want to see the reasoning.)',
+  'room.E':'Sales floor','room.L':'Prep room','room.P':'Cash desk','room.R':'Storeroom',
+  'obj.rug':'rug','obj.chair':'chair','obj.bench':'bench','obj.shelf':'shelf','obj.register':'register','obj.plant':'plant','obj.flowers':'flower bush',
+  'ch.amir.clue':'Was next to a chair.','ch.amir.why':'Next to the chair at C2, in the same room: C1.',
+  'ch.bruno.clue':'Was in row 2.','ch.bruno.why':'Row 2 — the only cell left in it: E2.',
+  'ch.vlad.clue':'The victim. Was alone with the killer.','ch.vlad.why':'Alone with the killer on the Sales floor — only Daniel shares it: A3.',
+  'ch.clara.clue':'Sat on a chair at the Cash desk.','ch.clara.why':'On a chair at the Cash desk. C2 is in row 2 — Bruno’s row — so: F4.',
+  'ch.daniel.clue':'Was next to a chair or a flower bush.','ch.daniel.why':'Next to the flower bush, in the same room: B5.',
+  'ch.elena.clue':'Was in the Prep room.','ch.elena.why':'In the Prep room: D6.',
+  'g.intro':'Pick a card, then click the grid to place them. Stuck? Try 💡 Hint.',
   'g.pick':'Pick a suspect from the cards first.',
   'g.blocked':'Nobody can stand here: the {o} blocks the cell.',
   'g.taken':'Someone already took this cell.',
   'g.clash':'Only one character per row and column.',
   'g.alldown':'Everyone is down. If you’re sure… hit Submit.',
-  'g.win':'Correct. The silence of the belfry speaks: only two were there.',
-  'g.verdict':'<h4>🩸 The killer: MORRIGAN ASHVALE</h4><p>Only Morrigan and Ábel were in the belfry. “The Order drove my mother out. Ábel signed the order.” — but the feather wasn’t left there by Morrigan…</p>',
+  'g.win':'Correct. Only one room held just two people — and one of them was the killer.',
+  'g.verdict':'<h4>🩸 The killer: DANIEL</h4><p>Only Daniel and Vlad were on the Sales floor — alone, together. Nobody else could have done it.</p>',
   'g.lose':'Wrong solution. The dead don’t lie — you do.',
   'g.hint':'💡 A candle lights up… {n}: {why}',
   'g.closed':'<b>Case closed.</b><small>The dead don’t lie.</small>',
@@ -552,27 +527,26 @@ var EN={
   'g.here':', occupied by: ',
   'toast.sound':'Sound on','toast.calmOn':'Calm mode: on','toast.calmOff':'Calm mode: off',
   'toast.dl':'Still in the works — the download will be here after the prototype.',
-  'toast.scare':'Calm mode is on, so the jumpscare won’t run.',
-  'demo.clueB':'Vlad sat on a coffin in the Crypt.'
+  'demo.clueB':'Amir was next to a shelf.'
 };
 var HU={
   'tag.text':'Ahol a sudoku vért ont.',
-  'room.K':'Kripta','room.S':'Sekrestye','room.O':'Oltár','room.H':'Harangláb','room.T':'Temetőkert',
-  'obj.coffin':'koporsó','obj.bench':'pad','obj.candle':'gyertya','obj.carpet':'szőnyeg','obj.grave':'sírkő','obj.tree':'fa','obj.bell':'harang',
-  'ch.vlad.clue':'Egy padon ült a Sekrestyében.','ch.vlad.why':'Padon ült a Sekrestyében: E1.',
-  'ch.morrigan.clue':'A harang mellett állt.','ch.morrigan.why':'A harang (A4) mellett, ugyanabban a helyiségben: A5.',
-  'ch.silas.clue':'Egy koporsón pihent.','ch.silas.why':'Koporsón pihent a Kriptában: B2.',
-  'ch.lilith.clue':'Az Oltár szőnyegén térdelt.','ch.lilith.why':'Az Oltár szőnyegén térdelt: D3.',
-  'ch.ezekiel.clue':'A Temetőkertben volt.','ch.ezekiel.why':'A Temetőkertben, a sírkövek közt maradt hely: F4.',
-  'ch.abel.clue':'A Haranglábban volt, egyedül a gyilkosával.','ch.abel.why':'A Haranglábban, egyedül a gyilkossal: C6.',
-  'g.intro':'Válassz egy kártyát, majd kattints a rácson a helyére. (Próbáld a „▶ Megoldás" gombot, ha látni akarod a levezetést.)',
+  'room.E':'Eladótér','room.L':'Előkészítés','room.P':'Pénztár','room.R':'Raktár',
+  'obj.rug':'szőnyeg','obj.chair':'szék','obj.bench':'pad','obj.shelf':'polc','obj.register':'pénztárgép','obj.plant':'növény','obj.flowers':'virágcserje',
+  'ch.amir.clue':'Egy szék mellett volt.','ch.amir.why':'A C2-es szék mellett, ugyanabban a helyiségben: C1.',
+  'ch.bruno.clue':'A 2. sorban volt.','ch.bruno.why':'A 2. sorban — ebben egyetlen szabad mező maradt: E2.',
+  'ch.vlad.clue':'Az áldozat. Egyedül volt a gyilkossal.','ch.vlad.why':'Egyedül a gyilkossal az Eladótéren — csak Daniel van ott: A3.',
+  'ch.clara.clue':'A Pénztárnál egy széken ült.','ch.clara.why':'Széken a Pénztárnál. A C2 a 2. sorban van — az Bruno sora —, tehát: F4.',
+  'ch.daniel.clue':'Egy szék vagy virágcserje mellett volt.','ch.daniel.why':'A virágcserje mellett, ugyanabban a helyiségben: B5.',
+  'ch.elena.clue':'Az Előkészítésben volt.','ch.elena.why':'Az Előkészítésben: D6.',
+  'g.intro':'Válassz egy kártyát, majd kattints a rácson a helyére. Elakadtál? Kérj 💡 Tippet.',
   'g.pick':'Előbb válassz egy gyanúsítottat a kártyák közül.',
   'g.blocked':'Ide nem állhat senki: a(z) {o} foglalt tárgy.',
   'g.taken':'Ezt a mezőt már elfoglalta valaki.',
   'g.clash':'Soronként és oszloponként csak egy karakter állhat.',
   'g.alldown':'Mindenki lent van. Ha biztos vagy benne… nyomd meg a Beküldést.',
-  'g.win':'Helyes. A harangláb csöndje beszél: csak ketten voltak ott.',
-  'g.verdict':'<h4>🩸 A gyilkos: MORRIGAN ASHVALE</h4><p>A Haranglábban csak ő és Ábel volt. „A Rend elűzte az anyámat. Ábel írta alá a parancsot." — de a tollat nem ő hagyta ott…</p>',
+  'g.win':'Helyes. Egyetlen helyiségben volt csak két ember — és egyikük a gyilkos.',
+  'g.verdict':'<h4>🩸 A gyilkos: DANIEL</h4><p>Az Eladótéren csak Daniel és Vlad volt — kettesben. Más nem tehette.</p>',
   'g.lose':'Hibás megoldás. A halottak nem hazudnak — te igen.',
   'g.hint':'💡 Egy gyertya gyullad… {n}: {why}',
   'g.closed':'<b>Ügy lezárva.</b><small>A halottak nem hazudnak.</small>',
@@ -581,49 +555,51 @@ var HU={
   'g.here':', itt áll: ',
   'toast.sound':'Hang bekapcsolva','toast.calmOn':'Nyugodt mód: be','toast.calmOff':'Nyugodt mód: ki',
   'toast.dl':'Még készül — a prototípus után itt lesz a letöltés.',
-  'toast.scare':'A Nyugodt mód miatt a jumpscare nem fut le.',
-  'demo.clueB':'Vlad egy koporsón ült a Kriptában.',
-  'demo.clueA':'Vlad egy padon ült a Sekrestyében.','demo.notif':'értesítés: —',
+  'demo.clueB':'Amir egy polc mellett volt.',
+  'demo.clueA':'Amir egy szék mellett volt.','demo.notif':'értesítés: —',
 
   'meta.title':'NIGHTDOKU — Ahol a sudoku vért ont',
-  'meta.desc':'NIGHTDOKU: horror-gyilkossági logikai rejtvényjáték. Egy rács, egy gyilkos, egyetlen megoldás. Klasszikus, Esemény, Random és két co-op mód — letölthető, offline is játszható.',
+  'meta.desc':'NIGHTDOKU: horror-gyilkossági logikai rejtvényjáték. Egy rács, egy gyilkos, egyetlen megoldás. Klasszikus, Esemény, Random és két co-op mód — közvetlenül a böngészőben játszható.',
   'meta.ogdesc':'Horror-gyilkossági logikai rejtvény. Egy rács. Egy gyilkos. Egyetlen megoldás.',
   'nav.sound':'Hang','nav.soundT':'Hang be/ki','nav.calm':'Nyugodt mód','nav.calmT':'Nyugodt mód: kevesebb mozgás és villogás',
   'lang.aria':'Váltás angol nyelvre',
   'hero.sub':'Horror-gyilkossági logikai rejtvény. Egy rács. Egy gyilkos. Egyetlen megoldás.',
   'hero.dl':'⬇ Letöltés — hamarosan','hero.try':'▶ Próbáld ki online','hero.meta':'Co-op és Gyilkos mód · végtelen Random ügyek · 16+',
-  'case.eyebrow':'Ügyirat #001 · nagyon könnyű','case.title':'Éjféli Mise',
-  'case.lead':'Éjfél. A Szent Bertalan-kápolna harangja magától megszólalt. Ábelt, a Rend írnokát a harangláb tövében találták, kezében egy fekete varjútollal. <b>Öten voltak a kápolnában aznap éjjel.</b> Ki ölte meg?',
+  'case.eyebrow':'Klasszikus · 1-01. pálya · nagyon könnyű','case.title':'A virágbolt',
+  'case.lead':'A virágboltban reggel az egyik alkalmazottat holtan találták. Mindenki úgy tesz, mintha semmit sem látott volna. <b>Hatan voltak a boltban.</b> Ki ölte meg Vladot?',
   'how.1':'Válassz egy gyanúsítottat a kártyák közül.',
   'how.2':'Rakd le a rácson — <b>soronként és oszloponként csak egy</b> karakter állhat.',
   'how.3':'Minden nyomnak teljesülnie kell. A „mellette" = közvetlenül szomszédos, <b>ugyanabban a helyiségben</b>.',
   'how.4':'Ha mindenki a helyén van: <b>Beküldés</b>. És imádkozz, hogy igazad legyen…',
   'case.grid':'6×6-os rács','case.stamp':'LEZÁRVA',
-  'btn.submit':'🩸 Beküldés','btn.hint':'💡 Tipp','btn.solve':'▶ Megoldás','btn.reset':'↺ Újra',
-  'scare.l':'Jumpscare bekapcsolása <small>rossz beküldésnél hirtelen kép és hang · csak 16+ · a Nyugodt mód kikapcsolja</small>',
+  'btn.submit':'🩸 Beküldés','btn.hint':'💡 Tipp','btn.reset':'↺ Újra',
   'modes.eyebrow':'Öt mód','modes.title':'Válaszd a rémálmod','modes.lead':'Egyedül a sötétben, barátokkal egy asztalnál — vagy úgy, hogy közülük az egyik <b>hazudik</b>.',
-  'm1.t':'Klasszikus','m1.p':'Hétköznapi ügyek: virágbolt, játszótér, állatkert, hotel… sima, tisztességes logikai rejtvények hétköznapi emberekkel. Kézzel tervezett pályák, egyetlen megoldással.','m1.b':'10 pálya',
-  'm2.t':'Esemény','m2.p':'Tizenkilenc eredeti horror-világ, mindegyik saját karakterekkel és saját szabállyal. A főgonosz az áldozat — te pedig kinyomozod, ki ölte meg.','m2.b':'19 pálya · eltitkosítva',
+  'm1.t':'Klasszikus','m1.p':'Hétköznapi ügyek: virágbolt, játszótér, állatkert, hotel… sima, tisztességes logikai rejtvények hétköznapi emberekkel. Kézzel tervezett pályák, egyetlen megoldással.','m1.b':'100 pálya',
+  'm2.t':'Esemény','m2.p':'Tizenkilenc eredeti horror-világ, mindegyikben öt ügy, saját karakterekkel és saját szabállyal. A főgonosz az áldozat — te pedig kinyomozod, ki ölte meg.','m2.b':'19 világ · 95 ügy',
   'm3.t':'Random','m3.p':'Soha ugyanaz az ügy kétszer. Mindig kivihető, mindig új — és ha félúton abbahagyod, a felhő megjegyzi, hol tartottál. Bármelyik gépen folytathatod.','m3.b':'végtelen',
   'm4.t':'Együtt','m4.p':'Közös tábla. Mindketten raktok, és a másikét is elviheted. Chat — de csak a játékban, ott, ahol a tét van.','m4.b':'2–4 játékos',
   'm5.t':'Gyilkos','m5.p':'Egyikőtök áruló. Ő is nyomoz — de titokban szabotál. Nincs értesítés. Nincs jelzés. Csak a gyanú.','m5.b':'3–6 játékos',
-  'archive.aria':'Az Esemény mód tíz eltitkosított világa',
+  'archive.aria':'Az Esemény mód 19 világa',
   'killer.eyebrow':'Co-op: Gyilkos','killer.title':'Valaki köztetek hazudik.',
   'killer.lead':'A szerver titokban kisorsol egy gyilkost. Ő is velünk nyomoz, ugyanazt a táblát látja — de három néma képességgel hátráltat. <b>Senki nem kap értesítést.</b> A többieknek csak a megfigyelés, a logika és a Gyűlés marad.',
-  'ab1.t':'Időcsavar','ab1.p':'Elvesz az óráról 20 másodpercet. Az óra csak… ugrik. Senki sem tudja, miért.','ab1.cd':'hűtés: 90 mp · játékonként 3×',
+  'ab1.t':'Időcsavar','ab1.p':'Elvesz az óráról 20 másodpercet — vagy 10 másodpercre háromszoros sebességre gyorsítja. Az óra csak… ugrik. Senki sem tudja, miért.','ab1.cd':'hűtés: 90 mp · nincs jelzés',
   'ab2.t':'Szövegcsere','ab2.p':'Öt másodpercre más szöveg áll a nyomkártyán. Aztán visszaáll. Ki látta? Ki hitte el?','ab2.cd':'hűtés: 45 mp · nincs jelzés',
   'ab3.t':'Eltüntetés','ab3.p':'Egy tárgy eltűnik — és a mező szabadnak látszik. Rakj oda bármit, és ha visszatér, minden elvész, a mező pedig örökre zárolt.','ab3.cd':'hűtés: 60 mp · 8 mp hatás',
-  'killer.counter':'<b>Ellenjáték:</b> 🔎 <b>Szimat</b> — „használt valaki képességet az elmúlt 30 mp-ben?" · 🗳️ <b>Gyűlés</b> — vita, majd szavazás: ha eltalálod, leleplezed. Ha nem… ő nevet a végén.',
-  'powers.eyebrow':'Erő-szabályok','powers.title':'A faj számít.','powers.lead':'A karakter faja megváltoztatja, hová állhat — és hogyan kell olvasni a nyomát. A szabályok a rejtvény részei.',
-  'pw1.t':'Vámpír','pw1.p':'Nem állhat holdfényes mezőn, és tükör mellett sem.',
-  'pw2.t':'Szellem','pw2.p':'A „mellette" a falon át is érvényes rá, és foglalt tárgyon is állhat.',
-  'pw3.t':'Démon','pw3.p':'Egy nyom hazudik. A kérdés: melyik?',
-  'pw4.t':'Vérfarkas','pw4.p':'Teliholdkor csak kültéren lehet — a Hold épp „fent van".',
-  'pw5.t':'Boszorkány','pw5.p':'A pentagramma-mezőkön csak ő állhat. Mindenki más elkerüli.',
-  'pw6.t':'Élőhalott','pw6.p':'Élő emberrel nem lehet szomszédos — még átlósan sem. Megérzik a szagát.',
-  'pw7.t':'Alakváltó','pw7.p':'Két kártyája van. Neked kell kitalálni, melyik az igazi.',
+  'killer.counter':'<b>Ellenjáték:</b> 🔎 <b>Szimat</b> — „használt valaki képességet az elmúlt 30 mp-ben?" · 🗳️ <b>Gyűlés</b> — 30 mp vita, majd szavazás: ha eltalálod, leleplezed. Ha nem… ő nevet a végén.',
+  'worlds.eyebrow':'Világ-szabályok','worlds.title':'Minden világ a saját szabálya szerint játszik.',
+  'worlds.lead':'Az Esemény módban mind a 19 világ megcsavarja a rejtvényt — új módon kell olvasni a nyomokat, vagy látni a táblát. A szabályok a rejtvény részei.',
+  'wr1.t':'Kamerák','wr1.p':'Válassz kamerát: az a helyiség kiemelődik, a többi helyiség nyomai elhalványulnak.',
+  'wr2.t':'Fogd meg!','wr2.p':'A kéz-kapcsoló melletti nyom két mezőre is érvényes, egy sorban vagy oszlopban.',
+  'wr3.t':'Zárt ajtók','wr3.p':'A kulcsos ajtók melletti nyomok az ajtón át, a szomszéd helyiségre is érvényesek.',
+  'wr4.t':'Mozgásérzékelő','wr4.p':'Néhány szereplőről csak távolság-adat van: „a légzsiliptől pontosan 3 mezőre." A falak nem akadály.',
+  'wr5.t':'Totem-látomás','wr5.p':'Aki totem mellé kerül, annak feltárul egy zárolt, extra nyoma.',
+  'wr6.t':'Vákuum','wr6.p':'A pirossal jelölt, levegőtlen helyiségekbe csak páncélos szereplő állhat.',
+  'wr7.t':'Éjjellátó','wr7.p':'A tábla sötét — csak a kurzorod körüli mezők látszanak.',
+  'wr8.t':'A rádió zaja','wr8.p':'A rádió közelében egy szó ki van takarva a nyomban (███) — a többiből kell kitalálni.',
+  'wr9.t':'Generátorok','wr9.p':'A generátor mellett álló szereplő zajt csap: a gyilkos nem állhat generátor mellett.',
+  'wr10.t':'A Fény és a Sötétség','wr10.p':'A villanyoszlopok és töltők körül fény van. A Birtoltak csak sötét mezőn állhatnak.',
   'foot.desc':'Horror-gyilkossági logikai rejtvény. Egy rács, egy gyilkos, egyetlen megoldás.',
-  'foot.explore':'Felfedezés','foot.case':'Az ügy','foot.modes':'Módok','foot.killer':'Gyilkos mód','foot.powers':'Erők',
+  'foot.explore':'Felfedezés','foot.case':'Az ügy','foot.modes':'Módok','foot.killer':'Gyilkos mód','foot.worlds':'Világ-szabályok',
   'foot.project':'Projekt','foot.dl':'Letöltés — hamarosan','foot.top':'Vissza a tetejére','foot.made':'Készítette',
   'foot.copy':'© 2026 NIGHTDOKU. Rajongói, nem kereskedelmi, fejlesztés alatt álló projekt.',
   'foot.warn':'⚠ Fotoszenzitív figyelmeztetés: villogó és mozgó effektek. A Nyugodt mód (jobb felül) kikapcsolja őket. Horror-tartalom, 16+ ajánlott.'
@@ -722,46 +698,48 @@ $$('.tilt').forEach(function(el){
     el.style.setProperty('--rx',((.5-py)*9).toFixed(2)+'deg');el.style.setProperty('--ry',((px-.5)*11).toFixed(2)+'deg');el.style.setProperty('--gx',(px*100).toFixed(0)+'%');el.style.setProperty('--gy',(py*100).toFixed(0)+'%')});
   el.addEventListener('pointerleave',function(){el.style.setProperty('--rx','0deg');el.style.setProperty('--ry','0deg')})});
 
-/* ---------- eltitkosított archívum ---------- */
-(function(){var w=[9,7,6,11,8,10,9,6,12,7],r=$('#rail'),h='';
-  for(var k=0;k<2;k++)for(var i=0;i<w.length;i++)h+='<span><i style="width:'+w[i]*.75+'ch"></i>'+(i<9?'':'')+'</span>';
-  r.innerHTML=h;
-  var lab=document.createElement('span');lab.textContent='';})();
+/* ---------- az Esemény mód 19 világa ---------- */
+(function(){var W=[['🐻','Teddy Mackó Pizzériája','Teddy’s Bear Pizzeria'],['🧸','Toytime Co. Gyár','Toytime Co. Factory'],['👮','Lemur Város Rendőrség','Lemur City Police Station'],
+  ['👽','Novastopol Állomás','Novastopol Station'],['🦌','Wendigo hegy','Wendigo Mountain'],['🚀','Kuromura Űrhajó','Starship Kuromura'],['🔦','Mount Hollow Elmegyógyintézet','Mount Hollow Asylum'],
+  ['🌫️','Hushed Hill Város','Hushed Hill Town'],['☠️','A Jelenlét Birodalma','The Presence’s Realm'],['🌲','Radiant Falls','Radiant Falls'],['🕹️','StarPláza','Starplaza Mall'],
+  ['🐉','Frosthold Vár','Frosthold'],['🛸','Őrült tudós garázsa','Crazy Grandpa’s Garage'],['🩸','Arcane Falls','Arcane Falls'],['🗡️','Aah Földje','Land of Aah'],
+  ['🐺','Crossroads Város','Crossroads'],['🧟','Avalon Menedék','Avalon Safe Zone'],['🍄','Sporefield Karanténzóna','Sporefield Quarantine Zone'],['⚡','Ravenwick Varázslóiskola','Ravenwick School of Magic']];
+  var r=$('#rail');
+  function paint(){var h='';for(var k=0;k<2;k++)for(var i=0;i<W.length;i++)h+='<span><span class="e">'+W[i][0]+'</span>'+W[i][lang==='hu'?1:2]+'</span>';r.innerHTML=h}
+  langHooks.push(paint);paint()})();
 
 /* ---------- letöltés gomb ---------- */
 $('#dlBtn').addEventListener('click',function(){toast(t('toast.dl'));Snd.thud()});
 
-/* ---------- jumpscare ---------- */
+/* ---------- rossz beküldés: rövid rázkódás ---------- */
 function softHurt(){var d=$('#dossier');d.classList.remove('hurt');void d.offsetWidth;d.classList.add('hurt')}
-function scare(){softHurt();if(calm||!$('#scareOn').checked)return;var s=$('#scare');s.classList.add('on');Snd.stinger();
-  var off=function(){s.classList.remove('on')};s.onclick=off;setTimeout(off,980)}
-addEventListener('keydown',function(e){if(e.key==='Escape')$('#scare').classList.remove('on')});
 
 /* ======================= THE PLAYABLE CASE ======================= */
 (function(){
-  var LAYOUT=['KKSSSS','KKSSSS','KKOOTT','HHOOTT','HHOOTT','HHHTTT'];
-  var RC={K:'#33224f',S:'#17415a',O:'#4a1f2c',H:'#4c3b19',T:'#1b4631'};
-  var OBJ={A1:'coffin',B2:'coffin',D1:'bench',E1:'bench',B6:'bench',F2:'candle',C3:'carpet',D3:'carpet',C4:'carpet',D4:'carpet',F3:'grave',E5:'grave',E6:'tree',A4:'bell'};
-  var ICON={coffin:'⚰️',bench:'🪑',candle:'🕯️',carpet:'🟥',grave:'🪦',tree:'🌳',bell:'🔔'};
-  var BLOCK={candle:1,grave:1,tree:1,bell:1};
+  var LAYOUT=['EEPPPP','EEPPPP','ERRRRP','ERRRRP','EEERRL','EEELLL'];
+  var RC={E:'#33224f',P:'#17415a',R:'#4a1f2c',L:'#1b4631'};
+  var OBJ={A3:'rug',F4:'chair',C2:'chair',B5:'bench',B1:'bench',B3:'shelf',D2:'register',A2:'plant',C5:'flowers'};
+  var BENCH='<svg viewBox="0 0 64 64" width="1.1em" height="1.1em" aria-hidden="true"><g stroke="#3b2412" stroke-width="2.4" stroke-linejoin="round"><rect x="6" y="13" width="52" height="7" rx="2" fill="#a9743f"/><rect x="6" y="23" width="52" height="7" rx="2" fill="#a9743f"/><rect x="4" y="35" width="56" height="9" rx="2" fill="#c08a4e"/><path d="M10 44V56M54 44V56M10 20V35M54 20V35" fill="none" stroke="#4a4a52" stroke-width="4" stroke-linecap="round"/></g></svg>';
+  var ICON={rug:'🟦',chair:'🪑',bench:BENCH,shelf:'📚',register:'🧾',plant:'🌵',flowers:'🌸'};
+  var BLOCK={shelf:1,register:1,plant:1,flowers:1};
   var room=function(k){return t('room.'+k)}, oname=function(k){return t('obj.'+k)};
   var CH=[
-    {id:'vlad',e:'🧛',n:'Vlad Drăgulescu'},
-    {id:'morrigan',e:'🌒',n:'Morrigan Ashvale'},
-    {id:'silas',e:'👻',n:'Silas Grey'},
-    {id:'lilith',e:'😈',n:'Lilith Vane'},
-    {id:'ezekiel',e:'🐺',n:'Ezekiel Thorne'},
-    {id:'abel',e:'📜',n:'Ábel Kóródi',victim:true}
+    {id:'amir',e:'🧔',n:'Amir'},
+    {id:'bruno',e:'👱',n:'Bruno'},
+    {id:'vlad',e:'👴',n:'Vlad',victim:true},
+    {id:'clara',e:'👩',n:'Clara'},
+    {id:'daniel',e:'👨',n:'Daniel'},
+    {id:'elena',e:'👧',n:'Elena'}
   ];
   var clueOf=function(c){return t('ch.'+c.id+'.clue')}, whyOf=function(c){return t('ch.'+c.id+'.why')};
   var quote=function(s){return lang==='hu'?'„'+s+'"':'“'+s+'”'};
-  var SOL={vlad:'E1',silas:'B2',lilith:'D3',ezekiel:'F4',morrigan:'A5',abel:'C6'};
-  var ORDER=['morrigan','vlad','silas','abel','lilith','ezekiel'];
+  var SOL={amir:'C1',bruno:'E2',vlad:'A3',clara:'F4',daniel:'B5',elena:'D6'};
+  var ORDER=['clara','amir','bruno','elena','daniel','vlad'];
   var byId={};CH.forEach(function(c){byId[c.id]=c});
   var cid=function(r,c){return String.fromCharCode(65+c)+(r+1)};
   var pos=function(id){return {c:id.charCodeAt(0)-65,r:+id.slice(1)-1}};
 
-  var placed={},sel='morrigan',solved=false,busy=false,wrongs=0,hints=0,cells={},cards={},roomLbl={},lastSay=null;
+  var placed={},sel='amir',solved=false,busy=false,wrongs=0,hints=0,cells={},cards={},roomLbl={},lastSay=null;
   var bd=$('#bd'),sus=$('#suspects'),msgEl=$('#msg'),act=$('#active'),dos=$('#dossier'),sub=$('#submitBtn'),ver=$('#verdict');
 
   /* rács felépítése */
@@ -776,7 +754,7 @@ addEventListener('keydown',function(e){if(e.key==='Escape')$('#scare').classList
       if(c===0||LAYOUT[r][c-1]!==rm)b.classList.add('bl');if(c===5||LAYOUT[r][c+1]!==rm)b.classList.add('br');
       if(OBJ[id]&&BLOCK[OBJ[id]])b.classList.add('blocked');
       if(!roomLbl[rm]){var rl=document.createElement('span');rl.className='rl';b.appendChild(rl);roomLbl[rm]=rl}
-      if(OBJ[id]){var ob=document.createElement('span');ob.className='ob';ob.textContent=ICON[OBJ[id]];b.appendChild(ob)}
+      if(OBJ[id]){var ob=document.createElement('span');ob.className='ob';ob.innerHTML=ICON[OBJ[id]];b.appendChild(ob)}
       b.addEventListener('click',(function(i){return function(){place(i)}})(id));
       bd.appendChild(b);cells[id]=b}}
 
@@ -805,7 +783,7 @@ addEventListener('keydown',function(e){if(e.key==='Escape')$('#scare').classList
       var isX=!who&&(rows[p.r]||cols[p.c]);
       if(isX&&!xm){var x=document.createElement('span');x.className='xm';x.textContent='✕';el.appendChild(x)}else if(!isX&&xm)xm.remove();
       el.setAttribute('aria-label',id+', '+room(LAYOUT[p.r][p.c])+(OBJ[id]?', '+oname(OBJ[id]):'')+(who?t('g.here')+byId[who].n:''));
-      el.classList.toggle('hl',solved&&LAYOUT[p.r][p.c]==='H')});
+      el.classList.toggle('hl',solved&&LAYOUT[p.r][p.c]==='E')});
     CH.forEach(function(ch){var b=cards[ch.id];b.classList.toggle('sel',!solved&&sel===ch.id);b.classList.toggle('done',!!placed[ch.id]);
       b.querySelector('.cl').textContent=quote(clueOf(ch));b.querySelector('.tag').textContent=placed[ch.id]?'→ '+placed[ch.id]:''});
     var s=byId[sel];
@@ -831,7 +809,7 @@ addEventListener('keydown',function(e){if(e.key==='Escape')$('#scare').classList
   function win(){
     solved=true;dos.classList.add('solved');ver.hidden=false;render();Snd.bell();
     say('g.win')}
-  function lose(){wrongs++;render();say('g.lose');scare()}
+  function lose(){wrongs++;render();say('g.lose');softHurt()}
   sub.addEventListener('click',function(){if(sub.disabled)return;var ok=CH.every(function(c){return placed[c.id]===SOL[c.id]});ok?win():lose()});
 
   $('#hintBtn').addEventListener('click',function(){
@@ -843,16 +821,9 @@ addEventListener('keydown',function(e){if(e.key==='Escape')$('#scare').classList
     placed[nx]=SOL[nx];hints++;Snd.thud();sel=nextUnplaced();render();say('g.hint',function(){return {n:byId[nx].n,why:whyOf(byId[nx])}})});
 
   $('#resetBtn').addEventListener('click',reset);
-  function reset(){placed={};solved=false;busy=false;dos.classList.remove('solved','hurt');ver.hidden=true;ver.innerHTML='';sel='morrigan';say('');
+  function reset(){placed={};solved=false;busy=false;dos.classList.remove('solved','hurt');ver.hidden=true;ver.innerHTML='';sel='amir';say('');
     Object.keys(cells).forEach(function(id){var el=cells[id],tk=el.querySelector('.tok');if(tk)tk.remove();delete el.dataset.tk});render()}
 
-  $('#solveBtn').addEventListener('click',function(){
-    if(busy)return;reset();busy=true;render();var i=0;
-    (function step(){if(i>=ORDER.length){busy=false;sel=null;render();setTimeout(win,500);return}
-      var id=ORDER[i++];sel=id;render();say('ch.'+id+'.why');
-      setTimeout(function(){placed[id]=SOL[id];Snd.thud();render();setTimeout(step,calm?400:900)},calm?300:800)})()});
-
-  $('#scareOn').addEventListener('change',function(){if(this.checked&&calm)toast(t('toast.scare'));Snd.init()});
   langHooks.push(function(){render();paintSay()});
   render();say('g.intro');
 })();
@@ -875,7 +846,7 @@ addEventListener('keydown',function(e){if(e.key==='Escape')$('#scare').classList
   /* Eltüntetés */
   var g=$('#vgrid'),mid;
   for(var i=0;i<9;i++){var c=document.createElement('div');c.className='vc'+(i===4?' mid':'');
-    if(i===4){c.innerHTML='<span class="ob">🪦</span><span class="tk">🧛</span><span class="lk">🔒</span>';mid=c}g.appendChild(c)}
+    if(i===4){c.innerHTML='<span class="ob">🌸</span><span class="tk">👤</span><span class="lk">🔒</span>';mid=c}g.appendChild(c)}
   function seq(){
     if(!vis.vgrid||document.hidden){setTimeout(seq,1500);return}
     mid.className='vc mid';
