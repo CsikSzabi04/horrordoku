@@ -5,12 +5,6 @@
   font-size: 1.8rem;
   top: 0.55rem;
 }
-.worlds .rulename {
-  color: var(--blood);
-  font: 600 0.72rem var(--ui);
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-}
 
 /* egy világ ügyei: sorszámozott lista, a következő megoldatlan kiemelve */
 .cases.order {

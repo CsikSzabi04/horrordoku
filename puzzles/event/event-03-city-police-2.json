@@ -1,0 +1,207 @@
+{
+  "v": 1,
+  "id": "event-03-city-police-2",
+  "mode": "event",
+  "world": "city-police",
+  "title": "A kapitány irodája",
+  "story": "Bryce Steel a saját irodájában maradt, a titkos ajtó pedig nyitva áll. A kulcsok mindkét irányba nyitnak — és mindkét irányba figyelnek.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "F": "Főcsarnok",
+    "N": "Nyugati iroda",
+    "K": "Könyvtár",
+    "M": "Mentőszoba",
+    "A": "Kapitányi iroda",
+    "L": "Lőtér"
+  },
+  "layout": [
+    "KKKFFF",
+    "KLKFFF",
+    "LLLFFF",
+    "NLLMFM",
+    "NNNMMM",
+    "AAAMMM"
+  ],
+  "objects": [
+    {
+      "type": "itembox",
+      "at": [
+        "B1",
+        "D4"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "E2",
+        "F3",
+        "C5"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "A4",
+        "C1"
+      ]
+    },
+    {
+      "type": "herb",
+      "at": "D6"
+    },
+    {
+      "type": "doorSpade",
+      "at": "D5",
+      "blocking": true
+    },
+    {
+      "type": "doorDiamond",
+      "at": "D3",
+      "blocking": true
+    },
+    {
+      "type": "doorCircle",
+      "at": "A3",
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": "F1",
+      "blocking": true
+    },
+    {
+      "type": "typewriter",
+      "at": [
+        "E3",
+        "B3",
+        "E5"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "lin-adel",
+      "name": "Ava Wei",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "itembox"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **tárolódobozon** volt."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "lazar-leo",
+      "name": "Leo S. Kendrick",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "banfi-bruno",
+      "name": "Bryce Steel",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Főcsarnokban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "biro-csenge",
+      "name": "Cherry Birkley",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "banfi-bruno",
+          "dir": "S"
+        }
+      ],
+      "clueText": [
+        "**Bryce Steeltől délre** volt."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "bodor-marcell",
+      "name": "Martin Brannick",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "doorSpade"
+        }
+      ],
+      "clueText": [
+        "Egy **pikk ajtó mellett** volt."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "hegedus-klara",
+      "name": "Clara Redbrook",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "herb"
+        }
+      ],
+      "clueText": [
+        "Egy **gyógynövényen** volt."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "lin-adel": "B1",
+    "lazar-leo": "E2",
+    "banfi-bruno": "F3",
+    "biro-csenge": "A4",
+    "bodor-marcell": "C5",
+    "hegedus-klara": "D6"
+  },
+  "murderer": "lazar-leo",
+  "rev": 1,
+  "worldRule": "doors"
+}

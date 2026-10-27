@@ -1,0 +1,193 @@
+{
+  "v": 1,
+  "id": "event-05-mountain-cabin-1",
+  "mode": "event",
+  "world": "mountain-cabin",
+  "title": "Az Agancsos Éhség éjszakája",
+  "story": "A hegyi kabinban az Agancsos Éhség végzett az éjszakával. A totemek mellett álló szereplők nyomai többet árulnak el.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "F": "Fürdő",
+    "P": "Pince",
+    "H": "Hálók",
+    "T": "Tisztás",
+    "E": "Felvonó"
+  },
+  "layout": [
+    "THHHP",
+    "TTHPP",
+    "TTHHP",
+    "FTEEP",
+    "FFEEP"
+  ],
+  "objects": [
+    {
+      "type": "sofa",
+      "at": [
+        "B2",
+        "A3",
+        "E5"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "E1",
+        "A4"
+      ]
+    },
+    {
+      "type": "totem",
+      "at": [
+        "A1",
+        "B3",
+        "D5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "gunrack",
+      "at": "E4",
+      "blocking": true
+    },
+    {
+      "type": "trophy",
+      "at": "C3",
+      "blocking": true
+    },
+    {
+      "type": "fireplace",
+      "at": [
+        "B5",
+        "E2"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "krisztian",
+      "name": "Kit",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "dani",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Sammytől északra** volt."
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    },
+    {
+      "id": "julia",
+      "name": "Jessamine",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa",
+          "room": "T"
+        },
+        {
+          "kind": "in",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A Tisztáson egy **kanapén** ült.",
+        "A Tisztáson volt."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    },
+    {
+      "id": "mihaly",
+      "name": "Mick",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 2
+        },
+        {
+          "kind": "on",
+          "object": "sofa",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A **2. oszloptól balra** volt.",
+        "A Tisztáson egy **kanapén** ült."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    },
+    {
+      "id": "dani",
+      "name": "Sammy",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    },
+    {
+      "id": "a-hegyi-szellem",
+      "name": "Az Agancsos Éhség",
+      "race": "werewolf",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Felvonóban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "krisztian": "E1",
+    "julia": "B2",
+    "mihaly": "A3",
+    "dani": "D4",
+    "a-hegyi-szellem": "C5"
+  },
+  "murderer": "dani",
+  "rev": 1,
+  "worldRule": "totems"
+}

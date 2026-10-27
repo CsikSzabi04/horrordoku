@@ -1,0 +1,276 @@
+{
+  "v": 1,
+  "id": "event-09-entity-realm-5",
+  "mode": "event",
+  "world": "entity-realm",
+  "title": "Álmok szövete",
+  "story": "Quincy Smythe nem ébredt fel. A Jelenlét Birodalmában a generátorok zaja a legrosszabb tanú.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "P": "Pajta",
+    "K": "Kukoricás",
+    "F": "Fészer",
+    "I": "Pince",
+    "E": "Erdei tisztás",
+    "A": "Kapu-terület",
+    "H": "Horgos-pince",
+    "Z": "Ház"
+  },
+  "layout": [
+    "AAZZZEEEK",
+    "AAZZZEEEK",
+    "AIIIKEEEK",
+    "IIIKKKKKK",
+    "IIIPPKHHH",
+    "FFFPPHHHH",
+    "FFFPPHHHH",
+    "FFFPPPPHH",
+    "FFFPPPPHH"
+  ],
+  "objects": [
+    {
+      "type": "medkit",
+      "at": [
+        "E9",
+        "B6",
+        "D3"
+      ]
+    },
+    {
+      "type": "pallet",
+      "at": [
+        "G8",
+        "F1",
+        "H5",
+        "G9"
+      ]
+    },
+    {
+      "type": "generator",
+      "at": [
+        "F7",
+        "D5",
+        "I5",
+        "F9"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": [
+        "E4",
+        "D2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "gate",
+      "at": [
+        "H1",
+        "D6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "hook",
+      "at": [
+        "A3",
+        "E6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "crate",
+      "at": [
+        "A1",
+        "A2"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "kalman-szuts",
+      "name": "Quincy Smythe",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Az Erdei tisztáson **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    },
+    {
+      "id": "nelli-karolyi",
+      "name": "Nia Karlsen",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "gate"
+        }
+      ],
+      "clueText": [
+        "Egy **kapu mellett** volt."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    },
+    {
+      "id": "a-csapdas",
+      "name": "A Hurokmester",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "hung-mihal",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Fen Meitől északra** volt."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    },
+    {
+      "id": "david-kiraly",
+      "name": "Davis Crown",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "a-csapdas"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **a Hurokmesterrel**."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    },
+    {
+      "id": "margo-tamas",
+      "name": "Maggie Thompson",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszloptól balra** volt."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    },
+    {
+      "id": "hung-mihal",
+      "name": "Fen Mei",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Fészerben ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    },
+    {
+      "id": "klaudia-morvai",
+      "name": "Claudine Moreau",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "generator"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **generátor mellett**."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    },
+    {
+      "id": "denes-feher",
+      "name": "Dwayne Fairbrook",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "pallet",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Pajtában egy **palettán** volt."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    },
+    {
+      "id": "jakab-pal",
+      "name": "Jack Parks",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "medkit"
+        }
+      ],
+      "clueText": [
+        "Egy **medkit-ládán** volt."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "kalman-szuts": "F1",
+    "nelli-karolyi": "H2",
+    "a-csapdas": "D3",
+    "david-kiraly": "C4",
+    "margo-tamas": "A5",
+    "hung-mihal": "B6",
+    "klaudia-morvai": "I7",
+    "denes-feher": "G8",
+    "jakab-pal": "E9"
+  },
+  "murderer": "nelli-karolyi",
+  "rev": 1,
+  "worldRule": "generators"
+}

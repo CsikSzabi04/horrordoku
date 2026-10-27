@@ -10,7 +10,7 @@ import type { CoopSync } from './coop'
 import { createBoardController } from './controller'
 import type { GameBoard } from './controller'
 import { puzzleFingerprint } from './fingerprint'
-import { awardSolve } from './rewards'
+import { awardSolve, awardWin } from './rewards'
 import type { Reward } from './rewards'
 import { nextHint } from './hints'
 import type { Hint } from './hints'
@@ -26,18 +26,20 @@ export function useBoot(ref: PuzzleRef | undefined): Boot {
     setBoot(null)
     void (async () => {
       const puzzle = ref ? await loadPuzzle(ref) : null
-      if (!puzzle) return alive ? setBoot('missing') : undefined
+      if (!alive) return // a fejlesztői dupla effekt-futtatásnál az első futás ne törölje a mentést a második elől (különben az „új játék" üzenet elmaradna)
+      if (!puzzle) return setBoot('missing')
       const fp = puzzleFingerprint(puzzle)
       let session: SessionState | undefined = (await getStorage().getSessions()).sessions[puzzle.id]
+      if (!alive) return
       // a pálya közben megváltozott (frissítés): a régi lerakások nem illenek rá → friss játék
       const refreshed = !!session && session.meta?.fp !== fp
       if (refreshed) {
         session = undefined
         await getStorage().deleteSession(puzzle.id)
       }
+      if (!alive) return
       board = createBoardController(puzzle, session?.board)
-      if (alive) setBoot({ puzzle, board, session, fp, ...(refreshed ? { refreshed } : {}) })
-      else board.destroy()
+      setBoot({ puzzle, board, session, fp, ...(refreshed ? { refreshed } : {}) })
     })()
     return () => {
       alive = false
@@ -60,6 +62,9 @@ export interface CoopRun {
   /** A host: ő zárja le a szobát (a játék végét a szerver is rögzíti). */
   host: boolean
   onFinish: (r: { solved: boolean; ms: number }) => void
+  /** Gyilkos-mód: a futás típusa és a szerepem (a `RunRecord.kind / role / won` miatt). Alap: 'together'. */
+  kind?: 'together' | 'killer'
+  role?: () => 'killer' | 'detective'
 }
 
 /** Időmérő, automatikus mentés (azonnal + 3 mp-es késleltetéssel), beküldés, feladás, tippek. Együtt módban a `coop` adja a közös órát és beküldést. */
@@ -74,7 +79,7 @@ export function useRun(puzzle: Puzzle, board: GameBoard, restored?: SessionState
   const live = useRef({ elapsed: startMs, hints: restored?.hintsUsed ?? 0, wrong: restored?.wrongSubmits ?? 0, finish: null as Finish })
   const startedAt = useRef(restored?.meta?.startedAt ?? new Date().toISOString())
   const stages = useRef<Record<string, number>>({})
-  const kind: RunRecord['kind'] = coop ? 'together' : isDailyRef(puzzle.id) ? 'daily' : puzzle.id.startsWith('gen:') ? 'random' : 'catalog'
+  const kind: RunRecord['kind'] = coop ? (coop.kind ?? 'together') : isDailyRef(puzzle.id) ? 'daily' : puzzle.id.startsWith('gen:') ? 'random' : 'catalog'
 
   const save = useCallback(() => {
     if (coop || live.current.finish) return
@@ -139,9 +144,9 @@ export function useRun(puzzle: Puzzle, board: GameBoard, restored?: SessionState
   }, [board, save, restored, puzzle, coop?.startedAt])
 
   const record = useCallback(
-    (solved: boolean) => {
+    (solved: boolean, extra?: { won: boolean | null; role: 'killer' | 'detective' }) => {
       const run: RunRecord = {
-        id: crypto.randomUUID(), ref: puzzle.id, kind, ...(coop ? { roomId: coop.roomId } : {}), difficulty: puzzle.difficulty, size: puzzle.size, solved,
+        id: crypto.randomUUID(), ref: puzzle.id, kind, ...(coop ? { roomId: coop.roomId } : {}), ...(extra ? { role: extra.role, won: extra.won } : {}), difficulty: puzzle.difficulty, size: puzzle.size, solved,
         ...(solved ? { ms: Math.round(live.current.elapsed) } : {}),
         hints: live.current.hints, wrongSubmits: live.current.wrong, at: new Date().toISOString(),
       }
@@ -154,6 +159,8 @@ export function useRun(puzzle: Puzzle, board: GameBoard, restored?: SessionState
         if (!coop) await st.deleteSession(puzzle.id)
         // XP csak katalógus-pálya első megoldásáért jár
         if (solved && kind === 'catalog') setReward(await awardSolve(st, puzzle, run.hints, was))
+        // Gyilkos-mód: a győztes oldal duplát kap
+        if (kind === 'killer' && extra?.won === true) setReward(await awardWin(st, puzzle, run.hints))
       })()
     },
     [puzzle, kind, coop],
@@ -198,6 +205,17 @@ export function useRun(puzzle: Puzzle, board: GameBoard, restored?: SessionState
     [board, record, coop],
   )
 
+  /** Gyilkos-mód: a szerver döntött (győzelem / vereség / döntetlen) — a futás lezárul, a megoldást NEM áruljuk el. */
+  const endKiller = useCallback(
+    (r: { solved: boolean; won: boolean | null; role: 'killer' | 'detective' }) => {
+      if (live.current.finish) return
+      live.current.finish = r.solved ? 'won' : 'gaveUp'
+      setFinish(live.current.finish)
+      record(r.solved, { won: r.won, role: r.role })
+    },
+    [record],
+  )
+
   const giveUp = useCallback(() => {
     if (live.current.finish) return
     live.current.finish = 'gaveUp'
@@ -235,5 +253,5 @@ export function useRun(puzzle: Puzzle, board: GameBoard, restored?: SessionState
     })
   }, [coop])
 
-  return { elapsed, hints, wrong, finish, reward, submit, applyResult, giveUp, hint, saveNow: save }
+  return { elapsed, hints, wrong, finish, reward, submit, applyResult, endKiller, giveUp, hint, saveNow: save }
 }

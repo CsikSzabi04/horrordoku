@@ -50,6 +50,6 @@ describe('jumpscare-terv', () => {
     expect(scareAllowed('classic')).toBe(false)
     expect(scareAllowed('bonus')).toBe(false)
     expect(['event', 'generated', 'community'].every(scareAllowed)).toBe(true)
-    for (const w of ['hollowmere', 'fnaf', 'poppy-playtime', 'ismeretlen']) expect(variantsFor(w).length).toBeGreaterThanOrEqual(3)
+    for (const w of ['hollowmere', 'night-pizzeria', 'toy-factory', 'ismeretlen']) expect(variantsFor(w).length).toBeGreaterThanOrEqual(3)
   })
 })

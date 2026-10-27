@@ -10,7 +10,7 @@ export type Route =
   | { name: 'login' }
   | { name: 'profile' }
   | { name: 'friends'; add?: string } // add: barát-link kódja (a link megnyitása után a találat felvehető)
-  | { name: 'lobby'; mode?: 'together' | 'killer' }
+  | { name: 'lobby'; mode?: 'together' | 'killer'; room?: string } // room: egy szoba azonosítója — a lista helyett egyből a szoba nyílik (meghívó „Belépés")
   | { name: 'coop' }
 
 export type RouteName = Route['name']

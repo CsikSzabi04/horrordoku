@@ -7,11 +7,12 @@
 // idősebb) műveleteket az alap-állapotba olvasztjuk. Biztonsági háló: a host időnként kivonatot küld, az eltérő kliens teljes pillanatképet kér;
 // a host (2 mp tétlenség után) a `save_room_state`-tel menti az állapotot (újrabelépéshez).
 import { boardEngine } from '../engine'
-import type { CellId, Unsubscribe, Uuid } from '../shared/base'
+import type { CellId, CharId, Unsubscribe, Uuid } from '../shared/base'
 import type { BoardState, Op, OpEnvelope } from '../shared/board'
 import type { Puzzle } from '../shared/puzzle'
 import type { RoomSession } from '../shared/room'
 import type { GameBoard } from './controller'
+import { isBoardState, isEnvelopeLog } from './validate'
 
 export const VOTE_MS = 10_000
 export const HINTS_PER_PLAYER = 3
@@ -38,6 +39,8 @@ export interface CoopOptions {
   puzzle: Puzzle
   meId: Uuid
   isHost: () => boolean
+  /** A host azonosítója: a pillanatképet és a kivonatot csak tőle fogadjuk el (nélküle bárkitől — csak tesztben). */
+  hostId?: () => Uuid | null
   /** A betöltött pillanatkép verziója (a mentéshez). */
   rev?: number
   now?: () => number
@@ -56,6 +59,8 @@ export interface CoopSync {
   canHint(members: number): boolean
   noteHint(): void
   onHints(cb: (used: number, by: Uuid | null) => void): Unsubscribe
+  /** Ki rakta le utoljára az egyes karaktereket (a Gyilkos-mód „Névvel mutatott lerakások” opciójához). */
+  placers?(): Record<CharId, Uuid>
   destroy(): void
 }
 
@@ -100,13 +105,22 @@ export function createCoopSync(o: CoopOptions): CoopSync {
   let lastActivity = 0
   let rev = o.rev ?? 0
 
+  /** A visszatért (zárolt) Eltüntetés-mezők tartalma mindenhonnan törlődik — az újrajátszás is ugyanarra jut, mint a helyi tábla. */
+  const purgeSealed = (st: BoardState): BoardState => {
+    let out = st
+    for (const cell of board.view().locked) {
+      const r = boardEngine.apply(puzzle, out, { op: 'erase', cell })
+      if (r.ok) out = r.state
+    }
+    return out
+  }
   const replay = (): BoardState => {
     let st = base
     for (const e of log) {
       const r = boardEngine.apply(puzzle, st, e.op)
       if (r.ok) st = r.state
     }
-    return st
+    return purgeSealed(st)
   }
   const insert = (env: OpEnvelope): boolean => {
     // igaz, ha a napló végére került (nem kell újrajátszani)
@@ -116,9 +130,17 @@ export function createCoopSync(o: CoopOptions): CoopSync {
     return i === log.length - 1
   }
 
+  // ki rakta le utoljára (a művelet beérkezésének sorrendjében; a táblán nem látható karakterek kiesnek)
+  const placedBy = new Map<CharId, Uuid>()
+  const track = (op: Op, by: Uuid) => {
+    if (op.op === 'place' || op.op === 'move') placedBy.set(op.char, by)
+    else if (op.op === 'unplace') placedBy.delete(op.char)
+  }
+
   offs.push(
     board.onLocalOp((op: Op) => {
       const env = session.ops.send(op)
+      track(op, meId)
       if (ids.has(env.id)) return
       ids.add(env.id)
       if (!insert(env)) board.syncState(replay()) // azonos seq-nél a kisebb `by` megelőzheti
@@ -129,6 +151,7 @@ export function createCoopSync(o: CoopOptions): CoopSync {
     session.ops.onOp((env) => {
       if (ids.has(env.id)) return
       ids.add(env.id)
+      track(env.op, env.by)
       const atEnd = insert(env)
       if (atEnd) board.applyRemote(env)
       else board.syncState(replay())
@@ -170,6 +193,11 @@ export function createCoopSync(o: CoopOptions): CoopSync {
     base = st
     log = log.slice(n)
   }
+  /** Igaz, ha az üzenet a hosttól jön (vagy nincs megadva host-azonosító — tesztben). */
+  const fromHost = (by: Uuid): boolean => {
+    const h = o.hostId?.()
+    return h === undefined || h === by
+  }
   offs.push(
     session.ops.onBroadcast('hello', (_p, by) => {
       if (o.isHost()) sendSnap(by)
@@ -177,15 +205,17 @@ export function createCoopSync(o: CoopOptions): CoopSync {
     session.ops.onBroadcast('need', (_p, by) => {
       if (o.isHost()) sendSnap(by)
     }),
-    session.ops.onBroadcast('snap', (p) => {
-      if (p.to !== meId) return
-      adopt(p.base as unknown as BoardState, (p.log as unknown as OpEnvelope[]) ?? [])
+    session.ops.onBroadcast('snap', (p, by) => {
+      if (p.to !== meId || !fromHost(by)) return
+      // idegen adat: alak- és méret-ellenőrzés, hamis / hibás pillanatképet nem fogadunk el
+      if (!isBoardState(p.base) || !isEnvelopeLog(p.log ?? [])) return
+      adopt(p.base, (p.log as OpEnvelope[] | undefined) ?? [])
     }),
   )
   let mismatches = 0
   offs.push(
-    session.ops.onBroadcast('dig', (p) => {
-      if (o.isHost()) return
+    session.ops.onBroadcast('dig', (p, by) => {
+      if (o.isHost() || !fromHost(by) || typeof p.h !== 'string') return
       if (stateHash(board.getState()) === p.h) {
         mismatches = 0
         return
@@ -227,9 +257,14 @@ export function createCoopSync(o: CoopOptions): CoopSync {
 
   // ---------- tippek: a szobának közös tippkerete van (játékosonként 3)
   let hints = 0
+  const hintsBy = new Map<Uuid, number>()
   const hintCbs = new Set<(used: number, by: Uuid | null) => void>()
   offs.push(
     session.ops.onBroadcast('hint', (_p, by) => {
+      // játékosonként legfeljebb 3 tipp számít (egy hamisító társ ne tudja kimeríteni a közös keretet)
+      const n = (hintsBy.get(by) ?? 0) + 1
+      if (n > HINTS_PER_PLAYER) return
+      hintsBy.set(by, n)
       hints++
       hintCbs.forEach((cb) => cb(hints, by))
     }),
@@ -279,6 +314,9 @@ export function createCoopSync(o: CoopOptions): CoopSync {
     session.ops.onBroadcast('propose', (p, by) => {
       const id = String(p.id)
       const deadlineAt = Number(p.deadlineAt)
+      // érvénytelen azonosító / határidő, vagy már van függő javaslat: a másik javaslatát nem írjuk felül
+      if (id.length === 0 || id.length > 64 || !Number.isFinite(deadlineAt) || deadlineAt > now() + VOTE_MS + 5000 || deadlineAt < now() - 5000) return
+      if (current && current.deadlineAt + 2000 > now()) return
       setProposal({ id, by, deadlineAt })
       // ha a javaslattevő eltűnik, a javaslat magától lejár
       later(Math.max(0, deadlineAt - now()) + 2000, () => {
@@ -286,15 +324,15 @@ export function createCoopSync(o: CoopOptions): CoopSync {
       })
     }),
     session.ops.onBroadcast('vote', (p, by) => {
-      if (!tally || !current || current.id !== p.id) return
+      if (!tally || !current || current.id !== p.id || typeof p.approve !== 'boolean') return
       tally.yes.delete(by)
       tally.no.delete(by)
       ;(p.approve ? tally.yes : tally.no).add(by)
       evaluate(false)
     }),
-    session.ops.onBroadcast('result', (p) => {
-      if (!current || current.id !== p.id) return
-      const by = current.by
+    session.ops.onBroadcast('result', (p, by) => {
+      // az eredményt csak a javaslattevő közölheti (különben bármelyik társ „helyesnek" hamisíthatná a beküldést)
+      if (!current || current.id !== p.id || current.by !== by) return
       setProposal(null)
       if (p.rejected) rejectCbs.forEach((cb) => cb())
       else resultCbs.forEach((cb) => cb({ correct: p.correct === true, by }))
@@ -335,6 +373,7 @@ export function createCoopSync(o: CoopOptions): CoopSync {
       rejectCbs.add(cb)
       return () => rejectCbs.delete(cb)
     },
+    placers: () => Object.fromEntries([...placedBy].filter(([ch]) => board.getState().placed[ch] !== undefined)),
     hintsUsed: () => hints,
     canHint: (members) => hints < members * HINTS_PER_PLAYER,
     noteHint() {

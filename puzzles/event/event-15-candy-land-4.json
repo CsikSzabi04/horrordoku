@@ -1,0 +1,223 @@
+{
+  "v": 1,
+  "id": "event-15-candy-land-4",
+  "mode": "event",
+  "world": "candy-land",
+  "title": "A laboratórium",
+  "story": "Buborékcukor hercegnő laboratóriumában feldőltek a lombikok. A térkép távolságokat mutat — iránytól függetlenül.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "F": "Fa-erőd",
+    "C": "Cukorbirodalom",
+    "J": "Jégbirodalom",
+    "L": "Lich-sírbolt",
+    "T": "Tűzbirodalom",
+    "S": "Sötét erdő"
+  },
+  "layout": [
+    "JFFFFFC",
+    "JJJFFFC",
+    "JJJJJFF",
+    "SSSJLLL",
+    "SSSJLLL",
+    "SSSTTLL",
+    "SSSTTTT"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "A6",
+        "E4",
+        "F6",
+        "B1"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "F1",
+        "G3",
+        "B2"
+      ]
+    },
+    {
+      "type": "sword",
+      "at": "F3",
+      "blocking": true
+    },
+    {
+      "type": "bmo",
+      "at": "E1",
+      "blocking": true
+    },
+    {
+      "type": "bush",
+      "at": [
+        "C1",
+        "D3",
+        "G5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "rock",
+      "at": [
+        "E3",
+        "C6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "crate",
+      "at": "E2"
+    }
+  ],
+  "characters": [
+    {
+      "id": "szaloncukor-hercegno",
+      "name": "Buborékcukor hercegnő",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Fa-erődben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "gocsortos-hercegno",
+      "name": "Bütyök hercegnő",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "bmo",
+          "cells": 3
+        }
+      ],
+      "clueText": [
+        "A játékkonzoltól pontosan **3 mezőre** volt."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "a-lich",
+      "name": "A Halhatatlan",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "bmo",
+          "cells": 2
+        }
+      ],
+      "clueText": [
+        "A játékkonzoltól pontosan **2 mezőre** volt."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "bimbo",
+      "name": "BÍPÓ",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "A Lich-sírboltban egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "dzsaki",
+      "name": "Jax",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "gocsortos-hercegno"
+        }
+      ],
+      "clueText": [
+        "**Bütyök hercegnővel** egy helyiségben volt."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "hokiraly",
+      "name": "Hókirály",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "bmo",
+          "cells": 5
+        }
+      ],
+      "clueText": [
+        "A játékkonzoltól pontosan **5 mezőre** volt."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "fin",
+      "name": "Flynn",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notSameRoom",
+          "with": "dzsaki"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt egy helyiségben **Jaxszal**."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "szaloncukor-hercegno": "F1",
+    "gocsortos-hercegno": "B2",
+    "a-lich": "G3",
+    "bimbo": "E4",
+    "dzsaki": "D5",
+    "hokiraly": "A6",
+    "fin": "C7"
+  },
+  "murderer": "a-lich",
+  "rev": 1,
+  "worldRule": "motion"
+}

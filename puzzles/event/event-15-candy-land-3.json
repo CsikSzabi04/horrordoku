@@ -1,0 +1,200 @@
+{
+  "v": 1,
+  "id": "event-15-candy-land-3",
+  "mode": "event",
+  "world": "candy-land",
+  "title": "Bütyök, bütyök!",
+  "story": "Bütyök hercegnő a Cukorbirodalom szélén feküdt. A kard és BÍPÓ távolsága árulkodó nyom.",
+  "size": 6,
+  "difficulty": 3,
+  "rooms": {
+    "F": "Fa-erőd",
+    "C": "Cukorbirodalom",
+    "J": "Jégbirodalom",
+    "L": "Lich-sírbolt",
+    "T": "Tűzbirodalom",
+    "S": "Sötét erdő"
+  },
+  "layout": [
+    "LLCCFF",
+    "LLCCFF",
+    "LLCCFF",
+    "LTCJJJ",
+    "TTTJJJ",
+    "TTTJJS"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "D4",
+        "A5"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "A6",
+        "E3",
+        "C5",
+        "D3"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": "F2"
+    },
+    {
+      "type": "sword",
+      "at": "E6",
+      "blocking": true
+    },
+    {
+      "type": "bmo",
+      "at": "A4",
+      "blocking": true
+    },
+    {
+      "type": "rock",
+      "at": [
+        "E2",
+        "B5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "bush",
+      "at": [
+        "D2",
+        "F1"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "fin",
+      "name": "Flynn",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "sword",
+          "cells": 5
+        }
+      ],
+      "clueText": [
+        "A kardtól pontosan **5 mezőre** volt."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "hokiraly",
+      "name": "Hókirály",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A helyiségében **ketten** voltak."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "bimbo",
+      "name": "BÍPÓ",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "bmo",
+          "cells": 4
+        }
+      ],
+      "clueText": [
+        "A játékkonzoltól pontosan **4 mezőre** volt."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "a-lich",
+      "name": "A Halhatatlan",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "dzsaki",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Jaxtól északra** volt."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "gocsortos-hercegno",
+      "name": "Bütyök hercegnő",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Tűzbirodalomban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "dzsaki",
+      "name": "Jax",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "Egy **pad mellett** volt."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "fin": "B1",
+    "hokiraly": "F2",
+    "bimbo": "E3",
+    "a-lich": "D4",
+    "gocsortos-hercegno": "C5",
+    "dzsaki": "A6"
+  },
+  "murderer": "dzsaki",
+  "rev": 1,
+  "worldRule": "motion"
+}

@@ -27,7 +27,7 @@ p.on('request', (r) => {
   if (u.includes('/rest/v1/')) return r.method() === 'GET' ? json([]) : json([], 201)
   return json({})
 })
-await p.evaluateOnNewDocument(() => { localStorage.setItem('nd_tutorial', '1') })
+await p.evaluateOnNewDocument(() => { localStorage.setItem('nd_tutorial', '1'); localStorage.setItem('nd:v1:guest:language', JSON.stringify('hu')) })
 await p.goto(`${BASE}/play/`, { waitUntil: 'networkidle0' })
 await p.evaluate(() => document.querySelector('[data-act="account"]').click())
 await p.waitForSelector('input[type="email"]')

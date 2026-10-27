@@ -1,6 +1,7 @@
 // Az Esemény-mód karaktereinek eredeti, lapos vektoros arcképei (nem a játékok hivatalos művészete): egy paraméteres emberi sablon
 // (haj, arcszőr, ruha, kiegészítők) + kézzel rajzolt lények/szörnyek. A megjelenés adatai: src/content/looks.ts. 100×120-as vászon.
-import { useId } from 'react'
+// A lények stilizált, lapos rajzok: a jellegzetes forma és arc megmarad, a szín enyhén eltolva, és mindegyik kis kiegészítőt (sál, sapka, szemüveg) kap.
+import { createContext, useContext, useId } from 'react'
 import type { ReactNode } from 'react'
 import { LOOKS, type CreatureId, type HumanLook } from '../content/looks'
 
@@ -8,6 +9,9 @@ import { LOOKS, type CreatureId, type HumanLook } from '../content/looks'
 export const hasLook = (id: string): boolean => id in LOOKS
 
 const SHADE = 'rgba(0,0,0,.2)'
+/** Kiegészítő (sál, sapka, szemüveg…) csak néhány lényen van — hébe-hóba, nem mindenkin. */
+const ACC_ON = new Set<CreatureId>(['aranyBrumi', 'dzsaki', 'kerek', 'fin', 'pottyos'])
+const AccCtx = createContext(false)
 
 /* ------------------------------------------------------------------ ember ------------------------------------------------------------------ */
 
@@ -364,6 +368,13 @@ function Human({ l }: { l: HumanLook }) {
         <rect x="42" y={kid ? 78 : 68} width="16" height="22" rx="4" fill={l.skin} />
         <rect x="42" y={kid ? 78 : 68} width="16" height="9" fill="rgba(0,0,0,.12)" />
         <g transform={`translate(0 ${by})`}>{outfitFront}</g>
+        {l.scarf && (
+          <g transform={`translate(0 ${by})`}>
+            <path d="M33 82 Q50 95 67 82 L69 92 Q50 105 31 92Z" fill={l.scarf} stroke={SHADE} strokeWidth="1.2" />
+            <path d="M56 96 L66 116 L55 116Z" fill={l.scarf} stroke={SHADE} strokeWidth="1.2" />
+            <path d="M36 90 Q50 100 64 90" fill="none" stroke="rgba(255,255,255,.35)" strokeWidth="1.4" />
+          </g>
+        )}
         <g transform={`translate(0 ${dy})`}>
           <circle cx={50 - rx - 1} cy="54" r="5" fill={l.skin} />
           <circle cx={50 + rx + 1} cy="54" r="5" fill={l.skin} />
@@ -388,10 +399,112 @@ function Human({ l }: { l: HumanLook }) {
 }
 
 /* ---------------------------------------------------------------- lények ---------------------------------------------------------------- */
+// Stilizált, lapos lény-portrék: a jellegzetes forma, póz és arc megmarad, a színek az eredeti színcsaládon belül enyhén (±~9% fényesség) eltolva,
+// és mindegyik lény kap egy-két kis kiegészítőt (sál, sapka, szemüveg, kendő, jelvény).
+
+/** Ötágú csillag a (0,0) körül, 6 egység sugárral (a „translate"-tel kell a helyére tenni). */
+const STAR = 'M0 -6 L1.8 -1.9 L6 -1.8 L2.8 1 L3.8 5.2 L0 2.9 L-3.8 5.2 L-2.8 1 L-6 -1.8 L-1.8 -1.9Z'
+
+/* Kiegészítők: a lények „álruhája" — sál, szemüveg, sapka, kendő, jelvény (100×120-as vászon, a koordináták a figura saját rajzához igazodnak). */
+
+const EDGE = 'rgba(0,0,0,.25)'
+
+/** Kerek szemüveg: a két lencse közepe (x1, x2, y), r sugár, c keret. */
+function Specs({ x1, x2, y, r, c }: { x1: number; x2: number; y: number; r: number; c: string }) {
+  if (!useContext(AccCtx)) return null
+  return (
+    <g fill="rgba(255,255,255,.14)" stroke={c} strokeWidth="2.2">
+      <circle cx={x1} cy={y} r={r} />
+      <circle cx={x2} cy={y} r={r} />
+      <path d={`M${x1 + r} ${y} Q50 ${y - 3} ${x2 - r} ${y}`} fill="none" />
+      <path d={`M${x1 - r} ${y} l-4 -1.5 M${x2 + r} ${y} l4 -1.5`} fill="none" strokeLinecap="round" />
+    </g>
+  )
+}
+
+/** Sál: a nyak köré (y a felső él, w a fél-szélesség), jobb oldalt lelógó véggel és csíkkal. */
+function Scarf({ y, w, c, c2 }: { y: number; w: number; c: string; c2: string }) {
+  if (!useContext(AccCtx)) return null
+  const l = 50 - w
+  const r = 50 + w
+  return (
+    <g>
+      <path d={`M${l} ${y} Q50 ${y + 10} ${r} ${y} L${r - 1} ${y + 7} Q50 ${y + 17} ${l + 1} ${y + 7}Z`} fill={c} stroke={EDGE} strokeWidth=".8" />
+      <path d={`M${r - 14} ${y + 10} L${r - 15} ${y + 26} L${r - 6} ${y + 25} L${r - 6} ${y + 9}Z`} fill={c} stroke={EDGE} strokeWidth=".8" />
+      <path d={`M${r - 14.8} ${y + 17} L${r - 6} ${y + 16} M${r - 14.9} ${y + 21.5} L${r - 6} ${y + 20.5}`} stroke={c2} strokeWidth="1.8" />
+    </g>
+  )
+}
+
+/** Nyakba kötött kendő (háromszög, pöttyös). */
+function Kerchief({ y, w, c }: { y: number; w: number; c: string }) {
+  if (!useContext(AccCtx)) return null
+  return (
+    <g>
+      <path d={`M${50 - w} ${y} Q50 ${y + 6} ${50 + w} ${y} L50 ${y + 20}Z`} fill={c} stroke={EDGE} strokeWidth=".8" />
+      <circle cx="42" cy={y + 6} r="1.4" fill="#fff" />
+      <circle cx="58" cy={y + 6} r="1.4" fill="#fff" />
+      <circle cx="50" cy={y + 12} r="1.4" fill="#fff" />
+    </g>
+  )
+}
+
+/** Kötött sapka pamaccsal: y az alsó (mandzsetta) él, w a fél-szélesség, h a magasság. */
+function Beanie({ y, w, h, c, c2 }: { y: number; w: number; h: number; c: string; c2: string }) {
+  if (!useContext(AccCtx)) return null
+  return (
+    <g>
+      <path d={`M${50 - w} ${y} Q${50 - w} ${y - h} 50 ${y - h} Q${50 + w} ${y - h} ${50 + w} ${y}Z`} fill={c} stroke={EDGE} strokeWidth=".8" />
+      <rect x={50 - w - 1.5} y={y - 3} width={w * 2 + 3} height="6" rx="3" fill={c2} stroke={EDGE} strokeWidth=".8" />
+      <circle cx="50" cy={y - h - 0.5} r="3.4" fill={c2} stroke={EDGE} strokeWidth=".8" />
+    </g>
+  )
+}
+
+/** Baseball-sapka elölről: kupola + pereme. */
+function Cap({ y, w, c, c2 }: { y: number; w: number; c: string; c2: string }) {
+  if (!useContext(AccCtx)) return null
+  return (
+    <g>
+      <path d={`M${50 - w} ${y} Q${50 - w} ${y - 17} 50 ${y - 17} Q${50 + w} ${y - 17} ${50 + w} ${y}Z`} fill={c} stroke={EDGE} strokeWidth=".8" />
+      <ellipse cx="50" cy={y} rx={w + 5} ry="3.4" fill={c2} stroke={EDGE} strokeWidth=".8" />
+      <circle cx="50" cy={y - 17} r="1.8" fill={c2} />
+    </g>
+  )
+}
+
+/** Hegyes sapka a csúcsos fejre: a háromszög csúcsától (tipY) az y szintig, half a fél-szélesség az y-nál. */
+function PointCap({ tipY, y, half, c, c2 }: { tipY: number; y: number; half: number; c: string; c2: string }) {
+  if (!useContext(AccCtx)) return null
+  return (
+    <g>
+      <path d={`M${50 - half} ${y} L50 ${tipY} L${50 + half} ${y}Z`} fill={c} stroke={EDGE} strokeWidth=".8" />
+      <rect x={50 - half - 1.5} y={y - 3} width={half * 2 + 3} height="6" rx="3" fill={c2} stroke={EDGE} strokeWidth=".8" />
+      <circle cx="50" cy={tipY + 1} r="3.2" fill={c2} stroke={EDGE} strokeWidth=".8" />
+    </g>
+  )
+}
+
+/** Homlokpánt a fej tetején (y a közepe). */
+function Headband({ y, c }: { y: number; c: string }) {
+  if (!useContext(AccCtx)) return null
+  return <path d={`M30 ${y} Q50 ${y - 14} 70 ${y} L69.5 ${y + 5} Q50 ${y - 9} 30.5 ${y + 5}Z`} fill={c} stroke={EDGE} strokeWidth=".8" />
+}
+
+/** Kerek jelvény csillaggal. */
+function Badge({ x, y, c }: { x: number; y: number; c: string }) {
+  if (!useContext(AccCtx)) return null
+  return (
+    <g>
+      <circle cx={x} cy={y} r="5" fill={c} stroke="rgba(0,0,0,.3)" strokeWidth=".9" />
+      <path d={STAR} fill="rgba(0,0,0,.45)" transform={`translate(${x} ${y}) scale(.6)`} />
+    </g>
+  )
+}
 
 interface BearPalette { fur: string; dark: string; muzzle: string; ear: string; eye: 'blue' | 'hollow' }
 
-function Bear({ p }: { p: BearPalette }) {
+function Bear({ p, neck, face }: { p: BearPalette; neck?: ReactNode; face?: ReactNode }) {
   return (
     <g>
       <circle cx="25" cy="31" r="13" fill={p.dark} />
@@ -407,7 +520,7 @@ function Bear({ p }: { p: BearPalette }) {
         p.eye === 'blue' ? (
           <g key={x}>
             <circle cx={x} cy="51" r="5.4" fill="#fff" />
-            <circle cx={x} cy="51" r="2.8" fill="#3b7fd9" />
+            <circle cx={x} cy="51" r="2.8" fill="#6198e0" />
           </g>
         ) : (
           <g key={x}>
@@ -417,110 +530,119 @@ function Bear({ p }: { p: BearPalette }) {
         ),
       )}
       <path d="M31 44 L45 47 M69 44 L55 47" stroke={p.dark} strokeWidth="3" strokeLinecap="round" />
-      <ellipse cx="50" cy="31" rx="22" ry="4.5" fill="#15151a" />
-      <rect x="36" y="9" width="28" height="22" rx="2" fill="#15151a" />
-      <rect x="36" y="24" width="28" height="4" fill="#3a3a44" />
-      <path d="M50 93 L36 86 L36 100Z M50 93 L64 86 L64 100Z" fill="#15151a" />
-      <circle cx="50" cy="93" r="3" fill="#2a2a32" />
+      {neck}
+      <ellipse cx="50" cy="31" rx="22" ry="4.5" fill="#2a2a33" />
+      <rect x="36" y="9" width="28" height="22" rx="2" fill="#2a2a33" />
+      <rect x="36" y="24" width="28" height="4" fill="#4f4f5d" />
+      <path d="M50 93 L36 86 L36 100Z M50 93 L64 86 L64 100Z" fill="#2a2a33" />
+      <circle cx="50" cy="93" r="3" fill="#3f3f4b" />
+      {face}
     </g>
   )
 }
 
-function Bonnie() {
+function Bunny() {
   return (
     <g>
-      <ellipse cx="33" cy="22" rx="9" ry="26" fill="#5b4bb5" transform="rotate(-8 33 22)" />
-      <ellipse cx="33" cy="22" rx="4.5" ry="19" fill="#8a7ad9" transform="rotate(-8 33 22)" />
-      <ellipse cx="67" cy="22" rx="9" ry="26" fill="#5b4bb5" transform="rotate(8 67 22)" />
-      <ellipse cx="67" cy="22" rx="4.5" ry="19" fill="#8a7ad9" transform="rotate(8 67 22)" />
-      <path d="M8 120 Q10 94 50 90 Q90 94 92 120Z" fill="#4a3c9a" />
-      <circle cx="50" cy="62" r="29" fill="#5b4bb5" />
-      <ellipse cx="50" cy="73" rx="16" ry="11" fill="#9a8be6" />
+      <ellipse cx="33" cy="22" rx="9" ry="26" fill="#796cc2" transform="rotate(-8 33 22)" />
+      <ellipse cx="33" cy="22" rx="4.5" ry="19" fill="#a99ee3" transform="rotate(-8 33 22)" />
+      <ellipse cx="67" cy="22" rx="9" ry="26" fill="#796cc2" transform="rotate(8 67 22)" />
+      <ellipse cx="67" cy="22" rx="4.5" ry="19" fill="#a99ee3" transform="rotate(8 67 22)" />
+      <path d="M8 120 Q10 94 50 90 Q90 94 92 120Z" fill="#5b4bb9" />
+      <circle cx="50" cy="62" r="29" fill="#796cc2" />
+      <ellipse cx="50" cy="73" rx="16" ry="11" fill="#bbb1ee" />
       {[38, 62].map((x) => (
         <g key={x}>
           <circle cx={x} cy="56" r="6" fill="#fff" />
-          <circle cx={x} cy="56" r="3.2" fill="#c43aa0" />
+          <circle cx={x} cy="56" r="3.2" fill="#cf5db1" />
           <circle cx={x} cy="56" r="1.4" fill="#15101c" />
         </g>
       ))}
-      <path d="M30 48 L45 52 M70 48 L55 52" stroke="#2f2670" strokeWidth="3" strokeLinecap="round" />
+      <path d="M30 48 L45 52 M70 48 L55 52" stroke="#3d3292" strokeWidth="3" strokeLinecap="round" />
       <ellipse cx="50" cy="66" rx="5" ry="3" fill="#1a1230" />
       <path d="M45 77 Q50 81 55 77" stroke="#1a1230" strokeWidth="1.6" fill="none" />
-      <path d="M50 94 L36 87 L36 101Z M50 94 L64 87 L64 101Z" fill="#d11a2a" />
-      <circle cx="50" cy="94" r="3" fill="#a31220" />
+      <path d="M50 94 L36 87 L36 101Z M50 94 L64 87 L64 101Z" fill="#e63343" />
+      <circle cx="50" cy="94" r="3" fill="#cc1728" />
+      <Headband y={41} c="#f08a2a" />
+      <Specs x1={38} x2={62} y={56} r={8.4} c="#f08a2a" />
     </g>
   )
 }
 
-function Marionette() {
+function Puppet() {
   return (
     <g>
-      <path d="M10 120 Q12 88 50 84 Q88 88 90 120Z" fill="#17171c" />
+      <path d="M10 120 Q12 88 50 84 Q88 88 90 120Z" fill="#070708" />
       {[96, 104, 112].map((y) => (
-        <path key={y} d={`M14 ${y} H86`} stroke="#f4f4f0" strokeWidth="3" />
+        <path key={y} d={`M14 ${y} H86`} stroke="#e1e1d6" strokeWidth="3" />
       ))}
-      <path d="M32 40 Q30 14 50 12 Q70 14 68 40Z" fill="#17171c" />
-      <ellipse cx="50" cy="54" rx="24" ry="28" fill="#f4f1ea" />
+      <path d="M32 40 Q30 14 50 12 Q70 14 68 40Z" fill="#070708" />
+      <ellipse cx="50" cy="54" rx="24" ry="28" fill="#e4ddcc" />
       {[39, 61].map((x) => (
         <g key={x}>
           <circle cx={x} cy="48" r="7.5" fill="#0c0c10" />
-          <circle cx={x} cy="48" r="1.6" fill="#f4f1ea" />
+          <circle cx={x} cy="48" r="1.6" fill="#e4ddcc" />
           <path d={`M${x} 56 Q${x + (x < 50 ? -3 : 3)} 66 ${x + (x < 50 ? -1 : 1)} 74`} stroke="#0c0c10" strokeWidth="2.4" fill="none" strokeLinecap="round" />
         </g>
       ))}
-      <circle cx="31" cy="62" r="5" fill="#d9302e" />
-      <circle cx="69" cy="62" r="5" fill="#d9302e" />
+      <circle cx="31" cy="62" r="5" fill="#b82321" />
+      <circle cx="69" cy="62" r="5" fill="#b82321" />
       <path d="M38 72 Q50 82 62 72" stroke="#0c0c10" strokeWidth="2.6" fill="none" strokeLinecap="round" />
+      <Scarf y={80} w={22} c="#e0a82a" c2="#9a5e12" />
     </g>
   )
 }
 
-function Chica() {
+function Hen() {
   return (
     <g>
-      <path d="M6 120 Q6 92 50 88 Q94 92 94 120Z" fill="#f2c230" />
-      <path d="M30 92 L70 92 L67 120 L33 120Z" fill="#f4f4f0" />
-      <path d="M38 100 H62 M40 107 H60" stroke="#d9544f" strokeWidth="2.4" strokeLinecap="round" />
-      <path d="M38 34 Q34 14 41 11 Q46 20 45 33Z M47 32 Q47 8 54 5 Q58 18 54 32Z M56 33 Q60 17 68 17 Q66 28 61 35Z" fill="#f2c230" />
-      <ellipse cx="50" cy="55" rx="28" ry="26" fill="#f2c230" />
-      <circle cx="31" cy="64" r="5" fill="#f28fa0" opacity=".7" />
-      <circle cx="69" cy="64" r="5" fill="#f28fa0" opacity=".7" />
-      <path d="M33 63 Q50 52 67 63 Q62 76 50 78 Q38 76 33 63Z" fill="#f28a1e" />
-      <path d="M39 74 Q50 86 61 74 Q50 77 39 74Z" fill="#d9701a" />
+      <path d="M6 120 Q6 92 50 88 Q94 92 94 120Z" fill="#f5cf5b" />
+      <path d="M30 92 L70 92 L67 120 L33 120Z" fill="#f9f9f6" />
+      <path d="M38 100 H62 M40 107 H60" stroke="#e17975" strokeWidth="2.4" strokeLinecap="round" />
+      <path d="M38 34 Q34 14 41 11 Q46 20 45 33Z M47 32 Q47 8 54 5 Q58 18 54 32Z M56 33 Q60 17 68 17 Q66 28 61 35Z" fill="#f5cf5b" />
+      <ellipse cx="50" cy="55" rx="28" ry="26" fill="#f5cf5b" />
+      <circle cx="31" cy="64" r="5" fill="#f7b8c3" opacity=".7" />
+      <circle cx="69" cy="64" r="5" fill="#f7b8c3" opacity=".7" />
+      <path d="M33 63 Q50 52 67 63 Q62 76 50 78 Q38 76 33 63Z" fill="#f5a149" />
+      <path d="M39 74 Q50 86 61 74 Q50 77 39 74Z" fill="#e7883a" />
       {[38, 62].map((x) => (
         <g key={x}>
           <circle cx={x} cy="46" r="6.5" fill="#fff" />
-          <circle cx={x} cy="46" r="3.6" fill="#a58be0" />
+          <circle cx={x} cy="46" r="3.6" fill="#c1afea" />
           <circle cx={x} cy="46" r="1.6" fill="#15101c" />
         </g>
       ))}
       <path d="M31 39 L36 42 M69 39 L64 42" stroke="#15101c" strokeWidth="2" strokeLinecap="round" />
+      <Specs x1={38} x2={62} y={46} r={8.4} c="#7a56c8" />
+      <Scarf y={84} w={24} c="#2f9e9a" c2="#fff" />
     </g>
   )
 }
 
-function Foxy() {
+function Fox() {
   return (
     <g>
-      <path d="M6 120 Q6 94 50 90 Q94 94 94 120Z" fill="#8a3418" />
-      <path d="M20 46 L25 8 L45 31Z" fill="#9b3a1f" />
-      <path d="M24 38 L27 17 L38 31Z" fill="#e8a37a" />
-      <path d="M80 46 L75 8 L55 31Z" fill="#9b3a1f" />
-      <path d="M76 38 L73 17 L62 31Z" fill="#e8a37a" />
-      <path d="M18 52 Q50 20 82 52 Q76 84 50 94 Q24 84 18 52Z" fill="#b4451f" />
-      <path d="M34 62 Q50 54 66 62 Q62 88 50 92 Q38 88 34 62Z" fill="#e8c9a0" />
+      <path d="M6 120 Q6 94 50 90 Q94 94 94 120Z" fill="#b1431f" />
+      <path d="M20 46 L25 8 L45 31Z" fill="#c14827" />
+      <path d="M24 38 L27 17 L38 31Z" fill="#efbea1" />
+      <path d="M80 46 L75 8 L55 31Z" fill="#c14827" />
+      <path d="M76 38 L73 17 L62 31Z" fill="#efbea1" />
+      <path d="M18 52 Q50 20 82 52 Q76 84 50 94 Q24 84 18 52Z" fill="#da5527" />
+      <path d="M34 62 Q50 54 66 62 Q62 88 50 92 Q38 88 34 62Z" fill="#f1dec5" />
       <circle cx="50" cy="85" r="3.6" fill="#15110e" />
       <path d="M42 80 L45 87 L48 80Z M52 80 L55 87 L58 80Z" fill="#fff" />
-      <circle cx="37" cy="53" r="5.4" fill="#f4d03a" />
+      <circle cx="37" cy="53" r="5.4" fill="#f6da65" />
       <circle cx="37" cy="53" r="2.2" fill="#15110e" />
       <path d="M52 44 L74 50 L71 64 L50 59Z" fill="#15110e" />
       <path d="M52 47 L26 38" stroke="#15110e" strokeWidth="1.8" />
-      <path d="M72 120 Q72 99 85 97 Q96 97 93 109 Q91 102 85 104 Q81 108 83 120Z" fill="#d4dbe0" stroke="#6b737a" strokeWidth="1.4" />
+      <path d="M72 120 Q72 99 85 97 Q96 97 93 109 Q91 102 85 104 Q81 108 83 120Z" fill="#eff1f3" stroke="#828a91" strokeWidth="1.4" />
+      <Scarf y={93} w={21} c="#2f7fcf" c2="#e8f0ff" />
+      <Badge x={22} y={108} c="#f4d03a" />
     </g>
   )
 }
 
-function Mouthy({ skin, lips, lashes }: { skin: string; lips: string; lashes?: boolean }) {
+function BigGrin({ skin, lips, lashes }: { skin: string; lips: string; lashes?: boolean }) {
   return (
     <g>
       <circle cx="50" cy="54" r="34" fill={skin} />
@@ -537,59 +659,63 @@ function Mouthy({ skin, lips, lashes }: { skin: string; lips: string; lashes?: b
   )
 }
 
-function Bunzo() {
+function DrummerBunny() {
   return (
     <g>
-      <ellipse cx="33" cy="22" rx="9" ry="26" fill="#6a5bd6" transform="rotate(-8 33 22)" />
-      <ellipse cx="33" cy="22" rx="4.5" ry="19" fill="#f0a5c8" transform="rotate(-8 33 22)" />
-      <ellipse cx="67" cy="22" rx="9" ry="26" fill="#6a5bd6" transform="rotate(8 67 22)" />
-      <ellipse cx="67" cy="22" rx="4.5" ry="19" fill="#f0a5c8" transform="rotate(8 67 22)" />
-      <path d="M12 120 Q14 96 50 92 Q86 96 88 120Z" fill="#5547b8" />
-      <circle cx="50" cy="64" r="28" fill="#6a5bd6" />
+      <ellipse cx="33" cy="22" rx="9" ry="26" fill="#8b80df" transform="rotate(-8 33 22)" />
+      <ellipse cx="33" cy="22" rx="4.5" ry="19" fill="#f7cce0" transform="rotate(-8 33 22)" />
+      <ellipse cx="67" cy="22" rx="9" ry="26" fill="#8b80df" transform="rotate(8 67 22)" />
+      <ellipse cx="67" cy="22" rx="4.5" ry="19" fill="#f7cce0" transform="rotate(8 67 22)" />
+      <path d="M12 120 Q14 96 50 92 Q86 96 88 120Z" fill="#7468c5" />
+      <circle cx="50" cy="64" r="28" fill="#8b80df" />
       {[39, 61].map((x) => (
         <g key={x}>
           <ellipse cx={x} cy="58" rx="5" ry="7" fill="#0f0c1c" />
           <circle cx={x + 1.5} cy="55" r="1.8" fill="#fff" />
         </g>
       ))}
-      <circle cx="30" cy="68" r="5" fill="#f0a5c8" opacity=".8" />
-      <circle cx="70" cy="68" r="5" fill="#f0a5c8" opacity=".8" />
-      <path d="M46 68 L54 68 L50 73Z" fill="#f0a5c8" />
+      <circle cx="30" cy="68" r="5" fill="#f7cce0" opacity=".8" />
+      <circle cx="70" cy="68" r="5" fill="#f7cce0" opacity=".8" />
+      <path d="M46 68 L54 68 L50 73Z" fill="#f7cce0" />
       <path d="M43 76 Q47 80 50 76 Q53 80 57 76" stroke="#0f0c1c" strokeWidth="1.8" fill="none" />
-      <circle cx="14" cy="106" r="13" fill="#f4c430" stroke="#c9961a" strokeWidth="2" />
-      <circle cx="86" cy="106" r="13" fill="#f4c430" stroke="#c9961a" strokeWidth="2" />
+      <circle cx="14" cy="106" r="13" fill="#f6d05c" stroke="#e4af2d" strokeWidth="2" />
+      <circle cx="86" cy="106" r="13" fill="#f6d05c" stroke="#e4af2d" strokeWidth="2" />
+      <Specs x1={39} x2={61} y={58} r={8} c="#f08a2a" />
+      <Scarf y={89} w={20} c="#2fa68c" c2="#e8fff4" />
     </g>
   )
 }
 
-function Mommy() {
+function LongLegs() {
   return (
     <g>
-      <path d="M3 30 Q-8 80 10 120 M97 14 Q112 60 92 104" stroke="#e86bb0" strokeWidth="7" fill="none" strokeLinecap="round" />
-      <path d="M16 56 Q8 6 50 6 Q92 6 84 56 L90 104 L10 104Z" fill="#c43a86" />
-      <ellipse cx="50" cy="56" rx="26" ry="30" fill="#ffb3d6" />
+      <path d="M3 30 Q-8 80 10 120 M97 14 Q112 60 92 104" stroke="#ee93c5" strokeWidth="7" fill="none" strokeLinecap="round" />
+      <path d="M16 56 Q8 6 50 6 Q92 6 84 56 L90 104 L10 104Z" fill="#cf5d9c" />
+      <ellipse cx="50" cy="56" rx="26" ry="30" fill="#ffe1ef" />
       {[39, 61].map((x) => (
         <g key={x}>
           <ellipse cx={x} cy="46" rx="7" ry="8.5" fill="#fff" />
-          <circle cx={x} cy="47" r="4" fill="#7a3fc4" />
+          <circle cx={x} cy="47" r="4" fill="#9262cf" />
           <circle cx={x} cy="47" r="1.8" fill="#15101c" />
         </g>
       ))}
       <path d="M30 38 L35 42 M70 38 L65 42" stroke="#15101c" strokeWidth="2" strokeLinecap="round" />
-      <path d="M30 68 Q50 90 70 68 Q50 74 30 68Z" fill="#7a1a44" />
+      <path d="M30 68 Q50 90 70 68 Q50 74 30 68Z" fill="#a02259" />
       <path d="M33 69 L36 75 L39 70 L43 77 L47 71 L50 78 L53 71 L57 77 L61 70 L64 75 L67 69Z" fill="#fff" />
+      <Specs x1={39} x2={61} y={47} r={8.8} c="#2f9e9a" />
+      <Scarf y={85} w={17} c="#f2c230" c2="#a87a10" />
     </g>
   )
 }
 
-function DogDay() {
+function Collie() {
   return (
     <g>
-      <path d="M12 120 Q14 96 50 92 Q86 96 88 120Z" fill="#e8a01c" />
-      <ellipse cx="20" cy="46" rx="11" ry="25" fill="#c8791f" transform="rotate(12 20 46)" />
-      <ellipse cx="80" cy="46" rx="11" ry="25" fill="#c8791f" transform="rotate(-12 80 46)" />
-      <circle cx="50" cy="57" r="30" fill="#f5b83c" />
-      <ellipse cx="50" cy="69" rx="18" ry="14" fill="#fbe3a0" />
+      <path d="M12 120 Q14 96 50 92 Q86 96 88 120Z" fill="#c28514" />
+      <ellipse cx="20" cy="46" rx="11" ry="25" fill="#a06119" transform="rotate(12 20 46)" />
+      <ellipse cx="80" cy="46" rx="11" ry="25" fill="#a06119" transform="rotate(-12 80 46)" />
+      <circle cx="50" cy="57" r="30" fill="#f3a810" />
+      <ellipse cx="50" cy="69" rx="18" ry="14" fill="#f9d674" />
       <ellipse cx="50" cy="62" rx="6" ry="4" fill="#15101c" />
       {[39, 61].map((x) => (
         <g key={x}>
@@ -598,167 +724,187 @@ function DogDay() {
         </g>
       ))}
       <path d="M31 72 Q50 96 69 72" stroke="#15101c" strokeWidth="2.6" fill="none" strokeLinecap="round" />
-      <path d="M24 38 L18 32 M76 38 L82 32 M50 20 L50 12" stroke="#f5b83c" strokeWidth="3" strokeLinecap="round" />
+      <path d="M24 38 L18 32 M76 38 L82 32 M50 20 L50 12" stroke="#f3a810" strokeWidth="3" strokeLinecap="round" />
+      <Specs x1={39} x2={61} y={50} r={8} c="#6a3a1a" />
+      <Kerchief y={89} w={20} c="#d9302e" />
     </g>
   )
 }
 
-function MrX() {
+function Brute() {
   return (
     <g>
-      <path d="M-2 120 L4 90 Q50 76 96 90 L102 120Z" fill="#14141a" />
-      <path d="M28 82 L50 114 L72 82 L64 72 L50 94 L36 72Z" fill="#26262e" />
-      <rect x="42" y="62" width="16" height="24" rx="4" fill="#b2ae9e" />
-      <ellipse cx="50" cy="50" rx="21" ry="27" fill="#c2beac" />
-      <ellipse cx="41" cy="48" rx="6" ry="4" fill="#25252a" />
-      <ellipse cx="59" cy="48" rx="6" ry="4" fill="#25252a" />
+      <path d="M-2 120 L4 90 Q50 76 96 90 L102 120Z" fill="#282834" />
+      <path d="M28 82 L50 114 L72 82 L64 72 L50 94 L36 72Z" fill="#3b3b47" />
+      <rect x="42" y="62" width="16" height="24" rx="4" fill="#c6c3b8" />
+      <ellipse cx="50" cy="50" rx="21" ry="27" fill="#d5d3c6" />
+      <ellipse cx="41" cy="48" rx="6" ry="4" fill="#3a3a42" />
+      <ellipse cx="59" cy="48" rx="6" ry="4" fill="#3a3a42" />
       <path d="M50 50 q-2 9 1 11 M42 70 Q50 73 58 70" stroke="rgba(0,0,0,.35)" strokeWidth="1.6" fill="none" strokeLinecap="round" />
-      <path d="M57 34 L65 62 M54 40 L60 38" stroke="#6b3a3a" strokeWidth="1.6" strokeLinecap="round" fill="none" />
-      <ellipse cx="50" cy="33" rx="36" ry="7" fill="#15151a" />
-      <path d="M30 33 Q30 6 50 6 Q70 6 70 33Z" fill="#1c1c22" />
-      <rect x="30" y="26" width="40" height="5" fill="#3a3a44" />
+      <path d="M57 34 L65 62 M54 40 L60 38" stroke="#894a4a" strokeWidth="1.6" strokeLinecap="round" fill="none" />
+      <ellipse cx="50" cy="33" rx="36" ry="7" fill="#2a2a33" />
+      <path d="M30 33 Q30 6 50 6 Q70 6 70 33Z" fill="#31313b" />
+      <rect x="30" y="26" width="40" height="5" fill="#4f4f5d" />
+      <Specs x1={41} x2={59} y={48} r={7.4} c="#c9a227" />
+      <Scarf y={76} w={18} c="#a8323a" c2="#d8d0c0" />
     </g>
   )
 }
 
-function Xeno() {
+function Insectoid() {
   return (
     <g>
-      <path d="M16 120 Q20 98 50 96 Q80 98 84 120Z" fill="#101719" />
-      <path d="M50 4 Q88 20 81 64 Q75 92 50 96 Q25 92 19 64 Q12 20 50 4Z" fill="#1a2326" />
-      <path d="M50 8 Q60 40 56 72 M38 12 Q46 44 44 78 M63 14 Q64 44 60 76" stroke="#34464b" strokeWidth="2.2" fill="none" />
-      <path d="M32 22 Q27 44 31 68" stroke="#6a8c93" strokeWidth="2" fill="none" opacity=".6" />
-      <path d="M31 74 Q50 100 69 74 Q50 82 31 74Z" fill="#0c1214" />
-      <path d="M35 76 L37 85 L41 78 L44 88 L47 79 L50 91 L53 79 L56 88 L59 78 L63 85 L65 76Z" fill="#cfd6dc" />
+      <path d="M16 120 Q20 98 50 96 Q80 98 84 120Z" fill="#223135" />
+      <path d="M50 4 Q88 20 81 64 Q75 92 50 96 Q25 92 19 64 Q12 20 50 4Z" fill="#2d3c41" />
+      <path d="M50 8 Q60 40 56 72 M38 12 Q46 44 44 78 M63 14 Q64 44 60 76" stroke="#475f66" strokeWidth="2.2" fill="none" />
+      <path d="M32 22 Q27 44 31 68" stroke="#84a1a7" strokeWidth="2" fill="none" opacity=".6" />
+      <path d="M31 74 Q50 100 69 74 Q50 82 31 74Z" fill="#1d2c31" />
+      <path d="M35 76 L37 85 L41 78 L44 88 L47 79 L50 91 L53 79 L56 88 L59 78 L63 85 L65 76Z" fill="#eaedef" />
       <path d="M50 92 L50 108 M44 90 L42 102" stroke="rgba(200,230,240,.55)" strokeWidth="1.6" />
+      <Scarf y={93} w={19} c="#e8602c" c2="#ffe2c8" />
     </g>
   )
 }
 
-function Wendigo() {
+function BarkSpirit() {
   return (
     <g>
-      <path d="M36 32 Q20 26 14 6 M24 24 Q14 24 6 14 M31 28 Q27 12 29 0 M64 32 Q80 26 86 6 M76 24 Q86 24 94 14 M69 28 Q73 12 71 0" stroke="#7a6a52" strokeWidth="4.4" fill="none" strokeLinecap="round" />
-      <path d="M14 120 Q18 96 50 92 Q82 96 86 120Z" fill="#3a3d3a" />
-      <path d="M36 94 L64 94 M38 102 L62 102 M40 110 L60 110" stroke="#5a5e5a" strokeWidth="2" />
-      <path d="M26 40 Q26 22 50 22 Q74 22 74 40 Q77 64 62 84 Q50 94 38 84 Q23 64 26 40Z" fill="#a1a79f" />
+      <path d="M36 32 Q20 26 14 6 M24 24 Q14 24 6 14 M31 28 Q27 12 29 0 M64 32 Q80 26 86 6 M76 24 Q86 24 94 14 M69 28 Q73 12 71 0" stroke="#958264" strokeWidth="4.4" fill="none" strokeLinecap="round" />
+      <path d="M14 120 Q18 96 50 92 Q82 96 86 120Z" fill="#505550" />
+      <path d="M36 94 L64 94 M38 102 L62 102 M40 110 L60 110" stroke="#707570" strokeWidth="2" />
+      <path d="M26 40 Q26 22 50 22 Q74 22 74 40 Q77 64 62 84 Q50 94 38 84 Q23 64 26 40Z" fill="#b8bdb7" />
       <ellipse cx="39" cy="49" rx="6.5" ry="9" fill="#0d0d0d" />
       <ellipse cx="61" cy="49" rx="6.5" ry="9" fill="#0d0d0d" />
-      <circle cx="39" cy="51" r="1.6" fill="#e03a2a" />
-      <circle cx="61" cy="51" r="1.6" fill="#e03a2a" />
-      <path d="M47 62 L50 70 L53 62Z" fill="#2a2a2a" />
-      <path d="M34 74 L38 84 L42 75 L46 86 L50 75 L54 86 L58 75 L62 84 L66 74 Q50 82 34 74Z" fill="#2a1414" stroke="#d8d4c8" strokeWidth="1" />
+      <circle cx="39" cy="51" r="1.6" fill="#e65f52" />
+      <circle cx="61" cy="51" r="1.6" fill="#e65f52" />
+      <path d="M47 62 L50 70 L53 62Z" fill="#414141" />
+      <path d="M34 74 L38 84 L42 75 L46 86 L50 75 L54 86 L58 75 L62 84 L66 74 Q50 82 34 74Z" fill="#492323" stroke="#ebe9e3" strokeWidth="1" />
+      <Specs x1={39} x2={61} y={49} r={10.5} c="#c9a227" />
+      <Scarf y={88} w={19} c="#b8323a" c2="#e8d4c0" />
     </g>
   )
 }
 
-function Hunter() {
+function TuskHunter() {
   return (
     <g>
-      <path d="M-2 112 Q4 68 32 58 Q12 82 18 114Z" fill="#c4cbd1" stroke="#7a838b" strokeWidth="1.4" />
-      <path d="M102 112 Q96 68 68 58 Q88 82 82 114Z" fill="#c4cbd1" stroke="#7a838b" strokeWidth="1.4" />
-      <path d="M24 120 Q28 92 50 90 Q72 92 76 120Z" fill="#4a2f2a" />
-      <ellipse cx="50" cy="48" rx="22" ry="28" fill="#6b4a42" />
-      <path d="M30 34 Q50 26 70 34 M32 42 Q50 36 68 42" stroke="#3a2420" strokeWidth="2" fill="none" />
-      <circle cx="40" cy="46" r="4.4" fill="#f2d13a" />
-      <circle cx="60" cy="46" r="4.4" fill="#f2d13a" />
-      <circle cx="40" cy="46" r="1.6" fill="#2a1a10" />
-      <circle cx="60" cy="46" r="1.6" fill="#2a1a10" />
-      <path d="M33 64 Q50 82 67 64 L61 92 Q50 85 39 92Z" fill="#2e1412" />
-      <path d="M38 70 L40 77 L43 71 L46 79 L50 72 L54 79 L57 71 L60 77 L62 70Z" fill="#d8d0c0" />
+      <path d="M-2 112 Q4 68 32 58 Q12 82 18 114Z" fill="#dee2e5" stroke="#939aa0" strokeWidth="1.4" />
+      <path d="M102 112 Q96 68 68 58 Q88 82 82 114Z" fill="#dee2e5" stroke="#939aa0" strokeWidth="1.4" />
+      <path d="M24 120 Q28 92 50 90 Q72 92 76 120Z" fill="#67423b" />
+      <ellipse cx="50" cy="48" rx="22" ry="28" fill="#875e54" />
+      <path d="M30 34 Q50 26 70 34 M32 42 Q50 36 68 42" stroke="#583630" strokeWidth="2" fill="none" />
+      <circle cx="40" cy="46" r="4.4" fill="#f5db65" />
+      <circle cx="60" cy="46" r="4.4" fill="#f5db65" />
+      <circle cx="40" cy="46" r="1.6" fill="#4b2f1d" />
+      <circle cx="60" cy="46" r="1.6" fill="#4b2f1d" />
+      <path d="M33 64 Q50 82 67 64 L61 92 Q50 85 39 92Z" fill="#4f221f" />
+      <path d="M38 70 L40 77 L43 71 L46 79 L50 72 L54 79 L57 71 L60 77 L62 70Z" fill="#eae5dc" />
+      <Beanie y={30} w={18} h={16} c="#e8782c" c2="#3a3a3a" />
+      <Specs x1={40} x2={60} y={46} r={7.5} c="#222" />
     </g>
   )
 }
 
-function Isaac() {
+function Engineer() {
   return (
     <g>
-      <path d="M2 120 Q4 86 50 82 Q96 86 98 120Z" fill="#5d6670" />
-      <ellipse cx="15" cy="97" rx="14" ry="10" fill="#7b8692" />
-      <ellipse cx="85" cy="97" rx="14" ry="10" fill="#7b8692" />
-      <rect x="44" y="84" width="12" height="36" rx="6" fill="#4fc3ff" opacity=".3" />
-      <rect x="47" y="84" width="6" height="36" rx="3" fill="#4fc3ff" />
-      <rect x="36" y="74" width="28" height="10" rx="3" fill="#4a525b" />
-      <ellipse cx="50" cy="48" rx="28" ry="30" fill="#6d7782" />
-      <path d="M30 43 Q50 33 70 43 Q73 66 50 70 Q27 66 30 43Z" fill="#0b1a2b" stroke="#4fc3ff" strokeWidth="1.8" />
+      <path d="M2 120 Q4 86 50 82 Q96 86 98 120Z" fill="#727d89" />
+      <ellipse cx="15" cy="97" rx="14" ry="10" fill="#949da7" />
+      <ellipse cx="85" cy="97" rx="14" ry="10" fill="#949da7" />
+      <rect x="44" y="84" width="12" height="36" rx="6" fill="#7dd3ff" opacity=".3" />
+      <rect x="47" y="84" width="6" height="36" rx="3" fill="#7dd3ff" />
+      <rect x="36" y="74" width="28" height="10" rx="3" fill="#5f6974" />
+      <ellipse cx="50" cy="48" rx="28" ry="30" fill="#858e98" />
+      <path d="M30 43 Q50 33 70 43 Q73 66 50 70 Q27 66 30 43Z" fill="#143050" stroke="#7dd3ff" strokeWidth="1.8" />
       <path d="M36 44 Q50 38 62 44" stroke="rgba(255,255,255,.4)" strokeWidth="2" fill="none" />
-      <path d="M38 22 Q50 16 62 22" stroke="#8c97a3" strokeWidth="3" fill="none" />
+      <path d="M38 22 Q50 16 62 22" stroke="#a6aeb7" strokeWidth="3" fill="none" />
+      <Scarf y={77} w={16} c="#e8782c" c2="#ffe2c8" />
+      <Badge x={28} y={108} c="#f4d03a" />
     </g>
   )
 }
 
-function Pyramid() {
+function StoneHead() {
   return (
     <g>
-      <path d="M8 120 Q12 90 50 86 Q88 90 92 120Z" fill="#3a2f2c" />
-      <path d="M32 90 L68 90 L74 120 L26 120Z" fill="#5b2a22" />
-      <ellipse cx="42" cy="108" rx="7" ry="4" fill="#7a1f1a" />
-      <ellipse cx="62" cy="100" rx="5" ry="3" fill="#7a1f1a" />
-      <path d="M50 2 L90 82 L10 82Z" fill="#6f5d54" />
-      <path d="M50 2 L90 82 L50 82Z" fill="#3f3430" />
-      <path d="M36 30 L34 60 M62 34 L66 66 M50 18 L50 40" stroke="#8a4a2a" strokeWidth="1.6" opacity=".7" />
+      <path d="M8 120 Q12 90 50 86 Q88 90 92 120Z" fill="#544440" />
+      <path d="M32 90 L68 90 L74 120 L26 120Z" fill="#7c392e" />
+      <ellipse cx="42" cy="108" rx="7" ry="4" fill="#a02922" />
+      <ellipse cx="62" cy="100" rx="5" ry="3" fill="#a02922" />
+      <path d="M50 2 L90 82 L10 82Z" fill="#897368" />
+      <path d="M50 2 L90 82 L50 82Z" fill="#594a44" />
+      <path d="M36 30 L34 60 M62 34 L66 66 M50 18 L50 40" stroke="#ad5d35" strokeWidth="1.6" opacity=".7" />
       {[
         [30, 70],
         [50, 76],
         [70, 70],
       ].map(([x, y]) => (
-        <circle key={`${x}${y}`} cx={x} cy={y} r="2.2" fill="#2a2220" />
+        <circle key={`${x}${y}`} cx={x} cy={y} r="2.2" fill="#443734" />
       ))}
+      <PointCap tipY={1} y={22} half={10} c="#d9402e" c2="#f4f0e0" />
+      <Scarf y={83} w={25} c="#2f9e9a" c2="#e8fff4" />
     </g>
   )
 }
 
-function Nurse() {
+function LampNurse() {
   return (
     <g>
-      <path d="M6 120 Q8 92 50 88 Q92 92 94 120Z" fill="#e8e4dc" />
-      <path d="M18 110 Q40 98 58 112 M64 100 Q74 108 70 120" stroke="#8a1a1a" strokeWidth="4" fill="none" opacity=".75" />
-      <ellipse cx="50" cy="58" rx="27" ry="29" fill="#d9a79a" />
+      <path d="M6 120 Q8 92 50 88 Q92 92 94 120Z" fill="#d6cfc0" />
+      <path d="M18 110 Q40 98 58 112 M64 100 Q74 108 70 120" stroke="#631313" strokeWidth="4" fill="none" opacity=".75" />
+      <ellipse cx="50" cy="58" rx="27" ry="29" fill="#cc8a79" />
       <circle cx="38" cy="46" r="7" fill="rgba(255,255,255,.2)" />
       <circle cx="62" cy="44" r="6" fill="rgba(255,255,255,.18)" />
       <circle cx="50" cy="68" r="8" fill="rgba(255,255,255,.16)" />
-      <path d="M25 52 Q50 62 75 52 M27 66 Q50 76 73 64" stroke="#8a5a50" strokeWidth="3.2" fill="none" />
-      <path d="M26 30 Q50 8 74 30 L68 38 Q50 28 32 38Z" fill="#f4f1ea" />
-      <rect x="46.8" y="16" width="6.4" height="2.4" fill="#b3122d" />
-      <rect x="48.8" y="14" width="2.4" height="6.4" fill="#b3122d" />
+      <path d="M25 52 Q50 62 75 52 M27 66 Q50 76 73 64" stroke="#6d473f" strokeWidth="3.2" fill="none" />
+      <path d="M26 30 Q50 8 74 30 L68 38 Q50 28 32 38Z" fill="#e4ddcc" />
+      <rect x="46.8" y="16" width="6.4" height="2.4" fill="#890e23" />
+      <rect x="48.8" y="14" width="2.4" height="6.4" fill="#890e23" />
+      <Specs x1={38} x2={62} y={48} r={8} c="#3a6fb8" />
+      <Scarf y={84} w={20} c="#4a8fd0" c2="#e8f4ff" />
     </g>
   )
 }
 
-function Liar() {
+function RagLiar() {
   return (
     <g>
-      <path d="M10 120 Q12 80 50 76 Q88 80 90 120Z" fill="#c98f7c" />
-      <path d="M8 94 L92 112 M8 112 L92 94" stroke="#3a2a28" strokeWidth="6.5" />
-      <rect x="44" y="98" width="12" height="10" rx="2" fill="#a6a39b" stroke="#444" />
-      <path d="M22 90 L30 98 M70 102 L78 110 M30 114 L36 108" stroke="#8a1a1a" strokeWidth="2.4" strokeLinecap="round" />
+      <path d="M10 120 Q12 80 50 76 Q88 80 90 120Z" fill="#d6ab9d" />
+      <path d="M8 94 L92 112 M8 112 L92 94" stroke="#553e3b" strokeWidth="6.5" />
+      <rect x="44" y="98" width="12" height="10" rx="2" fill="#bcb9b3" stroke="#444" />
+      <path d="M22 90 L30 98 M70 102 L78 110 M30 114 L36 108" stroke="#b12121" strokeWidth="2.4" strokeLinecap="round" />
       <g transform="rotate(9 50 62)">
-        <ellipse cx="50" cy="50" rx="19" ry="23" fill="#b8806e" />
-        <path d="M34 40 Q50 34 66 42 M33 52 Q50 58 67 50" stroke="#6b3a30" strokeWidth="2" fill="none" />
+        <ellipse cx="50" cy="50" rx="19" ry="23" fill="#c79b8d" />
+        <path d="M34 40 Q50 34 66 42 M33 52 Q50 58 67 50" stroke="#8b4b3e" strokeWidth="2" fill="none" />
         <ellipse cx="42" cy="46" rx="3" ry="2" fill="#2a1410" />
         <ellipse cx="58" cy="46" rx="3" ry="2" fill="#2a1410" />
         <path d="M44 66 Q50 70 56 66" stroke="#2a1410" strokeWidth="1.8" fill="none" />
+      <Beanie y={36} w={14.5} h={14} c="#3f9a52" c2="#e8f0d0" />
+      <Specs x1={42} x2={58} y={46} r={5.8} c="#222" />
+      <Scarf y={72} w={14} c="#3f9a52" c2="#e8f0d0" />
       </g>
     </g>
   )
 }
 
-function Trapper() {
+function JawTrapper() {
   return (
     <g>
-      <path d="M-6 120 Q-2 82 50 78 Q102 82 106 120Z" fill="#3d3630" />
-      <path d="M28 84 L72 84 L78 120 L22 120Z" fill="#6b3a2a" />
-      <path d="M18 84 L40 120 M82 84 L60 120" stroke="#202020" strokeWidth="4.4" />
-      <ellipse cx="46" cy="106" rx="9" ry="5" fill="#7a1f1a" />
-      <ellipse cx="62" cy="96" rx="5" ry="3" fill="#7a1f1a" />
-      <path d="M40 24 Q50 6 60 24Z" fill="#7a6a58" />
-      <rect x="44" y="21" width="12" height="3" rx="1" fill="#4a3a28" />
-      <ellipse cx="50" cy="50" rx="25" ry="29" fill="#7a6a58" />
+      <path d="M-6 120 Q-2 82 50 78 Q102 82 106 120Z" fill="#574d44" />
+      <path d="M28 84 L72 84 L78 120 L22 120Z" fill="#8c4c37" />
+      <path d="M18 84 L40 120 M82 84 L60 120" stroke="#373737" strokeWidth="4.4" />
+      <ellipse cx="46" cy="106" rx="9" ry="5" fill="#a02922" />
+      <ellipse cx="62" cy="96" rx="5" ry="3" fill="#a02922" />
+      <path d="M40 24 Q50 6 60 24Z" fill="#95816b" />
+      <rect x="44" y="21" width="12" height="3" rx="1" fill="#685138" />
+      <ellipse cx="50" cy="50" rx="25" ry="29" fill="#95816b" />
       <ellipse cx="40" cy="46" rx="5" ry="2.2" fill="#0a0806" />
       <ellipse cx="60" cy="46" rx="5" ry="2.2" fill="#0a0806" />
-      <path d="M37 67 L63 67 M40 64 L40 70 M46 64 L46 70 M52 64 L52 70 M58 64 L58 70" stroke="#2a2018" strokeWidth="1.6" strokeLinecap="round" />
-      <circle cx="64" cy="36" r="3" fill="#b3122d" opacity=".85" />
-      <circle cx="34" cy="58" r="2" fill="#b3122d" opacity=".8" />
+      <path d="M37 67 L63 67 M40 64 L40 70 M46 64 L46 70 M52 64 L52 70 M58 64 L58 70" stroke="#473629" strokeWidth="1.6" strokeLinecap="round" />
+      <circle cx="64" cy="36" r="3" fill="#dd1637" opacity=".85" />
+      <circle cx="34" cy="58" r="2" fill="#dd1637" opacity=".8" />
+      <Specs x1={40} x2={60} y={46} r={8} c="#c98a1a" />
+      <Scarf y={76} w={24} c="#d9a42a" c2="#7a5a14" />
     </g>
   )
 }
@@ -767,67 +913,75 @@ function Diver() {
   return (
     <g>
       <ellipse cx="50" cy="60" rx="48" ry="58" fill="rgba(63,208,192,.22)" />
-      <path d="M4 120 Q6 88 50 84 Q94 88 96 120Z" fill="#3a4a50" />
-      <ellipse cx="50" cy="86" rx="31" ry="7" fill="#9a7a3a" />
+      <path d="M4 120 Q6 88 50 84 Q94 88 96 120Z" fill="#4d636b" />
+      <ellipse cx="50" cy="86" rx="31" ry="7" fill="#ba9448" />
       {[26, 38, 50, 62, 74].map((x) => (
-        <circle key={x} cx={x} cy={86 + (x === 50 ? 2 : Math.abs(x - 50) / 12)} r="1.8" fill="#5a421a" />
+        <circle key={x} cx={x} cy={86 + (x === 50 ? 2 : Math.abs(x - 50) / 12)} r="1.8" fill="#7e5c24" />
       ))}
-      <circle cx="50" cy="52" r="31" fill="#b08a3e" />
+      <circle cx="50" cy="52" r="31" fill="#c4a058" />
       <path d="M28 40 Q32 24 50 21" stroke="rgba(255,255,255,.45)" strokeWidth="3" fill="none" strokeLinecap="round" />
-      <circle cx="50" cy="52" r="15" fill="#0f2a2f" stroke="#7a5a1e" strokeWidth="4" />
-      <ellipse cx="50" cy="52" rx="9" ry="11" fill="#3fd0c0" opacity=".35" />
-      <circle cx="22" cy="54" r="5" fill="#0f2a2f" stroke="#7a5a1e" strokeWidth="2.6" />
-      <circle cx="78" cy="54" r="5" fill="#0f2a2f" stroke="#7a5a1e" strokeWidth="2.6" />
-      <rect x="44" y="17" width="12" height="9" rx="2" fill="#7a5a1e" />
+      <circle cx="50" cy="52" r="15" fill="#1a4952" stroke="#9f7527" strokeWidth="4" />
+      <ellipse cx="50" cy="52" rx="9" ry="11" fill="#64d9cc" opacity=".35" />
+      <circle cx="22" cy="54" r="5" fill="#1a4952" stroke="#9f7527" strokeWidth="2.6" />
+      <circle cx="78" cy="54" r="5" fill="#1a4952" stroke="#9f7527" strokeWidth="2.6" />
+      <rect x="44" y="17" width="12" height="9" rx="2" fill="#9f7527" />
+      <Scarf y={84} w={26} c="#d9302e" c2="#ffe2c8" />
+      <Badge x={24} y={108} c="#f4d03a" />
     </g>
   )
 }
 
-function Vecna() {
+function Wisp() {
   return (
     <g>
-      <path d="M0 40 Q20 50 14 82 M100 40 Q80 50 86 82 M8 18 Q30 40 26 62 M92 18 Q70 40 74 62 M0 90 Q18 84 22 104 M100 90 Q82 84 78 104" stroke="#2a0a12" strokeWidth="3.2" fill="none" strokeLinecap="round" />
-      <path d="M14 120 Q18 92 50 88 Q82 92 86 120Z" fill="#1a1216" />
-      <ellipse cx="50" cy="50" rx="23" ry="30" fill="#7a2323" />
-      <path d="M34 30 Q40 44 36 62 M50 24 Q54 40 50 64 M66 30 Q60 44 64 62 M28 46 Q38 50 40 58 M72 46 Q62 50 60 58" stroke="#3a0e10" strokeWidth="2" fill="none" />
+      <path d="M0 40 Q20 50 14 82 M100 40 Q80 50 86 82 M8 18 Q30 40 26 62 M92 18 Q70 40 74 62 M0 90 Q18 84 22 104 M100 90 Q82 84 78 104" stroke="#4f1322" strokeWidth="3.2" fill="none" strokeLinecap="round" />
+      <path d="M14 120 Q18 92 50 88 Q82 92 86 120Z" fill="#35252d" />
+      <ellipse cx="50" cy="50" rx="23" ry="30" fill="#9e2d2d" />
+      <path d="M34 30 Q40 44 36 62 M50 24 Q54 40 50 64 M66 30 Q60 44 64 62 M28 46 Q38 50 40 58 M72 46 Q62 50 60 58" stroke="#5f171a" strokeWidth="2" fill="none" />
       <ellipse cx="41" cy="47" rx="5.5" ry="4" fill="#0b0506" />
       <ellipse cx="59" cy="47" rx="5.5" ry="4" fill="#0b0506" />
-      <circle cx="41" cy="47" r="1.7" fill="#ff8a2a" />
-      <circle cx="59" cy="47" r="1.7" fill="#ff8a2a" />
+      <circle cx="41" cy="47" r="1.7" fill="#ffa358" />
+      <circle cx="59" cy="47" r="1.7" fill="#ffa358" />
       <path d="M46 70 Q50 74 54 70" stroke="#1a0608" strokeWidth="2" fill="none" />
+      <Beanie y={32} w={18} h={17} c="#2f7f8a" c2="#d9a42a" />
+      <Scarf y={82} w={17} c="#d9a42a" c2="#7a5a14" />
     </g>
   )
 }
 
-function NightKing() {
+function IceGolem() {
   return (
     <g>
-      <path d="M12 120 Q16 92 50 88 Q84 92 88 120Z" fill="#2a3038" />
-      <path d="M28 34 L31 10 L40 26 L46 4 L50 24 L54 4 L60 26 L69 10 L72 34Z" fill="#c8dcee" stroke="#8fa8be" strokeWidth="1.2" />
-      <ellipse cx="50" cy="54" rx="22" ry="28" fill="#aeb9c8" />
-      <path d="M34 40 Q40 52 36 64 M64 40 Q60 52 64 64" stroke="#8798ad" strokeWidth="1.6" fill="none" />
+      <path d="M12 120 Q16 92 50 88 Q84 92 88 120Z" fill="#161a1e" />
+      <path d="M28 34 L31 10 L40 26 L46 4 L50 24 L54 4 L60 26 L69 10 L72 34Z" fill="#a5c6e3" stroke="#7291ad" strokeWidth="1.2" />
+      <ellipse cx="50" cy="54" rx="22" ry="28" fill="#93a1b5" />
+      <path d="M34 40 Q40 52 36 64 M64 40 Q60 52 64 64" stroke="#6c819a" strokeWidth="1.6" fill="none" />
       <circle cx="41" cy="48" r="4.2" fill="#0d1620" />
       <circle cx="59" cy="48" r="4.2" fill="#0d1620" />
-      <circle cx="41" cy="48" r="2" fill="#4fc3ff" />
-      <circle cx="59" cy="48" r="2" fill="#4fc3ff" />
-      <path d="M42 70 Q50 74 58 70" stroke="#5a6b80" strokeWidth="2" fill="none" />
+      <circle cx="41" cy="48" r="2" fill="#21b3ff" />
+      <circle cx="59" cy="48" r="2" fill="#21b3ff" />
+      <path d="M42 70 Q50 74 58 70" stroke="#475465" strokeWidth="2" fill="none" />
+      <Specs x1={41} x2={59} y={48} r={7.5} c="#c9a227" />
+      <Scarf y={80} w={19} c="#b8323a" c2="#3a3a44" />
     </g>
   )
 }
 
-function Meeseeks() {
+function Genie() {
   return (
     <g>
-      <path d="M12 120 Q16 92 50 88 Q84 92 88 120Z" fill="#3aa6d8" />
-      <ellipse cx="50" cy="54" rx="26" ry="29" fill="#4fb8e8" />
+      <path d="M12 120 Q16 92 50 88 Q84 92 88 120Z" fill="#268ebe" />
+      <ellipse cx="50" cy="54" rx="26" ry="29" fill="#26a8e3" />
       {[38, 62].map((x) => (
         <g key={x}>
           <circle cx={x} cy="44" r="8" fill="#fff" />
           <circle cx={x} cy="45" r="3.6" fill="#15101c" />
         </g>
       ))}
-      <path d="M30 62 Q50 86 70 62 Q50 70 30 62Z" fill="#0d3a52" />
+      <path d="M30 62 Q50 86 70 62 Q50 70 30 62Z" fill="#071e2a" />
       <path d="M33 63 Q50 72 67 63" stroke="#fff" strokeWidth="2.4" fill="none" />
+      <Cap y={33} w={17} c="#e8602c" c2="#c0431a" />
+      <Scarf y={82} w={21} c="#f4d03a" c2="#c9961a" />
     </g>
   )
 }
@@ -835,66 +989,74 @@ function Meeseeks() {
 function Lich() {
   return (
     <g>
-      <path d="M10 120 Q14 90 50 86 Q86 90 90 120Z" fill="#1d2a22" />
-      <path d="M30 34 Q24 16 34 6 Q36 20 42 30Z M70 34 Q76 16 66 6 Q64 20 58 30Z" fill="#cfd8c0" stroke="#8a9a7a" strokeWidth="1" />
-      <ellipse cx="50" cy="52" rx="24" ry="29" fill="#d4dcc6" />
+      <path d="M10 120 Q14 90 50 86 Q86 90 90 120Z" fill="#0a0f0c" />
+      <path d="M30 34 Q24 16 34 6 Q36 20 42 30Z M70 34 Q76 16 66 6 Q64 20 58 30Z" fill="#b9c6a4" stroke="#738363" strokeWidth="1" />
+      <ellipse cx="50" cy="52" rx="24" ry="29" fill="#bfcbaa" />
       <ellipse cx="40" cy="46" rx="7" ry="9" fill="#0a120c" />
       <ellipse cx="60" cy="46" rx="7" ry="9" fill="#0a120c" />
-      <circle cx="40" cy="47" r="2.4" fill="#7cff5a" />
-      <circle cx="60" cy="47" r="2.4" fill="#7cff5a" />
-      <path d="M47 60 L50 67 L53 60Z" fill="#2a3a2a" />
-      <path d="M34 74 L37 82 L41 74 L45 83 L50 74 L55 83 L59 74 L63 82 L66 74 Q50 80 34 74Z" fill="#1a1a12" stroke="#cfd8c0" strokeWidth="1" />
+      <circle cx="40" cy="47" r="2.4" fill="#58ff2c" />
+      <circle cx="60" cy="47" r="2.4" fill="#58ff2c" />
+      <path d="M47 60 L50 67 L53 60Z" fill="#171f17" />
+      <path d="M34 74 L37 82 L41 74 L45 83 L50 74 L55 83 L59 74 L63 82 L66 74 Q50 80 34 74Z" fill="#090906" stroke="#b9c6a4" strokeWidth="1" />
+      <Specs x1={40} x2={60} y={46} r={10} c="#c9a227" />
+      <Scarf y={81} w={19} c="#7a4bd0" c2="#cfd8c0" />
     </g>
   )
 }
 
-function Clicker() {
+function CapInfected() {
   return (
     <g>
-      <path d="M14 120 Q18 94 50 90 Q82 94 86 120Z" fill="#3a342c" />
+      <path d="M14 120 Q18 94 50 90 Q82 94 86 120Z" fill="#544b40" />
       {[0, 60, 120, 180, 240, 300].map((a) => (
-        <ellipse key={a} cx="50" cy="50" rx="13" ry="30" fill="#8a6a50" stroke="#4a3a2a" strokeWidth="1.4" transform={`rotate(${a} 50 52) translate(0 -14)`} />
+        <ellipse key={a} cx="50" cy="50" rx="13" ry="30" fill="#a58163" stroke="#67513b" strokeWidth="1.4" transform={`rotate(${a} 50 52) translate(0 -14)`} />
       ))}
-      <ellipse cx="50" cy="54" rx="22" ry="26" fill="#4a4038" />
-      <path d="M36 42 Q50 36 64 42 M34 56 Q50 50 66 56 M38 68 Q50 64 62 68" stroke="#2a221a" strokeWidth="2" fill="none" />
-      <path d="M44 78 L48 84 L52 78 L56 84" stroke="#d8d0b8" strokeWidth="1.6" fill="none" />
+      <ellipse cx="50" cy="54" rx="22" ry="26" fill="#64574c" />
+      <path d="M36 42 Q50 36 64 42 M34 56 Q50 50 66 56 M38 68 Q50 64 62 68" stroke="#46392c" strokeWidth="2" fill="none" />
+      <path d="M44 78 L48 84 L52 78 L56 84" stroke="#e8e4d6" strokeWidth="1.6" fill="none" />
+      <Scarf y={84} w={20} c="#e8602c" c2="#ffe2c8" />
+      <Badge x={28} y={108} c="#f4d03a" />
     </g>
   )
 }
 
-function Voldemort() {
+function MaskMage() {
   return (
     <g>
-      <path d="M6 120 Q8 88 50 82 Q92 88 94 120Z" fill="#101014" />
-      <path d="M40 84 L50 106 L60 84" stroke="#2a2a32" strokeWidth="2" fill="none" />
-      <ellipse cx="50" cy="50" rx="21" ry="29" fill="#d9d9c8" />
-      <path d="M31 44 Q36 52 34 62" stroke="#a0a090" strokeWidth="1.4" fill="none" />
-      <path d="M37 47 L45 49 M63 47 L55 49" stroke="#1a1a1a" strokeWidth="2.4" strokeLinecap="round" />
-      <ellipse cx="41" cy="50" rx="3.6" ry="1.8" fill="#c01a1a" />
-      <ellipse cx="59" cy="50" rx="3.6" ry="1.8" fill="#c01a1a" />
-      <path d="M48 64 L48 68 M52 64 L52 68" stroke="#6a6a60" strokeWidth="1.8" strokeLinecap="round" />
-      <path d="M43 76 Q50 78 57 76" stroke="#7a7a6c" strokeWidth="1.6" fill="none" />
+      <path d="M6 120 Q8 88 50 82 Q92 88 94 120Z" fill="#24242e" />
+      <path d="M40 84 L50 106 L60 84" stroke="#3f3f4b" strokeWidth="2" fill="none" />
+      <ellipse cx="50" cy="50" rx="21" ry="29" fill="#ecece3" />
+      <path d="M31 44 Q36 52 34 62" stroke="#b5b5a9" strokeWidth="1.4" fill="none" />
+      <path d="M37 47 L45 49 M63 47 L55 49" stroke="#313131" strokeWidth="2.4" strokeLinecap="round" />
+      <ellipse cx="41" cy="50" rx="3.6" ry="1.8" fill="#e22626" />
+      <ellipse cx="59" cy="50" rx="3.6" ry="1.8" fill="#e22626" />
+      <path d="M48 64 L48 68 M52 64 L52 68" stroke="#828276" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M43 76 Q50 78 57 76" stroke="#919183" strokeWidth="1.6" fill="none" />
+      <Beanie y={32} w={16} h={15} c="#c8782a" c2="#e8d4a0" />
+      <Scarf y={80} w={18} c="#c8782a" c2="#e8d4a0" />
     </g>
   )
 }
 
-function Finn() {
+function Kid() {
   return (
     <g>
-      <path d="M12 120 Q16 92 50 88 Q84 92 88 120Z" fill="#3a8ae0" />
-      <path d="M62 90 L74 120 M38 90 L26 120" stroke="#3fa24a" strokeWidth="5" />
-      <ellipse cx="50" cy="58" rx="19" ry="21" fill="#f0d0b0" />
-      <circle cx="28" cy="30" r="9" fill="#f4f4f0" stroke="#d0d0c8" strokeWidth="1.4" />
-      <circle cx="72" cy="30" r="9" fill="#f4f4f0" stroke="#d0d0c8" strokeWidth="1.4" />
-      <path d="M26 56 Q22 22 50 18 Q78 22 74 56 Q64 40 50 40 Q36 40 26 56Z" fill="#f4f4f0" stroke="#d0d0c8" strokeWidth="1.4" />
+      <path d="M12 120 Q16 92 50 88 Q84 92 88 120Z" fill="#2073cc" />
+      <path d="M62 90 L74 120 M38 90 L26 120" stroke="#32813b" strokeWidth="5" />
+      <ellipse cx="50" cy="58" rx="19" ry="21" fill="#e9b989" />
+      <circle cx="28" cy="30" r="9" fill="#e1e1d6" stroke="#bbbbaf" strokeWidth="1.4" />
+      <circle cx="72" cy="30" r="9" fill="#e1e1d6" stroke="#bbbbaf" strokeWidth="1.4" />
+      <path d="M26 56 Q22 22 50 18 Q78 22 74 56 Q64 40 50 40 Q36 40 26 56Z" fill="#e1e1d6" stroke="#bbbbaf" strokeWidth="1.4" />
       <circle cx="42" cy="58" r="2.4" fill="#15101c" />
       <circle cx="58" cy="58" r="2.4" fill="#15101c" />
       <path d="M44 68 Q50 72 56 68" stroke="#15101c" strokeWidth="1.8" fill="none" strokeLinecap="round" />
+      <Specs x1={42} x2={58} y={58} r={6} c="#222" />
+      <Scarf y={78} w={16} c="#d9302e" c2="#fff" />
     </g>
   )
 }
 
-function Dogish({ fur, ear, muzzle, pug }: { fur: string; ear: string; muzzle: string; pug?: boolean }) {
+function Dogish({ fur, ear, muzzle, pug, extra }: { fur: string; ear: string; muzzle: string; pug?: boolean; extra?: ReactNode }) {
   return (
     <g>
       <path d="M12 120 Q14 96 50 92 Q86 96 88 120Z" fill={ear} />
@@ -911,199 +1073,253 @@ function Dogish({ fur, ear, muzzle, pug }: { fur: string; ear: string; muzzle: s
       ))}
       <path d="M31 72 Q50 94 69 72" stroke="#15101c" strokeWidth="2.6" fill="none" strokeLinecap="round" />
       {pug && <path d="M36 40 Q40 36 44 40 M56 40 Q60 36 64 40 M44 54 Q50 58 56 54" stroke="rgba(0,0,0,.35)" strokeWidth="1.8" fill="none" />}
+      {extra}
     </g>
   )
 }
 
-function Bmo() {
+function Console() {
   return (
     <g>
-      <rect x="18" y="14" width="64" height="92" rx="9" fill="#5fd0b0" stroke="#2f9a80" strokeWidth="2.6" />
-      <rect x="26" y="22" width="48" height="40" rx="5" fill="#b8f4de" stroke="#2f9a80" strokeWidth="2" />
+      <rect x="18" y="14" width="64" height="92" rx="9" fill="#3cc69e" stroke="#247763" strokeWidth="2.6" />
+      <rect x="26" y="22" width="48" height="40" rx="5" fill="#90eecc" stroke="#247763" strokeWidth="2" />
       <circle cx="40" cy="38" r="3.2" fill="#15221e" />
       <circle cx="60" cy="38" r="3.2" fill="#15221e" />
       <path d="M40 48 Q50 56 60 48" stroke="#15221e" strokeWidth="2.4" fill="none" strokeLinecap="round" />
-      <rect x="28" y="70" width="18" height="5" rx="2" fill="#2f9a80" />
-      <rect x="35" y="66" width="4" height="13" rx="2" fill="#2f9a80" />
-      <circle cx="62" cy="72" r="4.4" fill="#d9302e" />
-      <circle cx="72" cy="66" r="3.4" fill="#2f6fe0" />
-      <path d="M30 90 H70" stroke="#2f9a80" strokeWidth="3.4" strokeLinecap="round" />
+      <rect x="28" y="70" width="18" height="5" rx="2" fill="#247763" />
+      <rect x="35" y="66" width="4" height="13" rx="2" fill="#247763" />
+      <circle cx="62" cy="72" r="4.4" fill="#b82321" />
+      <circle cx="72" cy="66" r="3.4" fill="#1d59c4" />
+      <path d="M30 90 H70" stroke="#247763" strokeWidth="3.4" strokeLinecap="round" />
+      <Beanie y={14} w={24} h={10} c="#d9302e" c2="#f4f4f0" />
+      <Specs x1={40} x2={60} y={38} r={6.5} c="#e8602c" />
     </g>
   )
 }
 
-function Birdperson() {
+function OwlPerson() {
   return (
     <g>
-      <path d="M8 120 Q10 92 50 88 Q90 92 92 120Z" fill="#7a1a1a" />
-      <path d="M30 34 Q34 12 50 10 Q66 12 70 34 Q60 24 50 24 Q40 24 30 34Z" fill="#6b4226" />
-      <ellipse cx="50" cy="54" rx="22" ry="26" fill="#8a5a3a" />
-      <path d="M30 50 Q50 40 70 50" stroke="#5a3a22" strokeWidth="2" fill="none" />
-      <circle cx="40" cy="48" r="4.4" fill="#f4d03a" />
-      <circle cx="60" cy="48" r="4.4" fill="#f4d03a" />
+      <path d="M8 120 Q10 92 50 88 Q90 92 92 120Z" fill="#a02222" />
+      <path d="M30 34 Q34 12 50 10 Q66 12 70 34 Q60 24 50 24 Q40 24 30 34Z" fill="#8d5732" />
+      <ellipse cx="50" cy="54" rx="22" ry="26" fill="#aa6f48" />
+      <path d="M30 50 Q50 40 70 50" stroke="#7b4f2f" strokeWidth="2" fill="none" />
+      <circle cx="40" cy="48" r="4.4" fill="#f6da65" />
+      <circle cx="60" cy="48" r="4.4" fill="#f6da65" />
       <circle cx="40" cy="48" r="1.8" fill="#15101c" />
       <circle cx="60" cy="48" r="1.8" fill="#15101c" />
-      <path d="M42 62 Q50 56 58 62 Q54 82 50 86 Q46 82 42 62Z" fill="#d9a34a" />
+      <path d="M42 62 Q50 56 58 62 Q54 82 50 86 Q46 82 42 62Z" fill="#e1b670" />
+      <Specs x1={40} x2={60} y={48} r={8.3} c="#2f9e9a" />
+      <Scarf y={87} w={20} c="#e8d4a0" c2="#b8761a" />
     </g>
   )
 }
 
-function Squanchy() {
+function TabbyCat() {
   return (
     <g>
-      <path d="M10 120 Q12 92 50 88 Q88 92 90 120Z" fill="#2fa38a" />
-      <path d="M22 100 L34 112 M60 96 L74 108 M44 108 L56 116" stroke="#f4d03a" strokeWidth="3" strokeLinecap="round" />
-      <path d="M26 46 L24 14 L44 32Z M74 46 L76 14 L56 32Z" fill="#e08a3a" />
-      <ellipse cx="50" cy="56" rx="26" ry="26" fill="#e08a3a" />
+      <path d="M10 120 Q12 92 50 88 Q88 92 90 120Z" fill="#257f6c" />
+      <path d="M22 100 L34 112 M60 96 L74 108 M44 108 L56 116" stroke="#f2c60f" strokeWidth="3" strokeLinecap="round" />
+      <path d="M26 46 L24 14 L44 32Z M74 46 L76 14 L56 32Z" fill="#cc7320" />
+      <ellipse cx="50" cy="56" rx="26" ry="26" fill="#cc7320" />
       <rect x="28" y="44" width="18" height="11" rx="4" fill="#0f0f14" />
       <rect x="54" y="44" width="18" height="11" rx="4" fill="#0f0f14" />
       <path d="M46 49 H54" stroke="#0f0f14" strokeWidth="2.4" />
-      <path d="M46 64 L54 64 L50 69Z" fill="#f28fa0" />
+      <path d="M46 64 L54 64 L50 69Z" fill="#ed667d" />
       <path d="M40 72 Q50 80 60 72" stroke="#15101c" strokeWidth="2" fill="none" strokeLinecap="round" />
+      <Beanie y={37} w={17} h={14} c="#7a4bd0" c2="#f4d03a" />
+      <Scarf y={82} w={20} c="#d9302e" c2="#ffe2c8" />
     </g>
   )
 }
 
-function Poopy() {
+function Onion() {
   return (
     <g>
-      <path d="M14 120 Q16 94 50 90 Q84 94 86 120Z" fill="#8a6a3a" />
-      <ellipse cx="50" cy="58" rx="30" ry="32" fill="#efe3c0" />
+      <path d="M14 120 Q16 94 50 90 Q84 94 86 120Z" fill="#6a512c" />
+      <ellipse cx="50" cy="58" rx="30" ry="32" fill="#e6d39b" />
       {[38, 62].map((x) => (
         <g key={x}>
-          <ellipse cx={x} cy="48" rx="7" ry="8.5" fill="#fff" stroke="#b8a878" strokeWidth="1" />
+          <ellipse cx={x} cy="48" rx="7" ry="8.5" fill="#fff" stroke="#a8955a" strokeWidth="1" />
           <circle cx={x} cy="50" r="3" fill="#15101c" />
         </g>
       ))}
-      <path d="M32 68 Q50 90 68 68 Q50 76 32 68Z" fill="#7a2a2a" />
+      <path d="M32 68 Q50 90 68 68 Q50 76 32 68Z" fill="#581e1e" />
       <path d="M36 69 Q50 76 64 69" stroke="#fff" strokeWidth="3" fill="none" />
+      <Cap y={33} w={18} c="#3a6fb8" c2="#244f8a" />
+      <Specs x1={38} x2={62} y={48} r={10} c="#444" />
     </g>
   )
 }
 
-function Lsp() {
+function LumpyPrincess() {
   return (
     <g>
-      <path d="M22 70 Q10 56 24 42 Q22 24 40 24 Q50 8 62 24 Q80 22 78 42 Q92 56 78 70 Q86 92 62 92 Q50 104 38 92 Q14 92 22 70Z" fill="#b08ad9" stroke="#8a64b8" strokeWidth="2" />
-      <path d="M50 24 L53 31 L60 31 L55 36 L57 43 L50 39 L43 43 L45 36 L40 31 L47 31Z" fill="#f4d03a" />
+      <path d="M22 70 Q10 56 24 42 Q22 24 40 24 Q50 8 62 24 Q80 22 78 42 Q92 56 78 70 Q86 92 62 92 Q50 104 38 92 Q14 92 22 70Z" fill="#9967ce" stroke="#734ba3" strokeWidth="2" />
+      <path d="M50 24 L53 31 L60 31 L55 36 L57 43 L50 39 L43 43 L45 36 L40 31 L47 31Z" fill="#f2c60f" />
       <circle cx="39" cy="55" r="5" fill="#fff" />
       <circle cx="61" cy="55" r="5" fill="#fff" />
       <circle cx="40" cy="56" r="2.4" fill="#15101c" />
       <circle cx="60" cy="56" r="2.4" fill="#15101c" />
       <path d="M42 72 Q50 66 58 72" stroke="#15101c" strokeWidth="2.2" fill="none" strokeLinecap="round" />
+      <Specs x1={39} x2={61} y={55} r={7.8} c="#2f9e9a" />
+      <Scarf y={84} w={22} c="#f06aa8" c2="#ffe2f0" />
     </g>
   )
 }
 
-function CatNap() {
+function Calico() {
   return (
     <g>
-      <path d="M12 120 Q14 94 50 90 Q86 94 88 120Z" fill="#3f2a66" />
-      <path d="M22 48 L24 14 L42 32Z M78 48 L76 14 L58 32Z" fill="#5a3a8a" />
-      <circle cx="50" cy="58" r="29" fill="#5a3a8a" />
-      <ellipse cx="50" cy="70" rx="16" ry="11" fill="#7a58b0" />
+      <path d="M12 120 Q14 94 50 90 Q86 94 88 120Z" fill="#533787" />
+      <path d="M22 48 L24 14 L42 32Z M78 48 L76 14 L58 32Z" fill="#6f48aa" />
+      <circle cx="50" cy="58" r="29" fill="#6f48aa" />
+      <ellipse cx="50" cy="70" rx="16" ry="11" fill="#9377bf" />
       {[39, 61].map((x) => (
         <g key={x}>
-          <circle cx={x} cy="52" r="6.4" fill="#f4e24a" />
+          <circle cx={x} cy="52" r="6.4" fill="#f7e975" />
           <circle cx={x} cy="52" r="2.4" fill="#15101c" />
         </g>
       ))}
       <path d="M32 70 Q50 90 68 70" stroke="#15101c" strokeWidth="2.6" fill="none" strokeLinecap="round" />
       <path d="M42 77 L45 83 L48 77 M52 77 L55 83 L58 77" fill="#fff" />
+      <Specs x1={39} x2={61} y={52} r={9} c="#f08a2a" />
+      <Scarf y={85} w={19} c="#f08a2a" c2="#f4e24a" />
     </g>
   )
 }
 
 function Creature({ c }: { c: CreatureId }) {
+  return (
+    <AccCtx.Provider value={ACC_ON.has(c)}>
+      <CreatureBody c={c} />
+    </AccCtx.Provider>
+  )
+}
+
+function CreatureBody({ c }: { c: CreatureId }) {
   switch (c) {
-    case 'freddy':
-      return <Bear p={{ fur: '#7d4a24', dark: '#6b3f1f', muzzle: '#d9b183', ear: '#c9966b', eye: 'blue' }} />
-    case 'goldenFreddy':
+    case 'brumi':
+      return <Bear
+        p={{ fur: '#a15f2e', dark: '#8f5429', muzzle: '#e4c7a6', ear: '#d5ae8d', eye: 'blue' }}
+        neck={<Scarf y={83} w={21} c="#2f9e9a" c2="#e8fff4" />}
+        face={<Specs x1={38} x2={62} y={51} r={8.4} c="#2f9e9a" />}
+      />
+    case 'aranyBrumi':
       return (
         <g transform="rotate(-9 50 72)">
-          <Bear p={{ fur: '#d9a82a', dark: '#b98a1c', muzzle: '#f0d27a', ear: '#f0d27a', eye: 'hollow' }} />
+          <Bear
+            p={{ fur: '#e0b851', dark: '#dea725', muzzle: '#f5e0a3', ear: '#f5e0a3', eye: 'hollow' }}
+            neck={<Scarf y={83} w={21} c="#b8323a" c2="#f2e6c8" />}
+            face={<Specs x1={38} x2={62} y={51} r={8.4} c="#7a2a2a" />}
+          />
         </g>
       )
-    case 'chica':
-      return <Chica />
-    case 'bonnie':
-      return <Bonnie />
+    case 'csibi':
+      return <Hen />
+    case 'nyuszi':
+      return <Bunny />
     case 'marionette':
-      return <Marionette />
-    case 'foxy':
-      return <Foxy />
-    case 'huggy':
+      return <Puppet />
+    case 'roko':
+      return <Fox />
+    case 'olelo':
       return (
         <g>
-          <circle cx="16" cy="112" r="12" fill="#f4c430" />
-          <circle cx="84" cy="112" r="12" fill="#f4c430" />
-          <Mouthy skin="#2f6fe0" lips="#a1121f" />
+          <circle cx="16" cy="112" r="12" fill="#eab30c" />
+          <circle cx="84" cy="112" r="12" fill="#eab30c" />
+          <BigGrin skin="#1d59c4" lips="#780d17" />
+          <Beanie y={27} w={21} h={17} c="#e8682c" c2="#f4d03a" />
+          <Scarf y={87} w={22} c="#f4d03a" c2="#c9961a" />
         </g>
       )
-    case 'kissy':
+    case 'csokos':
       return (
         <g>
-          <circle cx="16" cy="112" r="12" fill="#f4c430" />
-          <circle cx="84" cy="112" r="12" fill="#f4c430" />
-          <Mouthy skin="#ff5fa8" lips="#d4123a" lashes />
+          <circle cx="16" cy="112" r="12" fill="#eab30c" />
+          <circle cx="84" cy="112" r="12" fill="#eab30c" />
+          <BigGrin skin="#ff318f" lips="#aa0e2e" lashes />
+          <Cap y={30} w={22} c="#2f9e9a" c2="#1f7a76" />
+          <Specs x1={36} x2={64} y={43} r={10.5} c="#7a1f5a" />
         </g>
       )
-    case 'bunzo':
-      return <Bunzo />
-    case 'mommy':
-      return <Mommy />
-    case 'dogday':
-      return <DogDay />
-    case 'mrx':
-      return <MrX />
-    case 'xeno':
-      return <Xeno />
+    case 'dobos':
+      return <DrummerBunny />
+    case 'hosszulabu':
+      return <LongLegs />
+    case 'kutyanap':
+      return <Collie />
+    case 'surur':
+      return <Brute />
+    case 'urleny':
+      return <Insectoid />
     case 'wendigo':
-      return <Wendigo />
-    case 'hunter':
-      return <Hunter />
-    case 'isaac':
-      return <Isaac />
-    case 'pyramid':
-      return <Pyramid />
+      return <BarkSpirit />
+    case 'vadasz':
+      return <TuskHunter />
+    case 'ivan':
+      return <Engineer />
+    case 'piramis':
+      return <StoneHead />
     case 'nurse':
-      return <Nurse />
+      return <LampNurse />
     case 'liar':
-      return <Liar />
-    case 'trapper':
-      return <Trapper />
+      return <RagLiar />
+    case 'csapdas':
+      return <JawTrapper />
     case 'diver':
       return <Diver />
-    case 'vecna':
-      return <Vecna />
-    case 'nightking':
-      return <NightKing />
-    case 'meeseeks':
-      return <Meeseeks />
+    case 'lidero':
+      return <Wisp />
+    case 'fagykiraly':
+      return <IceGolem />
+    case 'kerek':
+      return <Genie />
     case 'lich':
       return <Lich />
-    case 'clicker':
-      return <Clicker />
-    case 'voldemort':
-      return <Voldemort />
-    case 'finn':
-      return <Finn />
-    case 'jake':
-      return <Dogish fur="#f3c33b" ear="#d89a1a" muzzle="#f8dc7a" />
-    case 'pug':
-      return <Dogish fur="#d9b47a" ear="#3a2a20" muzzle="#3a2a20" pug />
-    case 'bmo':
-      return <Bmo />
-    case 'birdperson':
-      return <Birdperson />
-    case 'squanchy':
-      return <Squanchy />
-    case 'poopy':
-      return <Poopy />
-    case 'lsp':
-      return <Lsp />
-    case 'catnap':
-      return <CatNap />
+    case 'kattogo':
+      return <CapInfected />
+    case 'nevtelen':
+      return <MaskMage />
+    case 'fin':
+      return <Kid />
+    case 'dzsaki':
+      return <Dogish
+          fur="#f0b610"
+          ear="#af7d15"
+          muzzle="#f6d14e"
+          extra={
+            <>
+              <Beanie y={36} w={21} h={16} c="#7a4bd0" c2="#f4f4f0" />
+              <Scarf y={88} w={20} c="#2f9e9a" c2="#e8fff4" />
+            </>
+          }
+        />
+    case 'pottyos':
+      return <Dogish
+          fur="#cfa056"
+          ear="#1c1510"
+          muzzle="#1c1510"
+          pug
+          extra={
+            <>
+              <Specs x1={39} x2={61} y={50} r={8} c="#d9302e" />
+              <Kerchief y={88} w={21} c="#d9302e" />
+            </>
+          }
+        />
+    case 'bimbo':
+      return <Console />
+    case 'madarember':
+      return <OwlPerson />
+    case 'csippento':
+      return <TabbyCat />
+    case 'fenekcsomo':
+      return <Onion />
+    case 'gocsi':
+      return <LumpyPrincess />
+    case 'macskanap':
+      return <Calico />
   }
 }
 

@@ -1,0 +1,175 @@
+{
+  "v": 1,
+  "id": "event-09-entity-realm-1",
+  "mode": "event",
+  "world": "entity-realm",
+  "title": "A Hurokmester horgai",
+  "story": "A Hurokmester a saját horgain végezte. Aki generátor mellett áll, zajt csap — a gyilkos pedig sosem hibázik így.",
+  "size": 5,
+  "difficulty": 2,
+  "rooms": {
+    "E": "Erdei tisztás",
+    "K": "Kapu-terület",
+    "H": "Horgos-pince",
+    "Z": "Ház"
+  },
+  "layout": [
+    "ZZKKK",
+    "ZZZKK",
+    "EEZZZ",
+    "EEEHH",
+    "EEEHH"
+  ],
+  "objects": [
+    {
+      "type": "medkit",
+      "at": [
+        "C3",
+        "D1"
+      ]
+    },
+    {
+      "type": "pallet",
+      "at": [
+        "D5",
+        "B3"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": "B1"
+    },
+    {
+      "type": "generator",
+      "at": [
+        "B5",
+        "E3",
+        "C2",
+        "B4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "hook",
+      "at": [
+        "E2",
+        "B2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": [
+        "A5",
+        "A3"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "klaudia-morvai",
+      "name": "Claudine Moreau",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "denes-feher"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Dwayne Fairbrookkal**."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    },
+    {
+      "id": "denes-feher",
+      "name": "Dwayne Fairbrook",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszloptól balra** volt."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    },
+    {
+      "id": "kalman-szuts",
+      "name": "Quincy Smythe",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Kapu-területen volt."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    },
+    {
+      "id": "a-csapdas",
+      "name": "A Hurokmester",
+      "race": "ghoul",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Horgos-pincében **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    },
+    {
+      "id": "margo-tamas",
+      "name": "Maggie Thompson",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "pallet"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **palettán** volt."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "klaudia-morvai": "B1",
+    "denes-feher": "A2",
+    "kalman-szuts": "C3",
+    "a-csapdas": "E4",
+    "margo-tamas": "D5"
+  },
+  "murderer": "margo-tamas",
+  "rev": 1,
+  "worldRule": "generators"
+}

@@ -1,0 +1,176 @@
+{
+  "v": 1,
+  "id": "event-10-lake-town-1",
+  "mode": "event",
+  "world": "lake-town",
+  "title": "Az elme-kórház",
+  "story": "Dr. Emery Hartwell holtan fekszik. A fény és a sötétség mezői közt a Birtokoltak csak sötétben állhatnak.",
+  "size": 5,
+  "difficulty": 2,
+  "rooms": {
+    "E": "Erdei ösvény",
+    "T": "Tóparti stég",
+    "Z": "Zsolnai kunyhója",
+    "L": "Elme-kórház"
+  },
+  "layout": [
+    "EEEET",
+    "ZELTT",
+    "ZELTT",
+    "ZLLTT",
+    "ZLLTT"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "E5",
+        "D3"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "D4",
+        "A2",
+        "E4"
+      ]
+    },
+    {
+      "type": "lamp",
+      "at": [
+        "C4",
+        "B4",
+        "A3",
+        "A5",
+        "C2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "charger",
+      "at": [
+        "E3",
+        "D1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "typewriter",
+      "at": [
+        "A4",
+        "B2",
+        "B5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "coffeemaker",
+      "at": "D5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "barna-vincze",
+      "name": "Benny Wheelwright",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "dr-emil-hofer",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Dr. Emery Hartwelltől északra** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "cintia-szovo",
+      "name": "Sylvia Webber",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "attila-vago",
+      "name": "Adam Waken",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "**Nem** az Erdei ösvényen volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "dr-emil-hofer",
+      "name": "Dr. Emery Hartwell",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Tóparti stégen **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "ilona-vago",
+      "name": "Alicia Waken",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "dark"
+        }
+      ],
+      "clueText": [
+        "Sötét mezőn állt — a Sötétség megszállta."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "barna-vincze": "B1",
+    "cintia-szovo": "A2",
+    "attila-vago": "C3",
+    "dr-emil-hofer": "D4",
+    "ilona-vago": "E5"
+  },
+  "murderer": "ilona-vago",
+  "rev": 1,
+  "worldRule": "light"
+}

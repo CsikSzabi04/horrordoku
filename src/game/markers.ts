@@ -1,7 +1,9 @@
+import { charName } from '../content/localize'
 import type { CharId } from '../shared/base'
 import type { Puzzle } from '../shared/puzzle'
 
-const SKIP = new Set(['a', 'az', 'dr.', 'mr.', 'mrs.', 'sister'])
+// névelők és címek: a jelölő betű nem rájuk épül (magyar „a / az", angol „the")
+const SKIP = new Set(['a', 'az', 'the', 'dr.', 'mr.', 'mrs.', 'sister'])
 
 /**
  * A karakter jelölő betűje (kezdőbetű), pályánként egyedi: ha két névnek ugyanaz a kezdőbetűje (pl. Silas / Sam),
@@ -9,7 +11,8 @@ const SKIP = new Set(['a', 'az', 'dr.', 'mr.', 'mrs.', 'sister'])
  */
 export function markersOf(p: Pick<Puzzle, 'characters'>): Map<CharId, string> {
   const words = p.characters.map((c) => {
-    const w = c.name.split(/\s+/).find((x) => !SKIP.has(x.toLowerCase())) ?? c.name
+    const nm = charName(c.id, c.name)
+    const w = nm.split(/\s+/).find((x) => !SKIP.has(x.toLowerCase())) ?? nm
     return { id: c.id, w: w.toUpperCase().replace(/[^\p{L}0-9]/gu, '') }
   })
   const out = new Map<CharId, string>()

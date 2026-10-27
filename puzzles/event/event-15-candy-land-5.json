@@ -1,0 +1,228 @@
+{
+  "v": 1,
+  "id": "event-15-candy-land-5",
+  "mode": "event",
+  "world": "candy-land",
+  "title": "A basszusgitár",
+  "story": "Marcelina basszusgitárja a fűben hever. A kard és BÍPÓ távolsága segít kideríteni, ki járt arra.",
+  "size": 7,
+  "difficulty": 5,
+  "rooms": {
+    "F": "Fa-erőd",
+    "C": "Cukorbirodalom",
+    "J": "Jégbirodalom",
+    "L": "Lich-sírbolt",
+    "T": "Tűzbirodalom",
+    "S": "Sötét erdő"
+  },
+  "layout": [
+    "FFFFSSS",
+    "TFFFSSS",
+    "TTFJJJJ",
+    "TTTJLLJ",
+    "TTTLLLJ",
+    "CCCCCLJ",
+    "CCCCCLL"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "G5",
+        "A3",
+        "E3",
+        "G6"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "D1",
+        "E2",
+        "B6"
+      ]
+    },
+    {
+      "type": "sword",
+      "at": "D4",
+      "blocking": true
+    },
+    {
+      "type": "bmo",
+      "at": "E7",
+      "blocking": true
+    },
+    {
+      "type": "rock",
+      "at": [
+        "E1",
+        "A1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": [
+        "G3",
+        "A4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "bush",
+      "at": "F2",
+      "blocking": true
+    },
+    {
+      "type": "crate",
+      "at": "D5"
+    }
+  ],
+  "characters": [
+    {
+      "id": "fin",
+      "name": "Flynn",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "bmo",
+          "cells": 6
+        }
+      ],
+      "clueText": [
+        "A játékkonzoltól pontosan **6 mezőre** volt."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "dzsaki",
+      "name": "Jax",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "A Sötét erdőben ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "a-lich",
+      "name": "A Halhatatlan",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "fin",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Flynntől délre** volt."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "marcella",
+      "name": "Marcelina",
+      "race": "vampire",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Tűzbirodalomban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "hokiraly",
+      "name": "Hókirály",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "J"
+        }
+      ],
+      "clueText": [
+        "A Jégbirodalomban egy **padon** ült."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "gocsortos-hercegno",
+      "name": "Bütyök hercegnő",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "szaloncukor-hercegno",
+      "name": "Buborékcukor hercegnő",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "bmo",
+          "cells": 1
+        }
+      ],
+      "clueText": [
+        "A játékkonzoltól pontosan **1 mezőre** volt."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "fin": "D1",
+    "dzsaki": "E2",
+    "a-lich": "A3",
+    "marcella": "C4",
+    "hokiraly": "G5",
+    "gocsortos-hercegno": "B6",
+    "szaloncukor-hercegno": "F7"
+  },
+  "murderer": "a-lich",
+  "rev": 1,
+  "worldRule": "motion"
+}

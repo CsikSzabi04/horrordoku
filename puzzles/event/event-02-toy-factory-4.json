@@ -1,0 +1,220 @@
+{
+  "v": 1,
+  "id": "event-02-toy-factory-4",
+  "mode": "event",
+  "world": "toy-factory",
+  "title": "Nappali álom",
+  "story": "CicaSzundi elaludt, de nem ébredt fel többé. A gáz szaga még a szellőzőben lebeg, a játékok pedig hallgatnak.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "E": "Előcsarnok",
+    "G": "Gyártósor",
+    "J": "Játékbolt",
+    "T": "Játszószoba",
+    "R": "Raktár",
+    "S": "Szellőzőrendszer"
+  },
+  "layout": [
+    "EEEEEEE",
+    "ESSEERR",
+    "JJSEERR",
+    "JSSSTTR",
+    "JSSSTTR",
+    "JJJSSTT",
+    "GJJJTTT"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "G6",
+        "D1",
+        "C1"
+      ]
+    },
+    {
+      "type": "toybox",
+      "at": [
+        "A7",
+        "E2",
+        "E5"
+      ]
+    },
+    {
+      "type": "panel",
+      "at": [
+        "D3",
+        "A2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "speaker",
+      "at": [
+        "E1",
+        "A1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "conveyor",
+      "at": [
+        "B2",
+        "C4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "blocks",
+      "at": "A4",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "hosszulabu-anyu",
+      "name": "Nyújtólábú Anyu",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "a-latogato"
+        }
+      ],
+      "clueText": [
+        "**A Látogatóval** egy helyiségben volt."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "a-latogato",
+      "name": "A Látogató",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "pottyos-hernyo",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **DJ Kutyaszázlábútól északra** volt."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "dobos-nyuszi",
+      "name": "Bongó Nyuszi",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "A Raktárban volt."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "macskanap",
+      "name": "CicaSzundi",
+      "race": "ghoul",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Szellőzőrendszerben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "pottyos-hernyo",
+      "name": "DJ Kutyaszázlábú",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "gt",
+          "n": 4
+        }
+      ],
+      "clueText": [
+        "A **4. sor alatt** volt."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "csokos-mici",
+      "name": "Puszis Mici",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "babika-rozsi",
+      "name": "Daisy",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "f",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "A Gyártósoron ő volt az **egyetlen nő**."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "hosszulabu-anyu": "B1",
+    "a-latogato": "E2",
+    "dobos-nyuszi": "F3",
+    "macskanap": "D4",
+    "pottyos-hernyo": "C5",
+    "csokos-mici": "G6",
+    "babika-rozsi": "A7"
+  },
+  "murderer": "pottyos-hernyo",
+  "rev": 1,
+  "worldRule": "grab"
+}

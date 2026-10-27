@@ -1,0 +1,233 @@
+{
+  "v": 1,
+  "id": "event-10-lake-town-2",
+  "mode": "event",
+  "world": "lake-town",
+  "title": "A tó partján",
+  "story": "Woden Anders a Fazék-tó partján maradt. A fény és a sötétség mezői közt a Birtokoltak csak sötétben állhatnak.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "F": "Fűrésztelep",
+    "V": "Vendégház",
+    "E": "Erdei ösvény",
+    "T": "Tóparti stég",
+    "Z": "Zsolnai kunyhója",
+    "L": "Elme-kórház"
+  },
+  "layout": [
+    "LLLLLLL",
+    "ZLZLLLL",
+    "ZZZFFFF",
+    "ZZZFFFT",
+    "ZVVVTTT",
+    "ZVVEEET",
+    "VVEEEET"
+  ],
+  "objects": [
+    {
+      "type": "crate",
+      "at": [
+        "E3",
+        "A2"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "D6",
+        "C4",
+        "F5",
+        "B1",
+        "B5"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "B7",
+        "A7"
+      ]
+    },
+    {
+      "type": "lamp",
+      "at": [
+        "G3",
+        "E1",
+        "B3",
+        "F2",
+        "C3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "charger",
+      "at": [
+        "A3",
+        "F3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "coffeemaker",
+      "at": [
+        "G5",
+        "A5",
+        "G4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "typewriter",
+      "at": [
+        "D3",
+        "E7"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "barna-vincze",
+      "name": "Benny Wheelwright",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "dark"
+        }
+      ],
+      "clueText": [
+        "Sötét mezőn állt — a Sötétség megszállta."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "odon-andrasfi",
+      "name": "Woden Anders",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "Z"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Zsolnai kunyhójában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "patrik-meszar",
+      "name": "Pete Mayne",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "**Nem** az Erdei ösvényen volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "sara-toro",
+      "name": "Sara Breakwell",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "dr-emil-hofer",
+      "name": "Dr. Emery Hartwell",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A Tóparti stégen ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "ilona-vago",
+      "name": "Alicia Waken",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "attila-vago",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Adam Wakentől északra** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "attila-vago",
+      "name": "Adam Waken",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "A Vendégházban egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "barna-vincze": "G1",
+    "odon-andrasfi": "A2",
+    "patrik-meszar": "E3",
+    "sara-toro": "C4",
+    "dr-emil-hofer": "F5",
+    "ilona-vago": "D6",
+    "attila-vago": "B7"
+  },
+  "murderer": "sara-toro",
+  "rev": 1,
+  "worldRule": "light"
+}

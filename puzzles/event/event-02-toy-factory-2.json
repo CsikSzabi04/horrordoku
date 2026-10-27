@@ -1,0 +1,192 @@
+{
+  "v": 1,
+  "id": "event-02-toy-factory-2",
+  "mode": "event",
+  "world": "toy-factory",
+  "title": "Üres dobszó",
+  "story": "Bongó Nyuszi dobja elnémult, ő maga pedig a játékgyár folyosóján fekszik. A szalagok még mindig mennek, mintha mi sem történt volna.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "E": "Előcsarnok",
+    "G": "Gyártósor",
+    "J": "Játékbolt",
+    "T": "Játszószoba",
+    "R": "Raktár",
+    "S": "Szellőzőrendszer"
+  },
+  "layout": [
+    "TTGGSS",
+    "JJGGSS",
+    "JRGGSS",
+    "JRRRSS",
+    "RREEES",
+    "REEEEE"
+  ],
+  "objects": [
+    {
+      "type": "toybox",
+      "at": [
+        "D3",
+        "B1",
+        "A4"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "E1",
+        "C2",
+        "A6",
+        "F5"
+      ]
+    },
+    {
+      "type": "panel",
+      "at": [
+        "C6",
+        "B2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "conveyor",
+      "at": [
+        "B3",
+        "F3",
+        "C4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "speaker",
+      "at": "A2",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "csokos-mici",
+      "name": "Puszis Mici",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "dobos-nyuszi",
+          "dir": "N"
+        }
+      ],
+      "clueText": [
+        "**Bongó Nyuszitól északra** volt."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "dobos-nyuszi",
+      "name": "Bongó Nyuszi",
+      "race": "ghoul",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Gyártósoron **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "hosszulabu-anyu",
+      "name": "Nyújtólábú Anyu",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "toybox"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **játékdobozon** volt."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "pottyos-hernyo",
+      "name": "DJ Kutyaszázlábú",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "conveyor"
+        }
+      ],
+      "clueText": [
+        "Egy **futószalag mellett** volt."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "babika-rozsi",
+      "name": "Daisy",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "A Szellőzőrendszerben egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "a-latogato",
+      "name": "A Látogató",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A helyiségében **ketten** voltak."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "csokos-mici": "E1",
+    "dobos-nyuszi": "C2",
+    "hosszulabu-anyu": "D3",
+    "pottyos-hernyo": "B4",
+    "babika-rozsi": "F5",
+    "a-latogato": "A6"
+  },
+  "murderer": "hosszulabu-anyu",
+  "rev": 1,
+  "worldRule": "grab"
+}

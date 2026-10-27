@@ -1,0 +1,194 @@
+{
+  "v": 1,
+  "id": "event-06-deep-ship-2",
+  "mode": "event",
+  "world": "deep-ship",
+  "title": "A néma folyosó",
+  "story": "Tristan Kline holtan maradt, a lámpák pedig még mindig villognak. A nyomásmentes szekciók ajtaja nyitva áll.",
+  "size": 6,
+  "difficulty": 3,
+  "rooms": {
+    "H": "Híd",
+    "O": "Orvosi szárny",
+    "G": "Gyárterem",
+    "I": "Hidroponika",
+    "K": "Külső szekció"
+  },
+  "layout": [
+    "GGKKKK",
+    "GKKIII",
+    "GGGIII",
+    "GGHHIO",
+    "HHHHOO",
+    "HHOOOO"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "D6",
+        "F4"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "A1",
+        "B5"
+      ]
+    },
+    {
+      "type": "stasis",
+      "at": [
+        "C2",
+        "F5"
+      ]
+    },
+    {
+      "type": "lockdoor",
+      "at": [
+        "B6",
+        "A3",
+        "E2",
+        "D2"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "ivan-kovacs",
+      "name": "Isaiah Clarkson",
+      "race": "human",
+      "gender": "m",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "ne",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "**Nem** a **2. oszlopban** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "a-vadasz",
+      "name": "Az Üldöző",
+      "race": "ghoul",
+      "gender": "m",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "on",
+          "object": "stasis"
+        }
+      ],
+      "clueText": [
+        "Egy **sztázis-állomáson** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "tibor-kun",
+      "name": "Tristan Kline",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "armored": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Hidroponikában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "nikolett-beran",
+      "name": "Nicolette Brenner",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "zoltan-hamar",
+      "name": "Zane Hammerton",
+      "race": "human",
+      "gender": "m",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "kinga-dezso",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Kara Danielsontól északra** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "kinga-dezso",
+      "name": "Kara Danielson",
+      "race": "human",
+      "gender": "f",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "O"
+        }
+      ],
+      "clueText": [
+        "Az Orvosi szárnyban egy **padon** ült."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "ivan-kovacs": "A1",
+    "a-vadasz": "C2",
+    "tibor-kun": "F3",
+    "nikolett-beran": "E4",
+    "zoltan-hamar": "B5",
+    "kinga-dezso": "D6"
+  },
+  "murderer": "nikolett-beran",
+  "rev": 1,
+  "worldRule": "vacuum",
+  "vacuumRooms": [
+    "K",
+    "G"
+  ]
+}

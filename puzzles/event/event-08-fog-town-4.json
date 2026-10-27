@@ -1,0 +1,242 @@
+{
+  "v": 1,
+  "id": "event-08-fog-town-4",
+  "mode": "event",
+  "world": "fog-town",
+  "title": "Az éjszakai műszak",
+  "story": "A Hólyagfejű Ápolónő a folyosón állt, amikor a lámpák kialudtak. A köd mindent eltakar, a rádió pedig eltorzítja a nyomokat.",
+  "size": 8,
+  "difficulty": 5,
+  "rooms": {
+    "K": "Kórterem",
+    "L": "Lépcsőház",
+    "A": "Apartman",
+    "B": "Bowlingpálya",
+    "T": "Tóparti szálló",
+    "M": "Másik világ"
+  },
+  "layout": [
+    "MMKKKBBB",
+    "MMKKKBBB",
+    "MMKKBBBT",
+    "MMMKKBTT",
+    "MMMKKBTT",
+    "MAAAATTT",
+    "LLAAAATT",
+    "LLLAAATT"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "B6",
+        "F1",
+        "E6",
+        "E4"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "C7",
+        "D4",
+        "F2"
+      ]
+    },
+    {
+      "type": "radio",
+      "at": [
+        "H6",
+        "A5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "window",
+      "at": [
+        "C2",
+        "D8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "doll",
+      "at": "C6",
+      "blocking": true
+    },
+    {
+      "type": "hospbed",
+      "at": [
+        "A2",
+        "F3",
+        "D2"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "ede-dombi",
+      "name": "Edwin Dombro",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "sandor-szeles",
+      "name": "Jamie Sunderwood",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "Egy **pad mellett** volt."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "a-piramisfeju",
+      "name": "Az Obeliszkfejű Hóhér",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszloptól balra** volt."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "marianna",
+      "name": "Marina",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "a-lampasfeju-apolono",
+      "name": "A Hólyagfejű Ápolónő",
+      "race": "ghoul",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Kórteremben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "mara",
+      "name": "Marie",
+      "race": "ghost",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "A"
+        }
+      ],
+      "clueText": [
+        "Az Apartmanban egy **███** volt."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "lujza",
+      "name": "Laurel",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "mara"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Mariével**."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "anna-oroszi",
+      "name": "Angelica Orsino",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "mara",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Mariétől délre** volt."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "ede-dombi": "F1",
+    "sandor-szeles": "G2",
+    "a-piramisfeju": "A3",
+    "marianna": "D4",
+    "a-lampasfeju-apolono": "E5",
+    "mara": "B6",
+    "lujza": "C7",
+    "anna-oroszi": "H8"
+  },
+  "murderer": "marianna",
+  "rev": 1,
+  "worldRule": "radio"
+}

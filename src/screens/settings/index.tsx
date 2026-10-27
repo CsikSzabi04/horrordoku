@@ -5,6 +5,8 @@ import type { ChangeEvent } from 'react'
 import { useNav } from '../../app/nav'
 import { useCloudUser } from '../../cloud/hooks'
 import { t } from '../../i18n'
+import { pick } from '../../i18n/lang'
+import { LangSwitch } from '../../components/LangSwitch'
 import type { I18nKey } from '../../i18n'
 import type { JumpscareMode, Settings, StorageExport } from '../../shared/storage'
 import { getStorage } from '../../storage'
@@ -60,7 +62,7 @@ export default function SettingsScreen() {
       const url = URL.createObjectURL(new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' }))
       const a = document.createElement('a')
       a.href = url
-      a.download = `nightdoku-mentes-${new Date().toISOString().slice(0, 10)}.json`
+      a.download = `nightdoku-${pick('mentes', 'save')}-${new Date().toISOString().slice(0, 10)}.json`
       a.click()
       URL.revokeObjectURL(url)
     })
@@ -131,15 +133,7 @@ export default function SettingsScreen() {
                   <Check label={t('settings.calm')} checked={s.photosensitive} onChange={(v) => patch({ photosensitive: v })} />
                   <Check label={t('settings.shake')} checked={s.screenShake} onChange={(v) => patch({ screenShake: v })} />
                   <Check label={t('settings.streamer')} checked={s.streamerMode} onChange={(v) => patch({ streamerMode: v })} />
-                  <label className="nd-field">
-                    {t('settings.language')}
-                    <select value={s.language} onChange={(e) => patch({ language: e.target.value as Settings['language'] })}>
-                      <option value="hu">Magyar</option>
-                      <option value="en" disabled>
-                        {t('settings.lang.en')}
-                      </option>
-                    </select>
-                  </label>
+                  <LangSwitch />
                 </div>
               </section>
               {user && (

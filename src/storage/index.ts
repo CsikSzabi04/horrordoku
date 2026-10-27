@@ -26,7 +26,42 @@ const MAX_RUNS = 20
 const MAX_QUEUE = 500
 const EVENTS: Record<string, StorageEvent['type']> = {
   settings: 'settings', progress: 'progress', sessions: 'sessions', unlocks: 'unlocks',
-  profile: 'profile', 'sync-queue': 'queue', 'cache-puzzles': 'cache',
+  profile: 'profile', 'sync-queue': 'queue', 'cache-puzzles': 'cache', language: 'settings',
+}
+
+const MAX_IMPORT_ENTRY = 2_000_000 // karakter
+const isObj = (x: unknown): x is Record<string, unknown> => typeof x === 'object' && x !== null && !Array.isArray(x)
+/** Egy importált bejegyzés érvényes-e: ismert kulcs-név és hatókör, érvényes JSON, a várt (legalább felszíni) alak. */
+export function validImportEntry(k: string, v: unknown): boolean {
+  if (typeof v !== 'string' || v.length > MAX_IMPORT_ENTRY || !k.startsWith(P)) return false
+  const rest = k.slice(P.length)
+  const name = rest === 'settings' ? 'settings' : /^(guest|u_[0-9a-f]{8}):([a-z-]+)$/.exec(rest)?.[2]
+  if (!name || !(name in EVENTS)) return false
+  let x: unknown
+  try {
+    x = JSON.parse(v)
+  } catch {
+    return false
+  }
+  switch (name) {
+    case 'language':
+      return x === 'hu' || x === 'en'
+    case 'settings':
+      return isObj(x)
+    case 'progress':
+      return isObj(x) && isObj(x.puzzles) && Array.isArray(x.recentRuns)
+    case 'sessions':
+      return isObj(x) && isObj(x.sessions)
+    case 'unlocks':
+      return isObj(x) && Array.isArray(x.items)
+    case 'profile':
+      return isObj(x) && typeof x.username === 'string'
+    case 'sync-queue':
+    case 'cache-puzzles':
+      return Array.isArray(x) || isObj(x)
+    default:
+      return false
+  }
 }
 
 export interface StorageOptions {
@@ -75,10 +110,13 @@ export function createStorage(kv: KV, o: StorageOptions = {}): StorageService {
   }
 
   const defSettings = (): Settings => ({
-    v: 1, language: 'hu', theme: 'dark', audio: { music: 0.6, sfx: 0.8, volumeCap: 0.8 }, jumpscare: 'off',
+    v: 1, language: 'en', theme: 'dark', audio: { music: 0.6, sfx: 0.8, volumeCap: 0.8 }, jumpscare: 'off',
     photosensitive: false, screenShake: true, streamerMode: false, invisible: false, updatedAt: now(),
   })
-  const getSettings_ = () => ({ ...defSettings(), ...read<Partial<Settings>>(key('settings'), () => ({})) }) as Settings
+  // A nyelv a PROFILÉ (vendég / fiók), nem az eszközé: minden fióknak és a vendégnek külön, alapból angol. Az eszköz többi beállítása (hang, jumpscare…) közös marad.
+  const langKey = () => `${P}${scope}:language`
+  const getLang_ = (): 'hu' | 'en' => (read<string | null>(langKey(), () => null) === 'hu' ? 'hu' : 'en')
+  const getSettings_ = () => ({ ...defSettings(), ...read<Partial<Settings>>(key('settings'), () => ({})), language: getLang_() }) as Settings
   const getProgress_ = () => read<ProgressFile>(key('progress'), () => ({ v: 1, updatedAt: now(), puzzles: {}, recentRuns: [] }))
   const getSessions_ = () => read<SessionsFile>(key('sessions'), () => ({ v: 1, sessions: {} }))
   const getUnlocks_ = () => read<UnlocksFile>(key('unlocks'), () => ({ v: 1, items: [] }))
@@ -115,8 +153,15 @@ export function createStorage(kv: KV, o: StorageOptions = {}): StorageService {
 
   return {
     async setScope(s) {
+      const prev = scope
       scope = s
+      // Új fióknak (még nincs saját nyelve) a vendég nyelve a kiindulás — a felhős érték, ha van, felülírja (cloud/sync.ts). Kilépéskor a vendég saját nyelve tér vissza.
+      if (prev === 'guest' && s !== 'guest' && kv.get(langKey()) == null) {
+        const g = kv.get(`${P}guest:language`)
+        if (g != null) kv.set(langKey(), g)
+      }
       emit({ type: 'scope', scope: s })
+      emit({ type: 'settings' }) // a nyelv (és a beállítások) a profillal együtt váltanak
     },
     scope: () => scope,
 
@@ -125,6 +170,7 @@ export function createStorage(kv: KV, o: StorageOptions = {}): StorageService {
     },
     async patchSettings(p) {
       const s: Settings = { ...getSettings_(), ...p, updatedAt: now() }
+      if (p.language) write(langKey(), p.language)
       write(key('settings'), s)
       if ('photosensitive' in p) applyCalm(s.photosensitive)
       enqueue('user_settings', 'self', 'upsert', s)
@@ -247,6 +293,7 @@ export function createStorage(kv: KV, o: StorageOptions = {}): StorageService {
       }
       if (patch.settings) {
         write(key('settings'), patch.settings)
+        write(langKey(), patch.settings.language)
         applyCalm(patch.settings.photosensitive)
         emit({ type: 'settings' })
       }
@@ -258,8 +305,15 @@ export function createStorage(kv: KV, o: StorageOptions = {}): StorageService {
       return { v: 1, exportedAt: now(), entries }
     },
     async importData(d) {
-      if (!d || d.v !== 1 || typeof d.entries !== 'object') throw new Error('invalid export')
-      for (const [k, v] of Object.entries(d.entries)) if (k.startsWith(P) && typeof v === 'string') kv.set(k, v)
+      if (!d || d.v !== 1 || typeof d.entries !== 'object' || d.entries === null) throw new Error('invalid export')
+      // idegen (akár rosszindulatú) fájl: csak ismert kulcs, érvényes JSON és a várt alakú adat kerülhet be — különben az app minden indításkor elszállna
+      let imported = 0
+      for (const [k, v] of Object.entries(d.entries)) {
+        if (!validImportEntry(k, v)) continue
+        kv.set(k, v)
+        imported++
+      }
+      if (imported === 0) throw new Error('nothing to import')
       Object.values(EVENTS).forEach((type) => emit({ type } as StorageEvent))
       applyCalm(getSettings_().photosensitive)
     },

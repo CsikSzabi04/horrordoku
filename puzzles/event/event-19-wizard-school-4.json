@@ -1,0 +1,259 @@
+{
+  "v": 1,
+  "id": "event-19-wizard-school-4",
+  "mode": "event",
+  "world": "wizard-school",
+  "title": "Nyitott ajtó",
+  "story": "Haldric az ajtó előtt feküdt, a kulcsai mellette. A Kalandozók Térképe csak egy helyiséget mutat élesen.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "N": "Nagyterem",
+    "O": "Oroszlán-torony",
+    "F": "Főzőterem",
+    "T": "Tiltott Erdő",
+    "A": "Akadémia kapuja",
+    "G": "Gyuri kunyhója",
+    "R": "Repülő-pálya"
+  },
+  "layout": [
+    "RRRRRRRRR",
+    "RRRRFFFFF",
+    "FFFFFFGGT",
+    "AFNFFFGGG",
+    "ANNNNNNNN",
+    "AANNNNNON",
+    "AAOOOOOON",
+    "AAAAAOOOO",
+    "AAAAAOOOO"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "A7",
+        "B1"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "E9",
+        "H5",
+        "G1",
+        "B6",
+        "I5"
+      ]
+    },
+    {
+      "type": "broom",
+      "at": [
+        "F4",
+        "I3",
+        "C9",
+        "F6"
+      ]
+    },
+    {
+      "type": "armor",
+      "at": [
+        "E1",
+        "E5",
+        "I7",
+        "C3",
+        "E4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "painting",
+      "at": "A5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "gyuri-bozontos",
+      "name": "Haldric",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Repülő-pályán **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "hugo-pakozdi",
+      "name": "Henry Villámseb",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 5
+        }
+      ],
+      "clueText": [
+        "Az **5. oszloptól balra** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "dorian-galambos",
+      "name": "Drake Malgrave",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A Tiltott Erdőben ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "perec-pitvar",
+      "name": "Severin Vipera",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "broom"
+        }
+      ],
+      "clueText": [
+        "Egy **seprűn** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "albert-dombo",
+      "name": "Albin Bumblewick",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "A Nagyteremben egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "lujza-szerelmes",
+      "name": "Selene Jószív",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "minerva-kopjas"
+        }
+      ],
+      "clueText": [
+        "**Mina McRavennel** egy helyiségben volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "hermina-gazdag",
+      "name": "Hermina Greenwood",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **padon** ült."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "minerva-kopjas",
+      "name": "Mina McRaven",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "broom"
+        }
+      ],
+      "clueText": [
+        "Egy **seprű mellett** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "remi-vasvari",
+      "name": "Rory Weswick",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "lujza-szerelmes",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Selene Jószívtól délre** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "gyuri-bozontos": "G1",
+    "hugo-pakozdi": "D2",
+    "dorian-galambos": "I3",
+    "perec-pitvar": "F4",
+    "albert-dombo": "H5",
+    "lujza-szerelmes": "B6",
+    "hermina-gazdag": "A7",
+    "minerva-kopjas": "C8",
+    "remi-vasvari": "E9"
+  },
+  "murderer": "hugo-pakozdi",
+  "rev": 1,
+  "worldRule": "cameras"
+}

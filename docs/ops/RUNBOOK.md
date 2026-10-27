@@ -5,7 +5,7 @@ Az AI-k **nem írnak** felhős szolgáltatásba (összekötő/MCP a felhasznál�
 
 ## 1. Migráció futtatása
 
-0. Eddigi migrációk sorrendje: `0001_init` → `0002_social` → `0003_invites` → `0004_extras` → `0005_rooms` → `0006_friend_code` (→ később `0007_killer`). Mindig a hiányzókat futtasd, sorban.
+0. Eddigi migrációk sorrendje: `0001_init` → `0002_social` → `0003_invites` → `0004_extras` → `0005_rooms` → `0006_friend_code` → `0007_killer`. Mindig a hiányzókat futtasd, sorban.
 1. Új fájl: `supabase/migrations/NNNN_<név>.sql` (sorszám folytatólagos; a már lefuttatott fájlt **soha** ne szerkeszd — új migráció kell).
 2. Minden új táblán `enable row level security` + szabályok; a séma-változás mellé teszt kerül a `supabase/tests`-be.
 3. Teszt (helyben, PGlite): `cd supabase/tests && npm install && npm test` — hibátlan, különben nem pusholunk.

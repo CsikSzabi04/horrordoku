@@ -1,0 +1,159 @@
+{
+  "v": 1,
+  "id": "event-07-summit-shelter-1",
+  "mode": "event",
+  "world": "summit-shelter",
+  "title": "Elemhiány",
+  "story": "Sötét van, az elem fogy. Kris Strider a menedékházban végezte — de csak a kurzorod körül látsz.",
+  "size": 5,
+  "difficulty": 2,
+  "rooms": {
+    "K": "Kápolna",
+    "C": "Csatorna",
+    "R": "Őrszoba",
+    "V": "Villamos-terem"
+  },
+  "layout": [
+    "CCKKV",
+    "CCKKV",
+    "CCRVV",
+    "CRRVV",
+    "RRRRR"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": "C4"
+    },
+    {
+      "type": "batterybox",
+      "at": "E1"
+    },
+    {
+      "type": "wheelchair",
+      "at": [
+        "D3",
+        "D5",
+        "D1"
+      ]
+    },
+    {
+      "type": "locker",
+      "at": [
+        "E4",
+        "C3",
+        "D4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "hospbed",
+      "at": "B5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "rudolf-tarnai",
+      "name": "Richmond Traeger",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "batterybox"
+        }
+      ],
+      "clueText": [
+        "Egy **elemdobozon** volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "dr-vargha",
+      "name": "Dr. Werling",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "milan-ungvari",
+      "name": "Milo Upcroft",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "aloneWith",
+          "with": "rudolf-tarnai"
+        }
+      ],
+      "clueText": [
+        "**Egyedül** volt **Richmond Traegerrel**."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "vajk-pal",
+      "name": "Wade Parks",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "furniture"
+        }
+      ],
+      "clueText": [
+        "Egy **szekrény mellett** volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "kristof-vadas",
+      "name": "Kris Strider",
+      "race": "ghoul",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Az Őrszobában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "rudolf-tarnai": "E1",
+    "dr-vargha": "B2",
+    "milan-ungvari": "D3",
+    "vajk-pal": "C4",
+    "kristof-vadas": "A5"
+  },
+  "murderer": "vajk-pal",
+  "rev": 1,
+  "worldRule": "nightvision"
+}

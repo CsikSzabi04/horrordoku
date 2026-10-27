@@ -14,7 +14,7 @@ const STEPS: Record<Lang, { t: string; b: string }[]> = {
     { t: 'Beküldés és tipp', b: 'Ha mindenki a helyén áll, a Beküldés ellenőriz. A Tipp háromszintű: először a nyomra, aztán a helyiségre mutat, végül a helyére is teszi a szereplőt.' },
   ],
   en: [
-    { t: 'The goal', b: 'A murder has happened. Put everyone in their place on the map — the clue cards tell where they were. The suspect alone with the victim is the murderer.' },
+    { t: 'The goal', b: 'A murder has happened. Put everyone in their place on the map — the clue cards tell where they were. The suspect alone with the victim is the killer.' },
     { t: 'Rows and columns', b: 'Every row and every column holds exactly one person (the victim too). Placing someone puts a faint ✕ on the rest of their row and column.' },
     { t: 'Select and letter', b: 'Click a portrait, then a cell: the character\'s initial goes into the cell — that is your note ("could be here"). Tap again to remove it. A cell can hold several letters.' },
     { t: 'Clues and objects', b: 'Beside means the four neighbouring cells (not diagonal) inside the same room. Object names are in the legend under the map; objects mentioned in the selected card get a dashed frame. Nobody can stand on a blocked (darker) cell. Compass: north = up, south = down, east = right, west = left. "Diagonal neighbour" means one of the four corner neighbours inside the same room. "Water", "swamp", "grass"… are the room floor patterns (shown in the legend); "animal", "plant" etc. mean any of the objects listed in the legend.' },

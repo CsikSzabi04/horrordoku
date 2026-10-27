@@ -1,0 +1,203 @@
+{
+  "v": 1,
+  "id": "event-17-walled-town-2",
+  "mode": "event",
+  "world": "walled-town",
+  "title": "Lucille",
+  "story": "Neylan baseballütője a földön hever, a szöges drót véres. A generátorok zaja odacsalja a sétálókat — a gyilkos nem állhat mellettük.",
+  "size": 6,
+  "difficulty": 3,
+  "rooms": {
+    "F": "Fogda-blokk",
+    "A": "Farm",
+    "E": "Fegyvertár",
+    "T": "Templom",
+    "R": "Erdei út"
+  },
+  "layout": [
+    "TTTAFF",
+    "EETAFF",
+    "EEEAFF",
+    "RRRAAF",
+    "RRRAAF",
+    "RRRAAA"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "D4",
+        "B6",
+        "A2"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "C5",
+        "F3"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "E6",
+        "B2"
+      ]
+    },
+    {
+      "type": "generator",
+      "at": [
+        "F4",
+        "F2",
+        "B1",
+        "D1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "barrel",
+      "at": "F1",
+      "blocking": true
+    },
+    {
+      "type": "tent",
+      "at": "F5",
+      "blocking": true
+    },
+    {
+      "type": "car",
+      "at": "E4",
+      "blocking": true
+    },
+    {
+      "type": "campfire",
+      "at": "D6",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "a-fonok",
+      "name": "A Helytartó",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notBesideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **pad mellett**."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "rudi-gorbe",
+      "name": "Rich Granger",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate"
+        }
+      ],
+      "clueText": [
+        "Egy **ládán** volt."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "kamilla-pelle",
+      "name": "Carla Pellet",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "nemes-noel",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Neylantól keletre** volt."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "mihaela-szep",
+      "name": "Mishana",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "denes-deak",
+      "name": "Darren Dixley",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "nemes-noel",
+      "name": "Neylan",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "A"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Farmon **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "a-fonok": "A1",
+    "rudi-gorbe": "B2",
+    "kamilla-pelle": "F3",
+    "mihaela-szep": "D4",
+    "denes-deak": "C5",
+    "nemes-noel": "E6"
+  },
+  "murderer": "mihaela-szep",
+  "rev": 1,
+  "worldRule": "generators"
+}

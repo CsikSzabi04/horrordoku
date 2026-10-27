@@ -1,5 +1,6 @@
 import { Fragment, useEffect, useMemo, useRef, useState } from 'react'
 import type { CSSProperties, KeyboardEvent, PointerEvent } from 'react'
+import { charName, objName, roomName } from '../../content/localize'
 import { boardEngine, OBJECTS, violations } from '../../engine'
 import { buildGrid, cellId } from '../../engine/grid'
 import { ROOM_STYLE } from '../../engine/vocab'
@@ -20,15 +21,21 @@ interface Props {
   view: BoardView
   selected: CharId | null
   markers: Map<CharId, string>
+  /** Karakter → saját szín: a kezdőbetűje (jegyzet, lerakott karakter, előnézet) ezzel jelenik meg. */
+  colors?: Map<CharId, string>
   /** Arcképek (Klasszikus) vagy emoji-jelek (horror-módok). */
   person: boolean
   /** Padló-stílusok (Klasszikus) vagy sötét tónusok (horror-módok). */
   floors: boolean
   tool: Tool
   highlightRoom?: string | null
+  /** Karakter → a legutóbbi lerakó színe (Gyilkos-mód „Névvel mutatott lerakások”): kis pont a lerakott karakteren. */
+  placers?: Record<string, string>
   shake?: CellId | null
   /** Éjjellátó (Outlast): csak a kurzor körüli mezők látszanak. */
   fog?: boolean
+  /** Az éjjellátó köd feloldva (beküldés után és a játék végén: lássa a játékos, ki áll rossz helyen / hol a megoldás). */
+  revealed?: boolean
   disabled?: boolean
   /** Beküldés után: melyik szereplő áll jó (zöld karika) / rossz (piros karika) helyen. */
   verdict?: Record<CharId, 'ok' | 'bad'> | null
@@ -50,7 +57,10 @@ const nameSize = (name: string): CSSProperties => ({ ['--nf' as string]: Math.mi
 const FALLBACK_STYLES = ['wood', 'checker', 'brick', 'grass', 'tile', 'carpet', 'sand', 'stone']
 const DARK_TINTS = ['#2a1520', '#16202a', '#1d2a1a', '#2a2415', '#241a2e', '#14282a', '#2d1c1c', '#1b1b2d', '#2a2a2a', '#1a2e24']
 
-export function Board({ puzzle, view, selected, markers, person, floors, tool, highlightRoom, shake, fog, disabled, verdict, focusTypes, focusFloors, focusChars, focusLines, onTap, onHold }: Props) {
+/** A betű saját színe (CSS-változó: a körvonal és az animáció marad). */
+const tint = (c?: string): CSSProperties | undefined => (c ? ({ ['--lc' as string]: c } as CSSProperties) : undefined)
+
+export function Board({ puzzle, view, selected, markers, colors, person, floors, tool, highlightRoom, placers, shake, fog, revealed, disabled, verdict, focusTypes, focusFloors, focusChars, focusLines, onTap, onHold }: Props) {
   const n = puzzle.size
   const grid = useMemo(() => buildGrid(puzzle), [puzzle])
   const letters = useMemo(() => Object.keys(puzzle.rooms), [puzzle])
@@ -110,7 +120,8 @@ export function Board({ puzzle, view, selected, markers, person, floors, tool, h
     [],
   )
 
-  const isBlocked = (r: number, c: number) => grid.blocked[r]![c]! || view.vanished.includes(cellId(r, c)) || view.locked.includes(cellId(r, c))
+  // az épp eltűnt tárgy mezője szabadnak látszik (csapda-mező, Gyilkos-mód); a visszatért, zárolt mező újra tiltott
+  const isBlocked = (r: number, c: number) => (grid.blocked[r]![c]! && !view.vanished.includes(cellId(r, c))) || view.locked.includes(cellId(r, c))
   const holdable = (id: CellId, r: number, c: number) => tool === 'letter' && !!selected && !placedAt.has(id) && !isBlocked(r, c)
 
   const down = (e: PointerEvent, id: CellId, r: number, c: number) => {
@@ -196,7 +207,7 @@ export function Board({ puzzle, view, selected, markers, person, floors, tool, h
           className={cls.join(' ')}
           data-cell={id}
           style={style}
-          aria-label={`${id}${ch ? `, ${ch.name}` : ''}${objs.length ? `, ${objs.map((t) => OBJECTS[t]?.hu ?? t).join(', ')}` : ''}`}
+          aria-label={`${id}${ch ? `, ${charName(ch.id, ch.name)}` : ''}${objs.length ? `, ${objs.map((t) => objName(t)).join(', ')}` : ''}`}
           onPointerDown={(e) => down(e, id, r, c)}
           onPointerUp={() => up(id)}
           onPointerLeave={cancel}
@@ -208,13 +219,13 @@ export function Board({ puzzle, view, selected, markers, person, floors, tool, h
         >
           {!vanished && objs.map((t) => (t === 'rug' || t === 'carpet' ? (
             <Fragment key={t}>
-              <span className={`obj rugobj ${t}`} title={OBJECTS[t]?.hu ?? t} />
-              <span className="oname" aria-hidden="true" style={nameSize(OBJECTS[t]?.hu ?? t)}>{OBJECTS[t]?.hu ?? t}</span>
+              <span className={`obj rugobj ${t}`} title={objName(t)} />
+              <span className="oname" aria-hidden="true" style={nameSize(objName(t))}>{objName(t)}</span>
             </Fragment>
           ) : (
-            <span key={t} className="obj" title={OBJECTS[t]?.hu ?? t}>
+            <span key={t} className="obj" title={objName(t)}>
               <ObjectIcon type={t} />
-              <span className="oname" aria-hidden="true" style={nameSize(OBJECTS[t]?.hu ?? t)}>{OBJECTS[t]?.hu ?? t}</span>
+              <span className="oname" aria-hidden="true" style={nameSize(objName(t))}>{objName(t)}</span>
             </span>
           )))}
           {locked && <span className="lock">⛓</span>}
@@ -223,14 +234,15 @@ export function Board({ puzzle, view, selected, markers, person, floors, tool, h
           {/* ahol X van (kézi vagy sor/oszlop szerinti), ott a ceruzás jegyzet eltűnik — minden módban, mert a tábla közös */}
           {!who && !crossed && ((notes && notes.length > 0) || (hover === id && marker && tool === 'letter' && !blocked)) && (
             <span className="letters">
-              {notes?.map((k) => <span key={k} className="letter">{markers.get(k)}</span>)}
-              {hover === id && marker && tool === 'letter' && !blocked && !notes?.includes(selected!) && <span className="letter pv">{marker}</span>}
+              {notes?.map((k) => <span key={k} className="letter" style={tint(colors?.get(k))}>{markers.get(k)}</span>)}
+              {hover === id && marker && tool === 'letter' && !blocked && !notes?.includes(selected!) && <span className="letter pv" style={tint(selected ? colors?.get(selected) : undefined)}>{marker}</span>}
             </span>
           )}
           {ch && (
-            <span className={`token${bad.has(ch.id) ? ' bad' : ''}${ch.victim ? ' victim' : ''}${focusChars?.includes(ch.id) ? ' focus' : ''}`} title={ch.name}>
+            <span className={`token${bad.has(ch.id) ? ' bad' : ''}${ch.victim ? ' victim' : ''}${focusChars?.includes(ch.id) ? ' focus' : ''}`} title={charName(ch.id, ch.name)}>
               <Portrait ch={ch} person={person} className="pic" />
-              <span className="letter">{markers.get(ch.id)}</span>
+              <span className="letter" style={tint(colors?.get(ch.id))}>{markers.get(ch.id)}</span>
+              {placers?.[ch.id] && <i className="placer" style={{ background: placers[ch.id] }} />}
             </span>
           )}
           {ch && verdict?.[ch.id] && (
@@ -270,13 +282,13 @@ export function Board({ puzzle, view, selected, markers, person, floors, tool, h
             <span
               key={l.letter}
               className={`room-name${hl === l.letter ? ' hr' : ''}`}
-              style={{ left: `${(l.c / n) * 100}%`, top: `${((l.r + 1) / n) * 100}%`, ['--run' as string]: l.run, ['--fs' as string]: Math.min(0.27, (l.run * 1.5) / puzzle.rooms[l.letter]!.length) } as CSSProperties}
+              style={{ left: `${(l.c / n) * 100}%`, top: `${((l.r + 1) / n) * 100}%`, ['--run' as string]: l.run, ['--fs' as string]: Math.min(0.27, (l.run * 1.5) / roomName(puzzle.rooms[l.letter]!).length) } as CSSProperties}
             >
-              {puzzle.rooms[l.letter]}
+              {roomName(puzzle.rooms[l.letter]!)}
             </span>
           ))}
         </div>
-        {fog && <div className="fog" style={{ ['--ex' as string]: `${eye?.x ?? -999}px`, ['--ey' as string]: `${eye?.y ?? -999}px` }} />}
+        {fog && <div className={revealed ? 'fog off' : 'fog'} style={{ ['--ex' as string]: `${eye?.x ?? -999}px`, ['--ey' as string]: `${eye?.y ?? -999}px` }} />}
       </div>
     </div>
   )

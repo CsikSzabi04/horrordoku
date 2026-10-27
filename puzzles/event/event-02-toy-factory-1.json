@@ -1,0 +1,168 @@
+{
+  "v": 1,
+  "id": "event-02-toy-factory-1",
+  "mode": "event",
+  "world": "toy-factory",
+  "title": "A zöld kéz",
+  "story": "Az elhagyatott játékgyárban Öleli Bújli nem kel fel többé. A zöld kéz mindenhová elér — a gyanúsítottak viszont nem mind.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "G": "Gyártósor",
+    "J": "Játékbolt",
+    "T": "Játszószoba",
+    "R": "Raktár",
+    "S": "Szellőzőrendszer"
+  },
+  "layout": [
+    "GRRRR",
+    "GGJJR",
+    "TJJJR",
+    "TTSSS",
+    "TTSSS"
+  ],
+  "objects": [
+    {
+      "type": "toybox",
+      "at": [
+        "A2",
+        "C5",
+        "E2"
+      ]
+    },
+    {
+      "type": "panel",
+      "at": [
+        "B2",
+        "E1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "conveyor",
+      "at": [
+        "D2",
+        "D5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "speaker",
+      "at": [
+        "B1",
+        "C2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "carpet",
+      "at": "B4"
+    }
+  ],
+  "characters": [
+    {
+      "id": "kutyanap",
+      "name": "KutyaHajnal",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "csokos-mici",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Puszis Micitől északra** volt."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "csokos-mici",
+      "name": "Puszis Mici",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "f",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "A Gyártósoron ő volt az **egyetlen nő**."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "hosszulabu-anyu",
+      "name": "Nyújtólábú Anyu",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "panel"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **kéz-kapcsoló mellett**."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "olelo-leny",
+      "name": "Öleli Bújli",
+      "race": "ghoul",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Szellőzőrendszerben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "babika-rozsi",
+      "name": "Daisy",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "toybox"
+        }
+      ],
+      "clueText": [
+        "Egy **játékdobozon** volt."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "kutyanap": "D1",
+    "csokos-mici": "A2",
+    "hosszulabu-anyu": "B3",
+    "olelo-leny": "E4",
+    "babika-rozsi": "C5"
+  },
+  "murderer": "babika-rozsi",
+  "rev": 1,
+  "worldRule": "grab"
+}

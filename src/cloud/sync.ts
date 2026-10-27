@@ -139,7 +139,10 @@ export async function mergeIntoLocal(storage: StorageService, remote: Remote, pe
   for (const k of pendingSaveDeletes) delete sessions.sessions[k] // helyben törölt, de még fel nem töltött törlés: ne éledjen újra
   const storedSettings = Object.keys(exp.entries).some((k) => k.endsWith('settings')) // alapértelmezett (soha nem mentett) beállítás ne írja felül a felhőst
   const profile = remote.profile ? (lprof.id === null ? remote.profile : { ...merge.mergeProfile(lprof, remote.profile), id: remote.profile.id }) : lprof
-  const settings = remote.settings ? (storedSettings ? merge.mergeSettings(lset, remote.settings) : remote.settings) : lset
+  const merged = remote.settings ? (storedSettings ? merge.mergeSettings(lset, remote.settings) : remote.settings) : lset
+  // A nyelv a PROFILÉ: ha a fióknak van felhős nyelve, az nyer (egy másik eszközön / vendégként állítottat nem írja felül); ha nincs, a helyi (vendégtől örökölt / alap) marad.
+  const remoteLang = (remote.settings as Partial<Settings> | null)?.language
+  const settings = { ...merged, language: remoteLang === 'hu' || remoteLang === 'en' ? remoteLang : lset.language }
   await storage.applyMerged({
     progress: merge.mergeProgress(lp, remote.progress), sessions, unlocks: merge.mergeUnlocks(lu, remote.unlocks), profile, settings,
   })

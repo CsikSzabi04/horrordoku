@@ -26,17 +26,14 @@ function withArticle(name: string, fn: (word: string) => string): string | null 
   return [m[1]!.toLowerCase(), ...words, fn(last)].join(' ')
 }
 
-/** Előtagok, amelyek nem a név „magja”: a toldalék a név végére kerül („Dr. Wernickével”, „Father Martinnal”, „Evil Mortyval”). */
-const PREFIX = new Set(['Mr.', 'Mrs.', 'Ms.', 'Dr.', 'Father', 'Evil', 'Golden'])
-
 /**
- * Hová kerül a toldalék: általában a keresztnévre („Leon S. Kennedy” → Leonnal), de előtagos névnél (Dr. …, Father …) vagy ha a név
- * kisbetűs közszóval végződik (Rágógumi hercegnő → Rágógumi hercegnővel) a név utolsó szavára; az előtag megmarad.
+ * Hová kerül a toldalék: a név UTOLSÓ szavára („Kiss Márton” → Kiss Mártonnal, „Dr. Vargha” → Dr. Varghával, „Gonosz Murci” → Gonosz Murcival).
+ * A magyar névsorrend (vezetéknév + keresztnév) és az előtagos nevek (Mr., Dr., Father, Evil…) is így helyesek; az előtag megmarad.
  */
 function target(name: string): { head: string; word: string } {
   const words = name.split(' ')
   const last = words[words.length - 1]!
-  if (words.length > 1 && (PREFIX.has(words[0]!) || /^\p{Ll}/u.test(last))) return { head: `${words.slice(0, -1).join(' ')} `, word: last }
+  if (words.length > 1) return { head: `${words.slice(0, -1).join(' ')} `, word: last }
   return { head: '', word: words[0]! }
 }
 

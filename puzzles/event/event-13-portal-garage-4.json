@@ -1,0 +1,227 @@
+{
+  "v": 1,
+  "id": "event-13-portal-garage-4",
+  "mode": "event",
+  "world": "portal-garage",
+  "title": "Csattanó!",
+  "story": "Gyűrci gyűrcölt, aztán csend lett. A portálok mindkét oldalra átlátnak.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "G": "Garázs",
+    "N": "Nappali",
+    "K": "Konyha",
+    "M": "Murci szobája",
+    "R": "Űrhajó",
+    "E": "Erőd-város",
+    "C": "Csőlakás-dimenzió"
+  },
+  "layout": [
+    "RRRRNNN",
+    "RRRRRNN",
+    "RRRREEG",
+    "CCCEEEG",
+    "CCCCCMG",
+    "CCCKKKK",
+    "KKKKKKK"
+  ],
+  "objects": [
+    {
+      "type": "crate",
+      "at": [
+        "D2",
+        "A1",
+        "F5"
+      ]
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "C7",
+        "B2",
+        "B5"
+      ]
+    },
+    {
+      "type": "doorGreen",
+      "at": "A4",
+      "blocking": true
+    },
+    {
+      "type": "doorBlue",
+      "at": "D4",
+      "blocking": true
+    },
+    {
+      "type": "doorOrange",
+      "at": "A7",
+      "blocking": true
+    },
+    {
+      "type": "tv",
+      "at": [
+        "B1",
+        "E7",
+        "D6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "machine",
+      "at": "D7",
+      "blocking": true
+    },
+    {
+      "type": "toolbox",
+      "at": "E6",
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": "A2"
+    }
+  ],
+  "characters": [
+    {
+      "id": "csippento",
+      "name": "Gyűrci",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Az Űrhajón **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Rich and Marty"
+      }
+    },
+    {
+      "id": "a-madarember",
+      "name": "Tollember",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ],
+      "source": {
+        "game": "Rich and Marty"
+      }
+    },
+    {
+      "id": "mr-kerek",
+      "name": "Nézzrám úr",
+      "race": "ghost",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Erőd-városban volt."
+      ],
+      "source": {
+        "game": "Rich and Marty"
+      }
+    },
+    {
+      "id": "jerzsi-szmit",
+      "name": "Gerry Miller",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "doorGreen"
+        }
+      ],
+      "clueText": [
+        "Egy **zöld portál mellett** volt."
+      ],
+      "source": {
+        "game": "Rich and Marty"
+      }
+    },
+    {
+      "id": "murci-szmit",
+      "name": "Marty Miller",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "Murci szobájában ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Rich and Marty"
+      }
+    },
+    {
+      "id": "gonosz-murci",
+      "name": "Gonosz Marty",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A helyiségében **ketten** voltak."
+      ],
+      "source": {
+        "game": "Rich and Marty"
+      }
+    },
+    {
+      "id": "rikard-santa",
+      "name": "Rich Sandrez",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "leftOf",
+          "of": "a-madarember"
+        }
+      ],
+      "clueText": [
+        "**Tollembertől balra** volt."
+      ],
+      "source": {
+        "game": "Rich and Marty"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "csippento": "A1",
+    "a-madarember": "D2",
+    "mr-kerek": "E3",
+    "jerzsi-szmit": "B4",
+    "murci-szmit": "F5",
+    "gonosz-murci": "G6",
+    "rikard-santa": "C7"
+  },
+  "murderer": "a-madarember",
+  "rev": 1,
+  "worldRule": "doors"
+}

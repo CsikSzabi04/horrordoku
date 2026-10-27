@@ -1,9 +1,10 @@
 import type { SupabaseClient } from '@supabase/supabase-js'
 import { describe, expect, it, vi } from 'vitest'
 import type { AuthApi } from '../shared/cloud'
-import type { RunRecord, StorageService } from '../shared/storage'
+import type { RunRecord, Settings, StorageService } from '../shared/storage'
 import { createStorage, memoryKV } from '../storage'
 import { scopeOf } from './auth'
+import { settingsFromRow, settingsRow } from './rows'
 import { createCatalog } from './catalog'
 import { mergeIntoLocal, createSync, pushOps, type Remote } from './sync'
 
@@ -173,6 +174,8 @@ describe('szinkron: a feltöltés nem írja felül a másik gép eredményét', 
 })
 
 describe('összefésülés a helyi tárolóba', () => {
+  /** A felhős sor úgy, ahogy az adatbázisból visszajön (langV: 2 = a profil tudatos nyelve; nélküle a régi, alapértékű sor). */
+  const rowsSettings = (s: Settings, langV: number | undefined) => settingsFromRow({ data: langV === undefined ? s : { ...settingsRow(UID, s).data, langV } })!
   const emptyRemote = (over: Partial<Remote> = {}): Remote => ({
     progress: { v: 1, updatedAt: '1970-01-01T00:00:00Z', puzzles: {}, recentRuns: [] }, sessions: { v: 1, sessions: {} }, unlocks: { v: 1, items: [] }, settings: null, profile: null, ...over,
   })
@@ -193,6 +196,32 @@ describe('összefésülés a helyi tárolóba', () => {
     await mergeIntoLocal(storage, emptyRemote({ settings, profile }), new Set())
     expect((await storage.getSettings()).photosensitive).toBe(true) // régebbi időbélyeg ellenére, mert a helyi csak alapérték volt
     expect(await storage.getProfile()).toMatchObject({ id: UID, xp: 700 })
+  })
+  it('a nyelv a PROFILÉ: a felhős nyelv nyer, a vendégtől örökölt marad, ha nincs; a régi (alapértékű) sor nyelvét nem vesszük át', async () => {
+    const hu = { ...(await createStorage(memoryKV()).getSettings()), language: 'hu' as const, updatedAt: '2026-01-01T00:00:00Z' }
+    // 1) a fiók felhős nyelve (langV 2) magyar, a gép angol → magyar
+    const a = createStorage(memoryKV())
+    await a.setScope(SCOPE)
+    await mergeIntoLocal(a, emptyRemote({ settings: rowsSettings({ ...hu }, 2) }), new Set())
+    expect((await a.getSettings()).language).toBe('hu')
+    // 2) egy másik eszköz magyarra váltott, ez az eszköz angol → a profil követi (a felhős nyer, még ha a helyi beállítás újabb is)
+    const b = createStorage(memoryKV())
+    await b.setScope(SCOPE)
+    await b.patchSettings({ language: 'en', screenShake: false })
+    await mergeIntoLocal(b, emptyRemote({ settings: rowsSettings({ ...hu }, 2) }), new Set())
+    expect((await b.getSettings()).language).toBe('hu')
+    expect((await b.getSettings()).screenShake).toBe(false) // az eszköz többi beállítása a szokásos összefésüléssel megy
+    // 3) régi sor (nincs langV): a benne lévő alap-'hu' nem választás → marad a helyi (alap: angol)
+    const c = createStorage(memoryKV())
+    await c.setScope(SCOPE)
+    await mergeIntoLocal(c, emptyRemote({ settings: rowsSettings({ ...hu }, undefined) }), new Set())
+    expect((await c.getSettings()).language).toBe('en')
+    // 4) vendégként magyarra váltott, új fiók (nincs felhős beállítás) → a fiók magyar marad
+    const d = createStorage(memoryKV())
+    await d.patchSettings({ language: 'hu' })
+    await d.setScope(SCOPE)
+    await mergeIntoLocal(d, emptyRemote(), new Set())
+    expect((await d.getSettings()).language).toBe('hu')
   })
   it('a pushOps külön kezeli a hálózati hibát, a külső-kulcs hibát és a siker', async () => {
     const db = memDb({ puzzles: [{ id: 'classic-01' }] })

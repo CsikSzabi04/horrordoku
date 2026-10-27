@@ -6,6 +6,7 @@ import { MURDOKU_KINDS } from '../engine/generator'
 import index from './classic-index.json'
 import eventIndex from './event-index.json'
 import { puzzleFingerprint } from '../game/fingerprint'
+import { EVENTS } from './events'
 import type { Puzzle } from '../shared/puzzle'
 
 /** Katalógus-validálás: `npm run validate:puzzles`. Minden `puzzles/**\/*.json` fájl érvényes és pontosan 1 megoldású. */
@@ -112,4 +113,13 @@ describe('katalógus', () => {
           expect(p.characters.find((c) => c.victim)!.name.startsWith('V')).toBe(true)
         })
     })
+})
+
+describe('Esemény: a világ főszereplői minden ügyben szerepelnek', () => {
+  for (const def of EVENTS)
+    if (def.opts.core?.length)
+      it(def.file, () => {
+        const have = new Set((JSON.parse(readFileSync(`puzzles/event/${def.file}.json`, 'utf8')) as Puzzle).characters.map((c) => c.id))
+        expect(def.opts.core!.filter((id) => !have.has(id))).toEqual([])
+      })
 })

@@ -1,0 +1,220 @@
+{
+  "v": 1,
+  "id": "event-06-deep-ship-3",
+  "mode": "event",
+  "world": "deep-ship",
+  "title": "A főmérnök naplója",
+  "story": "Henrik Tillmann naplója félbeszakadt, ő maga a padlón fekszik. Csak a páncélosok mehettek utána.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "O": "Orvosi szárny",
+    "G": "Gépház",
+    "Y": "Gyárterem",
+    "H": "Hidroponika",
+    "K": "Külső szekció"
+  },
+  "layout": [
+    "HHHOOOO",
+    "HHYOOGG",
+    "HYYOOGG",
+    "HHYYYGG",
+    "HHYYYKK",
+    "HHHYYKK",
+    "KKKKKKK"
+  ],
+  "objects": [
+    {
+      "type": "crate",
+      "at": [
+        "A4",
+        "E6",
+        "A2",
+        "G7"
+      ]
+    },
+    {
+      "type": "stasis",
+      "at": [
+        "F2",
+        "C5",
+        "F3"
+      ]
+    },
+    {
+      "type": "terminal",
+      "at": [
+        "D6",
+        "G5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "savepoint",
+      "at": [
+        "A1",
+        "C3",
+        "E3"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "bence-marton",
+      "name": "Benedict Mathers",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "gt",
+          "n": 6
+        }
+      ],
+      "clueText": [
+        "A **6. oszloptól jobbra** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "tibor-kun",
+      "name": "Tristan Kline",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "stasis",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "A Gépházban egy **sztázis-állomáson** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "kinga-dezso",
+      "name": "Kara Danielson",
+      "race": "human",
+      "gender": "f",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "bence-marton",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Benedict Matherstől délre** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "eszter-lakatos",
+      "name": "Ella Longford",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Hidroponikában egy **ládán** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "hubert-tamas",
+      "name": "Henrik Tillmann",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "armored": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "Y"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Gyárteremben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "nikolett-beran",
+      "name": "Nicolette Brenner",
+      "race": "human",
+      "gender": "f",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "ivan-kovacs",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Isaiah Clarksontól északra** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "ivan-kovacs",
+      "name": "Isaiah Clarkson",
+      "race": "human",
+      "gender": "m",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. oszloptól balra** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "bence-marton": "G1",
+    "tibor-kun": "F2",
+    "kinga-dezso": "D3",
+    "eszter-lakatos": "A4",
+    "hubert-tamas": "C5",
+    "nikolett-beran": "E6",
+    "ivan-kovacs": "B7"
+  },
+  "murderer": "nikolett-beran",
+  "rev": 1,
+  "worldRule": "vacuum",
+  "vacuumRooms": [
+    "K",
+    "Y"
+  ]
+}

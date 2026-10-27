@@ -15,115 +15,99 @@
     "G": "Gépház"
   },
   "layout": [
-    "TKKKKKGMM",
-    "TTTKKKGMM",
-    "TTTKKGGFM",
-    "TTKKKGFFF",
-    "TTTKGGFFF",
-    "TTKKGGFFF",
-    "TTTGGGFFF",
-    "TTGGGGFFF",
-    "TTGGGGFFF"
+    "TTTTTTTTT",
+    "TTTTTTGTT",
+    "TFTGGGGGG",
+    "FFFGGGGGG",
+    "FFFFFGGKG",
+    "FFFFFFKKK",
+    "MMMFFFKKK",
+    "MMMMMMKKK",
+    "MMMMMKKKK"
   ],
   "objects": [
     {
+      "type": "chair",
+      "at": [
+        "C1",
+        "A3"
+      ]
+    },
+    {
       "type": "bed",
       "at": [
-        "F2",
-        "D6"
+        "H8",
+        "G8"
       ]
     },
     {
       "type": "lounger",
       "at": [
-        "H5",
-        "I2",
-        "H1"
+        "F6",
+        "E9",
+        "D8",
+        "A6",
+        "F7"
       ]
     },
     {
-      "type": "chair",
-      "at": [
-        "B7",
-        "A1",
-        "I8",
-        "C3"
-      ]
-    },
-    {
-      "type": "sink",
-      "at": "C1",
-      "blocking": true
-    },
-    {
-      "type": "anchor",
-      "at": "H8",
-      "blocking": true
-    },
-    {
-      "type": "plant",
-      "at": "A4",
+      "type": "counter",
+      "at": "B2",
       "blocking": true
     },
     {
       "type": "barrel",
       "at": [
-        "F3",
-        "C9"
+        "D3",
+        "H4"
       ],
       "blocking": true
     },
     {
-      "type": "counter",
-      "at": "A5",
+      "type": "sink",
+      "at": "G9",
+      "blocking": true
+    },
+    {
+      "type": "plant",
+      "at": "H9",
+      "blocking": true
+    },
+    {
+      "type": "anchor",
+      "at": "B4",
       "blocking": true
     }
   ],
   "characters": [
     {
-      "id": "vera",
-      "name": "Vera",
+      "id": "anna",
+      "name": "Anna",
       "race": "human",
       "gender": "f",
-      "victim": true,
-      "clues": [
-        {
-          "kind": "aloneWithKiller"
-        }
-      ],
-      "clueText": [
-        "Az áldozat. **Egyedül** volt a gyilkossal."
-      ]
-    },
-    {
-      "id": "alfred",
-      "name": "Alfred",
-      "race": "human",
-      "gender": "m",
       "clues": [
         {
           "kind": "on",
-          "object": "bed",
-          "room": "K"
+          "object": "chair"
         }
       ],
       "clueText": [
-        "A Kabinban egy **ágyon** volt."
+        "Egy **széken** ült."
       ]
     },
     {
-      "id": "bianca",
-      "name": "Bianca",
+      "id": "bella",
+      "name": "Bella",
       "race": "human",
       "gender": "f",
       "clues": [
         {
           "kind": "diagonal",
-          "of": "cody"
+          "of": "anna"
         }
       ],
       "clueText": [
-        "Átlósan szomszédos volt **Codyvel**."
+        "Átlósan szomszédos volt **Annával**."
       ]
     },
     {
@@ -133,18 +117,48 @@
       "gender": "m",
       "clues": [
         {
-          "kind": "northOf",
-          "of": "flavia",
-          "rows": 3
+          "kind": "on",
+          "object": "chair",
+          "room": "T"
         }
       ],
       "clueText": [
-        "Pontosan három sorral **Flaviától északra** volt."
+        "Az Étkezőben egy **széken** ült."
       ]
     },
     {
-      "id": "derek",
-      "name": "Derek",
+      "id": "daniel",
+      "name": "Daniel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "barrel"
+        }
+      ],
+      "clueText": [
+        "Egy **hordó mellett** volt."
+      ]
+    },
+    {
+      "id": "emmett",
+      "name": "Emmett",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "col",
+          "n": 7
+        }
+      ],
+      "clueText": [
+        "A **7. oszlopban** volt."
+      ]
+    },
+    {
+      "id": "frank",
+      "name": "Frank",
       "race": "human",
       "gender": "m",
       "clues": [
@@ -159,82 +173,66 @@
       ]
     },
     {
-      "id": "ervin",
-      "name": "Ervin",
+      "id": "gordon",
+      "name": "Gordon",
       "race": "human",
       "gender": "m",
-      "clues": [
-        {
-          "kind": "diagonal",
-          "of": "derek"
-        }
-      ],
-      "clueText": [
-        "Átlósan szomszédos volt **Derekkel**."
-      ]
-    },
-    {
-      "id": "flavia",
-      "name": "Flavia",
-      "race": "human",
-      "gender": "f",
-      "clues": [
-        {
-          "kind": "aloneWith",
-          "with": "vera"
-        }
-      ],
-      "clueText": [
-        "**Egyedül** volt **Verával**."
-      ]
-    },
-    {
-      "id": "greg",
-      "name": "Greg",
-      "race": "human",
-      "gender": "m",
-      "clues": [
-        {
-          "kind": "on",
-          "object": "chair",
-          "room": "F"
-        }
-      ],
-      "clueText": [
-        "A Fedélzeten egy **széken** ült."
-      ]
-    },
-    {
-      "id": "holly",
-      "name": "Holly",
-      "race": "human",
-      "gender": "f",
       "clues": [
         {
           "kind": "line",
           "axis": "row",
           "op": "ne",
-          "n": 1
+          "n": 9
         }
       ],
       "clueText": [
-        "**Nem** az **első sorban** volt."
+        "**Nem** a **9. sorban** volt."
+      ]
+    },
+    {
+      "id": "henry",
+      "name": "Henry",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **cserepes növény mellett** volt."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. **Egyedül** volt a gyilkossal."
       ]
     }
   ],
   "activePowers": [],
   "solution": {
-    "vera": "A1",
-    "alfred": "F2",
-    "bianca": "D3",
-    "cody": "C4",
-    "derek": "H5",
-    "ervin": "G6",
-    "flavia": "B7",
-    "greg": "I8",
-    "holly": "E9"
+    "anna": "C1",
+    "bella": "D2",
+    "cody": "A3",
+    "daniel": "I4",
+    "emmett": "G5",
+    "frank": "F6",
+    "gordon": "B7",
+    "henry": "H8",
+    "vlad": "E9"
   },
-  "murderer": "flavia",
+  "murderer": "gordon",
   "rev": 1,
   "floors": {
     "M": "water",

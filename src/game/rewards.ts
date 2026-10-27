@@ -20,3 +20,11 @@ export async function awardSolve(storage: StorageService, puzzle: Pick<Puzzle, '
   await storage.putProfile({ ...p, xp: p.xp + xp, updatedAt: new Date().toISOString() })
   return { xp, first: true }
 }
+
+/** Gyilkos mód (GDD 22.4): a győztes oldal a sima XP kétszeresét kapja (nem „első megoldás”-alapú: a játék társas, nem farmolható egyedül). */
+export async function awardWin(storage: StorageService, puzzle: Pick<Puzzle, 'difficulty'>, hints: number, factor = 2): Promise<Reward> {
+  const xp = xpFor(puzzle.difficulty, hints) * factor
+  const p = await storage.getProfile()
+  await storage.putProfile({ ...p, xp: p.xp + xp, updatedAt: new Date().toISOString() })
+  return { xp, first: true }
+}

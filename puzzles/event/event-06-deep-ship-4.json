@@ -1,0 +1,243 @@
+{
+  "v": 1,
+  "id": "event-06-deep-ship-4",
+  "mode": "event",
+  "world": "deep-ship",
+  "title": "A biztonsági főnök",
+  "story": "Callum Merrow sosem bízott a hajó vezetőiben. Most nem bízhat többé senkiben — a lámpák kialudtak.",
+  "size": 8,
+  "difficulty": 5,
+  "rooms": {
+    "H": "Híd",
+    "O": "Orvosi szárny",
+    "G": "Gépház",
+    "Y": "Gyárterem",
+    "I": "Hidroponika",
+    "K": "Külső szekció"
+  },
+  "layout": [
+    "HHKKYYYY",
+    "HGGKYYYY",
+    "HGGKYYYY",
+    "HIGKYKKK",
+    "OIIKKKKK",
+    "OOIIIIKK",
+    "OOIIIIIK",
+    "OOOIIIIK"
+  ],
+  "objects": [
+    {
+      "type": "stasis",
+      "at": [
+        "D1",
+        "B4"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "G7",
+        "B1",
+        "B8",
+        "G5"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": "E8"
+    },
+    {
+      "type": "terminal",
+      "at": "B5",
+      "blocking": true
+    },
+    {
+      "type": "savepoint",
+      "at": [
+        "B3",
+        "C7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "lockdoor",
+      "at": [
+        "E5",
+        "C1",
+        "G6"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "csaba-mester",
+      "name": "Callum Merrow",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "armored": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Külső szekcióban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "zoltan-hamar",
+      "name": "Zane Hammerton",
+      "race": "human",
+      "gender": "m",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "bence-marton",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Benedict Matherstől északra** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "ivan-kovacs",
+      "name": "Isaiah Clarkson",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "kinga-dezso",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Kara Danielsontól északra** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "kinga-dezso",
+      "name": "Kara Danielson",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "stasis"
+        }
+      ],
+      "clueText": [
+        "Egy **sztázis-állomáson** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "bence-marton",
+      "name": "Benedict Mathers",
+      "race": "human",
+      "gender": "m",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "lockdoor"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **zárolt ajtó mellett**."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "eszter-lakatos",
+      "name": "Ella Longford",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "savepoint"
+        }
+      ],
+      "clueText": [
+        "Egy **mentőpont mellett** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "tibor-kun",
+      "name": "Tristan Kline",
+      "race": "human",
+      "gender": "m",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "crate"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **ládán** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "a-vadasz",
+      "name": "Az Üldöző",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notBesideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **pad mellett**."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "csaba-mester": "D1",
+    "zoltan-hamar": "F2",
+    "ivan-kovacs": "A3",
+    "kinga-dezso": "B4",
+    "bence-marton": "H5",
+    "eszter-lakatos": "C6",
+    "tibor-kun": "G7",
+    "a-vadasz": "E8"
+  },
+  "murderer": "bence-marton",
+  "rev": 1,
+  "worldRule": "vacuum",
+  "vacuumRooms": [
+    "K",
+    "Y"
+  ]
+}

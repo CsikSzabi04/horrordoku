@@ -24,9 +24,9 @@ describe('Folytatás: a következő ügy', () => {
     expect(nextPuzzle({ id: 'classic-1-20-office', mode: 'classic' })?.id).toMatch(/^classic-2-01-/)
   })
   it('az Eseményben a világ következő ügye, a világ végén a következő világ; az utolsónak és a bónusznak nincs következője', () => {
-    expect(nextPuzzle({ id: 'event-01-fnaf-1', mode: 'event' })?.id).toBe('event-01-fnaf-2')
-    expect(nextPuzzle({ id: 'event-01-fnaf-5', mode: 'event' })?.id).toBe('event-02-poppy-playtime-1')
-    expect(nextPuzzle({ id: 'event-19-harry-potter-5', mode: 'event' })).toBeNull()
+    expect(nextPuzzle({ id: 'event-01-night-pizzeria-1', mode: 'event' })?.id).toBe('event-01-night-pizzeria-2')
+    expect(nextPuzzle({ id: 'event-01-night-pizzeria-5', mode: 'event' })?.id).toBe('event-02-toy-factory-1')
+    expect(nextPuzzle({ id: 'event-19-wizard-school-5', mode: 'event' })).toBeNull()
     expect(nextPuzzle({ id: 'bonus-1', mode: 'bonus' })).toBeNull()
     expect(nextPuzzle({ id: 'gen:1:2:ABC', mode: 'generated' })).toBeNull()
   })

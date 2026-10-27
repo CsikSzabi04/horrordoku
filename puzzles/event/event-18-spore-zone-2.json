@@ -1,0 +1,224 @@
+{
+  "v": 1,
+  "id": "event-18-spore-zone-2",
+  "mode": "event",
+  "world": "spore-zone",
+  "title": "A csapdák mestere",
+  "story": "Billy a saját csapdájába sétált. A spórák köde elhomályosítja a rádiót — egy-egy szó kiesik a nyomokból.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "K": "Karantén-zóna",
+    "D": "Dunaváros",
+    "E": "Egyetem",
+    "R": "Kórház",
+    "M": "Metró",
+    "H": "Hegyi kabin"
+  },
+  "layout": [
+    "EEEHHHH",
+    "EEEHHHH",
+    "EEEHHHM",
+    "DDKKHMM",
+    "DDKKMMM",
+    "DDKKMMM",
+    "DRRRMMM"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "A7",
+        "E4"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "F6",
+        "G1"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "C2",
+        "B5",
+        "C1",
+        "A4",
+        "D7"
+      ]
+    },
+    {
+      "type": "radio",
+      "at": [
+        "C5",
+        "F2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "G6",
+      "blocking": true
+    },
+    {
+      "type": "car",
+      "at": [
+        "D4",
+        "D5",
+        "A1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "rock",
+      "at": "B3",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "abigel-andrasy",
+      "name": "Addie Anders",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate"
+        }
+      ],
+      "clueText": [
+        "Egy **ládán** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "ella-szucs",
+      "name": "Ella Williamson",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Egyetemen egy **███** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "hektor",
+      "name": "Hank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "jozsef-muller",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Jonah Millwardtól északra** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "tesza",
+      "name": "Tessa",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "jozsef-muller",
+      "name": "Jonah Millward",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "marcsi-makai",
+      "name": "Marlena",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **fa mellett** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "bela",
+      "name": "Billy",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "D"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Dunavárosban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "abigel-andrasy": "G1",
+    "ella-szucs": "C2",
+    "hektor": "D3",
+    "tesza": "E4",
+    "jozsef-muller": "B5",
+    "marcsi-makai": "F6",
+    "bela": "A7"
+  },
+  "murderer": "jozsef-muller",
+  "rev": 1,
+  "worldRule": "radio"
+}

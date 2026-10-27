@@ -1,0 +1,166 @@
+{
+  "v": 1,
+  "id": "event-19-wizard-school-1",
+  "mode": "event",
+  "world": "wizard-school",
+  "title": "A Nagyterem",
+  "story": "Mortivar nagyúr holtan fekszik az Akadémián. A Kalandozók Térképe egyszerre csak egy helyiséget mutat élesen — válts helyiséget, a többi nyom elhalványul.",
+  "size": 5,
+  "difficulty": 2,
+  "rooms": {
+    "A": "Akadémia kapuja",
+    "G": "Gyuri kunyhója",
+    "K": "Kívánság Terme",
+    "R": "Repülő-pálya"
+  },
+  "layout": [
+    "AAARR",
+    "AARRK",
+    "GGKKK",
+    "GGGKK",
+    "GGGKK"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "A3",
+        "D4"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": "B1"
+    },
+    {
+      "type": "candle",
+      "at": [
+        "A5",
+        "A2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "cauldron",
+      "at": "C3",
+      "blocking": true
+    },
+    {
+      "type": "armor",
+      "at": "B3",
+      "blocking": true
+    },
+    {
+      "type": "broom",
+      "at": [
+        "D2",
+        "A4"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "nandor-hosszuszar",
+      "name": "Nevin Longbrook",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "remi-vasvari",
+      "name": "Rory Weswick",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "a-nevtelen-ur",
+      "name": "Mortivar nagyúr",
+      "race": "ghost",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Gyuri kunyhójában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "hermina-gazdag",
+      "name": "Hermina Greenwood",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "f",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Kívánság Termében ő volt az **egyetlen nő**."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "hugo-pakozdi",
+      "name": "Henry Villámseb",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "a-nevtelen-ur",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Mortivar nagyúrtól délre** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "nandor-hosszuszar": "B1",
+    "remi-vasvari": "E2",
+    "a-nevtelen-ur": "A3",
+    "hermina-gazdag": "D4",
+    "hugo-pakozdi": "C5"
+  },
+  "murderer": "hugo-pakozdi",
+  "rev": 1,
+  "worldRule": "cameras"
+}

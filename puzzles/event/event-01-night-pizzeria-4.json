@@ -1,0 +1,219 @@
+{
+  "v": 1,
+  "id": "event-01-night-pizzeria-4",
+  "mode": "event",
+  "world": "night-pizzeria",
+  "title": "Az aranyszínű árnyék",
+  "story": "Arany Teddy a sötétből bukkant elő, és nem kelt fel többé. Senki sem tudja, ki volt vele utoljára.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "S": "Színpad",
+    "E": "Ebédlő",
+    "K": "Kalóz-öböl",
+    "O": "Konyha",
+    "I": "Iroda",
+    "N": "Nyugati folyosó"
+  },
+  "layout": [
+    "IIIIIOO",
+    "IIIIKOO",
+    "EIIKKOO",
+    "EEEEKKS",
+    "EEEENSS",
+    "NNNNNNS",
+    "NNNNSSS"
+  ],
+  "objects": [
+    {
+      "type": "giftbox",
+      "at": [
+        "F6",
+        "A5"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "G1",
+        "B7",
+        "E4",
+        "E3",
+        "B4",
+        "C1"
+      ]
+    },
+    {
+      "type": "partytable",
+      "at": "D2"
+    },
+    {
+      "type": "camera",
+      "at": [
+        "G5",
+        "E1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "doorbtn",
+      "at": "G2",
+      "blocking": true
+    },
+    {
+      "type": "oven",
+      "at": [
+        "F3",
+        "B2"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "brumi",
+      "name": "Teddy Bolyhosmackó",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "arany-brumi",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Arany Teddytől északra** volt."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "kiss-marton",
+      "name": "Miles Schmitt",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "lt",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. sor fölött** volt."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "arany-brumi",
+      "name": "Arany Teddy",
+      "race": "ghost",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Az Irodában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "varga-ferenc",
+      "name": "Warren Ashford",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Kalóz-öbölben egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "nyuszi",
+      "name": "Benny Nyuszi",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "a-babu",
+          "dir": "W"
+        }
+      ],
+      "clueText": [
+        "**A Zsinórmestertől nyugatra** volt."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "csibi",
+      "name": "Csipi Csibe",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "camera"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **kamera mellett**."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "a-babu",
+      "name": "A Zsinórmester",
+      "race": "ghost",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "brumi": "G1",
+    "kiss-marton": "D2",
+    "arany-brumi": "C3",
+    "varga-ferenc": "E4",
+    "nyuszi": "A5",
+    "csibi": "F6",
+    "a-babu": "B7"
+  },
+  "murderer": "kiss-marton",
+  "rev": 1,
+  "worldRule": "cameras"
+}

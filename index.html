@@ -11,9 +11,9 @@
 <meta property="og:title" data-i-content="meta.title" content="NIGHTDOKU — Where sudoku spills blood">
 <meta property="og:description" data-i-content="meta.ogdesc" content="Horror murder-mystery logic puzzle. One grid. One killer. A single solution.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Ccircle cx='16' cy='16' r='14' fill='%23b3122d'/%3E%3Ccircle cx='11' cy='11' r='5' fill='%23ff6a5c' opacity='.45'/%3E%3C/svg%3E">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Special+Elite&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/cinzel-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/special-elite-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/fonts/fonts.css">
 <script>
 /* "js" osztály + nyelv (alapból angol, mentett választás) + nyugodt mód (mentett beállítás vagy a rendszer "kevesebb mozgás" kérése) — még a festés előtt */
 (function(){var d=document.documentElement;d.classList.add('js');var r=false;try{r=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
@@ -392,9 +392,9 @@ h3{margin:0;font-family:var(--display);font-weight:700;letter-spacing:.06em}
     </div>
     <div class="grid5">
       <div class="reveal" style="--d:.05s"><article class="card tilt"><span class="no">01</span><span class="ic">🕯️</span><h3 data-i="m1.t">Classic</h3>
-        <p data-i="m1.p">Everyday cases: a flower shop, a playground, a zoo, a hotel… plain, honest Murdoku with ordinary people. Hand-crafted levels, each with a single solution.</p><span class="badge" data-i="m1.b">10 levels</span></article></div>
+        <p data-i="m1.p">Everyday cases: a flower shop, a playground, a zoo, a hotel… plain, honest logic puzzles with ordinary people. Hand-crafted levels, each with a single solution.</p><span class="badge" data-i="m1.b">10 levels</span></article></div>
       <div class="reveal" style="--d:.12s"><article class="card tilt"><span class="no">02</span><span class="ic">🎬</span><h3 data-i="m2.t">Event</h3>
-        <p data-i="m2.p">The worlds of nineteen famous horror games and series, with their own characters. The big bad is the victim — and you work out who killed them.</p><span class="badge" data-i="m2.b">19 levels · classified</span></article></div>
+        <p data-i="m2.p">Nineteen original horror worlds, each with its own characters and its own rule. The big bad is the victim — and you work out who killed them.</p><span class="badge" data-i="m2.b">19 levels · classified</span></article></div>
       <div class="reveal" style="--d:.19s"><article class="card tilt"><span class="no">03</span><span class="ic">🎲</span><h3 data-i="m3.t">Random</h3>
         <p data-i="m3.p">Never the same case twice. Always solvable, always new — and if you quit halfway, the cloud remembers where you were. Continue on any machine.</p><span class="badge" data-i="m3.b">endless</span></article></div>
       <div class="reveal" style="--d:.26s"><article class="card tilt"><span class="no">04</span><span class="ic">🤝</span><h3 data-i="m4.t">Together</h3>
@@ -602,8 +602,8 @@ var HU={
   'btn.submit':'🩸 Beküldés','btn.hint':'💡 Tipp','btn.solve':'▶ Megoldás','btn.reset':'↺ Újra',
   'scare.l':'Jumpscare bekapcsolása <small>rossz beküldésnél hirtelen kép és hang · csak 16+ · a Nyugodt mód kikapcsolja</small>',
   'modes.eyebrow':'Öt mód','modes.title':'Válaszd a rémálmod','modes.lead':'Egyedül a sötétben, barátokkal egy asztalnál — vagy úgy, hogy közülük az egyik <b>hazudik</b>.',
-  'm1.t':'Klasszikus','m1.p':'Hétköznapi ügyek: virágbolt, játszótér, állatkert, hotel… sima, tisztességes Murdoku hétköznapi emberekkel. Kézzel tervezett pályák, egyetlen megoldással.','m1.b':'10 pálya',
-  'm2.t':'Esemény','m2.p':'Tizenkilenc híres horror-játék és -sorozat világa, a saját karaktereikkel. A főgonosz az áldozat — te pedig kinyomozod, ki ölte meg.','m2.b':'19 pálya · eltitkosítva',
+  'm1.t':'Klasszikus','m1.p':'Hétköznapi ügyek: virágbolt, játszótér, állatkert, hotel… sima, tisztességes logikai rejtvények hétköznapi emberekkel. Kézzel tervezett pályák, egyetlen megoldással.','m1.b':'10 pálya',
+  'm2.t':'Esemény','m2.p':'Tizenkilenc eredeti horror-világ, mindegyik saját karakterekkel és saját szabállyal. A főgonosz az áldozat — te pedig kinyomozod, ki ölte meg.','m2.b':'19 pálya · eltitkosítva',
   'm3.t':'Random','m3.p':'Soha ugyanaz az ügy kétszer. Mindig kivihető, mindig új — és ha félúton abbahagyod, a felhő megjegyzi, hol tartottál. Bármelyik gépen folytathatod.','m3.b':'végtelen',
   'm4.t':'Együtt','m4.p':'Közös tábla. Mindketten raktok, és a másikét is elviheted. Chat — de csak a játékban, ott, ahol a tét van.','m4.b':'2–4 játékos',
   'm5.t':'Gyilkos','m5.p':'Egyikőtök áruló. Ő is nyomoz — de titokban szabotál. Nincs értesítés. Nincs jelzés. Csak a gyanú.','m5.b':'3–6 játékos',

@@ -14,56 +14,59 @@
     "W": "Wellness"
   },
   "layout": [
-    "KKSSSS",
-    "KSSWWS",
-    "KSSSWW",
-    "KFFWWW",
-    "FFFWWW",
-    "FFFFWW"
+    "WWSSFF",
+    "WWWSFF",
+    "WSSSFF",
+    "WSKFFF",
+    "WSKKKK",
+    "KKKKKK"
   ],
   "objects": [
     {
+      "type": "rug",
+      "at": "B3"
+    },
+    {
       "type": "stove",
       "at": [
-        "A4",
-        "A1"
+        "D5",
+        "A6"
       ],
       "blocking": true
     },
     {
-      "type": "minibar",
-      "at": "C1",
+      "type": "bath",
+      "at": "F4",
       "blocking": true
     },
     {
-      "type": "plant",
-      "at": "D4",
+      "type": "fridge",
+      "at": "E6",
       "blocking": true
     },
     {
-      "type": "sofa",
-      "at": "C2"
-    },
-    {
-      "type": "rug",
-      "at": "F1"
+      "type": "bed",
+      "at": [
+        "C1",
+        "D3"
+      ]
     }
   ],
   "characters": [
     {
-      "id": "anna",
-      "name": "Anna",
+      "id": "alfred",
+      "name": "Alfred",
       "race": "human",
-      "gender": "f",
+      "gender": "m",
       "clues": [
         {
           "kind": "northOf",
-          "of": "bella",
-          "rows": 1
+          "of": "cody",
+          "rows": 2
         }
       ],
       "clueText": [
-        "Pontosan egy sorral **Bellától északra** volt."
+        "Pontosan két sorral **Codytől északra** volt."
       ]
     },
     {
@@ -74,49 +77,51 @@
       "clues": [
         {
           "kind": "aloneWith",
-          "with": "clara"
+          "with": "cody"
         }
       ],
       "clueText": [
-        "**Egyedül** volt **Clarával**."
+        "**Egyedül** volt **Codyvel**."
       ]
     },
     {
-      "id": "clara",
-      "name": "Clara",
-      "race": "human",
-      "gender": "f",
-      "clues": [
-        {
-          "kind": "beside",
-          "object": "sofa"
-        }
-      ],
-      "clueText": [
-        "Egy **kanapé mellett** volt."
-      ]
-    },
-    {
-      "id": "derek",
-      "name": "Derek",
+      "id": "cody",
+      "name": "Cody",
       "race": "human",
       "gender": "m",
       "clues": [
         {
-          "kind": "southOf",
-          "of": "bella",
-          "rows": 2
+          "kind": "on",
+          "object": "rug"
         }
       ],
       "clueText": [
-        "Pontosan két sorral **Bellától délre** volt."
+        "Egy **szőnyegen** volt."
       ]
     },
     {
-      "id": "vera",
-      "name": "Vera",
+      "id": "dora",
+      "name": "Dora",
       "race": "human",
       "gender": "f",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "bath",
+            "rug"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **kád vagy szőnyeg mellett** volt."
+      ]
+    },
+    {
+      "id": "vlad",
+      "name": "Vlad",
+      "race": "human",
+      "gender": "m",
       "victim": true,
       "clues": [
         {
@@ -128,31 +133,34 @@
       ]
     },
     {
-      "id": "eva",
-      "name": "Eva",
+      "id": "elena",
+      "name": "Elena",
       "race": "human",
       "gender": "f",
       "clues": [
         {
-          "kind": "notSameRoom",
-          "with": "vera"
+          "kind": "besideAny",
+          "objects": [
+            "bath",
+            "fridge"
+          ]
         }
       ],
       "clueText": [
-        "**Nem** volt egy helyiségben **Verával**."
+        "Egy **kád vagy hűtő mellett** volt."
       ]
     }
   ],
   "activePowers": [],
   "solution": {
-    "anna": "B1",
-    "bella": "F2",
-    "clara": "C3",
-    "derek": "E4",
-    "vera": "D5",
-    "eva": "A6"
+    "alfred": "A1",
+    "bella": "D2",
+    "cody": "B3",
+    "dora": "E4",
+    "vlad": "C5",
+    "elena": "F6"
   },
-  "murderer": "derek",
+  "murderer": "elena",
   "rev": 1,
   "floors": {
     "K": "tile",

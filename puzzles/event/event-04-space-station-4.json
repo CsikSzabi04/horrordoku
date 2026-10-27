@@ -1,0 +1,219 @@
+{
+  "v": 1,
+  "id": "event-04-space-station-4",
+  "mode": "event",
+  "world": "space-station",
+  "title": "Késő jelentés",
+  "story": "Rico nem jelentkezett be a műszak végén. A mozgásérzékelő jelzett — csak éppen nem neki.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "H": "Híd",
+    "O": "Orvosi szárny",
+    "A": "Hangár",
+    "G": "Gépház",
+    "S": "Szellőzőrendszer",
+    "L": "Légzsilip"
+  },
+  "layout": [
+    "GGLSSSS",
+    "GGLSASA",
+    "GGLSAAA",
+    "OOLLLAA",
+    "OOLLHHA",
+    "OOLHHHH",
+    "OOOHHHH"
+  ],
+  "objects": [
+    {
+      "type": "cryopod",
+      "at": [
+        "F1",
+        "B7",
+        "C4"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "D6",
+        "A1",
+        "F5",
+        "C2"
+      ]
+    },
+    {
+      "type": "airlock",
+      "at": "E1",
+      "blocking": true
+    },
+    {
+      "type": "tracker",
+      "at": "G6",
+      "blocking": true
+    },
+    {
+      "type": "cardreader",
+      "at": [
+        "G3",
+        "C3",
+        "E5",
+        "B3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "flamer",
+      "at": "D4",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "sos",
+      "name": "Sampson",
+      "race": "ghost",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "airlock",
+          "cells": 1
+        }
+      ],
+      "clueText": [
+        "A légzsiliptől pontosan **1 mezőre** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "rokus",
+      "name": "Rico",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "A"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Hangárban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "az-urleny",
+      "name": "Az Űrszülött",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "sos",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Sampsontól délre** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "toth-nora",
+      "name": "Nora Tailor",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "antal-anita",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Amelia Ridleytől északra** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "akos",
+      "name": "Axton",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "cryopod",
+          "cells": 4
+        }
+      ],
+      "clueText": [
+        "A legközelebbi hibernálókapszulától pontosan **4 mezőre** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "veres",
+      "name": "Wade",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Hídon egy **padon** ült."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "antal-anita",
+      "name": "Amelia Ridley",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "cardreader",
+          "cells": 3
+        }
+      ],
+      "clueText": [
+        "A legközelebbi kártyaolvasótól pontosan **3 mezőre** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "sos": "F1",
+    "rokus": "E2",
+    "az-urleny": "A3",
+    "toth-nora": "C4",
+    "akos": "G5",
+    "veres": "D6",
+    "antal-anita": "B7"
+  },
+  "murderer": "akos",
+  "rev": 1,
+  "worldRule": "motion"
+}

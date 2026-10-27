@@ -1,0 +1,185 @@
+{
+  "v": 1,
+  "id": "event-01-night-pizzeria-3",
+  "mode": "event",
+  "world": "night-pizzeria",
+  "title": "Elnémult zenedoboz",
+  "story": "A zenedoboz elhallgatott, A Zsinórmester pedig mozdulatlanul hever a padlón. Valaki nem húzta fel időben — vagy éppen azért nem.",
+  "size": 6,
+  "difficulty": 3,
+  "rooms": {
+    "S": "Színpad",
+    "E": "Ebédlő",
+    "K": "Kalóz-öböl",
+    "O": "Konyha",
+    "I": "Iroda",
+    "N": "Nyugati folyosó"
+  },
+  "layout": [
+    "OOOOOO",
+    "IIOONN",
+    "IIINNN",
+    "IIIENS",
+    "KKKEES",
+    "KKKSSS"
+  ],
+  "objects": [
+    {
+      "type": "giftbox",
+      "at": [
+        "B4",
+        "C1",
+        "D6"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": "A1"
+    },
+    {
+      "type": "oven",
+      "at": "A6",
+      "blocking": true
+    },
+    {
+      "type": "camera",
+      "at": [
+        "F2",
+        "A2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "doorbtn",
+      "at": "F6",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "a-babu",
+      "name": "A Zsinórmester",
+      "race": "ghost",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "O"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Konyhában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "varga-ferenc",
+      "name": "Warren Ashford",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "nyuszi",
+      "name": "Benny Nyuszi",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "f",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "A Nyugati folyosón ő volt az **egyetlen nő**."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "arany-brumi",
+      "name": "Arany Teddy",
+      "race": "ghost",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "giftbox"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **ajándékdobozon** volt."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "kiss-marton",
+      "name": "Miles Schmitt",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "gt",
+          "n": 5
+        }
+      ],
+      "clueText": [
+        "Az **5. oszloptól jobbra** volt."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "brumi",
+      "name": "Teddy Bolyhosmackó",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "nyuszi",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Benny Nyuszitól keletre** volt."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "a-babu": "A1",
+    "varga-ferenc": "C2",
+    "nyuszi": "D3",
+    "arany-brumi": "B4",
+    "kiss-marton": "F5",
+    "brumi": "E6"
+  },
+  "murderer": "varga-ferenc",
+  "rev": 1,
+  "worldRule": "cameras"
+}

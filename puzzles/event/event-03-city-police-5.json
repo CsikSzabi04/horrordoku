@@ -1,0 +1,247 @@
+{
+  "v": 1,
+  "id": "event-03-city-police-5",
+  "mode": "event",
+  "world": "city-police",
+  "title": "A kampós kötél",
+  "story": "Ava Wei kampós kötele a korláton lóg, ő maga viszont a földön fekszik. Senki sem tudja, kinek dolgozott valójában.",
+  "size": 8,
+  "difficulty": 5,
+  "rooms": {
+    "F": "Főcsarnok",
+    "N": "Nyugati iroda",
+    "S": "Sötétkamra",
+    "K": "Könyvtár",
+    "M": "Mentőszoba",
+    "A": "Kapitányi iroda",
+    "L": "Lőtér"
+  },
+  "layout": [
+    "SSSKKKKK",
+    "SSAAFKKK",
+    "SAAAFFFF",
+    "SAAAFFLF",
+    "SMMMMLLF",
+    "MMMNLLLL",
+    "NMMNNLLL",
+    "NNNNNLLL"
+  ],
+  "objects": [
+    {
+      "type": "itembox",
+      "at": [
+        "H1",
+        "F4",
+        "A5"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "E2",
+        "F8",
+        "G1"
+      ]
+    },
+    {
+      "type": "doorSpade",
+      "at": "A6",
+      "blocking": true
+    },
+    {
+      "type": "doorDiamond",
+      "at": "G4",
+      "blocking": true
+    },
+    {
+      "type": "doorCircle",
+      "at": "C2",
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": [
+        "D6",
+        "G7",
+        "B1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "typewriter",
+      "at": [
+        "F6",
+        "A4",
+        "F5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "herb",
+      "at": "B7"
+    }
+  ],
+  "characters": [
+    {
+      "id": "biro-anett",
+      "name": "Anita Birkley",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Sötétkamrában volt."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "bodor-marcell",
+      "name": "Martin Brannick",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A helyiségében **hárman** voltak."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "biro-csenge",
+      "name": "Cherry Birkley",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "hegedus-klara"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Clara Redbrookkal**."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "hegedus-klara",
+      "name": "Clara Redbrook",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "itembox"
+        }
+      ],
+      "clueText": [
+        "Egy **tárolódobozon** volt."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "a-sotet-ur",
+      "name": "Y úr",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "doorSpade"
+        }
+      ],
+      "clueText": [
+        "Egy **pikk ajtó mellett** volt."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "banfi-bruno",
+      "name": "Bryce Steel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **gyógynövény mellett** volt."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "lin-adel",
+      "name": "Ava Wei",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Nyugati irodában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "lazar-leo",
+      "name": "Leo S. Kendrick",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "gt",
+          "n": 7
+        }
+      ],
+      "clueText": [
+        "A **7. sor alatt** volt."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "biro-anett": "H1",
+    "bodor-marcell": "E2",
+    "biro-csenge": "G3",
+    "hegedus-klara": "F4",
+    "a-sotet-ur": "A5",
+    "banfi-bruno": "B6",
+    "lin-adel": "D7",
+    "lazar-leo": "C8"
+  },
+  "murderer": "lazar-leo",
+  "rev": 1,
+  "worldRule": "doors"
+}

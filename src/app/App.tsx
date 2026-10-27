@@ -1,51 +1,37 @@
-import type { ComponentType } from 'react'
+import { useEffect } from 'react'
+import { setCurrentLang, useCurrentLang } from '../i18n/lang'
+import { getStorage } from '../storage'
 import { ToastProvider } from '../ui'
 import { ErrorBoundary } from './ErrorBoundary'
 import { NavProvider, useNav } from './nav'
-import type { RouteName } from './routes'
-import MenuScreen from '../screens/menu'
-import GameScreen from '../screens/game'
-import ClassicScreen from '../screens/classic'
-import RandomScreen from '../screens/random'
-import EventScreen from '../screens/event'
-// AI-B tulajdona (A1 csak csonkot hozott létre):
-import LoginScreen from '../screens/login'
-import ProfileScreen from '../screens/profile'
-import FriendsScreen from '../screens/friends'
 import { AddLinkHandler } from '../screens/friends/addLink'
-import LobbyScreen from '../screens/lobby'
-import CoopScreen from '../screens/coop'
-import CollectionScreen from '../screens/collection'
-import SettingsScreen from '../screens/settings'
-
-
-const screens: Record<RouteName, ComponentType> = {
-  menu: MenuScreen,
-  classic: ClassicScreen,
-  event: EventScreen,
-  random: RandomScreen,
-  game: GameScreen,
-  collection: CollectionScreen,
-  settings: SettingsScreen,
-  login: LoginScreen,
-  profile: ProfileScreen,
-  friends: FriendsScreen,
-  lobby: LobbyScreen,
-  coop: CoopScreen,
-}
+import { InviteBanner } from '../screens/lobby/InviteBanner'
+import { prefetchScreens, ScreenOutlet } from './screens'
 
 function Shell() {
   const { route } = useNav()
-  const Screen = screens[route.name]
-  return <Screen />
+  return <ScreenOutlet name={route.name} />
+}
+
+/** A nyelv a beállításokból (helyi tároló, bejelentkezve a felhő-profillal szinkronban): induláskor betölti és követi a változást. */
+function useLanguageSync(): void {
+  useEffect(() => {
+    const load = () => void getStorage().getSettings().then((st) => setCurrentLang(st.language))
+    load()
+    return getStorage().onChange((e) => e.type === 'settings' && load())
+  }, [])
 }
 
 export default function App() {
+  useLanguageSync()
+  useEffect(prefetchScreens, [])
+  useCurrentLang() // a nyelvváltáskor az egész fa újrarajzolódik, hogy a t() hívások az új nyelvet adják
   return (
     <ErrorBoundary>
       <ToastProvider>
         <NavProvider>
           <AddLinkHandler />
+          <InviteBanner />
           <Shell />
         </NavProvider>
       </ToastProvider>

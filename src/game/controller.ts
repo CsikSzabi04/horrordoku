@@ -62,7 +62,11 @@ function inverse(before: BoardState, op: Op): Op[] {
     case 'move': {
       const cell = op.op === 'place' ? op.cell : op.to
       const prev = before.placed[op.char]
-      return [prev ? { op: 'place', char: op.char, cell: prev } : { op: 'unplace', char: op.char }, ...restoreCell(cell)]
+      // a lerakás a karakter betű-jegyzeteit minden mezőről levette — a visszavonás mindet visszaadja
+      const strippedNotes: Op[] = Object.entries(before.notes)
+        .filter(([k, list]) => k !== cell && list.includes(op.char))
+        .map(([k, list]) => ({ op: 'note', cell: k, chars: list }) as Op)
+      return [prev ? { op: 'place', char: op.char, cell: prev } : { op: 'unplace', char: op.char }, ...restoreCell(cell), ...strippedNotes]
     }
     case 'unplace':
       return before.placed[op.char] ? [{ op: 'place', char: op.char, cell: before.placed[op.char]! }] : []
@@ -107,12 +111,13 @@ export function createBoardController(puzzle: Puzzle, initial?: BoardState): Gam
     }, ms)
     timers.add(t)
   }
-  const blocked = (cell: CellId) => v.vanished.includes(cell) || v.locked.includes(cell)
+  // Eltüntetés (GDD 22.3): amíg a tárgy „nincs ott”, a mező szabadnak látszik — lerakható rá (csapda); visszatérve zárolt marad
+  const sealed = (cell: CellId) => v.locked.includes(cell)
   const cellOf = (op: Op): CellId | null => (op.op === 'place' || op.op === 'mark' || op.op === 'note' || op.op === 'erase' ? op.cell : op.op === 'move' ? op.to : null)
 
   const run = (op: Op): OpError | null => {
     const c = cellOf(op)
-    if (c && blocked(c)) return 'vanished_cell'
+    if (c && sealed(c)) return 'vanished_cell'
     if (v.silenced) return 'power_violation'
     const r = boardEngine.apply(puzzle, state, op)
     if (!r.ok) return r.error
@@ -134,7 +139,10 @@ export function createBoardController(puzzle: Puzzle, initial?: BoardState): Gam
     actMany(ops) {
       const invs: Op[][] = []
       const done: Op[] = []
-      for (const op of ops) {
+      for (const op0 of ops) {
+        // csapda-mező: az eltűnt tárgy mezőjére rakott karakter „trap” jelzést kap, hogy a társak (és az újrajátszás) is elfogadják
+        const tc = op0.op === 'place' ? op0.cell : op0.op === 'move' ? op0.to : null
+        const op: Op = tc && v.vanished.includes(tc) && (op0.op === 'place' || op0.op === 'move') ? { ...op0, trap: true } : op0
         const before = state
         const err = run(op)
         if (err) {
@@ -176,6 +184,8 @@ export function createBoardController(puzzle: Puzzle, initial?: BoardState): Gam
     applyRemote(e: OpEnvelope) {
       if (seen.has(e.id)) return
       seen.add(e.id)
+      const rc = cellOf(e.op)
+      if (rc && sealed(rc)) return // a visszatért, zárolt mezőre már semmi sem kerülhet
       const r = boardEngine.apply(puzzle, state, e.op)
       if (r.ok) {
         state = r.state
@@ -215,12 +225,12 @@ export function createBoardController(puzzle: Puzzle, initial?: BoardState): Gam
           })
           return
         case 'object_vanish':
+          if (v.vanished.includes(fx.cell) || v.locked.includes(fx.cell)) return // ugyanaz a hatás eseményből és állapotból is megérkezhet
           publish({ ...base, vanished: [...v.vanished, fx.cell] })
           later(fx.ms, () => {
-            for (const [id, at] of Object.entries(state.placed)) {
-              const r = at === fx.cell ? boardEngine.apply(puzzle, state, { op: 'unplace', char: id }) : null
-              if (r?.ok) state = r.state
-            }
+            // a visszatéréskor minden törlődik a mezőről (lerakás, kizárás, jegyzet) — a sor / oszlop X-ei ettől újraszámolódnak
+            const r = boardEngine.apply(puzzle, state, { op: 'erase', cell: fx.cell })
+            if (r.ok) state = r.state
             publish({ vanished: v.vanished.filter((c) => c !== fx.cell), locked: [...v.locked, fx.cell] })
           })
           return

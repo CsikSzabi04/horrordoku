@@ -1,0 +1,241 @@
+{
+  "v": 1,
+  "id": "event-05-mountain-cabin-4",
+  "mode": "event",
+  "world": "mountain-cabin",
+  "title": "Elmosódott nyomok",
+  "story": "Matty nyomai a hóban a kabinig vezetnek, onnan már nem. A totemek mellett állók többet látnak.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "N": "Nappali",
+    "K": "Konyha",
+    "F": "Fürdő",
+    "P": "Pince",
+    "H": "Hálók",
+    "T": "Tisztás",
+    "E": "Felvonó"
+  },
+  "layout": [
+    "NNKKPPP",
+    "NKKKPPP",
+    "NNKTTTT",
+    "NNFTTEE",
+    "NFFFHEE",
+    "FFFHHHE",
+    "FFFHHHE"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "G2",
+        "F6",
+        "F5",
+        "G6"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": "A4"
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "B3",
+        "E1",
+        "C2"
+      ]
+    },
+    {
+      "type": "totem",
+      "at": [
+        "F1",
+        "D6",
+        "C6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "fireplace",
+      "at": [
+        "A5",
+        "G4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "trophy",
+      "at": [
+        "G5",
+        "E7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "gunrack",
+      "at": "G7",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "krisztian",
+      "name": "Kit",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "dani",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Sammytől keletre** volt."
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    },
+    {
+      "id": "a-hegyi-szellem",
+      "name": "Az Agancsos Éhség",
+      "race": "werewolf",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    },
+    {
+      "id": "gergo",
+      "name": "Joss",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "julia"
+        },
+        {
+          "kind": "on",
+          "object": "sofa"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Jessaminével**.",
+        "Egy **kanapén** ült."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    },
+    {
+      "id": "julia",
+      "name": "Jessamine",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        },
+        {
+          "kind": "beside",
+          "object": "fireplace"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült.",
+        "Egy **kandalló mellett** volt."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    },
+    {
+      "id": "dani",
+      "name": "Sammy",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    },
+    {
+      "id": "mihaly",
+      "name": "Mick",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Hálókban ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    },
+    {
+      "id": "mate",
+      "name": "Matty",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Fürdőben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "krisztian": "E1",
+    "a-hegyi-szellem": "G2",
+    "gergo": "B3",
+    "julia": "A4",
+    "dani": "D5",
+    "mihaly": "F6",
+    "mate": "C7"
+  },
+  "murderer": "dani",
+  "rev": 1,
+  "worldRule": "totems"
+}

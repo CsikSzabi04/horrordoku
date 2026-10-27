@@ -1,0 +1,175 @@
+{
+  "v": 1,
+  "id": "event-04-space-station-1",
+  "mode": "event",
+  "world": "space-station",
+  "title": "A szellőző csúszása",
+  "story": "Az Űrszülött a szellőzőben csúszott el utoljára. A mozgásérzékelő nem nevet mond — csak távolságot.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "H": "Hangár",
+    "G": "Gépház",
+    "S": "Szellőzőrendszer",
+    "L": "Légzsilip"
+  },
+  "layout": [
+    "LLHHH",
+    "SLHHH",
+    "GGGGH",
+    "GGGGH",
+    "GGGGH"
+  ],
+  "objects": [
+    {
+      "type": "vent",
+      "at": [
+        "B3",
+        "C5"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "E4",
+        "B5"
+      ]
+    },
+    {
+      "type": "airlock",
+      "at": "D3",
+      "blocking": true
+    },
+    {
+      "type": "tracker",
+      "at": "D1",
+      "blocking": true
+    },
+    {
+      "type": "cardreader",
+      "at": [
+        "A4",
+        "D5",
+        "C1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "flamer",
+      "at": "A5",
+      "blocking": true
+    },
+    {
+      "type": "cryopod",
+      "at": "B4"
+    }
+  ],
+  "characters": [
+    {
+      "id": "akos",
+      "name": "Axton",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "airlock",
+          "cells": 3
+        }
+      ],
+      "clueText": [
+        "A légzsiliptől pontosan **3 mezőre** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "sos",
+      "name": "Sampson",
+      "race": "ghost",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "az-urleny",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **az Űrszülötttől északra** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "toth-nora",
+      "name": "Nora Tailor",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "vent",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "A Gépházban egy **szellőzőrácson** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "az-urleny",
+      "name": "Az Űrszülött",
+      "race": "ghoul",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Hangárban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "antal-anita",
+      "name": "Amelia Ridley",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "tracker",
+          "cells": 4
+        }
+      ],
+      "clueText": [
+        "A mozgásérzékelőtől pontosan **4 mezőre** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "akos": "A1",
+    "sos": "D2",
+    "toth-nora": "B3",
+    "az-urleny": "E4",
+    "antal-anita": "C5"
+  },
+  "murderer": "sos",
+  "rev": 1,
+  "worldRule": "motion"
+}

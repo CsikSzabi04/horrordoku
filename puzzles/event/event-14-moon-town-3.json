@@ -1,0 +1,233 @@
+{
+  "v": 1,
+  "id": "event-14-moon-town-3",
+  "mode": "event",
+  "world": "moon-town",
+  "title": "Teliholdkor",
+  "story": "Taylor Lockridge a lépcsőn feküdt, amikor kisütött a hold. A napfényes mezőket a vámpírok elkerülik.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "H": "Holdi Kocsma",
+    "S": "Sárvári-kúria",
+    "G": "Gyöngyösi-ház",
+    "F": "Fűzfa-híd",
+    "T": "Temető",
+    "I": "Gimnázium",
+    "R": "Régi templom"
+  },
+  "layout": [
+    "TTGGIII",
+    "TTTGIII",
+    "TRRGGII",
+    "TRRRGGG",
+    "SSHHHFF",
+    "SSHHHFF",
+    "SSHHFFF"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "E5",
+        "F1",
+        "D7",
+        "E1"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "B6",
+        "C2",
+        "F2",
+        "B5"
+      ]
+    },
+    {
+      "type": "lamp",
+      "at": [
+        "G6",
+        "F5",
+        "G1",
+        "F3",
+        "B4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "charger",
+      "at": [
+        "D2",
+        "E4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": [
+        "C4",
+        "G7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "grave",
+      "at": [
+        "F4",
+        "E6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": "D4",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "karola-fabian",
+      "name": "Coraline Forrester",
+      "race": "vampire",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "A Gimnáziumban egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "tamas-lukacs",
+      "name": "Taylor Lockridge",
+      "race": "werewolf",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Temetőben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "alfred-sos",
+      "name": "Aldric Saltwell",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "dark"
+        }
+      ],
+      "clueText": [
+        "Sötét mezőn állt — a Sötétség megszállta."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "kata-pasztor",
+      "name": "Katerina Pearce",
+      "race": "vampire",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "A Gyöngyösi-házban volt."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "ella-gyongyosi",
+      "name": "Elina Gilmore",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "szabolcs-sarvari",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Stephen Salvatoritól északra** volt."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "szabolcs-sarvari",
+      "name": "Stephen Salvatori",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "A Sárvári-kúriában egy **széken** ült."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "daniel-sarvari",
+      "name": "Damian Salvatori",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Holdi Kocsmában egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "karola-fabian": "F1",
+    "tamas-lukacs": "C2",
+    "alfred-sos": "A3",
+    "kata-pasztor": "G4",
+    "ella-gyongyosi": "E5",
+    "szabolcs-sarvari": "B6",
+    "daniel-sarvari": "D7"
+  },
+  "murderer": "alfred-sos",
+  "rev": 1,
+  "worldRule": "light"
+}

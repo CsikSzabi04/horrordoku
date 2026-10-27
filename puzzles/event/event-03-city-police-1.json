@@ -1,0 +1,179 @@
+{
+  "v": 1,
+  "id": "event-03-city-police-1",
+  "mode": "event",
+  "world": "city-police",
+  "title": "Y úr kalapja",
+  "story": "1998 szeptembere. Y úr a kalapja mellett fekszik, a kulcsos ajtók pedig mindkét oldalról figyelnek.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "S": "Sötétkamra",
+    "K": "Könyvtár",
+    "M": "Mentőszoba",
+    "A": "Kapitányi iroda",
+    "L": "Lőtér"
+  },
+  "layout": [
+    "AAAAA",
+    "AALSS",
+    "MLLKS",
+    "MMLKS",
+    "MMMKS"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": "A4"
+    },
+    {
+      "type": "herb",
+      "at": "E2"
+    },
+    {
+      "type": "doorSpade",
+      "at": "E3",
+      "blocking": true
+    },
+    {
+      "type": "doorDiamond",
+      "at": "C2",
+      "blocking": true
+    },
+    {
+      "type": "doorCircle",
+      "at": "D4",
+      "blocking": true
+    },
+    {
+      "type": "typewriter",
+      "at": [
+        "B5",
+        "A1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": [
+        "C1",
+        "D2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "crate",
+      "at": "C3"
+    },
+    {
+      "type": "itembox",
+      "at": "C4"
+    }
+  ],
+  "characters": [
+    {
+      "id": "hegedus-klara",
+      "name": "Clara Redbrook",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "notBesideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **gyógynövény mellett**."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "biro-csenge",
+      "name": "Cherry Birkley",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "A"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Kapitányi irodában volt."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "lazar-leo",
+      "name": "Leo S. Kendrick",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Könyvtárban ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "a-sotet-ur",
+      "name": "Y úr",
+      "race": "ghoul",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Mentőszobában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "lin-adel",
+      "name": "Ava Wei",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "biro-csenge",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Cherry Birkleytől délre** volt."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "hegedus-klara": "B1",
+    "biro-csenge": "E2",
+    "lazar-leo": "D3",
+    "a-sotet-ur": "A4",
+    "lin-adel": "C5"
+  },
+  "murderer": "lin-adel",
+  "rev": 1,
+  "worldRule": "doors"
+}

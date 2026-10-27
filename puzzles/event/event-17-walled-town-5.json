@@ -1,0 +1,283 @@
+{
+  "v": 1,
+  "id": "event-17-walled-town-5",
+  "mode": "event",
+  "world": "walled-town",
+  "title": "Csendes konyha",
+  "story": "Carla Pellet a konyhában fekszik, a tűz még ég. A generátor mellett álló zajt csap.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "F": "Fogda-blokk",
+    "A": "Farm",
+    "S": "Sáncváros főtere",
+    "D": "Dombtető",
+    "E": "Fegyvertár",
+    "T": "Templom",
+    "R": "Erdei út"
+  },
+  "layout": [
+    "TTTDDDFFF",
+    "TTDDDDFFF",
+    "TTTDDDDFF",
+    "TTDDDFFFF",
+    "TTDSDFFFF",
+    "STSSAAAFE",
+    "SSSAAAAFE",
+    "RRRAAAAFE",
+    "RRRREEEEE"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "I6",
+        "E2",
+        "C5"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "B7",
+        "H5",
+        "C1",
+        "F3",
+        "E4"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "D8",
+        "D1",
+        "B1"
+      ]
+    },
+    {
+      "type": "generator",
+      "at": [
+        "I3",
+        "A8",
+        "G5",
+        "H3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "barrel",
+      "at": "H1",
+      "blocking": true
+    },
+    {
+      "type": "campfire",
+      "at": [
+        "C6",
+        "F5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tent",
+      "at": [
+        "F1",
+        "C4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "car",
+      "at": "I8",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "kornel-gorbe",
+      "name": "Karl Granger",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyeg mellett** volt."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "magdolna-zold",
+      "name": "Maisie Greenwood",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "D"
+        }
+      ],
+      "clueText": [
+        "A Dombtetőn egy **padon** ült."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "a-fonok",
+      "name": "A Helytartó",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "D"
+        }
+      ],
+      "clueText": [
+        "A Dombtetőn egy **ládán** volt."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "nemes-noel",
+      "name": "Neylan",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszloptól balra** volt."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "denes-deak",
+      "name": "Darren Dixley",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "nemes-noel",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Neylantól délre** volt."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "rudi-gorbe",
+      "name": "Rich Granger",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "mihaela-szep",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Mishanától északra** volt."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "gyula-reti",
+      "name": "Glen Ryu",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "A Sáncváros főterén ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "mihaela-szep",
+      "name": "Mishana",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "ne",
+          "n": 6
+        }
+      ],
+      "clueText": [
+        "**Nem** a **6. sorban** volt."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "kamilla-pelle",
+      "name": "Carla Pellet",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Fegyvertárban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "kornel-gorbe": "C1",
+    "magdolna-zold": "E2",
+    "a-fonok": "F3",
+    "nemes-noel": "A4",
+    "denes-deak": "H5",
+    "rudi-gorbe": "I6",
+    "gyula-reti": "B7",
+    "mihaela-szep": "D8",
+    "kamilla-pelle": "G9"
+  },
+  "murderer": "rudi-gorbe",
+  "rev": 1,
+  "worldRule": "generators"
+}

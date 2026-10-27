@@ -1,0 +1,260 @@
+{
+  "v": 1,
+  "id": "event-16-rain-forest-5",
+  "mode": "event",
+  "world": "rain-forest",
+  "title": "Az orvos",
+  "story": "Carlyle Callen sosem hagyta cserben a betegeit — most nem tudott magán segíteni. A totemek mellett látomások tárulnak fel.",
+  "size": 8,
+  "difficulty": 5,
+  "rooms": {
+    "K": "Kollár-ház",
+    "E": "Esőerdő Gimnázium",
+    "R": "Erdei tisztás",
+    "C": "Csendes-part",
+    "L": "Lenkei-ház",
+    "S": "Esőerdő kórház",
+    "V": "Vérkő-torony"
+  },
+  "layout": [
+    "RRRRRRRR",
+    "RRRCCRRR",
+    "EEECCRSS",
+    "EEECCSSS",
+    "EEECCKSS",
+    "LLECKKSV",
+    "LLEKKKVV",
+    "LLEKKVVV"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "H7",
+        "D6",
+        "G5",
+        "G2"
+      ]
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "A3",
+        "E6",
+        "B6"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": "F8"
+    },
+    {
+      "type": "totem",
+      "at": [
+        "C5",
+        "E3",
+        "G4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": [
+        "E4",
+        "C3",
+        "H4",
+        "B8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "fireplace",
+      "at": [
+        "C6",
+        "F3"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "rozalia-hajdu",
+      "name": "Rosalyn Hales",
+      "race": "vampire",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "ne",
+          "n": 7
+        }
+      ],
+      "clueText": [
+        "**Nem** a **7. sorban** volt."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "karoly-kollar",
+      "name": "Carlyle Callen",
+      "race": "vampire",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "C"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Csendes-parton **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "gabor-sas",
+      "name": "Jamie",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa"
+        },
+        {
+          "kind": "onlyOn",
+          "object": "sofa"
+        }
+      ],
+      "clueText": [
+        "Egy **kanapén** ült.",
+        "Ő volt az egyetlen, aki **kanapén** ült."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "peter-lenkei",
+      "name": "Chaz Heron",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "gabor-sas"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Jamiével**."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "ede-kollar",
+      "name": "Edmund Callen",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "Az Esőerdő kórházban ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "jonas-hajdu",
+      "name": "Casper Hales",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "peter-lenkei",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Chaz Herontól délre** volt."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "bella-lenkei",
+      "name": "Belle Heron",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "jakob-fekete",
+      "name": "Jakob Dark",
+      "race": "werewolf",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        },
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült.",
+        "A Vérkő-toronyban ő volt az **egyetlen férfi**."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "rozalia-hajdu": "C1",
+    "karoly-kollar": "E2",
+    "gabor-sas": "A3",
+    "peter-lenkei": "B4",
+    "ede-kollar": "G5",
+    "jonas-hajdu": "D6",
+    "bella-lenkei": "H7",
+    "jakob-fekete": "F8"
+  },
+  "murderer": "jonas-hajdu",
+  "rev": 1,
+  "worldRule": "totems"
+}

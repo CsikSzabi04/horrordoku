@@ -1,6 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { afterEach, describe, expect, it, vi } from 'vitest'
 import { boardEngine } from '../engine'
+import { buildGrid } from '../engine/grid'
 import type { Unsubscribe, Uuid } from '../shared/base'
 import type { BoardState, Op, OpEnvelope } from '../shared/board'
 import type { Puzzle } from '../shared/puzzle'
@@ -103,6 +104,14 @@ class Client {
     this.sync = createCoopSync({ session: this.session as never, board: this.board, puzzle, meId: this.id, isHost: () => isHost })
     return this
   }
+}
+
+/** Olyan kliens, amely csak a „a” hosttól fogad pillanatképet. */
+const createBoth = (hub: Hub): Client => {
+  const b = hub.add('b')
+  b.board = createBoardController(puzzle)
+  b.sync = createCoopSync({ session: b.session as never, board: b.board, puzzle, meId: 'b', isHost: () => false, hostId: () => 'a' })
+  return b
 }
 
 const rng = (seed: number) => () => {
@@ -339,3 +348,103 @@ describe('közös beküldés', () => {
     expect(a.sync.canHint(2)).toBe(false)
   })
 })
+
+describe('Gyilkos-mód: az Eltüntetés csapda-mezője a közös táblán', () => {
+  /** A pálya egy foglalt tárgyának mezője. */
+  const blockedCell = ((): string => {
+    const g = buildGrid(puzzle)
+    for (let r = 0; r < puzzle.size; r++) for (let c = 0; c < puzzle.size; c++) if (g.blocked[r]![c]) return `${String.fromCharCode(65 + c)}${r + 1}`
+    throw new Error('nincs foglalt mező')
+  })()
+
+  it('a visszatéréskor mindenhol törlődik a mező tartalma, és minden kliens ugyanarra jut (összevissza kézbesítéssel is)', () => {
+    vi.useFakeTimers()
+    for (let seed = 1; seed <= 25; seed++) {
+      const rnd = rng(seed * 13)
+      const hub = new Hub()
+      const cs = ['a', 'b', 'c'].map((id, i) => hub.add(id).start(i === 0))
+      for (const c of cs) c.board.applyFx({ type: 'object_vanish', cell: blockedCell, ms: 2000 })
+      for (let step = 0; step < 60; step++) {
+        const c = cs[Math.floor(rnd() * cs.length)]!
+        // a tárgy nincs ott: a mezőre is rakhatnak (csapda); közben a többi mezőn is folyik a munka
+        c.board.act(rnd() < 0.5 ? { op: 'place', char: chars[Math.floor(rnd() * chars.length)]!, cell: blockedCell } : randomOp(rnd))
+        if (rnd() < 0.3) hub.flush(rnd)
+      }
+      hub.flush(rnd)
+      // a csapda-mezőn volt (legalább egy) karakter, amíg a tárgy el volt tűnve
+      vi.advanceTimersByTime(2100) // a tárgy visszatér: törlődik, zárolt
+      hub.flush(rnd)
+      for (let i = 0; i < 4; i++) {
+        vi.advanceTimersByTime(10_000)
+        hub.flush(rnd)
+      }
+      for (const c of cs) {
+        expect(c.board.view().locked, `seed ${seed}`).toEqual([blockedCell])
+        expect(Object.values(c.board.getState().placed).includes(blockedCell), `seed ${seed}: a zárolt mező üres`).toBe(false)
+        expect(c.board.getState().marks.includes(blockedCell)).toBe(false)
+      }
+      expect(new Set(cs.map((c) => stateHash(c.board.getState()))).size, `seed ${seed}`).toBe(1)
+      // a visszatért mezőre többé nem lehet rakni
+      expect(cs[0]!.board.act({ op: 'place', char: chars[0]!, cell: blockedCell })).toBe('vanished_cell')
+    }
+  })
+
+})
+
+describe('hálózati hamisítás ellen', () => {
+  const solve = (c: Client) => {
+    for (const [ch, cell] of Object.entries(puzzle.solution)) c.board.act({ op: 'place', char: ch, cell })
+  }
+  const results = (c: Client) => {
+    const r: { correct: boolean }[] = []
+    c.sync.onResult((x) => r.push(x))
+    return { r }
+  }
+
+  it('hamisítás ellen: az eredményt csak a javaslattevő közölheti, a pillanatképet csak a host', () => {
+    const hub = new Hub()
+    const a = hub.add('a').start(true)
+    const b = hub.add('b').start(false)
+    const c = hub.add('c').start(false)
+    const rb = results(b)
+    solve(a)
+    hub.flush()
+    a.sync.propose()
+    hub.flush()
+    const id = b.sync.proposal()!.id
+    // c hamis „helyes” eredményt küld a javaslat nevében
+    c.session.ops.broadcast('result', { id, correct: true })
+    hub.flush()
+    expect(rb.r).toEqual([])
+    expect(b.sync.proposal()?.id).toBe(id) // a javaslat érintetlen
+  })
+
+  it('hibás vagy idegen pillanatkép / kivonat nem kerül a táblára', () => {
+    const hub = new Hub()
+    const a = hub.add('a').start(true)
+    const b = createBoth(hub)
+    a.board.act({ op: 'mark', cell: 'B2', on: true })
+    hub.flush()
+    const before = stateHash(b.board.getState())
+    // rossz alakú pillanatkép (nem tömb napló, hiányzó mezők) — nem szállhat el, és nem módosít
+    for (const bad of [{ to: 'b', base: 5, log: [] }, { to: 'b', base: { placed: {}, marks: 'x', notes: {} }, log: [] }, { to: 'b', base: { placed: {}, marks: [], notes: {} }, log: 'x' }, { to: 'b', base: { placed: { amir: 7 }, marks: [], notes: {} }, log: [] }])
+      a.session.ops.broadcast('snap', bad as never)
+    hub.flush()
+    expect(stateHash(b.board.getState())).toBe(before)
+    // nem hosttól érkező, jól formált pillanatkép is eldobódik (b tudja, hogy a host „a”)
+    const c = hub.add('c').start(false)
+    c.session.ops.broadcast('snap', { to: 'b', base: { placed: {}, marks: [], notes: {} }, log: [] })
+    hub.flush()
+    expect(b.board.getState().marks).toContain('B2')
+  })
+
+  it('a hamisító társ nem meríti ki a közös tippkeretet', () => {
+    const hub = new Hub()
+    const a = hub.add('a').start(true)
+    const b = hub.add('b').start(false)
+    for (let i = 0; i < 50; i++) b.sync.noteHint()
+    hub.flush()
+    expect(a.sync.hintsUsed()).toBe(3) // egy játékosnál legfeljebb 3 számít
+  })
+})
+

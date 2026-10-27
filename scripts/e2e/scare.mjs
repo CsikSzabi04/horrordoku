@@ -6,7 +6,7 @@ const b = await puppeteer.launch({ executablePath: BRAVE, headless: 'new', args:
 const p = await b.newPage()
 const errors = []
 p.on('pageerror', (e) => errors.push(String(e)))
-await p.evaluateOnNewDocument(() => { try { localStorage.setItem('nd_tutorial', '1') } catch {} })
+await p.evaluateOnNewDocument(() => { try { localStorage.setItem('nd_tutorial', '1'); localStorage.setItem('nd:v1:guest:language', JSON.stringify('hu')) } catch {} })
 await p.goto(`${BASE}/play/`, { waitUntil: 'networkidle0' })
 const r = await p.evaluate(async () => {
   const st = await import('/src/storage/index.ts')

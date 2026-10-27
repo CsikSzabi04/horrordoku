@@ -1,0 +1,191 @@
+{
+  "v": 1,
+  "id": "event-04-space-station-2",
+  "mode": "event",
+  "world": "space-station",
+  "title": "Zárt ajtó mögött",
+  "story": "Harlow a rendszerek közt dolgozott, amikor az áram megint kimaradt. A mozgásérzékelő pittyeg, de nevet nem mond.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "H": "Híd",
+    "O": "Orvosi szárny",
+    "G": "Gépház",
+    "S": "Szellőzőrendszer",
+    "L": "Légzsilip"
+  },
+  "layout": [
+    "SSSLGG",
+    "SSLLLG",
+    "SLLLGG",
+    "HHOOOO",
+    "HHOOOO",
+    "HHHHHO"
+  ],
+  "objects": [
+    {
+      "type": "cryopod",
+      "at": [
+        "D4",
+        "A1",
+        "D6"
+      ]
+    },
+    {
+      "type": "vent",
+      "at": [
+        "C6",
+        "B1"
+      ]
+    },
+    {
+      "type": "airlock",
+      "at": "E6",
+      "blocking": true
+    },
+    {
+      "type": "tracker",
+      "at": "E2",
+      "blocking": true
+    },
+    {
+      "type": "flamer",
+      "at": "E1",
+      "blocking": true
+    },
+    {
+      "type": "cardreader",
+      "at": [
+        "C3",
+        "A2",
+        "C2"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "akos",
+      "name": "Axton",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "airlock",
+          "cells": 5
+        }
+      ],
+      "clueText": [
+        "A légzsiliptől pontosan **5 mezőre** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "veres",
+      "name": "Wade",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Szellőzőrendszerben volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "antal-anita",
+      "name": "Amelia Ridley",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "airlock",
+          "cells": 4
+        }
+      ],
+      "clueText": [
+        "A légzsiliptől pontosan **4 mezőre** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "toth-nora",
+      "name": "Nora Tailor",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "cryopod"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **hibernálókapszulán** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "meszaros",
+      "name": "Harlow",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "O"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Az Orvosi szárnyban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "az-urleny",
+      "name": "Az Űrszülött",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "vent"
+        }
+      ],
+      "clueText": [
+        "Egy **szellőzőrácson** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "akos": "B1",
+    "veres": "F2",
+    "antal-anita": "A3",
+    "toth-nora": "D4",
+    "meszaros": "E5",
+    "az-urleny": "C6"
+  },
+  "murderer": "toth-nora",
+  "rev": 1,
+  "worldRule": "motion"
+}

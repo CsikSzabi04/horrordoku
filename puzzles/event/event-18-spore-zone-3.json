@@ -1,0 +1,255 @@
+{
+  "v": 1,
+  "id": "event-18-spore-zone-3",
+  "mode": "event",
+  "world": "spore-zone",
+  "title": "Két testvér",
+  "story": "Hank a kisöccse mellett maradt a szálláson, ahol a rádió még sistergett. A spórák köde kitakarja a nyomok néhány szavát.",
+  "size": 8,
+  "difficulty": 4,
+  "rooms": {
+    "K": "Karantén-zóna",
+    "D": "Dunaváros",
+    "Z": "Zsilip-gát",
+    "T": "Tetőtelep",
+    "R": "Kórház",
+    "M": "Metró",
+    "H": "Hegyi kabin"
+  },
+  "layout": [
+    "MMMHHHZZ",
+    "MMKKHHZZ",
+    "MMKKHZZZ",
+    "MMTTTDZZ",
+    "MTTTTDDD",
+    "RRTTTDDD",
+    "RRRRRDDD",
+    "RRRRRDDD"
+  ],
+  "objects": [
+    {
+      "type": "crate",
+      "at": [
+        "C7",
+        "F2",
+        "G4",
+        "D8",
+        "H6"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "H5",
+        "A6",
+        "E1",
+        "F4"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "B3",
+        "B2"
+      ]
+    },
+    {
+      "type": "radio",
+      "at": [
+        "C5",
+        "D1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "rock",
+      "at": "A2",
+      "blocking": true
+    },
+    {
+      "type": "car",
+      "at": "D7",
+      "blocking": true
+    },
+    {
+      "type": "tent",
+      "at": "E3",
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": [
+        "A5",
+        "H8",
+        "D4"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "hektor",
+      "name": "Hank",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Hegyi kabinban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "renata",
+      "name": "Rylee",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate"
+        }
+      ],
+      "clueText": [
+        "Egy **ládán** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "szabi",
+      "name": "Sammy",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "A Metróban egy **padon** ült."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "a-kattogo",
+      "name": "A Csattogó",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "Z"
+        }
+      ],
+      "clueText": [
+        "A Zsilip-gátnál ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "bela",
+      "name": "Billy",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "a-kattogo",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**A Csattogótól keletre** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "tomi-muller",
+      "name": "Toby Millward",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "jozsef-muller",
+      "name": "Jonah Millward",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "A Kórházban egy **███** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "ella-szucs",
+      "name": "Ella Williamson",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "tomi-muller",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Toby Millwardtól délre** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "hektor": "E1",
+    "renata": "F2",
+    "szabi": "B3",
+    "a-kattogo": "G4",
+    "bela": "H5",
+    "tomi-muller": "A6",
+    "jozsef-muller": "C7",
+    "ella-szucs": "D8"
+  },
+  "murderer": "renata",
+  "rev": 1,
+  "worldRule": "radio"
+}

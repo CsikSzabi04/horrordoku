@@ -1,0 +1,240 @@
+{
+  "v": 1,
+  "id": "event-16-rain-forest-4",
+  "mode": "event",
+  "world": "rain-forest",
+  "title": "A rendőrfőnök",
+  "story": "Chaz Heron a halászbotjával a tópartra indult. Alyssa látomása szerint nem egyedül ment.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "K": "Kollár-ház",
+    "E": "Esőerdő Gimnázium",
+    "R": "Erdei tisztás",
+    "C": "Csendes-part",
+    "L": "Lenkei-ház",
+    "S": "Esőerdő kórház",
+    "V": "Vérkő-torony"
+  },
+  "layout": [
+    "SSSSSCC",
+    "KKSCCCC",
+    "KKKLCCC",
+    "KLLLLVV",
+    "KLLEEVV",
+    "RREEEVV",
+    "RRRREVV"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "C6",
+        "D2",
+        "F1",
+        "A7",
+        "E4",
+        "C2"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": "B3"
+    },
+    {
+      "type": "totem",
+      "at": [
+        "B1",
+        "A3",
+        "B4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": [
+        "E2",
+        "G7",
+        "A2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "bush",
+      "at": [
+        "A6",
+        "B6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "E1",
+        "E6"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "ede-kollar",
+      "name": "Edmund Callen",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "peter-lenkei",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Chaz Herontól északra** volt."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "peter-lenkei",
+      "name": "Chaz Heron",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "C"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Csendes-parton **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "jakob-fekete",
+      "name": "Jakob Dark",
+      "race": "werewolf",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "aliz-kollar",
+      "name": "Alyssa Callen",
+      "race": "vampire",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "f",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "A Lenkei-házban ő volt az **egyetlen nő**."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "gabor-sas",
+      "name": "Jamie",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "ede-kollar",
+          "dir": "E"
+        },
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "gt",
+          "n": 6
+        }
+      ],
+      "clueText": [
+        "**Edmund Callentől keletre** volt.",
+        "A **6. oszloptól jobbra** volt."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "bella-lenkei",
+      "name": "Belle Heron",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        },
+        {
+          "kind": "in",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült.",
+        "Az Esőerdő Gimnáziumban volt."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "rozalia-hajdu",
+      "name": "Rosalyn Hales",
+      "race": "vampire",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "ede-kollar": "F1",
+    "peter-lenkei": "D2",
+    "jakob-fekete": "B3",
+    "aliz-kollar": "E4",
+    "gabor-sas": "G5",
+    "bella-lenkei": "C6",
+    "rozalia-hajdu": "A7"
+  },
+  "murderer": "ede-kollar",
+  "rev": 1,
+  "worldRule": "totems"
+}

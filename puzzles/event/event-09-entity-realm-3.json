@@ -1,0 +1,226 @@
+{
+  "v": 1,
+  "id": "event-09-entity-realm-3",
+  "mode": "event",
+  "world": "entity-realm",
+  "title": "Gyógyító kéz",
+  "story": "Claudine Moreau elsősegély-csomagja üresen hever mellette. A kukoricás zizeg, a generátorok zúgnak.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "P": "Pajta",
+    "K": "Kukoricás",
+    "F": "Fészer",
+    "I": "Pince",
+    "H": "Horgos-pince",
+    "Z": "Ház"
+  },
+  "layout": [
+    "PPKKKFF",
+    "PPPKKFF",
+    "PPPPKZF",
+    "IIIZZZZ",
+    "IIIZZZZ",
+    "IHHHHHH",
+    "IHHHHHH"
+  ],
+  "objects": [
+    {
+      "type": "medkit",
+      "at": [
+        "B2",
+        "F7"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "D6",
+        "F3",
+        "E6"
+      ]
+    },
+    {
+      "type": "pallet",
+      "at": [
+        "C1",
+        "E7",
+        "G6"
+      ]
+    },
+    {
+      "type": "generator",
+      "at": [
+        "C7",
+        "C5",
+        "F5",
+        "B5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "hook",
+      "at": "D1",
+      "blocking": true
+    },
+    {
+      "type": "gate",
+      "at": [
+        "B1",
+        "A7",
+        "C3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "A1",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "margo-tamas",
+      "name": "Maggie Thompson",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Fészerben volt."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    },
+    {
+      "id": "david-kiraly",
+      "name": "Davis Crown",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "medkit"
+        }
+      ],
+      "clueText": [
+        "Egy **medkit-ládán** volt."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    },
+    {
+      "id": "jakab-pal",
+      "name": "Jack Parks",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    },
+    {
+      "id": "nelli-karolyi",
+      "name": "Nia Karlsen",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "denes-feher",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Dwayne Fairbrooktól északra** volt."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    },
+    {
+      "id": "klaudia-morvai",
+      "name": "Claudine Moreau",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "Z"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Házban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    },
+    {
+      "id": "kalman-szuts",
+      "name": "Quincy Smythe",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Horgos-pincében egy **ládán** volt."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    },
+    {
+      "id": "denes-feher",
+      "name": "Dwayne Fairbrook",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "pallet",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Horgos-pincében egy **palettán** volt."
+      ],
+      "source": {
+        "game": "Deceased by Daybreak"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "margo-tamas": "C1",
+    "david-kiraly": "B2",
+    "jakab-pal": "F3",
+    "nelli-karolyi": "A4",
+    "klaudia-morvai": "G5",
+    "kalman-szuts": "D6",
+    "denes-feher": "E7"
+  },
+  "murderer": "jakab-pal",
+  "rev": 1,
+  "worldRule": "generators"
+}

@@ -1,4 +1,4 @@
-/* global process, fetch, AbortSignal */
+/* global process, fetch, AbortSignal, Buffer */
 // NIGHTDOKU keep-alive — a Vercel cron naponta egyszer hívja (lásd vercel.json).
 //
 // Miért kell: a Supabase ingyenes csomagja szüneteltetheti a projektet, ha egy héten át alig van
@@ -12,9 +12,18 @@
 //   SUPABASE_PUBLISHABLE_KEY  sb_publishable_...   (publikus kulcs; secret/service_role kulcs NEM kell)
 //   CRON_SECRET               hosszú, véletlen szöveg; a Vercel automatikusan Bearer tokenként küldi a cronnal
 
+import { timingSafeEqual } from 'node:crypto'
+
+/** Állandó idejű összehasonlítás (a titok hossza nem szivárog a válaszidőből). */
+function sameSecret(given, expected) {
+  const a = Buffer.from(String(given ?? ''))
+  const b = Buffer.from(expected)
+  return a.length === b.length && timingSafeEqual(a, b)
+}
+
 export default async function handler(req, res) {
   const cronSecret = process.env.CRON_SECRET
-  if (!cronSecret || req.headers.authorization !== `Bearer ${cronSecret}`) {
+  if (!cronSecret || !sameSecret(req.headers.authorization, `Bearer ${cronSecret}`)) {
     return res.status(401).json({ ok: false, error: 'unauthorized' })
   }
 

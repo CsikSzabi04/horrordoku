@@ -15,9 +15,11 @@ Ezen a repón **két AI** dolgozik párhuzamosan: **AI-A** (a játék) és **AI-
 
 Mint a murdoku.com: **három oszlop**, balról jobbra.
 
-1. **Bal oszlop:** felül a **logó**, a **vissza-nyíl**, a **Magyar / English váltó** és az **idő**; alatta a pálya címe + a bevezető szöveg; alatta a **karakterek** (arckép + alatta a színes nyomkártya).
+1. **Bal oszlop:** felül a **logó** és a **vissza-nyíl**; alatta a pálya címe + a bevezető szöveg (szorosan egymás alatt); alatta a **karakterek** (arckép + alatta a színes nyomkártya).
 2. **Középső (a legnagyobb) oszlop:** a **térkép**.
-3. **Jobb szélső, keskenyebb oszlop (eszközök):** ✕ (kizár), radír (nyomva tartva: teljes törlés), **visszavonás**, újra, **tipp**, **beküldés**, „hogyan kell játszani", ?, megosztás, **mentés**, **hang**, beállítások.
+3. **Jobb szélső, keskenyebb oszlop (eszközök), fentről lefelé:** ✕ (kizár); radír (csak a 🧽 jel, nyomva tartva: teljes törlés); **Visszavonás** (egyedül, nincs „újra" és nyíl gomb); lent **Tipp**, **Feladom**, **Beküldés**, **Hogyan kell játszani** egymás alatt. Nincs „?", megosztás és mentés gomb (a mentés automatikus).
+
+**A bal oszlop alján** (a görgethető kártyák alatt, mindig látszik, vékony vonallal elválasztva): balra az **idő**, a **🌙 sötét mód** és a **Magyar / English váltó**, jobbra a **beállítások** és a **hang** (`GameFooter`). Keskeny képernyőn ez a sáv a cím alá kerül. Cél: ne legyen olyan az elrendezés, mint a murdoku.com-on.
 
 A közös keret a `src/components/GameFrame.tsx` — **új játékmód (Együtt, Gyilkos stb.) is ezt használja**, nem épít saját elrendezést. **Kinézet:** a Klasszikus **alapból sötét** (fekete oldal, sötét lapok, mint az app többi része). A fejlécben a **🌙 gomb világos módra** vált: ilyenkor az **oldal háttere is fehér**, a három oszlop fehér lap vékony fekete szegéllyel (a Klasszikus listán ugyanígy). A **Klasszikus** „normális" murdoku-kinézetű (hétköznapi helyszínek és nevek, rajzolt arcképek, nincs horror); az Esemény/Random/co-op mindig sötét, horror-témájú — de a három oszlop ugyanaz.
 
@@ -59,7 +61,7 @@ A közös keret a `src/components/GameFrame.tsx` — **új játékmód (Együtt,
 
 ## Konvenciók
 
-- **Nyelv:** kód, azonosítók, commit-üzenetek angolul; a játékos által látott szöveg **magyar**, i18n-kulcsokkal (`src/i18n/hu.ts`).
+- **Nyelv:** kód, azonosítók, commit-üzenetek angolul; a játékos által látott szöveg **kétnyelvű (magyar + angol)**. A nyelv a `settings.language` (felhő-profillal szinkronban; váltó: Profil, Beállítások, játék). Szabályok: UI-szöveg kulcsból (`t()`, `src/i18n/hu.ts` + `hu.b.ts` + **`en.ts`** — a típus kikényszeríti, hogy minden kulcsnak legyen angol párja); inline szöveg `pick('magyar', 'english')` (`src/i18n/lang.ts`); **pálya-tartalom** (nevek, szobák, tárgyak, címek, történetek, nyomszövegek) a `src/content/localize.ts`-en át jelenik meg (angol adat: `src/content/en.ts`, `src/engine/vocab.en.ts`, a nyomszövegek `src/engine/text.en.ts`). Új tárgy / szoba / szereplő / pálya = angol párja is kell (a `vocab.en.test.ts`, `en.test.ts`, `localize.test.ts` ellenőrzi). Az angol nevek is eredetiek (franchise.md).
 - **Commit:** Conventional Commits (`feat(engine): …`, `fix(cloud): …`, `docs(tasks): …`), a törzs végén a sor: `Agent: AI-A` vagy `Agent: AI-B`.
 - **Környezet:** Windows 10, Git Bash + PowerShell, Node 24, Python 3.12. Headless böngészős teszthez a **Brave** működik
   (`C:\Program Files\BraveSoftware\Brave-Browser\Application\brave.exe`) `puppeteer-core`-ral; az Edge indítása ezen a gépen elhasal.

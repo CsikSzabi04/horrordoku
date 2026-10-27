@@ -1,0 +1,227 @@
+{
+  "v": 1,
+  "id": "event-17-walled-town-3",
+  "mode": "event",
+  "world": "walled-town",
+  "title": "A kalap",
+  "story": "Karl Granger kalapja a verandán maradt. A generátor zaja mindent elárul.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "F": "Fogda-blokk",
+    "A": "Farm",
+    "S": "Sáncváros főtere",
+    "D": "Dombtető",
+    "T": "Templom",
+    "E": "Erdei út"
+  },
+  "layout": [
+    "FFAAEEE",
+    "FFAAEEE",
+    "SSAAETT",
+    "DDDDTTT",
+    "DDDDTTT",
+    "DDDDTTT",
+    "DDTTTTT"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "E5",
+        "G2",
+        "D3",
+        "F2"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "B7",
+        "F6",
+        "D5"
+      ]
+    },
+    {
+      "type": "generator",
+      "at": [
+        "C7",
+        "G5",
+        "C5",
+        "A6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "barrel",
+      "at": "G3",
+      "blocking": true
+    },
+    {
+      "type": "car",
+      "at": [
+        "F5",
+        "A2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tent",
+      "at": [
+        "D4",
+        "G6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": "E3"
+    }
+  ],
+  "characters": [
+    {
+      "id": "nemes-noel",
+      "name": "Neylan",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "car"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **autó mellett**."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "kamilla-pelle",
+      "name": "Carla Pellet",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Erdei úton egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "denes-deak",
+      "name": "Darren Dixley",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "a-fonok",
+      "name": "A Helytartó",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "rudi-gorbe",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Rich Grangertől északra** volt."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "kornel-gorbe",
+      "name": "Karl Granger",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Templomban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "mihaela-szep",
+      "name": "Mishana",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "kornel-gorbe",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Karl Grangertől délre** volt."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "rudi-gorbe",
+      "name": "Rich Granger",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "D"
+        }
+      ],
+      "clueText": [
+        "A Dombtetőn egy **ládán** volt."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "nemes-noel": "C1",
+    "kamilla-pelle": "G2",
+    "denes-deak": "D3",
+    "a-fonok": "A4",
+    "kornel-gorbe": "E5",
+    "mihaela-szep": "F6",
+    "rudi-gorbe": "B7"
+  },
+  "murderer": "mihaela-szep",
+  "rev": 1,
+  "worldRule": "generators"
+}

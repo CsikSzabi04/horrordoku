@@ -1,0 +1,213 @@
+{
+  "v": 1,
+  "id": "event-16-rain-forest-2",
+  "mode": "event",
+  "world": "rain-forest",
+  "title": "Az érzelmek mestere",
+  "story": "Casper Hales a kertben feküdt, amikor leszállt az eső. A totemek mellett Alyssa látomásai feltárulnak.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "K": "Kollár-ház",
+    "E": "Esőerdő Gimnázium",
+    "C": "Csendes-part",
+    "L": "Lenkei-ház",
+    "S": "Esőerdő kórház",
+    "V": "Vérkő-torony"
+  },
+  "layout": [
+    "EELLLL",
+    "EEEVLL",
+    "EEKVVV",
+    "KEKSVV",
+    "KKKSSV",
+    "CCCSSS"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "B4",
+        "C3"
+      ]
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "D5",
+        "F2"
+      ]
+    },
+    {
+      "type": "totem",
+      "at": [
+        "E2",
+        "D6",
+        "F4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": [
+        "B5",
+        "A5",
+        "D1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "rock",
+      "at": "E5",
+      "blocking": true
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "F3",
+        "D2"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "jonas-hajdu",
+      "name": "Casper Hales",
+      "race": "vampire",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Lenkei-házban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "bella-lenkei",
+      "name": "Belle Heron",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "jonas-hajdu",
+          "dir": "E"
+        },
+        {
+          "kind": "on",
+          "object": "sofa"
+        }
+      ],
+      "clueText": [
+        "**Casper Halestől keletre** volt.",
+        "Egy **kanapén** ült."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "peter-lenkei",
+      "name": "Chaz Heron",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Kollár-házban ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "gabor-sas",
+      "name": "Jamie",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "jakob-fekete",
+      "name": "Jakob Dark",
+      "race": "werewolf",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Vérkő-toronyban volt."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "ede-kollar",
+      "name": "Edmund Callen",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge"
+        },
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "C"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt.",
+        "A Csendes-parton ő volt az **egyetlen férfi**."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "jonas-hajdu": "E1",
+    "bella-lenkei": "F2",
+    "peter-lenkei": "C3",
+    "gabor-sas": "B4",
+    "jakob-fekete": "D5",
+    "ede-kollar": "A6"
+  },
+  "murderer": "bella-lenkei",
+  "rev": 1,
+  "worldRule": "totems"
+}

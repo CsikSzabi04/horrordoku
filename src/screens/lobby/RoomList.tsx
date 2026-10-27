@@ -1,6 +1,7 @@
 // Szobák listája (0005): saját szobáim (nyitás/zárás, belépés, statisztika, törlés), mások szobái, belépés kóddal, összesített statisztika.
 // A zárt szoba is látszik a listában — de belépni csak a tulajdonos megnyitása után lehet.
 import { useCallback, useEffect, useRef, useState } from 'react'
+import { puzzleTitle } from '../../content/localize'
 import type { FormEvent } from 'react'
 import { useNav } from '../../app/nav'
 import { cloud } from '../../cloud'
@@ -109,7 +110,7 @@ export function RoomList({ mode, onOpen }: { mode: RoomMode; onOpen: (s: RoomSes
     // a pálya-választó az indexből épül (nem töltjük be mind a ~200 pályát)
     const p = listPuzzles()
     if (p.length > 0) {
-      setRefs(p.map((x) => ({ id: x.id, title: `${x.title} · ${x.size}×${x.size} · ${'★'.repeat(x.difficulty)}` })))
+      setRefs(p.map((x) => ({ id: x.id, title: `${puzzleTitle(x)} · ${x.size}×${x.size} · ${'★'.repeat(x.difficulty)}` })))
       setPuzzle((cur) => (p.some((x) => x.id === cur) ? cur : p[0]!.id))
     }
     const loadInvites = () => void cloud.rooms.invites().then((r) => alive.current && r.ok && setInvites(r.value.filter((i) => i.mode === mode)))

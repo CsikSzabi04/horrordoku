@@ -12,7 +12,7 @@ const errors = []
 p.on('pageerror', (e) => errors.push(String(e)))
 let failed = 0
 const ok = (n, c, x = '') => { console.log(c ? '  PASS' : '  FAIL', n, c ? '' : x); if (!c) failed++ }
-await p.evaluateOnNewDocument(() => { if (!sessionStorage.getItem('i')) { sessionStorage.setItem('i', '1'); localStorage.clear(); localStorage.setItem('nd_tutorial', '1') } })
+await p.evaluateOnNewDocument(() => { if (!sessionStorage.getItem('i')) { sessionStorage.setItem('i', '1'); localStorage.clear(); localStorage.setItem('nd_tutorial', '1'); localStorage.setItem('nd:v1:guest:language', JSON.stringify('hu')) } })
 await p.goto(`${BASE}/play/`, { waitUntil: 'networkidle0' })
 const byWorld = new Map()
 for (const f of files) {
@@ -77,6 +77,7 @@ ok('a következő ügy ki van emelve', (await p.$$('.case.next')).length === 1)
   await p.waitForSelector('.board')
   await new Promise((r) => setTimeout(r, 2300))
   ok('elavult mentésnél tiszta tábla', (await p.$$('.token')).length === 0)
+  await p.waitForFunction(() => [...document.querySelectorAll('.nd-toast')].some((x) => x.textContent.includes('frissült')), { timeout: 6000 }).catch(() => {})
   ok('„a pálya frissült" üzenet', (await p.$$eval('.nd-toast', (e) => e.some((x) => x.textContent.includes('frissült')))))
 }
 

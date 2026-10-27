@@ -191,17 +191,18 @@ ok('kliens nem hívhatja a cleanup-ot', (await fails(u1, `select public.cleanup_
 
   // ranglista
   ok('submit_score: rossz tábla elutasítva', (await fails(u1, "select public.submit_score('bármi', 90000, 0::smallint)")) !== null);
-  ok('submit_score: irreálisan gyors idő elutasítva', (await fails(u1, "select public.submit_score('daily:2026-10-25', 500, 0::smallint)")) !== null);
-  ok('a ranglista közvetlenül nem írható', (await fails(u1, `insert into public.leaderboard (board, user_id, time_ms) values ('daily:2026-10-25','${u1}', 4000)`)) !== null);
-  await as(u1, "select public.submit_score('daily:2026-10-25', 90000, 1::smallint)");
-  await as(u2, "select public.submit_score('daily:2026-10-25', 80000, 0::smallint)");
-  await as(u1, "select public.submit_score('daily:2026-10-25', 95000, 0::smallint)");
+  const TODAY = new Date().toISOString().slice(0, 10); // a napi tábla csak a mai (±1 nap) lehet
+  ok('submit_score: irreálisan gyors idő elutasítva', (await fails(u1, "select public.submit_score('daily:" + TODAY + "', 500, 0::smallint)")) !== null);
+  ok('a ranglista közvetlenül nem írható', (await fails(u1, `insert into public.leaderboard (board, user_id, time_ms) values ('daily:${TODAY}','${u1}', 4000)`)) !== null);
+  await as(u1, "select public.submit_score('daily:" + TODAY + "', 90000, 1::smallint)");
+  await as(u2, "select public.submit_score('daily:" + TODAY + "', 80000, 0::smallint)");
+  await as(u1, "select public.submit_score('daily:" + TODAY + "', 95000, 0::smallint)");
   r = await as('postgres', `select time_ms from public.leaderboard where user_id = '${u1}'`); ok('submit_score: a rosszabb idő nem írja felül a jobbat', r.rows[0].time_ms === 90000);
-  await as(u1, "select public.submit_score('daily:2026-10-25', 70000, 0::smallint)");
-  await as(u3, "select public.submit_score('daily:2026-10-25', 60000, 0::smallint)");
-  r = await as(u1, "select username, time_ms from public.leaderboard_top('daily:2026-10-25', 10)");
+  await as(u1, "select public.submit_score('daily:" + TODAY + "', 70000, 0::smallint)");
+  await as(u3, "select public.submit_score('daily:" + TODAY + "', 60000, 0::smallint)");
+  r = await as(u1, "select username, time_ms from public.leaderboard_top('daily:" + TODAY + "', 10)");
   ok('leaderboard_top: javuló idő, sorrend, a nem kereshető profil rejtve', r.rows.map(x => x.time_ms).join() === '70000,80000');
-  r = await as(u3, "select time_ms from public.leaderboard_top('daily:2026-10-25', 10)"); ok('leaderboard_top: a nem kereshető a saját sorát látja', r.rows[0].time_ms === 60000);
+  r = await as(u3, "select time_ms from public.leaderboard_top('daily:" + TODAY + "', 10)"); ok('leaderboard_top: a nem kereshető a saját sorát látja', r.rows[0].time_ms === 60000);
 
   // nyilvános profil
   await as('postgres', `insert into public.runs (id, user_id, puzzle_ref, kind, solved, time_ms, hints_used) values (gen_random_uuid(), '${u2}', 'classic-01', 'catalog', true, 1000, 0)`);
@@ -329,11 +330,405 @@ ok('kliens nem hívhatja a cleanup-ot', (await fails(u1, `select public.cleanup_
   ok('0006: a profil törlésekor a kódja is törlődik', await (async () => { await db.exec("delete from public.profiles where id = '55555555-5555-5555-5555-555555555555'"); return (await as('postgres', "select count(*)::int n from public.profile_codes where user_id = '55555555-5555-5555-5555-555555555555'")).rows[0].n === 0 })());
 }
 
+// --- 0007: Gyilkos mód (szerepsorsolás, képességek, Szimat, Gyűlés, közös beküldés, Epilógus, vég) ---
+{
+  console.log('\n[0007: Gyilkos mód]');
+  await db.exec('delete from public.rooms');
+  const u4 = '44444444-4444-4444-4444-444444444444';
+  const out = '66666666-6666-6666-6666-666666666666';
+  await db.exec(`insert into auth.users (id, email, raw_user_meta_data) values ('${out}', 'f@x.hu', '{"username":"Kivulallo"}')`);
+  const mk = async (host, settings, max = 4) => {
+    const rr = (await as(host, `select * from public.create_room('killer','classic-01',${max}::smallint,'${JSON.stringify(settings)}')`)).rows[0];
+    await as(host, `select public.set_room_open('${rr.id}', true)`);
+    return rr;
+  };
+  const S = async (u, room) => (await as(u, `select public.killer_state('${room}') as s`)).rows[0].s;
+  const beat = async (u, room) => (await as(u, `select public.killer_beat('${room}') as s`)).rows[0].s;
+  const rpc = (u, sql) => as(u, sql);
+  const roles = async (game) => Object.fromEntries((await as('postgres', `select user_id, role from public.room_roles where game_id = ${game}`)).rows.map(x => [x.user_id, x.role]));
+  const shiftGame = (id, set) => as('postgres', `update public.killer_games set ${set} where id = ${id}`);
+  const events = async (room, kind) => (await as('postgres', `select kind, payload from public.room_events where room_id = '${room}' ${kind ? `and kind = '${kind}'` : ''} order by id`)).rows;
+  const all = [u1, u2, u3, u4];
+
+  // ---- indítás, szerepsorsolás, titkosság
+  const K = await mk(u1, { timeLimit: 600, lives: 2, meetings: 2, sniffPerDetective: 1 });
+  ok('killer: egy taggal nem indítható', (await fails(u1, `select * from public.start_room('${K.id}')`)) !== null);
+  for (const u of [u2, u3, u4]) await as(u, `select * from public.join_room('${K.code}')`);
+  ok('killer: nem host nem indíthat', (await fails(u2, `select * from public.start_room('${K.id}')`)) !== null);
+  r = await as(u1, `select * from public.start_room('${K.id}')`);
+  ok('killer: a host elindítja', r.rows[0].status === 'playing');
+  let G = (await as('postgres', `select id, cfg, lives from public.killer_games where room_id = '${K.id}'`)).rows[0];
+  const R = await roles(G.id);
+  const killer = Object.keys(R).find(k => R[k] === 'killer');
+  const dets = all.filter(u => u !== killer);
+  ok('killer: 4 játékos, pontosan 1 gyilkos, 3 nyomozó', Object.keys(R).length === 4 && Object.values(R).filter(x => x === 'killer').length === 1);
+  ok('killer: a beállítások szabályos tartományba kerültek', G.cfg.lives === 2 && G.cfg.timeLimit === 600 && G.cfg.killerCount === 1 && G.cfg.abilities.vanish === true && G.cfg.cooldownScale === 1);
+  r = await as(u2, 'select * from public.room_roles'); ok('szerep: mindenki csak a SAJÁT sorát látja', r.rows.length === 1 && r.rows[0].user_id === u2);
+  ok('szerep: anon nem látja', (await fails('anon', 'select * from public.room_roles')) !== null);
+  ok('szerep: közvetlenül nem írható', (await fails(u2, `update public.room_roles set role = 'killer'`)) !== null || (await as(u2, `update public.room_roles set role = 'killer' where user_id = '${u2}' returning 1`)).rows.length === 0);
+  ok('killer_games közvetlenül nem olvasható', (await fails(u2, 'select * from public.killer_games')) !== null);
+  ok('room_events: kívülálló nem olvashatja', (await as(out, 'select * from public.room_events')).rows.length === 0);
+  ok('room_events: kliens nem írhat', (await fails(u2, `insert into public.room_events (room_id, kind) values ('${K.id}','fx')`)) !== null);
+  ok('killer_state: kívülálló nem hívhatja', (await fails(out, `select public.killer_state('${K.id}')`)) !== null);
+  ok('killer_state: anon nem hívhatja', (await fails('anon', `select public.killer_state('${K.id}')`)) !== null);
+  const sk = await S(killer, K.id);
+  const sd = await S(dets[0], K.id);
+  ok('állapot: a gyilkos a saját szerepét, hűtéseit és képességeit látja', sk.role === 'killer' && sk.cooldowns && sk.abilities.textSwap === true && sk.lives === 2 && sk.timeLimitMs === 600000);
+  ok('állapot: a nyomozó nem lát hűtést / képességet, és nem látja a gyilkost', sd.role === 'detective' && sd.cooldowns === undefined && sd.abilities === undefined && !JSON.stringify(sd).includes(killer) && sd.exposedKillers.length === 0);
+  ok('állapot: a gyilkos is látja a Szimat/Gyűlés nélküli keretet (0 szimat)', sk.sniffsLeft === 0 && sk.canCallMeeting === false && sd.sniffsLeft === 1 && sd.canCallMeeting === true);
+
+  // ---- képességek
+  ok('képesség: nyomozó nem használhatja', (await fails(dets[0], `select public.use_ability('${K.id}','textSwap','{"char":"vlad","text":"Hamis nyom szöveg"}')`)) !== null);
+  ok('képesség: ismeretlen képesség elutasítva', (await fails(killer, `select public.use_ability('${K.id}','laser','{}')`)) !== null);
+  ok('képesség: rossz célpont elutasítva (textSwap)', (await fails(killer, `select public.use_ability('${K.id}','textSwap','{"char":"???","text":"Hamis nyom szöveg"}')`)) !== null);
+  r = await as(killer, `select public.use_ability('${K.id}','textSwap','{"char":"vlad","text":"A harang mellett volt."}') as x`);
+  ok('képesség: Szövegcsere megy, a hűtés látszik a gyilkosnak', r.rows[0].x.ok === true && r.rows[0].x.cooldowns.textSwap > 0);
+  let ev = await events(K.id, 'fx');
+  ok('képesség: a hatás-esemény megérkezik a szobának (clue_override, 5 mp)', ev.length === 1 && ev[0].payload.type === 'clue_override' && ev[0].payload.char === 'vlad' && ev[0].payload.ms === 5000);
+  ok('képesség: az eseményben NINCS feladó (a gyilkos azonosítója sehol)', !JSON.stringify(await events(K.id)).includes(killer));
+  ok('képesség: egyszerre csak egy hatás / közös hűtés', (await fails(killer, `select public.use_ability('${K.id}','vanish','{"cell":"E3"}')`)) !== null);
+  await shiftGame(G.id, `effect_until = null, global_cd_until = null`);
+  ok('képesség: ugyanannak a képességnek a hűtése él', (await fails(killer, `select public.use_ability('${K.id}','textSwap','{"char":"vlad","text":"Megint hamis"}')`)) !== null);
+  ok('képesség: a nyomozó nem látja a képesség-naplót (killer_games zárt)', (await fails(dets[0], 'select ability_log from public.killer_games')) !== null);
+  r = await as(killer, `select public.use_ability('${K.id}','vanish','{"cell":"E3"}') as x`);
+  ev = await events(K.id, 'fx');
+  ok('képesség: Eltüntetés (8 mp, cella)', r.rows[0].x.ok === true && ev[1].payload.type === 'object_vanish' && ev[1].payload.cell === 'E3' && ev[1].payload.ms === 8000);
+  ok('Eltüntetés: a zárolt mezők az állapotban is ott vannak (későn érkezőnek is) — a nyomozó is látja', (await S(dets[1], K.id)).seals.length === 1 && (await S(dets[1], K.id)).seals[0].cell === 'E3' && (await S(dets[1], K.id)).seals[0].until - (await S(dets[1], K.id)).seals[0].from === 8000);
+  await shiftGame(G.id, `effect_until = null, global_cd_until = null`);
+  ok('képesség: rossz cella-azonosító elutasítva', (await fails(killer, `select public.use_ability('${K.id}','timeWarp','{"mode":"nope"}')`)) !== null);
+  const before = (await as('postgres', `select penalty_ms from public.killer_games where id = ${G.id}`)).rows[0].penalty_ms;
+  await as(killer, `select public.use_ability('${K.id}','timeWarp','{"mode":"steal"}')`);
+  const after = (await as('postgres', `select penalty_ms from public.killer_games where id = ${G.id}`)).rows[0].penalty_ms;
+  ok('Időcsavar (lopás): 20 mp-et levon a hátralévő időből', Number(after) - Number(before) === 20000);
+  r = await as(killer, `select public.killer_state('${K.id}') as s`);
+  ok('állapot: a hátralévő idő (határidő − büntetés) csökkent', Number(r.rows[0].s.penaltyMs) === Number(after));
+  // a 3-as korlát
+  for (let i = 0; i < 2; i++) {
+    await shiftGame(G.id, `effect_until = null, global_cd_until = null, cd = '{}'`);
+    await as(killer, `select public.use_ability('${K.id}','timeWarp','{"mode":"speed"}')`);
+  }
+  await shiftGame(G.id, `effect_until = null, global_cd_until = null, cd = '{}'`);
+  ok('Időcsavar: játékonként legfeljebb 3×', (await fails(killer, `select public.use_ability('${K.id}','timeWarp','{"mode":"steal"}')`)) !== null);
+  r = await as('postgres', `select speed from public.killer_games where id = ${G.id}`);
+  ok('Időcsavar (gyorsítás): 10 mp-es, háromszoros szakasz kerül a naplóba', r.rows[0].speed.length === 2 && r.rows[0].speed[0].factor === 3 && r.rows[0].speed[0].until - r.rows[0].speed[0].from === 10000);
+  r = await as('postgres', `select public.kg_remaining_ms(g, floor(extract(epoch from now()) * 1000)::bigint + 20000) as m, public.kg_remaining_ms(g, floor(extract(epoch from now()) * 1000)::bigint) as m0 from public.killer_games g where id = ${G.id}`);
+  ok('hátralévő idő: a gyorsított szakasz többletet von le (3× sebesség)', Number(r.rows[0].m0) - Number(r.rows[0].m) > 20000);
+
+  // ---- Szimat
+  ok('Szimat: a gyilkos nem szimatolhat', (await fails(killer, `select public.sniff('${K.id}')`)) !== null);
+  r = await as(dets[0], `select public.sniff('${K.id}') as x`);
+  ok('Szimat: a nemrég használt képességre „igen”', r.rows[0].x.used === true);
+  ok('Szimat: nyomozónként 1 (a keret a beállításokból)', (await fails(dets[0], `select public.sniff('${K.id}')`)) !== null);
+  ev = await events(K.id, 'sniff');
+  ok('Szimat: az eredmény az egész szobának megy, név nélkül', ev.length === 1 && ev[0].payload.used === true && !JSON.stringify(ev[0]).includes(dets[0]));
+  await shiftGame(G.id, `ability_log = (select coalesce(jsonb_agg(jsonb_set(e, '{at}', to_jsonb((e->>'at')::bigint - 120000))), '[]') from jsonb_array_elements(ability_log) e)`);
+  r = await as(dets[1], `select public.sniff('${K.id}') as x`);
+  ok('Szimat: 30 mp-nél régebbi képességre „nem”', r.rows[0].x.used === false);
+
+  // ---- Gyűlés
+  ok('Gyűlés: a gyilkos nem kezdeményezhet', (await fails(killer, `select public.call_meeting('${K.id}')`)) !== null);
+  await as(dets[0], `select public.call_meeting('${K.id}')`);
+  ok('Gyűlés: nyomozónként csak 1', (await fails(dets[0], `select public.call_meeting('${K.id}')`)) !== null);
+  ok('Gyűlés: közben nem lehet képességet használni', (await fails(killer, `select public.use_ability('${K.id}','vanish','{"cell":"B2"}')`)) !== null);
+  ok('Gyűlés: a vita alatt még nincs szavazás', (await fails(dets[1], `select public.vote_meeting('${K.id}', '${killer}')`)) !== null);
+  r = await S(dets[1], K.id);
+  ok('Gyűlés: az állapot a vitát mutatja (30 mp), és hogy ki szavazott-e', r.meeting.phase === 'discuss' && r.meeting.voted === false && r.meeting.votes === undefined && r.meetingsLeft === 1);
+  await shiftGame(G.id, `meeting = jsonb_set(meeting, '{endsAt}', to_jsonb(floor(extract(epoch from now()) * 1000)::bigint - 1000))`);
+  r = await beat(dets[1], K.id);
+  ok('Gyűlés: a vita lejártával szavazás indul (a beat előrelépteti)', r.meeting.phase === 'vote');
+  ok('Gyűlés: magára nem szavazhat', (await fails(dets[1], `select public.vote_meeting('${K.id}', '${dets[1]}')`)) !== null);
+  for (const d of dets) await as(d, `select public.vote_meeting('${K.id}', '${killer}')`);
+  r = await S(killer, K.id);
+  ok('Gyűlés: amíg a gyilkos nem szavazott, még nincs eredmény', r.meeting.phase === 'vote');
+  await as(killer, `select public.vote_meeting('${K.id}', null)`);
+  r = await S(dets[0], K.id);
+  ok('Gyűlés: a gyilkosra szavazott többség → leleplezve', r.meeting.phase === 'result' && r.meeting.killerExposed === true && r.meeting.ejected === killer && r.exposedKillers[0] === killer);
+  r = await as('postgres', `select exposed from public.room_roles where user_id = '${killer}'`); ok('Gyűlés: a gyilkos leleplezve (szerver)', r.rows[0].exposed === true);
+  ok('leleplezett gyilkos nem használhat képességet', (await fails(killer, `select public.use_ability('${K.id}','vanish','{"cell":"B2"}')`)) !== null);
+  const pen2 = (await as('postgres', `select penalty_ms from public.killer_games where id = ${G.id}`)).rows[0].penalty_ms;
+  ok('leleplezés: +60 mp idő a csapatnak', Number(after) + 40000 /* 2 gyorsítás nem büntetés */ >= 0 && Number(pen2) === Number(after) - 60000);
+  ev = await events(K.id, 'fx');
+  ok('leleplezés: az `exposed` esemény kimegy', ev.some(e => e.payload.type === 'exposed'));
+  await shiftGame(G.id, `meeting = null`);
+  // második Gyűlés: ártatlan kiszavazása → néma + a gyilkos hűtése gyorsul
+  await shiftGame(G.id, `cd = '{"textSwap": ${Date.now() - 1000}}'`);
+  await as(dets[1], `select public.call_meeting('${K.id}')`);
+  await shiftGame(G.id, `meeting = jsonb_set(jsonb_set(meeting, '{endsAt}', to_jsonb(floor(extract(epoch from now()) * 1000)::bigint - 1000)), '{phase}', '"discuss"')`);
+  await beat(dets[1], K.id);
+  for (const u of [killer, dets[1], dets[2]]) await as(u, `select public.vote_meeting('${K.id}', '${dets[0]}')`);
+  await as(dets[0], `select public.vote_meeting('${K.id}', '${dets[2]}')`);
+  r = await S(dets[0], K.id);
+  ok('Gyűlés: ártatlanra szavazott többség → ő néma, nincs leleplezés', r.meeting.phase === 'result' && r.meeting.killerExposed === false && r.meeting.ejected === dets[0] && r.silencedMs > 0 && r.silencedMs <= 45000);
+  ev = await events(K.id, 'fx');
+  ok('néma: a `silenced` esemény 45 mp-es', ev.some(e => e.payload.type === 'silenced' && e.payload.userId === dets[0] && e.payload.ms === 45000));
+  r = await as('postgres', `select (cd->>'textSwap')::bigint as t from public.killer_games where id = ${G.id}`);
+  ok('ártatlan kiszavazása: a gyilkos hűtése 20 mp-cel korábbra kerül', Number(r.rows[0].t) <= Date.now() - 1000 - 19000);
+  ok('Gyűlés: a keret elfogyott (2/játék)', (await S(dets[2], K.id)).meetingsLeft === 0);
+  await shiftGame(G.id, `meeting = null`);
+
+  // ---- közös beküldés: javaslat → a szavazók többsége jóváhagyja (mindenki szavazata EGYFORMÁN számít) → ellenőrzés → eredmény
+  r = await as(dets[0], `select public.propose_submit('${K.id}') as id`);
+  ok('beküldés: javaslat id-vel', typeof r.rows[0].id === 'string' && r.rows[0].id.length > 10);
+  ok('beküldés: egyszerre egy javaslat', (await fails(dets[1], `select public.propose_submit('${K.id}')`)) !== null);
+  await as(killer, `select public.vote_submit('${K.id}', true)`);
+  r = await S(dets[1], K.id);
+  ok('beküldés: a gyilkos jóváhagyása is csak egy szavazat — 2 a 4-ből még nem többség', r.submit.phase === 'vote' && r.submit.voted === false);
+  await as(dets[1], `select public.vote_submit('${K.id}', true)`);
+  r = await S(dets[2], K.id);
+  ok('beküldés: 3 a 4-ből → többség jóváhagyta → ellenőrzés', r.submit.phase === 'verify');
+  await as(dets[0], `select public.report_submit('${K.id}', false)`);
+  await as(dets[1], `select public.report_submit('${K.id}', false)`);
+  await as(killer, `select public.report_submit('${K.id}', true)`);   // a gyilkos jelentése ugyanúgy beleszámít (ezért nem szivároghat ki a szerepe a lezárás időzítéséből)
+  r = await S(dets[2], K.id);
+  ok('beküldés: amíg nem jelentett mindenki, nincs döntés', r.submit && r.submit.phase === 'verify' && r.lives === 2);
+  await as(dets[2], `select public.report_submit('${K.id}', false)`);
+  r = await S(dets[0], K.id);
+  ok('beküldés: helytelen → egy élet vész, a játék megy tovább', r.lives === 1 && r.submit === null && r.phase === 'play');
+  ev = await events(K.id, 'submit');
+  ok('beküldés: az eredmény-esemény (wrong, hátralévő élet)', ev.some(e => e.payload.state === 'wrong' && e.payload.livesLeft === 1));
+  // újabb javaslat: a nyomozók „helyes”-t jelentenek
+  await as(dets[1], `select public.propose_submit('${K.id}')`);
+  await as(dets[2], `select public.vote_submit('${K.id}', true)`);
+  await as(dets[0], `select public.vote_submit('${K.id}', true)`);
+  for (const d of all) await as(d, `select public.report_submit('${K.id}', true)`);
+  r = await S(dets[0], K.id);
+  ok('beküldés: helyes → Epilógus (20 mp), a játék még nem ért véget', r.phase === 'epilogue' && r.epilogue.endsAt > r.now && r.epilogue.voted === false);
+  ev = await events(K.id, 'epilogue');
+  ok('Epilógus: az esemény kimegy', ev.length === 1);
+  ok('Epilógus: a nyomozó nem szavazhat magára', (await fails(dets[0], `select public.epilogue_vote('${K.id}', '${dets[0]}')`)) !== null);
+  await as(killer, `select public.epilogue_vote('${K.id}', '${dets[0]}')`);   // a gyilkos szavazata nem számít
+  await as(dets[0], `select public.epilogue_vote('${K.id}', '${killer}')`);
+  await as(dets[1], `select public.epilogue_vote('${K.id}', '${killer}')`);
+  r = await S(dets[2], K.id);
+  ok('Epilógus: amíg nem szavazott mindenki, folytatódik', r.phase === 'epilogue');
+  await as(dets[2], `select public.epilogue_vote('${K.id}', '${dets[1]}')`);
+  r = await as('postgres', `select outcome, reason, ended_at from public.killer_games where id = ${G.id}`);
+  ok('Epilógus: a nyomozók többsége a gyilkost nevezte meg → NYOMOZÓK GYŐZNEK', r.rows[0].outcome === 'detectives' && r.rows[0].reason === 'identified' && r.rows[0].ended_at !== null);
+  r = await as('postgres', `select status from public.rooms where id = '${K.id}'`); ok('vég: a szoba visszaáll lobbyba', r.rows[0].status === 'lobby');
+  r = await as('postgres', `select solved, ms from public.room_games where room_id = '${K.id}' order by id desc limit 1`); ok('vég: a statisztikai napló lezárul (megoldva)', r.rows[0].solved === true && r.rows[0].ms !== null);
+  ev = await events(K.id, 'end');
+  ok('vég: a végső esemény a gyilkost és a képesség-naplót is elárulja', ev.length === 1 && ev[0].payload.outcome === 'detectives' && ev[0].payload.killerIds[0] === killer && ev[0].payload.abilityLog.length === 5);
+  r = await as(dets[0], `select public.killer_result('${K.id}') as x`);
+  ok('killer_result: szerepek, gyilkos, napló', r.rows[0].x.outcome === 'detectives' && r.rows[0].x.killerIds[0] === killer && r.rows[0].x.roles[killer] === 'killer' && r.rows[0].x.abilityLog.length === 5);
+  r = await as(out, `select public.killer_result('${K.id}') as x`); ok('killer_result: kívülálló nem látja', r.rows[0].x === null);
+  r = await as(dets[0], `select public.killer_state('${K.id}') as s`); ok('vég után nincs futó játék', r.rows[0].s.running === false);
+  ok('vég után nem használható képesség', (await fails(killer, `select public.use_ability('${K.id}','vanish','{"cell":"E3"}')`)) !== null);
+
+  // ---- más vég-feltételek
+  const startAgain = async (room) => { await as(u1, `select * from public.start_room('${room}')`); return (await as('postgres', `select id from public.killer_games where room_id = '${room}' and ended_at is null`)).rows[0].id; };
+  // 1) lejár az idő
+  let g2 = await startAgain(K.id);
+  ok('új játék: az előző lezárt játék és szerepei megmaradnak, új szerepsorsolás', (await roles(g2)) && Object.keys(await roles(g2)).length === 4);
+  await shiftGame(g2, `started_at = now() - interval '11 minutes'`);
+  r = await beat(u2, K.id);
+  r = await as('postgres', `select outcome, reason from public.killer_games where id = ${g2}`);
+  ok('vég: lejárt az idő → A GYILKOS NYER', r.rows[0].outcome === 'killer' && r.rows[0].reason === 'time');
+  // 2) elfogynak az életek
+  g2 = await startAgain(K.id);
+  const R2 = await roles(g2); const k2 = Object.keys(R2).find(x => R2[x] === 'killer'); const d2 = all.filter(u => u !== k2);
+  await shiftGame(g2, 'lives = 1');
+  await as(d2[0], `select public.propose_submit('${K.id}')`);
+  await as(d2[1], `select public.vote_submit('${K.id}', true)`);
+  await as(d2[2], `select public.vote_submit('${K.id}', true)`);
+  for (const d of all) await as(d, `select public.report_submit('${K.id}', false)`);
+  r = await as('postgres', `select outcome, reason from public.killer_games where id = ${g2}`);
+  ok('vég: elfogyott az utolsó élet is → A GYILKOS NYER', r.rows[0].outcome === 'killer' && r.rows[0].reason === 'lives');
+  // 3) döntetlen: helyes megoldás, de a gyilkos megúszta
+  g2 = await startAgain(K.id);
+  const R3 = await roles(g2); const k3 = Object.keys(R3).find(x => R3[x] === 'killer'); const d3 = all.filter(u => u !== k3);
+  await as(d3[0], `select public.propose_submit('${K.id}')`);
+  await as(d3[1], `select public.vote_submit('${K.id}', true)`);
+  await as(d3[2], `select public.vote_submit('${K.id}', true)`);
+  for (const d of all) await as(d, `select public.report_submit('${K.id}', true)`);
+  await as(k3, `select public.epilogue_vote('${K.id}', '${d3[0]}')`);   // a gyilkos is „szavaz” — a kimenetelt a nyomozók szavazata dönti el
+  for (const d of d3) await as(d, `select public.epilogue_vote('${K.id}', '${d3.find(x => x !== d)}')`);
+  r = await as('postgres', `select outcome, reason from public.killer_games where id = ${g2}`);
+  ok('vég: helyes megoldás, de rossz gyanúsított → DÖNTETLEN (a gyilkos megúszta)', r.rows[0].outcome === 'draw' && r.rows[0].reason === 'escaped');
+  // 4) a tulajdonos megszakítja
+  g2 = await startAgain(K.id);
+  ok('megszakítás: csak a tulajdonos', (await fails(u2, `select public.finish_game('${K.id}', false, 0)`)) !== null);
+  await as(u1, `select public.finish_game('${K.id}', false, 0)`);
+  r = await as('postgres', `select outcome, reason from public.killer_games where id = ${g2}`);
+  ok('megszakítás: a játék „aborted”, a szoba lobbyban', r.rows[0].outcome === 'aborted' && (await as('postgres', `select status from public.rooms where id = '${K.id}'`)).rows[0].status === 'lobby');
+  // 5) a javaslat elutasítása és a várakozás
+  g2 = await startAgain(K.id);
+  const R5 = await roles(g2); const k5 = Object.keys(R5).find(x => R5[x] === 'killer'); const d5 = all.filter(u => u !== k5);
+  await as(k5, `select public.propose_submit('${K.id}')`);
+  await as(d5[0], `select public.vote_submit('${K.id}', false)`);
+  await as(d5[1], `select public.vote_submit('${K.id}', false)`);
+  r = await S(d5[2], K.id);
+  ok('beküldés: a nyomozók elutasítják a gyilkos javaslatát → nincs függő javaslat', r.submit === null && r.lives === 2);
+  ok('beküldés: az elutasítás után rövid várakozás — de CSAK a javaslattevőnek (nincs spam, a szoba mégsem foglalható el)', (await fails(k5, `select public.propose_submit('${K.id}')`)) !== null && (await as(d5[0], `select public.propose_submit('${K.id}') as id`)).rows[0].id.length > 10);
+  // a Gyűlés félreteszi a szavazás alatti javaslatot
+  await as(d5[1], `select public.call_meeting('${K.id}')`);
+  r = await S(d5[2], K.id);
+  ok('Gyűlés: a függő (szavazási szakaszú) beküldési javaslatot félreteszi, a Gyűlés elindul', r.submit === null && r.meeting && r.meeting.phase === 'discuss');
+  await shiftGame(g2, `meeting = null`);
+  ev = await events(K.id, 'submit');
+  ok('beküldés: `rejected` esemény', ev.some(e => e.payload.state === 'rejected'));
+  // 6) a gyilkos lecsatlakozik
+  await as('postgres', `update public.room_roles set last_seen = now() - interval '5 minutes' where user_id = '${k5}' and game_id = ${g2}`);
+  await beat(d5[0], K.id);
+  r = await as('postgres', `select killer_gone from public.killer_games where id = ${g2}`);
+  ok('lecsatlakozott gyilkos: a játék folytatódik képességek nélkül', r.rows[0].killer_gone === true);
+  await beat(k5, K.id);   // visszatér (a saját szívverése frissíti az aktív állapotát)
+  r = await as('postgres', `select killer_gone from public.killer_games where id = ${g2}`);
+  ok('lecsatlakozott gyilkos: ha visszatér, a képességei is visszajönnek (nem végleges)', r.rows[0].killer_gone === false);
+  await shiftGame(g2, `effect_until = null, global_cd_until = null, cd = '{}'`);
+  ok('visszatért gyilkos újra használhat képességet', (await as(k5, `select public.use_ability('${K.id}','vanish','{"cell":"B2"}') as x`)).rows[0].x.ok === true);
+  await as(u1, `select public.finish_game('${K.id}', false, 0)`);
+
+  // ---- 2 játékos: a gyilkos kiléte nyilvános, nincs Gyűlés / Epilógus
+  const D = await mk(u2, { timeLimit: 300 }, 3);
+  await as(u3, `select * from public.join_room('${D.code}')`);
+  await as(u2, `select * from public.start_room('${D.id}')`);
+  const gD = (await as('postgres', `select id from public.killer_games where room_id = '${D.id}' and ended_at is null`)).rows[0].id;
+  const RD = await roles(gD); const kD = Object.keys(RD).find(x => RD[x] === 'killer'); const dD = [u2, u3].find(x => x !== kD);
+  r = await S(dD, D.id);
+  ok('2 játékos: a nyomozó látja, ki a gyilkos', r.exposedKillers.length === 1 && r.exposedKillers[0] === kD && r.canCallMeeting === false);
+  ok('2 játékos: nincs Gyűlés', (await fails(dD, `select public.call_meeting('${D.id}')`)) !== null);
+  await as(dD, `select public.propose_submit('${D.id}')`);   // egy nyomozó: a saját javaslata azonnal többség
+  r = await S(dD, D.id);
+  ok('2 játékos: a nyomozó javaslata azonnal ellenőrzésre kerül', r.submit.phase === 'verify');
+  await as(dD, `select public.report_submit('${D.id}', true)`);
+  r = await as('postgres', `select outcome from public.killer_games where id = ${gD}`);
+  ok('2 játékos: helyes megoldás → a nyomozó nyer, Epilógus nélkül', r.rows[0].outcome === 'detectives');
+
+  // ---- 6 játékos: két gyilkos
+  const six = [u1, u2, u3, u4, '77777777-7777-7777-7777-777777777777', '88888888-8888-8888-8888-888888888888'];
+  await db.exec(`insert into auth.users (id, email, raw_user_meta_data) values ('${six[4]}', 'g@x.hu', '{"username":"Hatodik"}'), ('${six[5]}', 'h@x.hu', '{"username":"Hetedik"}')`);
+  const X = await mk(u1, { killerCount: 2 }, 6);
+  for (const u of six.slice(1)) await as(u, `select * from public.join_room('${X.code}')`);
+  await as(u1, `select * from public.start_room('${X.id}')`);
+  const gX = (await as('postgres', `select id from public.killer_games where room_id = '${X.id}' and ended_at is null`)).rows[0].id;
+  ok('6 játékos: kettő gyilkos is lehet', Object.values(await roles(gX)).filter(x => x === 'killer').length === 2);
+  r = await as('postgres', `select (cfg->'timeLimit') is null or cfg->>'timeLimit' is null as nolimit from public.killer_games where id = ${gX}`);
+  ok('időkorlát nélküli játék: nincs hátralévő idő', (await S(u1, X.id)).timeLimitMs === null);
+  const kx = Object.keys(await roles(gX)).find(x => true);
+  const anyKiller = Object.entries(await roles(gX)).find(([, v]) => v === 'killer')[0];
+  ok('időkorlát nélkül az Időcsavar nem használható', (await fails(anyKiller, `select public.use_ability('${X.id}','timeWarp','{"mode":"steal"}')`)) !== null);
+  await as(u1, `select public.finish_game('${X.id}', false, 0)`);
+
+  // ---- ellenőrzői javítások
+  {
+    // (1) a szavazás kimenetele NEM függhet a szereptől: 3 játékos, a megfigyelő nyomozó egyetlen jóváhagyása ugyanúgy hat, akárki a javaslattevő
+    const M = await mk(u1, { timeLimit: 600 }, 3);
+    await as(u2, `select * from public.join_room('${M.code}')`); await as(u3, `select * from public.join_room('${M.code}')`);
+    const outcomeOf = async (proposerRole) => {
+      await as(u1, `select * from public.start_room('${M.id}')`);
+      const gm = (await as('postgres', `select id from public.killer_games where room_id = '${M.id}' and ended_at is null`)).rows[0].id;
+      const three = [u1, u2, u3];
+      await as('postgres', `update public.room_roles set role = case when user_id = '${u3}' then 'killer' else 'detective' end where game_id = ${gm}`);   // próba-elrendezés: u3 a gyilkos
+      const proposer = proposerRole === 'killer' ? u3 : u1;
+      const observer = u2;
+      await as(proposer, `select public.propose_submit('${M.id}')`);
+      await as(observer, `select public.vote_submit('${M.id}', true)`);
+      const phase = (await S(observer, M.id)).submit?.phase ?? null;
+      await as(u1, `select public.finish_game('${M.id}', false, 0)`);
+      return phase;
+    };
+    ok('szerep-szivárgás: a gyilkos és a nyomozó javaslata ugyanarra jut egy megfigyelő egyetlen szavazatával (nem derül ki, ki a gyilkos)', (await outcomeOf('killer')) === (await outcomeOf('detective')) && (await outcomeOf('detective')) === 'verify');
+    await as(u1, `select public.delete_room('${M.id}')`);   // (legfeljebb 5 saját szoba)
+  }
+  {
+    // (2) a hallgatás nem beleegyezés: lejáratkor a kisebbségi jóváhagyás nem megy át
+    const M = await mk(u1, { timeLimit: 600 }, 4);
+    for (const u of [u2, u3, u4]) await as(u, `select * from public.join_room('${M.code}')`);
+    await as(u1, `select * from public.start_room('${M.id}')`);
+    const gm = (await as('postgres', `select id from public.killer_games where room_id = '${M.id}' and ended_at is null`)).rows[0].id;
+    const Rm = await roles(gm); const km = Object.keys(Rm).find(x => Rm[x] === 'killer'); const dm = all.filter(u => u !== km);
+    await as(dm[0], `select public.propose_submit('${M.id}')`);
+    await shiftGame(gm, `submit = jsonb_set(submit, '{endsAt}', to_jsonb(floor(extract(epoch from now()) * 1000)::bigint - 1000))`);
+    r = await beat(dm[1], M.id);
+    ok('beküldés: lejáratkor a kisebbségi (1/4) jóváhagyás NEM megy át (a hallgatás nem beleegyezés)', r.submit === null && r.lives === 3);
+    // (3) az ajtó: a zárt ajtójú szoba indításkor kinyílik, a tagok látják az eseményeket
+    await as(u1, `select public.finish_game('${M.id}', false, 0)`);
+    await as(u1, `select public.set_room_open('${M.id}', false)`);
+    await as(u1, `select * from public.start_room('${M.id}')`);
+    ok('indítás: a zárt ajtó kinyílik (a nem tulajdonos tagok is látják a szobát és az eseményeket)', (await as(u2, `select count(*)::int n from public.room_events where room_id = '${M.id}'`)).rows[0].n >= 1 && (await as(u2, `select count(*)::int n from public.rooms where id = '${M.id}'`)).rows[0].n === 1);
+    // (4) a leleplezett gyilkos újabb kiszavazása nem ad újabb időt
+    const g4 = (await as('postgres', `select id from public.killer_games where room_id = '${M.id}' and ended_at is null`)).rows[0].id;
+    const R4 = await roles(g4); const k4 = Object.keys(R4).find(x => R4[x] === 'killer'); const d4 = all.filter(u => u !== k4);
+    const expose = async (caller) => {
+      await as(caller, `select public.call_meeting('${M.id}')`);
+      await shiftGame(g4, `meeting = jsonb_set(jsonb_set(meeting, '{endsAt}', to_jsonb(floor(extract(epoch from now()) * 1000)::bigint - 1000)), '{phase}', '"discuss"')`);
+      await beat(caller, M.id);
+      for (const d of d4) await as(d, `select public.vote_meeting('${M.id}', '${k4}')`);
+      await as(k4, `select public.vote_meeting('${M.id}', null)`);
+      await shiftGame(g4, `meeting = null`);
+    };
+    await expose(d4[0]);
+    const p1 = Number((await as('postgres', `select penalty_ms from public.killer_games where id = ${g4}`)).rows[0].penalty_ms);
+    await expose(d4[1]);
+    const p2 = Number((await as('postgres', `select penalty_ms from public.killer_games where id = ${g4}`)).rows[0].penalty_ms);
+    ok('leleplezés: az első kiszavazás +60 mp, a már leleplezett gyilkos újabb kiszavazása nem ad még', p1 === -60000 && p2 === -60000);
+    // (5) időrend: a lejárt idő előtti határidejű ellenőrzés előbb zárul le, mint az idő-lejárat
+    await shiftGame(g4, `submit = jsonb_build_object('id', 'x', 'by', '${d4[0]}', 'phase', 'verify', 'endsAt', floor(extract(epoch from now()) * 1000)::bigint - 8000, 'approve', '[]'::jsonb, 'reject', '[]'::jsonb, 'reports', jsonb_build_object('${d4[0]}', false, '${d4[1]}', false, '${d4[2]}', false, '${k4}', false)), started_at = now() - interval '603 seconds', penalty_ms = 0`);
+    await beat(d4[0], M.id);
+    ev = await events(M.id, 'submit');
+    r = await as('postgres', `select outcome, reason from public.killer_games where id = ${g4}`);
+    ok('időrend: az idő lejárta előtti határidejű beküldés előbb dől el (életvesztés), csak utána jön az idő-lejárat', ev.some(e => e.payload.state === 'wrong') && r.rows[0].outcome === 'killer' && r.rows[0].reason === 'time');
+    await as(u1, `select public.delete_room('${M.id}')`);
+  }
+  {
+    // (6) hibás beállítás nem ejti el az indítást: rossz szám / szöveg / óriási érték alapértékre / tartományba kerül
+    const M = await mk(u1, { lives: 'abc', timeLimit: 1e30, meetings: 'NaN', cooldownScale: 'x', showPlacers: 'talán', abilities: { vanish: 'nope' } }, 3);
+    await as(u2, `select * from public.join_room('${M.code}')`);
+    await as(u1, `select * from public.start_room('${M.id}')`);
+    const cfg = (await as('postgres', `select cfg from public.killer_games where room_id = '${M.id}' and ended_at is null`)).rows[0].cfg;
+    ok('hibás beállítások: alapérték / tartományba vágás, az indítás nem hibázik', cfg.lives === 3 && cfg.timeLimit === 7200 && cfg.meetings === 6 && cfg.cooldownScale === 1 && cfg.showPlacers === false && cfg.abilities.vanish === true, JSON.stringify(cfg));
+    await as(u1, `select public.delete_room('${M.id}')`);
+  }
+
+  // ---- a Együtt mód változatlan, a közös start_room továbbra is működik
+  const T = (await as(u1, `select * from public.create_room('together','classic-01',3::smallint,'{}')`)).rows[0];
+  await as(u1, `select public.set_room_open('${T.id}', true)`);
+  r = await as(u1, `select * from public.start_room('${T.id}')`);
+  ok('Együtt mód: a start_room változatlanul megy, szerepek nélkül', r.rows[0].status === 'playing' && (await as('postgres', `select count(*)::int n from public.killer_games where room_id = '${T.id}'`)).rows[0].n === 0);
+  await as(u1, `select public.finish_game('${T.id}', true, 1000)`);
+  r = await as('postgres', `select solved from public.room_games where room_id = '${T.id}'`); ok('Együtt mód: a finish_game változatlan', r.rows[0].solved === true);
+}
+
 {
   const pub = await as('postgres', "select tablename from pg_publication_tables where pubname = 'supabase_realtime' order by 1");
   const got = pub.rows.map(x => x.tablename).join(',');
-  ok('Realtime-publikációban benne van az 5 social tábla', ['friendships', 'room_invites', 'room_members', 'room_messages', 'rooms'].every(t => got.split(',').includes(t)), got);
+  ok('Realtime-publikációban benne van a 6 social tábla', ['friendships', 'room_invites', 'room_members', 'room_messages', 'rooms', 'room_events'].every(t => got.split(',').includes(t)), got);
   console.log('');
+}
+{
+  // 0008 — biztonsági megerősítés
+  const bad = async (who, sql) => (await fails(who, sql)) !== null;
+  const u9 = '99999999-9999-9999-9999-999999999999';
+  await db.exec(`insert into auth.users (id, email, raw_user_meta_data) values ('${u9}', 'i@x.hu', '{"username":"Tesztelo9"}')`);
+  console.log('0008:');
+  ok('0008: az XP nem ugorhat az egekbe (korlát)', await bad(u9, `update public.profiles set xp = 9000000 where id = '${u9}'`));
+  ok('0008: az XP-ugrás egy módosításban korlátos', await bad(u9, `update public.profiles set xp = 500000 where id = '${u9}'`));
+  ok('0008: a normális XP-növekedés megy', (await as(u9, `update public.profiles set xp = 400, coins = 30 where id = '${u9}' returning xp`)).rows[0].xp === 400);
+  ok('0008: láthatatlan karakteres becenév elutasítva', await bad(u9, `update public.profiles set username = 'Abc' || chr(8203) where id = '${u9}'`));
+  ok('0008: lemaradó szóközös becenév elutasítva', await bad(u9, `update public.profiles set username = 'Abcd ' where id = '${u9}'`));
+  ok('0008: a rendes átnevezés megy', (await as(u9, `update public.profiles set username = 'Tesztelo_9' where id = '${u9}' returning username`)).rows[0].username === 'Tesztelo_9');
+  ok('0008: futás-napló: negatív idő elutasítva', await bad(u9, `insert into public.runs (id, user_id, puzzle_ref, kind, solved, time_ms) values (gen_random_uuid(), '${u9}', 'x', 'catalog', true, -5)`));
+  ok('0008: futás-napló: irreális tipp-szám elutasítva', await bad(u9, `insert into public.runs (id, user_id, puzzle_ref, kind, solved, hints_used) values (gen_random_uuid(), '${u9}', 'x', 'catalog', true, 5000)`));
+  ok('0008: futás-napló: normális sor megy', (await as(u9, `insert into public.runs (id, user_id, puzzle_ref, kind, solved, time_ms) values (gen_random_uuid(), '${u9}', 'x', 'catalog', true, 60000) returning 1`)).rows.length === 1);
+  ok('0008: óriási mentés elutasítva', await bad(u9, `insert into public.saves (user_id, puzzle_ref, state) values ('${u9}', 'x', jsonb_build_object('x', repeat('a', 300000)))`));
+  ok('0008: normális mentés megy', (await as(u9, `insert into public.saves (user_id, puzzle_ref, state) values ('${u9}', 'x', '{"placed":{}}') returning 1`)).rows.length === 1);
+  const day = (n) => new Date(Date.now() + n * 86400000).toISOString().slice(0, 10);
+  ok('0008: submit_score: távoli jövőbeli tábla elutasítva', await bad(u9, `select public.submit_score('daily:${day(40)}', 90000, 0::smallint)`));
+  ok('0008: submit_score: régi tábla elutasítva', await bad(u9, `select public.submit_score('daily:${day(-40)}', 90000, 0::smallint)`));
+  ok('0008: submit_score: irreális tipp-szám elutasítva', await bad(u9, `select public.submit_score('daily:${day(0)}', 90000, 500::smallint)`));
+  ok('0008: submit_score: mai tábla megy', !(await bad(u9, `select public.submit_score('daily:${day(0)}', 90000, 0::smallint)`)));
+  ok('0008: a barát-kód generátor anonként nem hívható', await bad('anon', 'select public.new_friend_code()'));
+  ok('0008: a belső implementációs függvények kliensként nem hívhatók', (await bad(u9, "select * from public._join_room_impl('AAAAAA')")) && (await bad(u9, "select public._rate_limit('x', 1, interval '1 minute')")));
+  // chat-árasztás: legfeljebb 12 üzenet / 10 mp
+  const cr = (await as(u9, `select * from public.create_room('together', 'classic-1-01', 2::smallint, '{}')`)).rows[0];
+  for (let i = 0; i < 12; i++) await as(u9, `insert into public.room_messages (room_id, user_id, body) values ('${cr.id}', '${u9}', 'üzenet ${i}')`);
+  ok('0008: chat-árasztás: a 13. üzenet 10 mp-en belül elutasítva', await bad(u9, `insert into public.room_messages (room_id, user_id, body) values ('${cr.id}', '${u9}', 'spam')`));
+  ok('0008: a chat időbélyegét a szerver adja', (await db.query(`select count(*)::int n from public.room_messages where room_id = '${cr.id}' and created_at < now() - interval '1 minute'`)).rows[0].n === 0);
+  // szoba-kód próbálgatás: legfeljebb 30 keresés / perc
+  let allowed = 0;
+  for (let i = 0; i < 35; i++) if (!(await bad(u9, "select * from public.room_peek('ZZZZZZ')"))) allowed++;
+  ok('0008: a szoba-kód keresése percenként korlátos (35 próbából legfeljebb 30 megy)', allowed <= 30 && allowed >= 25, String(allowed));
+  ok('0008: join_room is a közös korlát alatt van', await bad(u9, "select * from public.join_room('ZZZZZZ')"));
 }
 console.log(`\n${pass} sikeres, ${fail} sikertelen`);
 process.exit(fail ? 1 : 0);

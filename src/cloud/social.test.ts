@@ -23,6 +23,7 @@ function fake(cfg: Cfg = {}) {
     let key = table
     const q: Record<string, unknown> = {}
     for (const m of ['select', 'eq', 'neq', 'order', 'limit', 'in']) q[m] = () => q
+    q.delete = () => { key = `${table}:delete`; return q }
     q.ilike = (...a: unknown[]) => { rec.ilike = a; return q }
     q.insert = () => { key = `${table}:insert`; return q }
     const result = () => cfg.tables?.[key] ?? { data: [], error: null }
@@ -210,6 +211,24 @@ describe('szoba-munkamenet', () => {
     f.handlers.find((h) => h.filter.table === 'room_messages')?.cb({ new: { id: 9, room_id: ROOM, user_id: OTHER, body: 'újra', created_at: '2026-10-25T21:02:00+00:00' } })
     await new Promise((r) => setTimeout(r, 5))
     expect(got).toEqual([])
+  })
+  it('némítás feloldása: a korábbi (és a némítás alatt érkezett) üzenetek visszatérnek, a muted() követi az állapotot', async () => {
+    const { f, s } = await open()
+    expect(s.chat.muted()).toEqual([])
+    await s.chat.mute(OTHER)
+    expect(s.chat.muted()).toEqual([OTHER])
+    expect(s.chat.history()).toHaveLength(0)
+    f.handlers.find((h) => h.filter.table === 'room_messages')?.cb({ new: { id: 9, room_id: ROOM, user_id: OTHER, body: 'újra', created_at: '2026-10-25T21:02:00+00:00' } })
+    await new Promise((r) => setTimeout(r, 5))
+    expect(s.chat.history()).toHaveLength(0) // némítva: nem látszik
+    expect(await s.chat.unmute(OTHER)).toEqual({ ok: true, value: undefined })
+    expect(s.chat.muted()).toEqual([])
+    expect(s.chat.history().map((m) => m.id)).toEqual([1]) // az előzmény-sor visszajött (nem akadt el a „már láttam” halmazban)
+    const got: number[] = []
+    s.chat.onMessage((m) => got.push(m.id))
+    f.handlers.find((h) => h.filter.table === 'room_messages')?.cb({ new: { id: 10, room_id: ROOM, user_id: OTHER, body: 'látszik', created_at: '2026-10-25T21:03:00+00:00' } })
+    await new Promise((r) => setTimeout(r, 5))
+    expect(got).toEqual([10])
   })
   it('a Realtime rooms-UPDATE frissíti az állapotot (lobby → playing)', async () => {
     const { f, s } = await open()

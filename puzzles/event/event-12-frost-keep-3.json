@@ -1,0 +1,225 @@
+{
+  "v": 1,
+  "id": "event-12-frost-keep-3",
+  "mode": "event",
+  "world": "frost-keep",
+  "title": "Az aranykéz",
+  "story": "Jaimon Goldmere az aranykezével sem tudta megvédeni magát. Az éjszaka hidege mindenre ráfagyott.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "N": "Nagyterem",
+    "S": "Szent liget",
+    "F": "Fegyvertár",
+    "K": "Kripta",
+    "A": "A Gáton túl",
+    "G": "Fagyott tó"
+  },
+  "layout": [
+    "GGNNSSA",
+    "GGNNSSA",
+    "GGNNSAA",
+    "GGNSSAA",
+    "GGNFFAA",
+    "FFFFKKK",
+    "FFFKKKK"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": "C2"
+    },
+    {
+      "type": "crate",
+      "at": [
+        "A5",
+        "F7"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "B1",
+        "A7",
+        "C6"
+      ]
+    },
+    {
+      "type": "armor",
+      "at": "A4",
+      "blocking": true
+    },
+    {
+      "type": "throne",
+      "at": [
+        "E2",
+        "F1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": "F2",
+      "blocking": true
+    },
+    {
+      "type": "fireplace",
+      "at": "B7",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "jeno-aranykez",
+      "name": "Jaimon Goldmere",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "armored": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Fagyott tavon **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "jon-hovari",
+      "name": "John Dér",
+      "race": "human",
+      "gender": "m",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "notBesideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **pad mellett**."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "sarolta-hideg",
+      "name": "Sarina Winterhart",
+      "race": "human",
+      "gender": "f",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "f",
+          "room": "A"
+        }
+      ],
+      "clueText": [
+        "A Gáton túl ő volt az **egyetlen nő**."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "tamas-rendes",
+      "name": "Tyrian Goldmere",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "jeno-aranykez",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Jaimon Goldmerétől délre** volt."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "a-fagykiraly",
+      "name": "A Fagykirály",
+      "race": "ghoul",
+      "gender": "m",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "crate"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **ládán** volt."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "balint-fagyos",
+      "name": "Bram Winterhart",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "sarolta-hideg",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Sarina Winterharttól keletre** volt."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "dalma-tuzi",
+      "name": "Daenara Drakaryn",
+      "race": "human",
+      "gender": "f",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "crate"
+        }
+      ],
+      "clueText": [
+        "Egy **láda mellett** volt."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "jeno-aranykez": "B1",
+    "jon-hovari": "C2",
+    "sarolta-hideg": "F3",
+    "tamas-rendes": "D4",
+    "a-fagykiraly": "A5",
+    "balint-fagyos": "G6",
+    "dalma-tuzi": "E7"
+  },
+  "murderer": "a-fagykiraly",
+  "rev": 1,
+  "worldRule": "vacuum",
+  "vacuumRooms": [
+    "A",
+    "G"
+  ]
+}

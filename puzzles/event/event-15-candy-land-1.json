@@ -1,0 +1,174 @@
+{
+  "v": 1,
+  "id": "event-15-candy-land-1",
+  "mode": "event",
+  "world": "candy-land",
+  "title": "A Halhatatlan sírboltja",
+  "story": "Aah Földjén a Halhatatlan holtteste a sírboltban hever. A térkép nem mutat mindent: néhány szereplőről csak annyi derül ki, milyen messze volt a kardtól vagy BÍPÓtól.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "C": "Cukorbirodalom",
+    "J": "Jégbirodalom",
+    "L": "Lich-sírbolt",
+    "T": "Tűzbirodalom",
+    "S": "Sötét erdő"
+  },
+  "layout": [
+    "TTSSS",
+    "CTLLS",
+    "CCJJS",
+    "CJJJS",
+    "CJJJS"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "C5",
+        "E1"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "B3",
+        "E2"
+      ]
+    },
+    {
+      "type": "sword",
+      "at": "D1",
+      "blocking": true
+    },
+    {
+      "type": "bmo",
+      "at": "C4",
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": [
+        "D5",
+        "A1",
+        "D2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "bush",
+      "at": "C1",
+      "blocking": true
+    },
+    {
+      "type": "carpet",
+      "at": "E3"
+    }
+  ],
+  "characters": [
+    {
+      "id": "szaloncukor-hercegno",
+      "name": "Buborékcukor hercegnő",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "C"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Cukorbirodalomban volt."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "gocsortos-hercegno",
+      "name": "Bütyök hercegnő",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "sword",
+          "cells": 3
+        }
+      ],
+      "clueText": [
+        "A kardtól pontosan **3 mezőre** volt."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "fin",
+      "name": "Flynn",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "sameRoom",
+          "with": "gocsortos-hercegno"
+        }
+      ],
+      "clueText": [
+        "**Bütyök hercegnővel** egy helyiségben volt."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "a-lich",
+      "name": "A Halhatatlan",
+      "race": "ghoul",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "J"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Jégbirodalomban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    },
+    {
+      "id": "dzsaki",
+      "name": "Jax",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "sword",
+          "cells": 4
+        }
+      ],
+      "clueText": [
+        "A kardtól pontosan **4 mezőre** volt."
+      ],
+      "source": {
+        "game": "Quest Hour"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "szaloncukor-hercegno": "E1",
+    "gocsortos-hercegno": "A2",
+    "fin": "B3",
+    "a-lich": "D4",
+    "dzsaki": "C5"
+  },
+  "murderer": "dzsaki",
+  "rev": 1,
+  "worldRule": "motion"
+}

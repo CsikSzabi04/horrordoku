@@ -1,0 +1,258 @@
+{
+  "v": 1,
+  "id": "event-10-lake-town-3",
+  "mode": "event",
+  "world": "lake-town",
+  "title": "Benny utolsó vicce",
+  "story": "Benny Wheelwright nem nevetett, amikor a lámpák kialudtak. A Birtokoltak csak sötét mezőn állhatnak.",
+  "size": 8,
+  "difficulty": 4,
+  "rooms": {
+    "F": "Fűrésztelep",
+    "V": "Vendégház",
+    "R": "Rádióállomás",
+    "E": "Rendőrség",
+    "Z": "Zsolnai kunyhója",
+    "L": "Elme-kórház"
+  },
+  "layout": [
+    "RLLLEEEE",
+    "RRLLEEEE",
+    "RLLLLLLE",
+    "RLLLLLZE",
+    "RRLVVZZZ",
+    "RRVVVVZZ",
+    "RRRVVFFF",
+    "RRRRVFFF"
+  ],
+  "objects": [
+    {
+      "type": "crate",
+      "at": [
+        "E8",
+        "C7",
+        "F6",
+        "D1",
+        "A5"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "B4",
+        "C3",
+        "A1"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "G2",
+        "H2"
+      ]
+    },
+    {
+      "type": "lamp",
+      "at": [
+        "E4",
+        "E2",
+        "B7",
+        "F5",
+        "A8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "charger",
+      "at": [
+        "B2",
+        "E5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "coffeemaker",
+      "at": [
+        "G4",
+        "B8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "typewriter",
+      "at": [
+        "D2",
+        "A2",
+        "C8",
+        "G8"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "barna-vincze",
+      "name": "Benny Wheelwright",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Az Elme-kórházban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "tamas-zsolnai",
+      "name": "Tobias Zayne",
+      "race": "ghost",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "dark"
+        }
+      ],
+      "clueText": [
+        "Sötét mezőn állt — a Sötétség megszállta."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "rozsa-csikos",
+      "name": "Rosie Goldflower",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "dr-emil-hofer",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Dr. Emery Hartwelltől északra** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "patrik-meszar",
+      "name": "Pete Mayne",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "dr-emil-hofer",
+      "name": "Dr. Emery Hartwell",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszloptól balra** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "odon-andrasfi",
+      "name": "Woden Anders",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "A Vendégházban egy **ládán** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "attila-vago",
+      "name": "Adam Waken",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "A Rádióállomáson egy **ládán** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "ilona-vago",
+      "name": "Alicia Waken",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "dr-emil-hofer",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Dr. Emery Hartwelltől délre** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "barna-vincze": "D1",
+    "tamas-zsolnai": "G2",
+    "rozsa-csikos": "H3",
+    "patrik-meszar": "B4",
+    "dr-emil-hofer": "A5",
+    "odon-andrasfi": "F6",
+    "attila-vago": "C7",
+    "ilona-vago": "E8"
+  },
+  "murderer": "patrik-meszar",
+  "rev": 1,
+  "worldRule": "light"
+}

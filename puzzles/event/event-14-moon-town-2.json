@@ -1,0 +1,209 @@
+{
+  "v": 1,
+  "id": "event-14-moon-town-2",
+  "mode": "event",
+  "world": "moon-town",
+  "title": "A tanár pohara",
+  "story": "Aldric Saltwell pohara félig tele maradt a Holdi Kocsmában. A lámpák körül napfény van — a vámpírok csak árnyékban állhatnak.",
+  "size": 6,
+  "difficulty": 3,
+  "rooms": {
+    "H": "Holdi Kocsma",
+    "S": "Sárvári-kúria",
+    "L": "Lukács-kúria",
+    "T": "Temető",
+    "G": "Gimnázium",
+    "R": "Régi templom"
+  },
+  "layout": [
+    "SSSSHH",
+    "SSGGHL",
+    "SGGGGL",
+    "STTTLL",
+    "TTTTRR",
+    "RRRRRR"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "B5",
+        "C1"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": [
+        "F6",
+        "E2"
+      ]
+    },
+    {
+      "type": "lamp",
+      "at": [
+        "E6",
+        "F3",
+        "B4",
+        "A5",
+        "D3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "charger",
+      "at": [
+        "F4",
+        "C5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "grave",
+      "at": [
+        "E4",
+        "B3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "C3",
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": "E1",
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": [
+        "E5",
+        "C2"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "szabolcs-sarvari",
+      "name": "Stephen Salvatori",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "ella-gyongyosi",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Elina Gilmorétől északra** volt."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "daniel-sarvari",
+      "name": "Damian Salvatori",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Holdi Kocsmában ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "karola-fabian",
+      "name": "Coraline Forrester",
+      "race": "vampire",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "dark"
+        }
+      ],
+      "clueText": [
+        "Sötét mezőn állt — a Sötétség megszállta."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "ella-gyongyosi",
+      "name": "Elina Gilmore",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "charger"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **elemlámpa-töltő mellett**."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "alfred-sos",
+      "name": "Aldric Saltwell",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Temetőben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "tamas-lukacs",
+      "name": "Taylor Lockridge",
+      "race": "werewolf",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "szabolcs-sarvari": "C1",
+    "daniel-sarvari": "E2",
+    "karola-fabian": "A3",
+    "ella-gyongyosi": "D4",
+    "alfred-sos": "B5",
+    "tamas-lukacs": "F6"
+  },
+  "murderer": "ella-gyongyosi",
+  "rev": 1,
+  "worldRule": "light"
+}

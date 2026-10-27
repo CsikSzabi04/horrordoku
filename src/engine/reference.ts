@@ -16,7 +16,7 @@ interface P {
 }
 const at = (id: CellId): P => ({ c: id.charCodeAt(0) - 65, r: Number(id.slice(1)) - 1 })
 
-const UNARY = new Set(['on', 'in', 'notIn', 'beside', 'besideAny', 'notBeside', 'besideCat', 'notBesideCat', 'terrain', 'line', 'edge', 'corner', 'distance', 'col', 'row', 'lit', 'dark'])
+const UNARY = new Set(['on', 'onlyGender', 'in', 'notIn', 'beside', 'besideAny', 'notBeside', 'besideCat', 'notBesideCat', 'terrain', 'line', 'edge', 'corner', 'distance', 'col', 'row', 'lit', 'dark'])
 const PAIR = new Set(['besideChar', 'sameRoom', 'notSameRoom', 'dir', 'leftOf', 'diagonal', 'northOf', 'southOf', 'aloneWith'])
 
 export function makeReference(p: Puzzle) {
@@ -48,7 +48,9 @@ export function makeReference(p: Puzzle) {
     if (rule === 'grab' && t === 'panel') for (const [dr, dc] of ORTH) if (has({ r: q.r + 2 * dr, c: q.c + 2 * dc }, t)) return true
     return false
   }
-  const nearest = (q: P, t: string) => Math.min(...cells.filter((x) => has(x, t)).map((x) => manhattan(x, q)))
+  // távolság-nyom: lépésekben, egy lépés = 1 mező jobbra / balra / fel / le / átlósan (a falak és tárgyak nem állnak az útba)
+  const steps = (a: P, b: P) => Math.max(Math.abs(a.r - b.r), Math.abs(a.c - b.c))
+  const nearest = (q: P, t: string) => Math.min(...cells.filter((x) => has(x, t)).map((x) => steps(x, q)))
 
   /** Egy nyom igaz-e. `pos`: ismert helyek; a más szereplőktől függő nyomok csak teljes (vagy a szükséges) hely-ismeretnél értékelhetők. */
   function holds(cl: Clue, me: CharId, pos: Map<CharId, P>): boolean {
@@ -96,6 +98,11 @@ export function makeReference(p: Puzzle) {
         return cl.dir === 'N' ? a.r < b.r : cl.dir === 'S' ? a.r > b.r : cl.dir === 'E' ? a.c > b.c : a.c < b.c
       }
       case 'notSameRoom': return roomAt(a) !== roomAt(who(cl.with))
+      case 'onlyGender': {
+        if (cl.room && roomAt(a) !== cl.room) return false
+        const me2 = p.characters.find((c) => c.id === me)!
+        return me2.gender === cl.gender && others.every(([id, q]) => p.characters.find((c) => c.id === id)!.gender !== cl.gender || roomAt(q) !== roomAt(a))
+      }
       case 'withGender': return others.some(([id, q]) => p.characters.find((c) => c.id === id)!.gender === cl.gender && roomAt(q) === roomAt(a))
       case 'roomCount': return [...pos.values()].filter((q) => roomAt(q) === roomAt(a)).length === cl.n
       case 'lit': return lit(a)

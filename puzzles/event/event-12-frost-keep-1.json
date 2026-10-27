@@ -1,0 +1,170 @@
+{
+  "v": 1,
+  "id": "event-12-frost-keep-1",
+  "mode": "event",
+  "world": "frost-keep",
+  "title": "A Fagykirály",
+  "story": "Frosthold Vár hideg éjszakáján a Fagykirály holtan esett össze. A Gáton túlra csak páncélos (🛡) merészkedik — a kártyákon ott a jelzés.",
+  "size": 5,
+  "difficulty": 2,
+  "rooms": {
+    "K": "Kripta",
+    "T": "Toronyszoba",
+    "A": "A Gáton túl",
+    "F": "Fagyott tó"
+  },
+  "layout": [
+    "AAAAA",
+    "AAFFF",
+    "KFFKF",
+    "KKKKT",
+    "KKTTT"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "C4",
+        "B2"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": "A1"
+    },
+    {
+      "type": "crate",
+      "at": [
+        "D3",
+        "A2",
+        "D5"
+      ]
+    },
+    {
+      "type": "throne",
+      "at": [
+        "C2",
+        "D1",
+        "D2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "armor",
+      "at": "E2",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "balint-fagyos",
+      "name": "Bram Winterhart",
+      "race": "human",
+      "gender": "m",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "dalma-tuzi",
+      "name": "Daenara Drakaryn",
+      "race": "human",
+      "gender": "f",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **pad mellett**."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "a-fagykiraly",
+      "name": "A Fagykirály",
+      "race": "ghoul",
+      "gender": "m",
+      "victim": true,
+      "armored": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Kriptában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "tamas-rendes",
+      "name": "Tyrian Goldmere",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "balint-fagyos",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Bram Winterharttól délre** volt."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "jon-hovari",
+      "name": "John Dér",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **vörös szőnyeg mellett**."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "balint-fagyos": "A1",
+    "dalma-tuzi": "B2",
+    "a-fagykiraly": "D3",
+    "tamas-rendes": "C4",
+    "jon-hovari": "E5"
+  },
+  "murderer": "tamas-rendes",
+  "rev": 1,
+  "worldRule": "vacuum",
+  "vacuumRooms": [
+    "A",
+    "F"
+  ]
+}

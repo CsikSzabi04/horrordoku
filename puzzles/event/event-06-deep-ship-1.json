@@ -1,0 +1,178 @@
+{
+  "v": 1,
+  "id": "event-06-deep-ship-1",
+  "mode": "event",
+  "world": "deep-ship",
+  "title": "Az Üldöző maradt",
+  "story": "A hajón egy Üldöző maradt holtan. A nyomásmentes szekciókba csak páncélos léphet — a kártyákon ott a jelzés.",
+  "size": 5,
+  "difficulty": 2,
+  "rooms": {
+    "G": "Gépház",
+    "Y": "Gyárterem",
+    "H": "Hidroponika",
+    "K": "Külső szekció"
+  },
+  "layout": [
+    "HHHKK",
+    "HHHKK",
+    "HYYYY",
+    "GYGGY",
+    "GGGGG"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "D1",
+        "E5"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "C3",
+        "B4",
+        "B1"
+      ]
+    },
+    {
+      "type": "stasis",
+      "at": [
+        "A2",
+        "D5"
+      ]
+    },
+    {
+      "type": "lockdoor",
+      "at": "A4",
+      "blocking": true
+    },
+    {
+      "type": "savepoint",
+      "at": [
+        "E1",
+        "B2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "terminal",
+      "at": "B5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "bence-marton",
+      "name": "Benedict Mathers",
+      "race": "human",
+      "gender": "m",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Külső szekcióban ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "csaba-mester",
+      "name": "Callum Merrow",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "stasis"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **sztázis-állomás mellett**."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "a-vadasz",
+      "name": "Az Üldöző",
+      "race": "ghoul",
+      "gender": "m",
+      "victim": true,
+      "armored": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "Y"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Gyárteremben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "kinga-dezso",
+      "name": "Kara Danielson",
+      "race": "human",
+      "gender": "f",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "leftOf",
+          "of": "a-vadasz"
+        }
+      ],
+      "clueText": [
+        "**Az Üldözőtől balra** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "ivan-kovacs",
+      "name": "Isaiah Clarkson",
+      "race": "human",
+      "gender": "m",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "bence-marton": "D1",
+    "csaba-mester": "A2",
+    "a-vadasz": "C3",
+    "kinga-dezso": "B4",
+    "ivan-kovacs": "E5"
+  },
+  "murderer": "kinga-dezso",
+  "rev": 1,
+  "worldRule": "vacuum",
+  "vacuumRooms": [
+    "K",
+    "Y"
+  ]
+}

@@ -1,0 +1,176 @@
+{
+  "v": 1,
+  "id": "event-18-spore-zone-1",
+  "mode": "event",
+  "world": "spore-zone",
+  "title": "A Csattogó",
+  "story": "Boston karantén-zónája, húsz évvel a kitörés után. Egy Csattogó holtteste hever. A rádió recseg a spóra-ködben: a nyomok néhány szava kitakarva marad.",
+  "size": 5,
+  "difficulty": 2,
+  "rooms": {
+    "E": "Egyetem",
+    "K": "Kórház",
+    "M": "Metró",
+    "H": "Hegyi kabin"
+  },
+  "layout": [
+    "EMMMM",
+    "EKKMM",
+    "EKKKM",
+    "EEKHH",
+    "HHHHH"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": "B5"
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "A2",
+        "E4"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "C3",
+        "B3",
+        "E1"
+      ]
+    },
+    {
+      "type": "radio",
+      "at": [
+        "D2",
+        "D3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tent",
+      "at": "B4",
+      "blocking": true
+    },
+    {
+      "type": "rock",
+      "at": "A3",
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": [
+        "B2",
+        "C5"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "abigel-andrasy",
+      "name": "Addie Anders",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "radio"
+        }
+      ],
+      "clueText": [
+        "Egy **rádió mellett** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "bela",
+      "name": "Billy",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "abigel-andrasy",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Addie Anderstől délre** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "ella-szucs",
+      "name": "Ella Williamson",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Kórházban egy **███** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "a-kattogo",
+      "name": "A Csattogó",
+      "race": "ghoul",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Hegyi kabinban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "jozsef-muller",
+      "name": "Jonah Millward",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **fa mellett** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "abigel-andrasy": "D1",
+    "bela": "A2",
+    "ella-szucs": "C3",
+    "a-kattogo": "E4",
+    "jozsef-muller": "B5"
+  },
+  "murderer": "jozsef-muller",
+  "rev": 1,
+  "worldRule": "radio"
+}

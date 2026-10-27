@@ -21,7 +21,8 @@ export const runRow = (uid: string, r: RunRecord) => ({
   wrong_submits: r.wrongSubmits, played_at: r.at,
 })
 export const unlockRow = (uid: string, u: { kind: string; id: string; at: IsoTime }) => ({ user_id: uid, kind: u.kind, item_id: u.id, unlocked_at: u.at })
-export const settingsRow = (uid: string, s: Settings) => ({ user_id: uid, data: s, updated_at: s.updatedAt })
+/** `langV: 2`: a `data.language` már a PROFIL tudatos nyelve (a korábbi sorokban az alapérték, 'hu' szerepel — azt nem vesszük át). */
+export const settingsRow = (uid: string, s: Settings) => ({ user_id: uid, data: { ...s, langV: 2 }, updated_at: s.updatedAt })
 /** A profil-frissítés csak a játék-adatokat írja; a becenevet/avatárt a ProfileApi.update intézi (egyediség-ellenőrzéssel). */
 export const profilePatch = (p: ProfileSnapshot) => ({ xp: p.xp, coins: p.coins, streak: p.streak, best_streak: p.bestStreak, last_daily: p.lastDaily ?? null, updated_at: p.updatedAt })
 
@@ -72,8 +73,11 @@ export const unlocksFromRows = (rows: UnlockDbRow[]): UnlocksFile => ({
 })
 
 export const settingsFromRow = (row: { data: unknown } | null): Settings | null => {
-  const d = row?.data as Partial<Settings> | undefined
-  return d && d.v === 1 && typeof d.updatedAt === 'string' ? (d as Settings) : null
+  const raw = row?.data as (Partial<Settings> & { langV?: number }) | undefined
+  if (!raw || raw.v !== 1 || typeof raw.updatedAt !== 'string') return null
+  const { langV, ...d } = raw
+  if (langV !== 2) delete d.language // a régi sor nyelve nem tudatos választás
+  return d as Settings
 }
 
 export const profileFromRow = (r: ProfileDbRow): ProfileSnapshot => ({

@@ -69,11 +69,12 @@
       "clues": [
         {
           "kind": "on",
-          "object": "chair"
+          "object": "chair",
+          "room": "B"
         }
       ],
       "clueText": [
-        "Egy **széken** ült."
+        "A Büfében egy **széken** ült."
       ]
     },
     {
@@ -83,12 +84,13 @@
       "gender": "f",
       "clues": [
         {
-          "kind": "col",
-          "n": 2
+          "kind": "southOf",
+          "of": "alfred",
+          "rows": 1
         }
       ],
       "clueText": [
-        "A **2. oszlopban** volt."
+        "Pontosan egy sorral **Alfredtől délre** volt."
       ]
     },
     {
@@ -145,12 +147,11 @@
       "gender": "m",
       "clues": [
         {
-          "kind": "notSameRoom",
-          "with": "victor"
+          "kind": "roomAlone"
         }
       ],
       "clueText": [
-        "**Nem** volt egy helyiségben **Victorral**."
+        "**Egyedül** volt."
       ]
     }
   ],

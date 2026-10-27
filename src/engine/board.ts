@@ -23,7 +23,7 @@ export const boardEngine: BoardEngine = {
         if (!known(op.char)) return err('unknown_char')
         if (!validCell(g, cell)) return err('unknown_cell')
         const { r, c } = parseCell(cell)
-        if (g.blocked[r][c]) return err('blocked_object')
+        if (g.blocked[r][c] && !op.trap) return err('blocked_object') // trap: az Eltüntetés csapda-mezője (a tárgy épp nincs ott)
         if (!allowedAt(g, p.characters.find((x) => x.id === op.char)!, r, c)) return err('power_violation')
         if (at(s, cell).some((x) => x !== op.char)) return err('cell_occupied')
         for (const [id, other] of Object.entries(s.placed)) {
@@ -34,6 +34,13 @@ export const boardEngine: BoardEngine = {
         s.placed[op.char] = cell
         s.marks = s.marks.filter((m) => m !== cell)
         delete s.notes[cell]
+        // a lerakott karakter betű-jegyzetei („itt lehetett") mindenhonnan lekerülnek: a döntés megszületett, a tábla ne maradjon tele a régi tippekkel
+        for (const [k, list] of Object.entries(s.notes)) {
+          if (!list.includes(op.char)) continue
+          const rest = list.filter((x) => x !== op.char)
+          if (rest.length) s.notes[k] = rest
+          else delete s.notes[k]
+        }
         return ok(s)
       }
       case 'unplace':

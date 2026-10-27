@@ -1,0 +1,241 @@
+{
+  "v": 1,
+  "id": "event-16-rain-forest-3",
+  "mode": "event",
+  "world": "rain-forest",
+  "title": "Az autók szerelmese",
+  "story": "Rosalyn Hales a kedvenc autója mellett fekszik. A totemek közelében plusz nyom tárul fel.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "K": "Kollár-ház",
+    "E": "Esőerdő Gimnázium",
+    "R": "Erdei tisztás",
+    "C": "Csendes-part",
+    "L": "Lenkei-ház",
+    "S": "Esőerdő kórház",
+    "V": "Vérkő-torony"
+  },
+  "layout": [
+    "EEEELKK",
+    "EEEELLK",
+    "VVVVSSK",
+    "VVVCCSS",
+    "VVVCCSS",
+    "CCCCCRR",
+    "RRRRRRR"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "A2",
+        "F3",
+        "A6"
+      ]
+    },
+    {
+      "type": "sofa",
+      "at": "C5"
+    },
+    {
+      "type": "bench",
+      "at": [
+        "B6",
+        "G5",
+        "G7"
+      ]
+    },
+    {
+      "type": "totem",
+      "at": [
+        "B2",
+        "C3",
+        "F6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "rock",
+      "at": "B4",
+      "blocking": true
+    },
+    {
+      "type": "fireplace",
+      "at": [
+        "F5",
+        "B3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": [
+        "C7",
+        "C2"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "jakob-fekete",
+      "name": "Jakob Dark",
+      "race": "werewolf",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "K"
+        },
+        {
+          "kind": "in",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Kollár-házban ő volt az **egyetlen férfi**.",
+        "A Kollár-házban volt."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "peter-lenkei",
+      "name": "Chaz Heron",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "jakob-fekete",
+          "rows": 1
+        },
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Jakob Darktól délre** volt.",
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "jonas-hajdu",
+      "name": "Casper Hales",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "gabor-sas",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Jamiétől keletre** volt."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "rozalia-hajdu",
+      "name": "Rosalyn Hales",
+      "race": "vampire",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "C"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Csendes-parton **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "gabor-sas",
+      "name": "Jamie",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa"
+        }
+      ],
+      "clueText": [
+        "Egy **kanapén** ült."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "bella-lenkei",
+      "name": "Belle Heron",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **padon** ült."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "ede-kollar",
+      "name": "Edmund Callen",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "plant"
+        }
+      ],
+      "clueText": [
+        "Egy **fa mellett** volt."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "jakob-fekete": "G1",
+    "peter-lenkei": "A2",
+    "jonas-hajdu": "F3",
+    "rozalia-hajdu": "E4",
+    "gabor-sas": "C5",
+    "bella-lenkei": "B6",
+    "ede-kollar": "D7"
+  },
+  "murderer": "bella-lenkei",
+  "rev": 1,
+  "worldRule": "totems"
+}

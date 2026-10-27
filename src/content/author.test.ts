@@ -48,11 +48,14 @@ describe.skipIf(!process.env.AUTHOR)('szerzői eszköz', () => {
   for (const def of EVENTS)
     it(def.file, () => {
       let p: Puzzle | null = null
-      // a seed-változatok közül a legösszetettebb nyomkészletűt választjuk (sok égtáj / átlós / kapcsolat / tagadás, kevés sima „tárgyon / mellett”)
-      const PLAIN = new Set(['on', 'onlyOn', 'in', 'beside', 'besideAny', 'line'])
+      // a seed-változatok közül a legváltozatosabb nyomkészletűt választjuk (sok ötletes egyedi nyom — „egyedül ült”, „az egyetlen férfi”, szobás „tárgyon volt” —, kevés sima „tárgyon / mellett”)
+      const PLAIN = new Set(['in', 'beside', 'besideAny', 'line'])
       const score = (q: Puzzle) => {
-        const kinds = q.characters.filter((c) => !c.victim).map((c) => c.clues[0]!.kind)
-        return kinds.filter((k) => !PLAIN.has(k)).length * 10 + new Set(kinds).size
+        const clues = q.characters.filter((c) => !c.victim).map((c) => c.clues[0]!)
+        const kinds = clues.map((c) => c.kind)
+        const tricks = clues.filter((c) => c.kind === 'onlyOn' || c.kind === 'onlyGender' || (c.kind === 'on' && c.room)).length
+        const plain = clues.filter((c) => PLAIN.has(c.kind) || (c.kind === 'on' && !c.room)).length
+        return (clues.length - plain) * 10 + tricks * 6 + new Set(kinds).size
       }
       let best = -1
       let accepted = 0
@@ -65,6 +68,7 @@ describe.skipIf(!process.env.AUTHOR)('szerzői eszköz', () => {
           const all = q.characters.flatMap((c) => c.clues)
           if (q.worldRule === 'light' && !all.some((c) => c.kind === 'dark' || c.kind === 'lit')) continue
           if (q.worldRule === 'motion' && all.filter((c) => c.kind === 'distance').length < 2) continue
+          if (q.worldRule === 'vacuum' && q.characters.every((c) => c.armored)) continue // legyen páncél nélküli szereplő is
           accepted++
           if (score(q) > best) {
             best = score(q)

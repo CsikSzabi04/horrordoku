@@ -1,0 +1,236 @@
+{
+  "v": 1,
+  "id": "event-07-summit-shelter-5",
+  "mode": "event",
+  "world": "summit-shelter",
+  "title": "Nyitott ajtók",
+  "story": "Edwin Glasswick dolgozószobája mindig zárva volt, most tárva áll. Az elem fogy, a folyosók pedig hosszúak.",
+  "size": 8,
+  "difficulty": 5,
+  "rooms": {
+    "F": "Fogadócsarnok",
+    "K": "Kórterem-szárny",
+    "P": "Pincebörtön",
+    "O": "Kápolna",
+    "C": "Csatorna",
+    "R": "Őrszoba",
+    "V": "Villamos-terem"
+  },
+  "layout": [
+    "VVVVVFFF",
+    "VVVCCFFF",
+    "CCCCCFFK",
+    "CPCCRKKK",
+    "PPCRRRRK",
+    "PPPPPRRK",
+    "PPOOOOOK",
+    "PPOOOOOO"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "B8",
+        "E2",
+        "D2"
+      ]
+    },
+    {
+      "type": "batterybox",
+      "at": [
+        "C4",
+        "C7"
+      ]
+    },
+    {
+      "type": "switch",
+      "at": [
+        "F3",
+        "F7",
+        "H1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "locker",
+      "at": [
+        "C5",
+        "D6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "hospbed",
+      "at": "G4",
+      "blocking": true
+    },
+    {
+      "type": "wheelchair",
+      "at": "H2"
+    }
+  ],
+  "characters": [
+    {
+      "id": "atya-marton",
+      "name": "Marvin atya",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. sor fölött** volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "vajk-pal",
+      "name": "Wade Parks",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A helyiségében **hárman** voltak."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "kristof-vadas",
+      "name": "Kris Strider",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "dr-vargha"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Dr. Werlinggel**."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "dr-vargha",
+      "name": "Dr. Werling",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "batterybox"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **elemdoboz mellett**."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "milan-ungvari",
+      "name": "Milo Upcroft",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "dr-vargha",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Dr. Werlingtől délre** volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "elemer-gulyas",
+      "name": "Edwin Glasswick",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Pincebörtönben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "rudolf-tarnai",
+      "name": "Richmond Traeger",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "switch"
+        }
+      ],
+      "clueText": [
+        "Egy **generátorkapcsoló mellett** volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "jeno-balogh",
+      "name": "Jerome Blake",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "atya-marton": "F1",
+    "vajk-pal": "E2",
+    "kristof-vadas": "D3",
+    "dr-vargha": "C4",
+    "milan-ungvari": "H5",
+    "elemer-gulyas": "A6",
+    "rudolf-tarnai": "G7",
+    "jeno-balogh": "B8"
+  },
+  "murderer": "jeno-balogh",
+  "rev": 1,
+  "worldRule": "nightvision"
+}

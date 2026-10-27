@@ -1,6 +1,7 @@
 // B10 — Gyűjtemény / bestiárium (GDD 14.7, 19.4): a `content.characters()` és a `StorageService.getUnlocks()` találkozása.
 // A még meg nem szerzett karakterek „ismeretlen" sziluettként látszanak; szűrés világ / faj szerint; számláló.
 import { useEffect, useMemo, useState } from 'react'
+import { charBio, charName, charSource, worldTitle } from '../../content/localize'
 import { useNav } from '../../app/nav'
 import { content } from '../../content'
 import { t } from '../../i18n'
@@ -10,7 +11,7 @@ import { Avatar, Button, Panel } from '../../ui'
 import '../login/form.css'
 import './collection.css'
 
-const worldName = (w: string) => (w === 'hollowmere' ? 'Hollowmere' : w.toUpperCase())
+const worldName = worldTitle
 
 export default function CollectionScreen() {
   const { back } = useNav()
@@ -79,12 +80,12 @@ export default function CollectionScreen() {
                   <li key={c.id} className={known ? 'nd-card' : 'nd-card locked'}>
                     <Avatar id={known ? c.id : 'unknown'} emoji={known ? c.emoji : '❔'} size="3.4rem" />
                     <div>
-                      <h4>{known ? c.name : t('collection.unknown')}</h4>
+                      <h4>{known ? charName(c.id, c.name) : t('collection.unknown')}</h4>
                       <p className="nd-note">
                         {known ? `${t(`race.${c.race}` as I18nKey)} · ${worldName(c.world)}` : t('collection.unknown.hint')}
                       </p>
-                      {known && c.bio && <p>{c.bio}</p>}
-                      {known && (c.source?.game ?? c.source?.film) && <p className="nd-note">{c.source?.game ?? c.source?.film}</p>}
+                      {known && charBio(c) && <p>{charBio(c)}</p>}
+                      {known && charSource(c) && <p className="nd-note">{charSource(c)}</p>}
                     </div>
                   </li>
                 )

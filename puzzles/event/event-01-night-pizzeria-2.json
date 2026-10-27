@@ -1,0 +1,188 @@
+{
+  "v": 1,
+  "id": "event-01-night-pizzeria-2",
+  "mode": "event",
+  "world": "night-pizzeria",
+  "title": "Hajnali hat óra",
+  "story": "Miles Schmitt nem lépett ki a pizzéria ajtaján, amikor hajnalban kisütött a nap. A kamerák az egész éjszakát felvették — de egyszerre csak egy szobát mutatnak.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "S": "Színpad",
+    "E": "Ebédlő",
+    "K": "Kalóz-öböl",
+    "O": "Konyha",
+    "I": "Iroda",
+    "N": "Nyugati folyosó"
+  },
+  "layout": [
+    "SEEEEI",
+    "SEEEEI",
+    "SSSSEE",
+    "KKSOOO",
+    "KKSOON",
+    "KKNNNN"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": "A5"
+    },
+    {
+      "type": "giftbox",
+      "at": [
+        "F2",
+        "C5",
+        "E1"
+      ]
+    },
+    {
+      "type": "partytable",
+      "at": "E3"
+    },
+    {
+      "type": "doorbtn",
+      "at": [
+        "C4",
+        "B5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "oven",
+      "at": [
+        "D1",
+        "A6"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "kiss-marton",
+      "name": "Miles Schmitt",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Az Ebédlőben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "csibi",
+      "name": "Csipi Csibe",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "giftbox"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **ajándékdobozon** volt."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "brumi",
+      "name": "Teddy Bolyhosmackó",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "gt",
+          "n": 4
+        }
+      ],
+      "clueText": [
+        "A **4. oszloptól jobbra** volt."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "roko",
+      "name": "Rozsdás Róka",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "O"
+        }
+      ],
+      "clueText": [
+        "A Konyhában ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "arany-brumi",
+      "name": "Arany Teddy",
+      "race": "ghost",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "nyuszi",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Benny Nyuszitól északra** volt."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "nyuszi",
+      "name": "Benny Nyuszi",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "f",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "A Nyugati folyosón ő volt az **egyetlen nő**."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "kiss-marton": "B1",
+    "csibi": "F2",
+    "brumi": "E3",
+    "roko": "D4",
+    "arany-brumi": "A5",
+    "nyuszi": "C6"
+  },
+  "murderer": "brumi",
+  "rev": 1,
+  "worldRule": "cameras"
+}

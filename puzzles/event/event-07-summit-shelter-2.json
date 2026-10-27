@@ -1,0 +1,188 @@
+{
+  "v": 1,
+  "id": "event-07-summit-shelter-2",
+  "mode": "event",
+  "world": "summit-shelter",
+  "title": "A lépcső alján",
+  "story": "Jerome Blake a lépcső alján fekszik, a zseblámpa kezében még világít. A menedékház falai mindent láttak.",
+  "size": 6,
+  "difficulty": 3,
+  "rooms": {
+    "F": "Fogadócsarnok",
+    "K": "Kórterem-szárny",
+    "C": "Csatorna",
+    "R": "Őrszoba",
+    "V": "Villamos-terem"
+  },
+  "layout": [
+    "KVFFFC",
+    "KVFFCC",
+    "RVVFCC",
+    "RRVFFC",
+    "RRVVCC",
+    "RRRVCC"
+  ],
+  "objects": [
+    {
+      "type": "wheelchair",
+      "at": "A6"
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "B3",
+        "F4"
+      ]
+    },
+    {
+      "type": "switch",
+      "at": [
+        "D6",
+        "B1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "locker",
+      "at": "D2",
+      "blocking": true
+    },
+    {
+      "type": "hospbed",
+      "at": "C1",
+      "blocking": true
+    },
+    {
+      "type": "batterybox",
+      "at": [
+        "A1",
+        "B6"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "jeno-balogh",
+      "name": "Jerome Blake",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Fogadócsarnokban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "rudolf-tarnai",
+      "name": "Richmond Traeger",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "elemer-gulyas",
+      "name": "Edwin Glasswick",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "A Villamos-teremben ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "atya-marton",
+      "name": "Marvin atya",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "vajk-pal",
+      "name": "Wade Parks",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "rudolf-tarnai",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Richmond Traegertől keletre** volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "milan-ungvari",
+      "name": "Milo Upcroft",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notBesideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **kerekesszék mellett**."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "jeno-balogh": "D1",
+    "rudolf-tarnai": "C2",
+    "elemer-gulyas": "B3",
+    "atya-marton": "F4",
+    "vajk-pal": "E5",
+    "milan-ungvari": "A6"
+  },
+  "murderer": "rudolf-tarnai",
+  "rev": 1,
+  "worldRule": "nightvision"
+}

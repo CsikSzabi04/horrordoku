@@ -1,6 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useState } from 'react'
 import type { ButtonHTMLAttributes, ReactNode } from 'react'
 import { EventPortrait, hasLook } from '../components/EventPortrait'
+import { pick } from '../i18n/lang'
 import './ui.css'
 
 const cx = (...a: (string | false | undefined)[]) => a.filter(Boolean).join(' ')
@@ -105,7 +106,7 @@ export function ToastProvider({ children }: { children: ReactNode }) {
       {children}
       <div className="nd-toasts" role="status" aria-live="polite">
         {items.map((i) => (
-          <div key={i.id} className="nd-toast" title="Kattints a bezáráshoz" onClick={() => setItems((s) => s.filter((x) => x.id !== i.id))}>
+          <div key={i.id} className="nd-toast" title={pick('Kattints a bezáráshoz', 'Click to dismiss')} onClick={() => setItems((s) => s.filter((x) => x.id !== i.id))}>
             {i.msg}
           </div>
         ))}

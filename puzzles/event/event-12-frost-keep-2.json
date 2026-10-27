@@ -1,0 +1,191 @@
+{
+  "v": 1,
+  "id": "event-12-frost-keep-2",
+  "mode": "event",
+  "world": "frost-keep",
+  "title": "A bor és a méreg",
+  "story": "Cerys Goldmere a pohár mellett maradt, amikor a kandallók kialudtak. A Gáton túlra csak páncélos mer menni.",
+  "size": 6,
+  "difficulty": 3,
+  "rooms": {
+    "N": "Nagyterem",
+    "S": "Szent liget",
+    "T": "Toronyszoba",
+    "A": "A Gáton túl",
+    "F": "Fagyott tó"
+  },
+  "layout": [
+    "TTTFFF",
+    "TTTFFF",
+    "SSTAAF",
+    "SSTAAN",
+    "SSSANN",
+    "SSAANN"
+  ],
+  "objects": [
+    {
+      "type": "crate",
+      "at": [
+        "E6",
+        "B3"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "B5",
+        "F1"
+      ]
+    },
+    {
+      "type": "fireplace",
+      "at": "E3",
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": "D3",
+      "blocking": true
+    },
+    {
+      "type": "armor",
+      "at": [
+        "F6",
+        "A2"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "aliz-szurke",
+      "name": "Aria Winterhart",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "tamas-rendes",
+      "name": "Tyrian Goldmere",
+      "race": "human",
+      "gender": "m",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "lt",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. sor fölött** volt."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "cecilia-aranyi",
+      "name": "Cerys Goldmere",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "armored": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Fagyott tavon **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "jon-hovari",
+      "name": "John Dér",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Toronyszobában volt."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "jeno-aranykez",
+      "name": "Jaimon Goldmere",
+      "race": "human",
+      "gender": "m",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "dalma-tuzi",
+      "name": "Daenara Drakaryn",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "tamas-rendes",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Tyrian Goldmerétől keletre** volt."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "aliz-szurke": "C1",
+    "tamas-rendes": "D2",
+    "cecilia-aranyi": "F3",
+    "jon-hovari": "A4",
+    "jeno-aranykez": "B5",
+    "dalma-tuzi": "E6"
+  },
+  "murderer": "tamas-rendes",
+  "rev": 1,
+  "worldRule": "vacuum",
+  "vacuumRooms": [
+    "A",
+    "F"
+  ]
+}

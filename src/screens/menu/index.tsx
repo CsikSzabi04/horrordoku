@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useNav } from '../../app/nav'
 import type { Route } from '../../app/routes'
+import { prefetch } from '../../app/screens'
 import { cloud } from '../../cloud'
 import { useCloudUser } from '../../cloud/hooks'
 import { SignOutButton } from '../../components/SignOutButton'
 import { t } from '../../i18n'
 import type { I18nKey } from '../../i18n'
+import { pick } from '../../i18n/lang'
 import { getStorage } from '../../storage'
 import { Button, Chip } from '../../ui'
 import './menu.css'
@@ -43,9 +45,9 @@ export default function MenuScreen() {
         </h1>
         <p>{t('app.tagline')}</p>
       </header>
-      <nav className="modes" aria-label="Játékmódok">
+      <nav className="modes" aria-label={pick('Játékmódok', 'Game modes')}>
         {MODES.map((m) => (
-          <button key={m.key} type="button" className="mode" onClick={() => go(m.route)}>
+          <button key={m.key} type="button" className="mode" onClick={() => go(m.route)} onPointerEnter={() => prefetch(m.route.name)} onFocus={() => prefetch(m.route.name)}>
             <span className="ico">{m.emoji}</span>
             <strong>{t(`menu.${m.key}` as I18nKey)}</strong>
             <small>{t(`menu.${m.key}.sub` as I18nKey)}</small>
@@ -77,7 +79,7 @@ export default function MenuScreen() {
         <span className="acct">
           {/* belépve a névre koppintva egyből a profil, kilépve a bejelentkezés nyílik */}
           <button type="button" className="link" data-act="account" onClick={() => go({ name: user ? 'profile' : 'login' })}>
-            {user ? user.username : 'Bejelentkezés'}
+            {user ? user.username : pick('Bejelentkezés', 'Sign in')}
           </button>
           {user && <SignOutButton />}
         </span>

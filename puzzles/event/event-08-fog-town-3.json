@@ -1,0 +1,215 @@
+{
+  "v": 1,
+  "id": "event-08-fog-town-3",
+  "mode": "event",
+  "world": "fog-town",
+  "title": "Tükörszoba",
+  "story": "A Megtévesztő Alak sosem mutatta az arcát — most sem látjuk, ki vele végzett. A rádió egyes szavakat kitakar.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "K": "Kórterem",
+    "L": "Lépcsőház",
+    "A": "Apartman",
+    "B": "Bowlingpálya",
+    "M": "Másik világ"
+  },
+  "layout": [
+    "LLAAAAA",
+    "LLAAAAM",
+    "LKKBBMM",
+    "LKKKBMM",
+    "KKKKBMM",
+    "KKBBBMM",
+    "BBBBBMM"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": "C2"
+    },
+    {
+      "type": "wheelchair",
+      "at": [
+        "G7",
+        "E6",
+        "A3",
+        "A6",
+        "D6",
+        "G6"
+      ]
+    },
+    {
+      "type": "radio",
+      "at": [
+        "D2",
+        "B6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "window",
+      "at": "D3",
+      "blocking": true
+    },
+    {
+      "type": "doll",
+      "at": [
+        "F7",
+        "B7",
+        "E3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "hospbed",
+      "at": "D7",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "a-hazug-alak",
+      "name": "A Megtévesztő Alak",
+      "race": "ghoul",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Lépcsőházban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "mara",
+      "name": "Marie",
+      "race": "ghost",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "sandor-szeles",
+      "name": "Jamie Sunderwood",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "wheelchair"
+        }
+      ],
+      "clueText": [
+        "Egy **kerekesszéken** ült."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "a-piramisfeju",
+      "name": "Az Obeliszkfejű Hóhér",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "sandor-szeles",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Jamie Sunderwoodtól délre** volt."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "ede-dombi",
+      "name": "Edwin Dombro",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "leftOf",
+          "of": "marianna"
+        }
+      ],
+      "clueText": [
+        "**Marinától balra** volt."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "marianna",
+      "name": "Marina",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "wheelchair",
+          "room": "B"
+        }
+      ],
+      "clueText": [
+        "A Bowlingpályán egy **kerekesszéken** ült."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "anna-oroszi",
+      "name": "Angelica Orsino",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "wheelchair",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "A Másik világban egy **███** ült."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "a-hazug-alak": "B1",
+    "mara": "C2",
+    "sandor-szeles": "A3",
+    "a-piramisfeju": "F4",
+    "ede-dombi": "D5",
+    "marianna": "E6",
+    "anna-oroszi": "G7"
+  },
+  "murderer": "sandor-szeles",
+  "rev": 1,
+  "worldRule": "radio"
+}

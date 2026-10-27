@@ -1,0 +1,220 @@
+{
+  "v": 1,
+  "id": "event-07-summit-shelter-4",
+  "mode": "event",
+  "world": "summit-shelter",
+  "title": "Az orvos jegyzetei",
+  "story": "Dr. Werling jegyzetei szétszórva hevernek a kórterem padlóján. Ki hordta ki a fiókokat?",
+  "size": 7,
+  "difficulty": 5,
+  "rooms": {
+    "F": "Fogadócsarnok",
+    "K": "Kórterem-szárny",
+    "P": "Pincebörtön",
+    "O": "Kápolna",
+    "C": "Csatorna",
+    "R": "Őrszoba"
+  },
+  "layout": [
+    "OOKKKRR",
+    "OKKKKKR",
+    "OOOKKKR",
+    "OOOKKRR",
+    "POOFCRR",
+    "POFFCCR",
+    "PPFFCCC"
+  ],
+  "objects": [
+    {
+      "type": "batterybox",
+      "at": [
+        "D1",
+        "E2",
+        "C2"
+      ]
+    },
+    {
+      "type": "wheelchair",
+      "at": [
+        "E7",
+        "E4"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "C5",
+        "A3"
+      ]
+    },
+    {
+      "type": "hospbed",
+      "at": [
+        "F2",
+        "G6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "switch",
+      "at": [
+        "D6",
+        "B5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "locker",
+      "at": "E5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "jeno-balogh",
+      "name": "Jerome Blake",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "batterybox",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Kórterem-szárnyban egy **elemdobozon** volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "rudolf-tarnai",
+      "name": "Richmond Traeger",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "atya-marton",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Marvin atyától északra** volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "elemer-gulyas",
+      "name": "Edwin Glasswick",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "O"
+        }
+      ],
+      "clueText": [
+        "A Kápolnában egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "dr-vargha",
+      "name": "Dr. Werling",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Az Őrszobában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "atya-marton",
+      "name": "Marvin atya",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "O"
+        }
+      ],
+      "clueText": [
+        "A Kápolnában egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "vajk-pal",
+      "name": "Wade Parks",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. oszloptól balra** volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "milan-ungvari",
+      "name": "Milo Upcroft",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notBesideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **kerekesszék mellett**."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "jeno-balogh": "D1",
+    "rudolf-tarnai": "G2",
+    "elemer-gulyas": "A3",
+    "dr-vargha": "F4",
+    "atya-marton": "C5",
+    "vajk-pal": "B6",
+    "milan-ungvari": "E7"
+  },
+  "murderer": "rudolf-tarnai",
+  "rev": 1,
+  "worldRule": "nightvision"
+}

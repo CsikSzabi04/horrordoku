@@ -1,0 +1,216 @@
+{
+  "v": 1,
+  "id": "event-11-sunshine-mall-3",
+  "mode": "event",
+  "world": "sunshine-mall",
+  "title": "Fagylaltozó",
+  "story": "Stevie Hargrove fagylaltos sapkája a pulton maradt, ő maga eltűnt. Az áramszünetben csak a kurzorod fénye világít.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "F": "Fagylaltozó",
+    "T": "Étterem-udvar",
+    "M": "Mozi",
+    "J": "Játékbolt",
+    "S": "Szökőkút-tér",
+    "Z": "Szolgálati folyosó",
+    "I": "Titkos labor"
+  },
+  "layout": [
+    "FFFFTTT",
+    "FFFFZTT",
+    "IIIIZZT",
+    "IIMZZMS",
+    "IIMMMMS",
+    "IJJJSSS",
+    "JJJJJSS"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "D7",
+        "A1",
+        "G3",
+        "B2",
+        "A7"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "E2",
+        "C1"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": "B5"
+    },
+    {
+      "type": "counter",
+      "at": "B7",
+      "blocking": true
+    },
+    {
+      "type": "popcorn",
+      "at": [
+        "D3",
+        "G2",
+        "A2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "fountain",
+      "at": "F5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "mariann-majer",
+      "name": "Maxine Meadows",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Fagylaltozóban egy **padon** ült."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "a-liderc",
+      "name": "Az Átokúr",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "matyas-palfi",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Mick Wheelwrighttől északra** volt."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "vilmos-balint",
+      "name": "Willy Baines",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "Az Étterem-udvarban ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "nyolc",
+      "name": "Tizenkettő",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "a-liderc",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Az Átokúrtól keletre** volt."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "matyas-palfi",
+      "name": "Mick Wheelwright",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Moziban volt."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "istvan-halasz",
+      "name": "Stevie Hargrove",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "J"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Játékboltban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "dezso-hunyadi",
+      "name": "Dusty Hendricks",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "mariann-majer": "A1",
+    "a-liderc": "E2",
+    "vilmos-balint": "G3",
+    "nyolc": "F4",
+    "matyas-palfi": "B5",
+    "istvan-halasz": "C6",
+    "dezso-hunyadi": "D7"
+  },
+  "murderer": "dezso-hunyadi",
+  "rev": 1,
+  "worldRule": "nightvision"
+}

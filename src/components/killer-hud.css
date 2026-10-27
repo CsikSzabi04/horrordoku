@@ -1,0 +1,124 @@
+/* A Gyilkos mód felülete: állapotsáv, képességek, Gyűlés / Epilógus, szerepkártya, vég-ablak */
+.kh-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.7rem;
+  margin: 0 0 0.5rem;
+  padding: 0.45rem 0.6rem;
+  border: 2px solid var(--btn-line, #121212);
+  border-radius: 10px;
+  font: 700 0.8rem var(--ui, system-ui);
+}
+.kh-status.killer {
+  border-color: #d1162f;
+}
+.kh-role {
+  letter-spacing: 0.04em;
+}
+.kh-lives {
+  color: #d1162f;
+  letter-spacing: 0.1em;
+}
+.kh-lives .off {
+  opacity: 0.25;
+}
+.kh-warn {
+  flex-basis: 100%;
+  color: #ff8d9b;
+  font-weight: 700;
+}
+.kh-note {
+  flex-basis: 100%;
+  color: var(--g-muted, #8b8590);
+  font-weight: 500;
+}
+.kh-actions {
+  display: grid;
+  gap: 8px;
+}
+.kh-actions .tbtn {
+  width: 100%;
+}
+.kh-actions .tbtn.on {
+  background: #d1162f;
+  border-color: #d1162f;
+  color: #fff;
+}
+.kh-actions .tbtn:disabled {
+  opacity: 0.45;
+}
+.kh-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+.kh-meet {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0 0 0.5rem;
+  padding: 0.55rem 0.7rem;
+  border: 2px solid #d1162f;
+  border-radius: 10px;
+  background: color-mix(in srgb, #d1162f 10%, var(--g-surface, transparent));
+  font: 700 0.82rem var(--ui, system-ui);
+}
+.kh-meet .left {
+  justify-self: end;
+  margin-top: -1.3rem;
+  font-weight: 800;
+}
+.kh-meet.result {
+  border-color: var(--gold, #c9a228);
+}
+.kh-vote {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+.kh-vote button {
+  padding: 0.4rem 0.8rem;
+  border: 2px solid var(--btn-line, #121212);
+  border-radius: 8px;
+  background: var(--btn-bg, #fff);
+  color: var(--btn-ink, #121212);
+  font: 800 0.78rem var(--ui, system-ui);
+  cursor: pointer;
+}
+.kh-vote button.ghost {
+  border-style: dashed;
+}
+.kh-card h3,
+.kh-end h3 {
+  margin: 0;
+  font: 800 1.25rem var(--display, inherit);
+  letter-spacing: 0.06em;
+}
+.kh-card.killer h3 {
+  color: #d1162f;
+}
+.kh-end .kh-you {
+  font: 800 1.05rem var(--ui, system-ui);
+}
+.kh-end .kh-you.won {
+  color: #6fcf97;
+}
+.kh-end .kh-you.lost {
+  color: #ff8d9b;
+}
+.kh-end .kh-xp {
+  color: var(--gold, #c9a228);
+  font: 800 1.05rem var(--ui, system-ui);
+}
+/* Árulkodó jel (lobby-opció): a kártya 0,2 mp-re megvillan */
+.suspect.kh-flash {
+  outline: 3px solid #fff;
+  filter: brightness(1.5);
+}
+
+/* rendszersorok a chatben (Szimat, Gyűlés, életvesztés…) */
+.coop-chat .log i.sys {
+  color: var(--g-muted, #8b8590);
+  font-style: italic;
+  font-weight: 600;
+}

@@ -1,10 +1,12 @@
 // RoomSession (B4): tagok + online-állapot (Presence), a szoba állapota (lobby → playing) és a chat (postgres_changes).
 // A közös tábla (ops / kurzorok / üzenetek — B5, Broadcast `room:<id>`) itt él; a beküldés-szavazás és a szinkron-logika a `game/coop.ts`-ben.
-// A Gyilkos-mód (killer — B6) és a `submit` itt még csonk.
+// A Gyilkos-mód (B6): a szerver-oldali játékállapot kliense a `cloud/killer.ts`-ben; a közös beküldés (`submit`) ennél a csonk — az Együttben a `game/coop.ts`, a Gyilkosban a szerver végzi.
 import type { SupabaseClient } from '@supabase/supabase-js'
 import type { CellId, Result, Unsubscribe, Uuid } from '../shared/base'
 import type { BoardState, Op, OpEnvelope } from '../shared/board'
 import type { ChatMessage, RoomInfo, RoomMember, RoomSession } from '../shared/room'
+import { createKillerSession } from './killer'
+import { isEnvelope } from '../game/validate'
 import { fail, fromError, guard, iso, ok } from './result'
 import { toRoomInfo, type RoomRow } from './roomRow'
 
@@ -55,21 +57,25 @@ export async function openSession(client: SupabaseClient, roomId: string): Promi
   }
   function addMessage(r: MsgRow) {
     if (seen.has(r.id)) return // a saját üzenet kétszer is megérkezhet (insert-válasz + Realtime)
+    if (muted.has(r.user_id)) return // nem kerül a `seen`-be: a némítás feloldásakor az üzenet visszajöhet
     seen.add(r.id)
-    if (muted.has(r.user_id)) return
     const m: ChatMessage = { id: r.id, userId: r.user_id, username: people.get(r.user_id)?.username ?? '?', body: r.body, at: iso(r.created_at) }
     history.push(m)
     history.sort((a, b) => a.id - b.id)
     msgCbs.forEach((cb) => cb(m))
   }
 
+  async function loadPast() {
+    const past = await client.from('room_messages').select('*').eq('room_id', roomId).order('id', { ascending: false }).limit(100)
+    const pastRows = ((past.data ?? []) as MsgRow[]).reverse()
+    await loadPeople(pastRows.map((r) => r.user_id))
+    pastRows.forEach(addMessage)
+  }
+
   await reloadMembers()
   const mutes = await client.from('chat_mutes').select('muted_id')
   ;((mutes.data ?? []) as { muted_id: string }[]).forEach((m) => muted.add(m.muted_id))
-  const past = await client.from('room_messages').select('*').eq('room_id', roomId).order('id', { ascending: false }).limit(100)
-  const pastRows = ((past.data ?? []) as MsgRow[]).reverse()
-  await loadPeople(pastRows.map((r) => r.user_id))
-  pastRows.forEach(addMessage)
+  await loadPast()
 
   const channel = client.channel(`room-lobby:${roomId}`, { config: { presence: { key: me } } })
   channel
@@ -106,7 +112,13 @@ export async function openSession(client: SupabaseClient, roomId: string): Promi
   boardCh
     .on('broadcast', { event: 'm' }, (msg: { payload?: unknown }) => {
       const m = msg.payload as Msg | undefined
-      if (!m || typeof m.t !== 'string' || m.by === me) return
+      if (!m || typeof m.t !== 'string' || typeof m.by !== 'string' || m.by === me) return
+      if (m.p !== undefined && (typeof m.p !== 'object' || m.p === null || Array.isArray(m.p))) return
+      // a csatorna nyilvános (a szoba-azonosító a titok): csak a szoba tagjaitól fogadunk üzenetet; ismeretlen feladónál frissítjük a taglistát
+      if (!memberIds.includes(m.by)) {
+        void reloadMembers()
+        return
+      }
       handlers.get(m.t)?.forEach((cb) => cb(m.p ?? {}, m.by))
     })
     .subscribe((status: string) => {
@@ -125,9 +137,10 @@ export async function openSession(client: SupabaseClient, roomId: string): Promi
   }
   let lamport = 0
   const opCbs = new Set<(e: OpEnvelope) => void>()
-  on('op', (p) => {
-    const env = p.env as OpEnvelope | undefined
-    if (!env || typeof env.id !== 'string' || typeof env.seq !== 'number') return
+  on('op', (p, by) => {
+    const env = p.env
+    // alak-ellenőrzés + a feladó nem hamisíthatja más nevében a műveletet
+    if (!isEnvelope(env) || env.by !== by) return
     lamport = Math.max(lamport, env.seq)
     opCbs.forEach((cb) => cb(env))
   })
@@ -136,6 +149,10 @@ export async function openSession(client: SupabaseClient, roomId: string): Promi
   let lastCursor = 0
   let cursorTimer: ReturnType<typeof setTimeout> | undefined
   let cursorPending: CellId | null | undefined
+
+  // Gyilkos-mód: a szoba játékállapota a szerveren él; a kliens-réteg a Realtime-eseményekből és szívverésből épül
+  const killer = info.mode === 'killer' ? createKillerSession(client, roomId) : undefined
+  if (killer) infoCbs.add((i) => i.status === 'playing' && void killer.refresh())
 
   let lastSent = 0
   const session: RoomSession = {
@@ -155,6 +172,7 @@ export async function openSession(client: SupabaseClient, roomId: string): Promi
       guard(async () => {
         const { error } = await client.rpc('leave_room', { p_room: roomId })
         if (error) return fromError(error)
+        killer?.close()
         void client.removeChannel(channel)
         void client.removeChannel(boardCh)
         return ok(undefined)
@@ -184,9 +202,22 @@ export async function openSession(client: SupabaseClient, roomId: string): Promi
           const { error } = await client.from('chat_mutes').insert({ user_id: me, muted_id: userId })
           if (error && (error as { code?: string }).code !== '23505') return fromError(error)
           muted.add(userId)
-          for (let i = history.length - 1; i >= 0; i--) if (history[i]!.userId === userId) history.splice(i, 1)
+          for (let i = history.length - 1; i >= 0; i--) {
+            if (history[i]!.userId !== userId) continue
+            seen.delete(history[i]!.id)
+            history.splice(i, 1)
+          }
           return ok(undefined)
         }),
+      unmute: (userId) =>
+        guard(async () => {
+          const { error } = await client.from('chat_mutes').delete().eq('user_id', me).eq('muted_id', userId)
+          if (error) return fromError(error)
+          muted.delete(userId)
+          await loadPast() // a némítás alatt érkezett (és a korábbi) üzenetek visszatérnek
+          return ok(undefined)
+        }),
+      muted: () => [...muted],
       onMessage: sub(msgCbs),
     },
     ops: {
@@ -211,6 +242,7 @@ export async function openSession(client: SupabaseClient, roomId: string): Promi
       broadcast: post,
       onBroadcast: on,
     },
+    ...(killer ? { killer } : {}),
     cursors: {
       send: (cell: CellId | null) => {
         const now = Date.now()
@@ -235,13 +267,19 @@ export async function openSession(client: SupabaseClient, roomId: string): Promi
     submit: { propose: noop, vote: noop, onProposal: () => noop, onResult: () => noop }, // a közös beküldés a `game/coop.ts`-ben (ops.broadcast-on)
     close: () => {
       clearTimeout(cursorTimer)
+      killer?.close()
       void client.removeChannel(channel)
       void client.removeChannel(boardCh)
     },
     finish: (res) =>
       guard(async () => {
         const { error } = await client.rpc('finish_game', { p_room: roomId, p_solved: res.solved, p_ms: Math.round(res.ms) })
-        return error ? fromError(error) : ok(undefined)
+        if (error) return fromError(error)
+        // a szoba lobbyba áll vissza (a Realtime-esemény is megjön, de a hívó rögtön tudja — pl. a „Következő pálya”)
+        info = { ...info, status: 'lobby' }
+        delete info.startedAt
+        infoCbs.forEach((cb) => cb(info))
+        return ok(undefined)
       }),
   }
   return ok(session)

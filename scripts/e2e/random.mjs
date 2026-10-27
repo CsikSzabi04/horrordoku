@@ -9,7 +9,7 @@ const errors = []
 p.on('pageerror', (e) => errors.push(String(e)))
 let failed = 0
 const ok = (n, c, x = '') => { console.log(c ? '  PASS' : '  FAIL', n, c ? '' : x); if (!c) failed++ }
-await p.evaluateOnNewDocument(() => { if (!sessionStorage.getItem('init')) { sessionStorage.setItem('init', '1'); localStorage.clear(); localStorage.setItem('nd_tutorial', '1') } })
+await p.evaluateOnNewDocument(() => { if (!sessionStorage.getItem('init')) { sessionStorage.setItem('init', '1'); localStorage.clear(); localStorage.setItem('nd_tutorial', '1'); localStorage.setItem('nd:v1:guest:language', JSON.stringify('hu')) } })
 const openRandom = async () => {
   await p.goto(`${BASE}/play/`, { waitUntil: 'networkidle0' })
   const modes = await p.$$('.mode')

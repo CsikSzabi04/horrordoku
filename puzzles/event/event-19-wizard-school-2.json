@@ -1,0 +1,213 @@
+{
+  "v": 1,
+  "id": "event-19-wizard-school-2",
+  "mode": "event",
+  "world": "wizard-school",
+  "title": "A tiltott bájital",
+  "story": "Drake Malgrave a sötét folyosón maradt, amikor kialudtak a fáklyák. A Kalandozók Térképe egyszerre egy helyiséget mutat élesen.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "N": "Nagyterem",
+    "O": "Oroszlán-torony",
+    "A": "Akadémia kapuja",
+    "G": "Gyuri kunyhója",
+    "K": "Kívánság Terme",
+    "R": "Repülő-pálya"
+  },
+  "layout": [
+    "GGOKKKN",
+    "GGOOOKN",
+    "GGOOOKN",
+    "RGGOOKN",
+    "RGGGAKN",
+    "RRRAAKA",
+    "RRRAAAA"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "G4",
+        "E7",
+        "E4"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "B1",
+        "B5",
+        "A5"
+      ]
+    },
+    {
+      "type": "broom",
+      "at": [
+        "A2",
+        "F5"
+      ]
+    },
+    {
+      "type": "armor",
+      "at": [
+        "G3",
+        "G7",
+        "A1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "cauldron",
+      "at": [
+        "F3",
+        "C4"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "a-nevtelen-ur",
+      "name": "Mortivar nagyúr",
+      "race": "ghost",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **padon** ült."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "dorian-galambos",
+      "name": "Drake Malgrave",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Gyuri kunyhójában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "gyuri-bozontos",
+      "name": "Haldric",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "dorian-galambos",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Drake Malgravétől délre** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "hermina-gazdag",
+      "name": "Hermina Greenwood",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "f",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "A Nagyteremben ő volt az **egyetlen nő**."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "gina-vasvari",
+      "name": "Ginnie Weswick",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "broom"
+        }
+      ],
+      "clueText": [
+        "Egy **seprűn** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "remi-vasvari",
+      "name": "Rory Weswick",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A helyiségében **ketten** voltak."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "hugo-pakozdi",
+      "name": "Henry Villámseb",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "a-nevtelen-ur": "B1",
+    "dorian-galambos": "A2",
+    "gyuri-bozontos": "C3",
+    "hermina-gazdag": "G4",
+    "gina-vasvari": "F5",
+    "remi-vasvari": "D6",
+    "hugo-pakozdi": "E7"
+  },
+  "murderer": "a-nevtelen-ur",
+  "rev": 1,
+  "worldRule": "cameras"
+}

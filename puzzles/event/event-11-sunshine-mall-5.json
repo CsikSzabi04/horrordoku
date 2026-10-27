@@ -1,0 +1,240 @@
+{
+  "v": 1,
+  "id": "event-11-sunshine-mall-5",
+  "mode": "event",
+  "world": "sunshine-mall",
+  "title": "A rádióhívás",
+  "story": "Dusty Hendricks utolsó hívása a labor felől érkezett, aztán csend lett. Az Árnyoldal sötétjében csak a zseblámpád fénye marad.",
+  "size": 8,
+  "difficulty": 5,
+  "rooms": {
+    "F": "Fagylaltozó",
+    "T": "Étterem-udvar",
+    "M": "Mozi",
+    "J": "Játékbolt",
+    "S": "Szökőkút-tér",
+    "Z": "Szolgálati folyosó",
+    "I": "Titkos labor"
+  },
+  "layout": [
+    "FFZZZTTT",
+    "FZZZZTTT",
+    "FFZZZTTT",
+    "FFFSSJTT",
+    "MFSSJJJI",
+    "MMSSJJII",
+    "MMSSJJII",
+    "MMMJJIII"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "D7",
+        "C1",
+        "A4"
+      ]
+    },
+    {
+      "type": "counter",
+      "at": [
+        "B1",
+        "D5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "arcade",
+      "at": "C8",
+      "blocking": true
+    },
+    {
+      "type": "fountain",
+      "at": [
+        "C7",
+        "A5",
+        "C2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "E8",
+        "A3"
+      ]
+    },
+    {
+      "type": "chair",
+      "at": "E1"
+    }
+  ],
+  "characters": [
+    {
+      "id": "dezso-hunyadi",
+      "name": "Dusty Hendricks",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "Z"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Szolgálati folyosón **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "matyas-palfi",
+      "name": "Mick Wheelwright",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "besideAny",
+          "objects": [
+            "arcade",
+            "chair"
+          ]
+        }
+      ],
+      "clueText": [
+        "Egy **arcade-gép vagy szék mellett** volt."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "jeno-kertesz",
+      "name": "Jimmy Hopley",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "erika-sarosi",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Erin St. Clairtól északra** volt."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "erika-sarosi",
+      "name": "Erin St. Clair",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "lorant-sarkany",
+      "name": "Luke St. Clair",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "gt",
+          "n": 6
+        }
+      ],
+      "clueText": [
+        "A **6. oszloptól jobbra** volt."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "a-liderc",
+      "name": "Az Átokúr",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "A Titkos laborban ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "rita-berki",
+      "name": "Wren Buckwell",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "a-liderc",
+          "dir": "S"
+        }
+      ],
+      "clueText": [
+        "**Az Átokúrtól délre** volt."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "nyolc",
+      "name": "Tizenkettő",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "arcade"
+        }
+      ],
+      "clueText": [
+        "Egy **arcade-gép mellett** volt."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "dezso-hunyadi": "C1",
+    "matyas-palfi": "E2",
+    "jeno-kertesz": "F3",
+    "erika-sarosi": "A4",
+    "lorant-sarkany": "G5",
+    "a-liderc": "H6",
+    "rita-berki": "D7",
+    "nyolc": "B8"
+  },
+  "murderer": "matyas-palfi",
+  "rev": 1,
+  "worldRule": "nightvision"
+}

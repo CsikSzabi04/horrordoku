@@ -1,0 +1,169 @@
+{
+  "v": 1,
+  "id": "event-11-sunshine-mall-1",
+  "mode": "event",
+  "world": "sunshine-mall",
+  "title": "StarPláza, július 4.",
+  "story": "1985. július 4., StarPláza. Az Átokúr a Titkos labor liftjében hever. Az áramszünet sötétjében csak a zseblámpád fénye marad: az Árnyoldalon csak azt látod, ami a kurzorod körül van.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "M": "Mozi",
+    "J": "Játékbolt",
+    "S": "Szökőkút-tér",
+    "Z": "Szolgálati folyosó",
+    "T": "Titkos labor"
+  },
+  "layout": [
+    "TTTJJ",
+    "TTJJJ",
+    "SSJJJ",
+    "SSSMM",
+    "SSZZM"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "C5",
+        "A1"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "D4",
+        "E3",
+        "E2"
+      ]
+    },
+    {
+      "type": "arcade",
+      "at": "D2",
+      "blocking": true
+    },
+    {
+      "type": "counter",
+      "at": [
+        "C4",
+        "D1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "popcorn",
+      "at": "E1",
+      "blocking": true
+    },
+    {
+      "type": "carpet",
+      "at": "A4"
+    }
+  ],
+  "characters": [
+    {
+      "id": "a-liderc",
+      "name": "Az Átokúr",
+      "race": "ghoul",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Titkos laborban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "matyas-palfi",
+      "name": "Mick Wheelwright",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge",
+          "inner": true
+        }
+      ],
+      "clueText": [
+        "**Nem** a pálya szélén volt."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "istvan-halasz",
+      "name": "Stevie Hargrove",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "J"
+        }
+      ],
+      "clueText": [
+        "A Játékboltban egy **padon** ült."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "dezso-hunyadi",
+      "name": "Dusty Hendricks",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "A Moziban ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "nyolc",
+      "name": "Tizenkettő",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Szökőkút-téren volt."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "a-liderc": "A1",
+    "matyas-palfi": "B2",
+    "istvan-halasz": "E3",
+    "dezso-hunyadi": "D4",
+    "nyolc": "C5"
+  },
+  "murderer": "matyas-palfi",
+  "rev": 1,
+  "worldRule": "nightvision"
+}

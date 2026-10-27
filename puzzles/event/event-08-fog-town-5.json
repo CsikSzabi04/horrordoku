@@ -1,0 +1,273 @@
+{
+  "v": 1,
+  "id": "event-08-fog-town-5",
+  "mode": "event",
+  "world": "fog-town",
+  "title": "A lépcsőház alja",
+  "story": "Angelica Orsino a lépcsőházban várt valakire, aki sosem jött el. A rádió egy-egy szót kitakar.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "K": "Kórterem",
+    "L": "Lépcsőház",
+    "A": "Apartman",
+    "B": "Bowlingpálya",
+    "T": "Tóparti szálló",
+    "M": "Másik világ"
+  },
+  "layout": [
+    "TTTTAAAAA",
+    "TTAAAAAAA",
+    "TTLLAAAAA",
+    "TLLLMMAKK",
+    "LLLMMKAKK",
+    "LLBMMKKKK",
+    "BBBMMKKKK",
+    "BBBMMKKKK",
+    "BBBMMKKKK"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "B9",
+        "H3"
+      ]
+    },
+    {
+      "type": "wheelchair",
+      "at": [
+        "I5",
+        "A4",
+        "D7",
+        "E6",
+        "D3",
+        "H4"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "G1",
+        "F8",
+        "E2",
+        "H7"
+      ]
+    },
+    {
+      "type": "radio",
+      "at": [
+        "C9",
+        "G2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "hospbed",
+      "at": [
+        "E9",
+        "C7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "doll",
+      "at": [
+        "E7",
+        "G6",
+        "C1",
+        "D1"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "mara",
+      "name": "Marie",
+      "race": "ghost",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. sor fölött** volt."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "lujza",
+      "name": "Laurel",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "A"
+        }
+      ],
+      "clueText": [
+        "Az Apartmanban egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "marianna",
+      "name": "Marina",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "ede-dombi",
+      "name": "Edwin Dombro",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A Tóparti szállóban ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "a-hazug-alak",
+      "name": "A Megtévesztő Alak",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "wheelchair",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Kórteremben egy **███** ült."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "anna-oroszi",
+      "name": "Angelica Orsino",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "B"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Bowlingpályán **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "a-lampasfeju-apolono",
+      "name": "A Hólyagfejű Ápolónő",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "wheelchair",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "A Másik világban egy **kerekesszéken** ült."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "a-piramisfeju",
+      "name": "Az Obeliszkfejű Hóhér",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Kórteremben egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "sandor-szeles",
+      "name": "Jamie Sunderwood",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "gt",
+          "n": 8
+        }
+      ],
+      "clueText": [
+        "A **8. sor alatt** volt."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "mara": "G1",
+    "lujza": "E2",
+    "marianna": "H3",
+    "ede-dombi": "A4",
+    "a-hazug-alak": "I5",
+    "anna-oroszi": "C6",
+    "a-lampasfeju-apolono": "D7",
+    "a-piramisfeju": "F8",
+    "sandor-szeles": "B9"
+  },
+  "murderer": "sandor-szeles",
+  "rev": 1,
+  "worldRule": "radio"
+}

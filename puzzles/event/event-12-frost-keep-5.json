@@ -1,0 +1,273 @@
+{
+  "v": 1,
+  "id": "event-12-frost-keep-5",
+  "mode": "event",
+  "world": "frost-keep",
+  "title": "A könyvmoly",
+  "story": "Samwin Tarley könyvei szétszórva hevernek a földön. Aki a Gáton túlra ment, páncélt viselt.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "N": "Nagyterem",
+    "S": "Szent liget",
+    "F": "Fegyvertár",
+    "K": "Kripta",
+    "T": "Toronyszoba",
+    "A": "A Gáton túl",
+    "G": "Fagyott tó"
+  },
+  "layout": [
+    "FFNNTTAAA",
+    "FFNNTTTAA",
+    "FFNKTTTAA",
+    "NNNKSSSSS",
+    "NNKKSSGGG",
+    "KKKKSGGGG",
+    "KKKKSSGGG",
+    "KKKSSSGGG",
+    "KKKSSSGGG"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "C9",
+        "G3",
+        "F9"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "D2",
+        "I8"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "F5",
+        "A4",
+        "B8",
+        "I1",
+        "F8"
+      ]
+    },
+    {
+      "type": "throne",
+      "at": [
+        "H2",
+        "D9",
+        "A6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "armor",
+      "at": "F2",
+      "blocking": true
+    },
+    {
+      "type": "fireplace",
+      "at": [
+        "I9",
+        "H5"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "jeno-aranykez",
+      "name": "Jaimon Goldmere",
+      "race": "human",
+      "gender": "m",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "aliz-szurke",
+      "name": "Aria Winterhart",
+      "race": "human",
+      "gender": "f",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Fegyvertárban volt."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "cecilia-aranyi",
+      "name": "Cerys Goldmere",
+      "race": "human",
+      "gender": "f",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "jeno-aranykez",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Jaimon Goldmerétől délre** volt."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "tamas-rendes",
+      "name": "Tyrian Goldmere",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "jon-hovari",
+      "name": "John Dér",
+      "race": "human",
+      "gender": "m",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "A Szent ligetben egy **padon** ült."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "a-fagykiraly",
+      "name": "A Fagykirály",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "sarolta-hideg",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Sarina Winterharttól északra** volt."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "sarolta-hideg",
+      "name": "Sarina Winterhart",
+      "race": "human",
+      "gender": "f",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "jon-hovari",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **John Dértől délre** volt."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "samu-tarlos",
+      "name": "Samwin Tarley",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "armored": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Kriptában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    },
+    {
+      "id": "dalma-tuzi",
+      "name": "Daenara Drakaryn",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Contest of Crowns"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "jeno-aranykez": "I1",
+    "aliz-szurke": "D2",
+    "cecilia-aranyi": "H3",
+    "tamas-rendes": "A4",
+    "jon-hovari": "F5",
+    "a-fagykiraly": "E6",
+    "sarolta-hideg": "G7",
+    "samu-tarlos": "B8",
+    "dalma-tuzi": "C9"
+  },
+  "murderer": "dalma-tuzi",
+  "rev": 1,
+  "worldRule": "vacuum",
+  "vacuumRooms": [
+    "A",
+    "G"
+  ]
+}

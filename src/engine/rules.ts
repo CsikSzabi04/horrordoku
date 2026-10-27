@@ -27,10 +27,14 @@ function besideObj(g: Grid, r: number, c: number, types: readonly string[]): boo
 /** Implicit szabály: Dead Space — a nyomásmentes helyiségbe csak páncélos állhat. */
 export const allowedAt = (g: Grid, ch: PuzzleCharacter, r: number, c: number): boolean => ch.armored === true || !g.vacuum.has(g.room[r][c])
 
+/**
+ * A legközelebbi `type` tárgy távolsága LÉPÉSEKBEN: egy lépés egy mező jobbra, balra, fel, le VAGY átlósan (sakk-király lépés), a falak és a tárgyak
+ * nem állnak az útba. Vagyis egy mező távolsága = max(sor-különbség, oszlop-különbség) — így a „4 mezőre a kardtól" szemmel megszámolható.
+ */
 function minDist(g: Grid, r: number, c: number, type: string): number {
   let best = Infinity
   for (let i = 0; i < g.n; i++)
-    for (let j = 0; j < g.n; j++) if (g.objs[i][j].includes(type)) best = Math.min(best, Math.abs(i - r) + Math.abs(j - c))
+    for (let j = 0; j < g.n; j++) if (g.objs[i][j].includes(type)) best = Math.min(best, Math.max(Math.abs(i - r), Math.abs(j - c)))
   return best
 }
 
@@ -51,6 +55,8 @@ export function unaryOk(g: Grid, clue: Clue, r: number, c: number): boolean {
       return r === clue.n - 1
     case 'notIn':
       return g.room[r][c] !== clue.room
+    case 'onlyGender':
+      return !clue.room || g.room[r][c] === clue.room
     case 'beside':
       return (!clue.room || g.room[r][c] === clue.room) && besideObj(g, r, c, [clue.object])
     case 'besideAny':
@@ -138,6 +144,10 @@ export function globalOk(g: Grid, chars: readonly PuzzleCharacter[], pos: Pos): 
           if (g.room[yr][yc] === home) suspects++
         }
         if (suspects !== 1) return false
+      } else if (cl.kind === 'onlyGender') {
+        // a saját neme egyezik, és a helyiségében rajta kívül senki (az áldozatot is beleértve) nem ilyen nemű
+        if (x.gender !== cl.gender) return false
+        if (chars.some((y) => y.id !== x.id && y.gender === cl.gender && g.room[pos.get(y.id)![0]][pos.get(y.id)![1]] === g.room[r][c])) return false
       } else if (cl.kind === 'withGender') {
         if (!chars.some((y) => y.id !== x.id && y.gender === cl.gender && g.room[pos.get(y.id)![0]][pos.get(y.id)![1]] === g.room[r][c])) return false
       } else if (cl.kind === 'roomCount') {

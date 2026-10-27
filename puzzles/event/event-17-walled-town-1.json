@@ -1,0 +1,173 @@
+{
+  "v": 1,
+  "id": "event-17-walled-town-1",
+  "mode": "event",
+  "world": "walled-town",
+  "title": "A Helytartó",
+  "story": "A világvége után Avalon Menedék főtere elcsendesedett: A Helytartó holtan hever. A generátor zaja odacsalja a kóborló fertőzötteket — a gyilkos nem állhat generátor mellett.",
+  "size": 5,
+  "difficulty": 2,
+  "rooms": {
+    "D": "Dombtető",
+    "F": "Fegyvertár",
+    "T": "Templom",
+    "E": "Erdei út"
+  },
+  "layout": [
+    "DDEEE",
+    "DDDEE",
+    "FDDDE",
+    "FFFFF",
+    "TTTTF"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "D5",
+        "C1"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "A1",
+        "B1"
+      ]
+    },
+    {
+      "type": "generator",
+      "at": [
+        "C5",
+        "E1",
+        "B2",
+        "B3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "campfire",
+      "at": [
+        "D4",
+        "D1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "barrel",
+      "at": "E2",
+      "blocking": true
+    },
+    {
+      "type": "car",
+      "at": "E5",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "nemes-noel",
+      "name": "Neylan",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. sor fölött** volt."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "a-fonok",
+      "name": "A Helytartó",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "D"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Dombtetőn **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "denes-deak",
+      "name": "Darren Dixley",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notSameRoom",
+          "with": "mihaela-szep"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt egy helyiségben **Mishanával**."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "rudi-gorbe",
+      "name": "Rich Granger",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "barrel"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **hordó mellett**."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    },
+    {
+      "id": "mihaela-szep",
+      "name": "Mishana",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "The Wandering Deceased"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "nemes-noel": "A1",
+    "a-fonok": "C2",
+    "denes-deak": "E3",
+    "rudi-gorbe": "B4",
+    "mihaela-szep": "D5"
+  },
+  "murderer": "nemes-noel",
+  "rev": 1,
+  "worldRule": "generators"
+}

@@ -1,0 +1,182 @@
+{
+  "v": 1,
+  "id": "event-11-sunshine-mall-2",
+  "mode": "event",
+  "world": "sunshine-mall",
+  "title": "A rendőrfőnök",
+  "story": "Jimmy Hopley a bevásárlóközpont hátsó folyosóján maradt, mielőtt kialudtak a fények. Az Árnyoldal csak a zseblámpád körül látszik.",
+  "size": 6,
+  "difficulty": 2,
+  "rooms": {
+    "F": "Fagylaltozó",
+    "T": "Étterem-udvar",
+    "J": "Játékbolt",
+    "S": "Szökőkút-tér",
+    "Z": "Szolgálati folyosó",
+    "I": "Titkos labor"
+  },
+  "layout": [
+    "ZZZZZJ",
+    "ZZZJJJ",
+    "SZZJJJ",
+    "SSSJJJ",
+    "FFSSJJ",
+    "FTTIII"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "B4",
+        "A6",
+        "E4"
+      ]
+    },
+    {
+      "type": "popcorn",
+      "at": [
+        "B5",
+        "C3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "fountain",
+      "at": "C4",
+      "blocking": true
+    },
+    {
+      "type": "arcade",
+      "at": "C6",
+      "blocking": true
+    },
+    {
+      "type": "chair",
+      "at": "A1"
+    }
+  ],
+  "characters": [
+    {
+      "id": "mariann-majer",
+      "name": "Maxine Meadows",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "istvan-halasz",
+      "name": "Stevie Hargrove",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "mariann-majer"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Maxine Meadowsszal**."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "dezso-hunyadi",
+      "name": "Dusty Hendricks",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A helyiségében **hárman** voltak."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "jeno-kertesz",
+      "name": "Jimmy Hopley",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Szökőkút-téren **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "matyas-palfi",
+      "name": "Mick Wheelwright",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "gt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszloptól jobbra** volt."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "nyolc",
+      "name": "Tizenkettő",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "**Nem** az Étterem-udvarban volt."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "mariann-majer": "F1",
+    "istvan-halasz": "E2",
+    "dezso-hunyadi": "D3",
+    "jeno-kertesz": "B4",
+    "matyas-palfi": "C5",
+    "nyolc": "A6"
+  },
+  "murderer": "matyas-palfi",
+  "rev": 1,
+  "worldRule": "nightvision"
+}

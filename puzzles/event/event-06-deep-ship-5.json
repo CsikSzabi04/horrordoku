@@ -1,0 +1,275 @@
+{
+  "v": 1,
+  "id": "event-06-deep-ship-5",
+  "mode": "event",
+  "world": "deep-ship",
+  "title": "A kapitány utolsó parancsa",
+  "story": "Benedict Mathers kiadta az utolsó parancsot, aztán csend lett. A Kuromura Űrhajó szekciói közül néhányba csak páncélosok léphetnek.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "H": "Híd",
+    "O": "Orvosi szárny",
+    "G": "Gépház",
+    "Y": "Gyárterem",
+    "I": "Hidroponika",
+    "K": "Külső szekció"
+  },
+  "layout": [
+    "OOYYYYYYY",
+    "OOYYYYYHH",
+    "OOGYYYHHH",
+    "OOGGHHHHH",
+    "OOGGGGKHH",
+    "OOGGGKKKH",
+    "OOIIGKKKK",
+    "OIIIIKKKK",
+    "IIIIIKKKK"
+  ],
+  "objects": [
+    {
+      "type": "stasis",
+      "at": [
+        "E1",
+        "A7",
+        "C8",
+        "D9"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "H4",
+        "F3",
+        "B3"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "B6",
+        "G4",
+        "B5",
+        "I6"
+      ]
+    },
+    {
+      "type": "savepoint",
+      "at": [
+        "I4",
+        "B4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "lockdoor",
+      "at": [
+        "C5",
+        "F7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "terminal",
+      "at": [
+        "F2",
+        "F8"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "zoltan-hamar",
+      "name": "Zane Hammerton",
+      "race": "human",
+      "gender": "m",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "on",
+          "object": "stasis"
+        }
+      ],
+      "clueText": [
+        "Egy **sztázis-állomáson** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "kinga-dezso",
+      "name": "Kara Danielson",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "ne",
+          "n": 4
+        }
+      ],
+      "clueText": [
+        "**Nem** a **4. sorban** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "nikolett-beran",
+      "name": "Nicolette Brenner",
+      "race": "human",
+      "gender": "f",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "crate"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **láda mellett**."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "bence-marton",
+      "name": "Benedict Mathers",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "armored": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Hídon **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "csaba-mester",
+      "name": "Callum Merrow",
+      "race": "human",
+      "gender": "m",
+      "armored": true,
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Külső szekcióban ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "tibor-kun",
+      "name": "Tristan Kline",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "ivan-kovacs"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Isaiah Clarksonnal**."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "ivan-kovacs",
+      "name": "Isaiah Clarkson",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "stasis"
+        }
+      ],
+      "clueText": [
+        "Egy **sztázis-állomáson** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "hubert-tamas",
+      "name": "Henrik Tillmann",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "stasis",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "A Hidroponikában egy **sztázis-állomáson** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    },
+    {
+      "id": "a-vadasz",
+      "name": "Az Üldöző",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "gt",
+          "n": 8
+        }
+      ],
+      "clueText": [
+        "A **8. sor alatt** volt."
+      ],
+      "source": {
+        "game": "Lifeless Void"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "zoltan-hamar": "E1",
+    "kinga-dezso": "I2",
+    "nikolett-beran": "F3",
+    "bence-marton": "H4",
+    "csaba-mester": "G5",
+    "tibor-kun": "B6",
+    "ivan-kovacs": "A7",
+    "hubert-tamas": "C8",
+    "a-vadasz": "D9"
+  },
+  "murderer": "kinga-dezso",
+  "rev": 1,
+  "worldRule": "vacuum",
+  "vacuumRooms": [
+    "K",
+    "Y"
+  ]
+}

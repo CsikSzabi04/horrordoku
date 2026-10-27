@@ -7,10 +7,13 @@ import { errorText } from '../../cloud/errors'
 import { useCloudStatus, useCloudUser } from '../../cloud/hooks'
 import { content } from '../../content'
 import { t } from '../../i18n'
+import { pick } from '../../i18n/lang'
 import type { Profile, ProfileStats } from '../../shared/cloud'
 import { Avatar, Button, Chip, Modal, Panel, ProgressBar, Tabs, useToast } from '../../ui'
 import '../login/form.css'
 import { SignOutButton } from '../../components/SignOutButton'
+import { LangSwitch } from '../../components/LangSwitch'
+import { charName } from '../../content/localize'
 import { copyText, friendLink } from '../friends/addLink'
 import { hoursMinutes, rankOf } from './rank'
 
@@ -25,6 +28,7 @@ export default function ProfileScreen() {
       <main className="nd-page">
         <Panel tag={t('profile.title').toUpperCase()}>
           <p>{t('profile.guest')}</p>
+          <LangSwitch />
           <div className="nd-row">
             <Button onClick={() => go({ name: 'login' })}>{t('profile.signin')}</Button>
             <Button variant="ghost" onClick={back}>
@@ -100,6 +104,7 @@ function Signed({ userId }: { userId: string }) {
                   XP {profile.xp}
                   {rank.next !== null && ` / ${rank.next}`} · 💀 {profile.coins} {t('profile.coins')} · 🔥 {profile.streak} {t('profile.streak')} ({t('profile.best')}: {profile.bestStreak})
                 </p>
+                <LangSwitch />
                 {code !== undefined && (
                   <div className="nd-pf-code">
                     {code ? (
@@ -208,7 +213,7 @@ function Account({ profile, onProfile }: { profile: Profile; onProfile: (p: Prof
     const url = URL.createObjectURL(new Blob([JSON.stringify(r.value, null, 2)], { type: 'application/json' }))
     const a = document.createElement('a')
     a.href = url
-    a.download = `nightdoku-fiok-${new Date().toISOString().slice(0, 10)}.json`
+    a.download = `nightdoku-${pick('fiok', 'account')}-${new Date().toISOString().slice(0, 10)}.json`
     a.click()
     URL.revokeObjectURL(url)
   }
@@ -241,7 +246,7 @@ function Account({ profile, onProfile }: { profile: Profile; onProfile: (p: Prof
         {t('account.avatar')}
         <div className="nd-avatars">
           {content.characters().map((c) => (
-            <button key={c.id} type="button" title={c.name} aria-pressed={c.id === profile.avatar} disabled={busy} onClick={() => void save({ avatar: c.id })}>
+            <button key={c.id} type="button" title={charName(c.id, c.name)} aria-pressed={c.id === profile.avatar} disabled={busy} onClick={() => void save({ avatar: c.id })}>
               <Avatar id={c.id} emoji={c.emoji} size="3rem" />
             </button>
           ))}

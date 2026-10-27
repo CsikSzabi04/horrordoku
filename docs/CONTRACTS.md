@@ -78,6 +78,7 @@ export type Clue =
   | { kind: 'notBesideCat'; cat: string }                           // „Nem volt állat mellett."
   | { kind: 'terrain'; style: string; not?: boolean }               // „Vízben / mocsárban / fűben volt." — a helyiség padlója (`Puzzle.floors`)
   | { kind: 'line'; axis: 'row' | 'col'; op: 'lt' | 'gt' | 'ne'; n: number } // „Az 5. sor fölött / az 2. oszloptól balra / nem a 3. sorban volt."
+  | { kind: 'onlyGender'; gender: 'm' | 'f'; room?: string }        // „(A Konyhában) ő volt az egyetlen férfi.” (a helyiségében rajta kívül senki ilyen nemű; a nemének egyeznie kell a sajátjával)
   | { kind: 'withGender'; gender: 'm' | 'f' }                       // „A helyiségében volt egy férfi." (rajta kívül legalább egy ilyen nemű)
   | { kind: 'notSameRoom'; with: CharId }                           // „Nem volt egy helyiségben Marával."
   | { kind: 'edge'; inner?: boolean }                               // „A pálya szélén volt." / `inner`: nem a szélén
@@ -138,9 +139,9 @@ export interface BoardState {
 }
 
 export type Op =
-  | { op: 'place';   char: CharId; cell: CellId }
+  | { op: 'place';   char: CharId; cell: CellId; trap?: true }   // trap: a Gyilkos „Eltüntetés” csapda-mezőjére (épp eltűnt tárgy) — a motor ilyenkor a foglalt mezőt is elfogadja
   | { op: 'unplace'; char: CharId }
-  | { op: 'move';    char: CharId; to: CellId }      // co-op: a másik lerakását is el lehet vinni
+  | { op: 'move';    char: CharId; to: CellId; trap?: true }      // co-op: a másik lerakását is el lehet vinni
   | { op: 'mark';    cell: CellId; on: boolean }
   | { op: 'note';    cell: CellId; chars: CharId[] }
   | { op: 'erase';   cell: CellId }
@@ -477,7 +478,11 @@ export interface RoomSession {
   start(): Promise<Result<RoomInfo>>                                  // csak a host
   leave(): Promise<Result<void>>                                      // VÉGLEGES kilépés a szoba tagjai közül (tulajdonos nem)
   close(): void                                                       // [0005] csak a Realtime-kapcsolatot zárja le, a tagság marad
-  chat: { send(body: string): Promise<Result<void>>; history(): ChatMessage[]; onMessage(cb: (m: ChatMessage) => void): Unsubscribe; report(messageId: number, reason?: string): Promise<Result<void>>; mute(userId: Uuid): Promise<Result<void>> }
+  chat: { send(body: string): Promise<Result<void>>; history(): ChatMessage[]; onMessage(cb: (m: ChatMessage) => void): Unsubscribe; report(messageId: number, reason?: string): Promise<Result<void>>; mute(userId: Uuid): Promise<Result<void>>
+    /** [additív] A némítás feloldása: a játékos korábbi üzenetei visszatérnek a `history()`-ba. */
+    unmute(userId: Uuid): Promise<Result<void>>
+    /** [additív] A (ebben a munkamenetben ismert) némított játékosok — a némítás fiókhoz kötött, minden szobában érvényes. */
+    muted(): Uuid[] }
   /** A közös tábla műveletei (Broadcast `room:<id>`). */
   ops: {
     /** A saját műveletet sugározza; visszaadja a borítékot (id, seq), hogy a hívó a saját naplójába is felvehesse. [B5: void → OpEnvelope, visszafelé kompatibilis] */
@@ -496,22 +501,58 @@ export interface RoomSession {
   finish(result: { solved: boolean; ms: number }): Promise<Result<void>>   // lezárja a szobát, a RunRecord-ot a hívó menti
 }
 
+export type KillerAbility = 'timeWarp' | 'textSwap' | 'vanish'
+export type KillerOutcome = 'detectives' | 'killer' | 'draw' | 'aborted'
+/** [0007, B6] A szerver állapot-pillanatképe (`killer_state`): a nyilvános rész mindenkinek, a SAJÁT titkos rész (szerep, hűtés, Szimat-keret) a hívónak. Idők: a SZERVER epoch ms-ban (`now` = a pillanatkép ideje). */
+export interface KillerState {
+  running: boolean; now: number
+  gameId?: number; startedAt?: number; phase?: 'play' | 'epilogue' | 'over'
+  role?: 'killer' | 'detective'
+  lives?: number; maxLives?: number
+  timeLimitMs?: number | null; penaltyMs?: number; speed?: { from: number; until: number; factor: number }[]; seals?: { cell: CellId; from: number; until: number }[]   // hátralévő = határidő − büntetés − eltelt − gyorsítási többlet (game/killerClock.ts)
+  meeting?: { phase: 'discuss' | 'vote' | 'result'; endsAt: number; by?: Uuid; voted?: boolean; ejected?: Uuid | null; killerExposed?: boolean } | null
+  meetingsLeft?: number
+  submit?: { id: string; by: Uuid; phase: 'vote' | 'verify'; endsAt: number; voted: boolean } | null
+  epilogue?: { endsAt: number; voted: boolean } | null
+  players?: number; showPlacers?: boolean; telltale?: boolean
+  exposedKillers?: Uuid[]                                              // leleplezett gyilkosok (kettő játékosnál a gyilkos eleve nyilvános)
+  exposed?: boolean; sniffsLeft?: number; canCallMeeting?: boolean; silencedMs?: number
+  cooldowns?: Record<KillerAbility, number>; abilities?: { timeWarp: boolean; textSwap: boolean; vanish: boolean }   // csak a gyilkosnak
+  busyMs?: number; killerGone?: boolean                                // csak a gyilkosnak
+}
+export interface KillerResult { gameId: number; outcome: KillerOutcome; reason: string; lives: number; elapsedMs: number; killerIds: Uuid[]; roles: Record<Uuid, 'killer' | 'detective'>; abilityLog: { ability: string; at: number }[] }
+/** A közös beküldés eseményei (szerver-oldali szavazás + ellenőrzés). */
+export interface KillerSubmitEvent { state: 'proposal' | 'verify' | 'rejected' | 'correct' | 'wrong'; id: string; by: Uuid; endsAt?: number; livesLeft?: number }
+
 export interface KillerSession {
   myRole(): 'killer' | 'detective'                                    // csak a saját szerep; a többi játékosé sosem érhető el
-  useAbility(a: 'timeWarp' | 'textSwap' | 'vanish', target?: { char?: CharId; cell?: CellId; text?: string }): Promise<Result<void>>
-  cooldowns(): Record<'timeWarp' | 'textSwap' | 'vanish', number>     // hátralévő ms
+  /** timeWarp: `mode` = 'steal' (20 mp lopás, alap) | 'speed' (10 mp háromszoros sebesség); textSwap: `char` + `text`; vanish: `cell`. */
+  useAbility(a: KillerAbility, target?: { char?: CharId; cell?: CellId; text?: string; mode?: 'steal' | 'speed' }): Promise<Result<void>>
+  cooldowns(): Record<KillerAbility, number>                          // hátralévő ms
   sniff(): Promise<Result<{ used: boolean }>>                         // Szimat (nyomozó)
   callMeeting(): Promise<Result<void>>
-  vote(userId: Uuid): Promise<Result<void>>
-  onMeeting(cb: (m: { phase: 'discuss' | 'vote' | 'result'; endsAt: number; ejected?: Uuid; killerExposed?: boolean }) => void): Unsubscribe
+  vote(userId: Uuid | null): Promise<Result<void>>                    // null = tartózkodás
+  onMeeting(cb: (m: { phase: 'discuss' | 'vote' | 'result'; endsAt: number; by?: Uuid; ejected?: Uuid | null; killerExposed?: boolean }) => void): Unsubscribe
   onEpilogue(cb: (e: { endsAt: number }) => void): Unsubscribe
   epilogueVote(userId: Uuid): Promise<Result<void>>
-  onEnd(cb: (r: { outcome: 'detectives' | 'killer' | 'draw'; killerId: Uuid; abilityLog: { ability: string; at: number }[] }) => void): Unsubscribe
+  onEnd(cb: (r: { outcome: KillerOutcome; killerId: Uuid; killerIds: Uuid[]; reason: string; elapsedMs: number; abilityLog: { ability: string; at: number }[] }) => void): Unsubscribe
   onFx(cb: (fx: Fx) => void): Unsubscribe                             // 8. fejezet
+  /** [B6, additív] A szerver-állapot pillanatképe (szívveréssel / eseményekkel frissül) és a szerver-óra. */
+  state(): KillerState | null
+  onState(cb: (s: KillerState) => void): Unsubscribe
+  refresh(): Promise<Result<KillerState>>
+  serverNow(): number
+  /** [B6, additív] Közös beküldés a szerveren: javaslat → az aktív játékosok többsége jóváhagyja (mindenki szavazata egyformán számít) → a kliensek jelentik, helyes-e → a jelentések többsége dönt → eredmény. */
+  proposeSubmit(): Promise<Result<void>>
+  voteSubmit(approve: boolean): Promise<Result<void>>
+  reportSubmit(correct: boolean): Promise<Result<void>>
+  onSubmit(cb: (e: KillerSubmitEvent) => void): Unsubscribe
+  onSniff(cb: (r: { used: boolean }) => void): Unsubscribe
+  result(): Promise<Result<KillerResult | null>>
 }
 ```
 
-**Csatornák** (GDD 23.5): `postgres_changes` a `rooms`, `room_members`, `room_messages`, `room_invites`, `friendships` táblákon · privát Broadcast `room:<id>` (játék-műveletek, kurzorok, ping) · privát Broadcast `room:<id>:fx` (csak a szerver ír, `realtime.send`).
+**Csatornák** (GDD 23.5): `postgres_changes` a `rooms`, `room_members`, `room_messages`, `room_invites`, `friendships` táblákon · privát Broadcast `room:<id>` (játék-műveletek, kurzorok, ping) · a Gyilkos-mód hatásai a `room_events` táblán át (a szoba tagjai olvashatják, csak a szerver-függvények írják; `postgres_changes` INSERT) — a GDD 23.5 `room:<id>:fx` privát csatornája helyett (0007).
 
 ---
 
@@ -522,7 +563,7 @@ export interface KillerSession {
 export type Fx =
   | { type: 'time_penalty'; seconds: number; serverTime: number }                 // Időcsavar (lopás)
   | { type: 'time_speed'; factor: number; ms: number; serverTime: number }        // Időcsavar (gyorsítás)
-  | { type: 'clue_override'; char: CharId; text: string; ms: number }             // Szövegcsere — NINCS feladó, NINCS értesítés
+  | { type: 'clue_override'; char: CharId; text: string; ms: number; telltale?: boolean }   // Szövegcsere — NINCS feladó, NINCS értesítés (telltale: a lobby-opció „Árulkodó jel”)
   | { type: 'object_vanish'; cell: CellId; ms: number }                           // Eltüntetés: a visszatéréskor a cella törlődik és zárolt
   | { type: 'exposed' }                                                           // a gyilkos leleplezve (képességek letiltva)
   | { type: 'silenced'; userId: Uuid; ms: number }                                // rossz szavazás: a játékos némán nem rakhat

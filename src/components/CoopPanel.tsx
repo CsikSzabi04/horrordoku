@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import type { FormEvent } from 'react'
+import type { FormEvent, ReactNode } from 'react'
 import type { Lang } from '../game/strings'
 import { tr } from '../game/strings'
 import type { Proposal } from '../game/coop'
@@ -15,10 +15,14 @@ interface Props {
   voted: boolean
   hintsLeft: number
   onVote: (approve: boolean) => void
+  /** Gyilkos-mód: a chat mellé fésült rendszersorok (Szimat, Gyűlés, életvesztés…). */
+  system?: { id: string; at: number; text: string }[]
+  /** Gyilkos-mód: a játékosok és a chat között megjelenő szakasz (Gyűlés / Epilógus). */
+  extra?: ReactNode
 }
 
 /** Az Együtt mód bal oszlopba kerülő sávja: játékosok (színnel, online-jelzéssel), a közös beküldés szavazása és a szobai chat. */
-export function CoopPanel({ lang, session, meId, members, proposal, voted, hintsLeft, onVote }: Props) {
+export function CoopPanel({ lang, session, meId, members, proposal, voted, hintsLeft, onVote, system = [], extra }: Props) {
   const t = (k: Parameters<typeof tr>[1]) => tr(lang, k)
   const [messages, setMessages] = useState<ChatMessage[]>(session.chat.history())
   const [text, setText] = useState('')
@@ -28,7 +32,7 @@ export function CoopPanel({ lang, session, meId, members, proposal, voted, hints
   useEffect(() => session.chat.onMessage(() => setMessages(session.chat.history())), [session])
   useEffect(() => {
     log.current?.scrollTo({ top: log.current.scrollHeight })
-  }, [messages])
+  }, [messages, system.length])
   useEffect(() => {
     if (!proposal) return
     const tick = () => setLeft(Math.max(0, Math.ceil((proposal.deadlineAt - Date.now()) / 1000)))
@@ -82,14 +86,18 @@ export function CoopPanel({ lang, session, meId, members, proposal, voted, hints
           )}
         </div>
       )}
+      {extra}
       <div className="coop-chat">
         <b>{t('coopChat')}</b>
         <div className="log" ref={log} aria-live="polite">
-          {messages.slice(-40).map((m) => (
-            <div key={m.id}>
-              <b style={{ color: members.find((x) => x.userId === m.userId)?.color }}>{m.username}</b> {m.body}
-            </div>
-          ))}
+          {[
+            ...messages.slice(-40).map((m) => ({ key: `m${m.id}`, at: Date.parse(m.at), node: (<><b style={{ color: members.find((x) => x.userId === m.userId)?.color }}>{m.username}</b> {m.body}</>) })),
+            ...system.map((l) => ({ key: l.id, at: l.at, node: <i className="sys">{l.text}</i> })),
+          ]
+            .sort((a, b) => a.at - b.at)
+            .map((x) => (
+              <div key={x.key}>{x.node}</div>
+            ))}
         </div>
         <form onSubmit={(e) => void send(e)}>
           <input value={text} onChange={(e) => setText(e.target.value)} maxLength={300} placeholder={t('coopChatPh')} autoComplete="off" aria-label={t('coopChat')} />

@@ -1,0 +1,211 @@
+{
+  "v": 1,
+  "id": "event-07-summit-shelter-3",
+  "mode": "event",
+  "world": "summit-shelter",
+  "title": "Elnémult harang",
+  "story": "Marvin atya imája félbeszakadt, a padok üresek. A sötétben csak a kurzorod fénye mutat utat.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "F": "Fogadócsarnok",
+    "K": "Kórterem-szárny",
+    "P": "Pincebörtön",
+    "O": "Kápolna",
+    "R": "Őrszoba",
+    "V": "Villamos-terem"
+  },
+  "layout": [
+    "OOOOOFR",
+    "KOOOFFR",
+    "KOOOFRR",
+    "KPPPFRR",
+    "KPPPFVV",
+    "KPPPVVV",
+    "KKKKVVV"
+  ],
+  "objects": [
+    {
+      "type": "wheelchair",
+      "at": [
+        "E1",
+        "A7",
+        "F6"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "D4",
+        "G1"
+      ]
+    },
+    {
+      "type": "batterybox",
+      "at": "G7"
+    },
+    {
+      "type": "hospbed",
+      "at": [
+        "C1",
+        "F5",
+        "D3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "switch",
+      "at": "D5",
+      "blocking": true
+    },
+    {
+      "type": "locker",
+      "at": "D6",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "vajk-pal",
+      "name": "Wade Parks",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "dr-vargha",
+          "dir": "E"
+        }
+      ],
+      "clueText": [
+        "**Dr. Werlingtől keletre** volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "atya-marton",
+      "name": "Marvin atya",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "O"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Kápolnában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "milan-ungvari",
+      "name": "Milo Upcroft",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "vajk-pal",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Wade Parkstól délre** volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "dr-vargha",
+      "name": "Dr. Werling",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "rudolf-tarnai",
+      "name": "Richmond Traeger",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "switch"
+        }
+      ],
+      "clueText": [
+        "Egy **generátorkapcsoló mellett** volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "kristof-vadas",
+      "name": "Kris Strider",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Villamos-teremben volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    },
+    {
+      "id": "elemer-gulyas",
+      "name": "Edwin Glasswick",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "batterybox"
+        }
+      ],
+      "clueText": [
+        "Egy **elemdobozon** volt."
+      ],
+      "source": {
+        "game": "Outlive"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "vajk-pal": "E1",
+    "atya-marton": "B2",
+    "milan-ungvari": "F3",
+    "dr-vargha": "D4",
+    "rudolf-tarnai": "C5",
+    "kristof-vadas": "A6",
+    "elemer-gulyas": "G7"
+  },
+  "murderer": "vajk-pal",
+  "rev": 1,
+  "worldRule": "nightvision"
+}

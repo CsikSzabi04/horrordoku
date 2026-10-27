@@ -41,6 +41,7 @@ export type Clue =
   | { kind: 'notBesideCat'; cat: string }                           // „Nem volt állat mellett."
   | { kind: 'terrain'; style: string; not?: boolean }               // „Vízben / mocsárban / fűben volt." — a helyiség padlója (`Puzzle.floors`)
   | { kind: 'line'; axis: 'row' | 'col'; op: 'lt' | 'gt' | 'ne'; n: number } // „Az 5. sor fölött / az 2. oszloptól balra / nem a 3. sorban volt."
+  | { kind: 'onlyGender'; gender: 'm' | 'f'; room?: string }        // „(A Konyhában) ő volt az egyetlen férfi.” (a helyiségében rajta kívül senki ilyen nemű; a nemének egyeznie kell a sajátjával)
   | { kind: 'withGender'; gender: 'm' | 'f' }                       // „A helyiségében volt egy férfi." (rajta kívül legalább egy ilyen nemű)
   | { kind: 'notSameRoom'; with: CharId }                           // „Nem volt egy helyiségben Marával."
   | { kind: 'edge'; inner?: boolean }                               // „A pálya szélén volt." / `inner`: nem a szélén

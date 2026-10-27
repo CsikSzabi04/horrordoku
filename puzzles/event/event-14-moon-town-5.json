@@ -1,0 +1,277 @@
+{
+  "v": 1,
+  "id": "event-14-moon-town-5",
+  "mode": "event",
+  "world": "moon-town",
+  "title": "Az utolsó műszak",
+  "story": "Matty Donnelly a Holdi Kocsma pultja mögött maradt, amikor a lámpák elaludtak. A vámpírok csak árnyékban állhatnak.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "H": "Holdi Kocsma",
+    "S": "Sárvári-kúria",
+    "G": "Gyöngyösi-ház",
+    "F": "Fűzfa-híd",
+    "L": "Lukács-kúria",
+    "T": "Temető",
+    "I": "Gimnázium",
+    "R": "Régi templom"
+  },
+  "layout": [
+    "SSSHHTTRR",
+    "GGSHTTTRR",
+    "GGSHTLRRR",
+    "GGIITLRRR",
+    "GIIILLRRR",
+    "GIIILLLRL",
+    "GIIFFLLLL",
+    "IIFFFFFLL",
+    "IIFFFFFFL"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "A3",
+        "D4",
+        "H6",
+        "I2",
+        "D7"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "G1",
+        "G5",
+        "G2",
+        "B5"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": "C9"
+    },
+    {
+      "type": "lamp",
+      "at": [
+        "A5",
+        "H4",
+        "I9",
+        "F8",
+        "C4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "charger",
+      "at": [
+        "A4",
+        "F1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "grave",
+      "at": "I1",
+      "blocking": true
+    },
+    {
+      "type": "candle",
+      "at": [
+        "I3",
+        "I5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": [
+        "F4",
+        "F2",
+        "E1"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "karola-fabian",
+      "name": "Coraline Forrester",
+      "race": "vampire",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A Temetőben egy **padon** ült."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "bogi-bertalan",
+      "name": "Bea Bennetson",
+      "race": "witch",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "grave"
+        }
+      ],
+      "clueText": [
+        "Egy **sírkő mellett** volt."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "alfred-sos",
+      "name": "Aldric Saltwell",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "charger"
+        }
+      ],
+      "clueText": [
+        "Egy **elemlámpa-töltő mellett** volt."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "daniel-sarvari",
+      "name": "Damian Salvatori",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "mark-denes",
+      "name": "Matty Donnelly",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Lukács-kúriában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "ella-gyongyosi",
+      "name": "Elina Gilmore",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "A Régi templomban egy **széken** ült."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "jeromos-gyongyosi",
+      "name": "Jerome Gilmore",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "lit"
+        }
+      ],
+      "clueText": [
+        "Fényes mezőn állt."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "szabolcs-sarvari",
+      "name": "Stephen Salvatori",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Fűzfa-hídon volt."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "tamas-lukacs",
+      "name": "Taylor Lockridge",
+      "race": "werewolf",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "karola-fabian": "G1",
+    "bogi-bertalan": "I2",
+    "alfred-sos": "A3",
+    "daniel-sarvari": "D4",
+    "mark-denes": "E5",
+    "ella-gyongyosi": "H6",
+    "jeromos-gyongyosi": "F7",
+    "szabolcs-sarvari": "B8",
+    "tamas-lukacs": "C9"
+  },
+  "murderer": "jeromos-gyongyosi",
+  "rev": 1,
+  "worldRule": "light"
+}

@@ -31,6 +31,11 @@ await page.evaluateOnNewDocument(() => {
       /* */
     }
   }
+  try {
+    localStorage.setItem('nd:v1:guest:language', JSON.stringify('hu')) // az alapnyelv angol; a teszt magyar szövegekre épül
+  } catch {
+    /* */
+  }
 })
 const placeKey = async (ch, cell) => {
   await page.click(`[data-char="${ch}"] .face`)
@@ -73,8 +78,10 @@ ok('bemutató bezárul', !(await page.$('.tutorial[data-step]')))
 
 // elrendezés: bal oszlop · térkép · jobb szélső eszközök; fekete keret, fehér játék
 const x = async (sel) => (await (await page.$(sel)).boundingBox()).x
+const y = async (sel) => (await (await page.$(sel)).boundingBox()).y
 ok('elrendezés: bal < közép < jobb', (await x('.gf-left')) < (await x('.board')) && (await x('.board')) < (await x('.gf-tools')))
-ok('fejléc: logó, nyelvváltó, sötét mód, idő', !!(await page.$('.gf-head .logo')) && !!(await page.$('.gf-head select.lang')) && !!(await page.$('[data-act="dark"]')) && !!(await page.$('[data-timer]')))
+ok('bal oszlop: logó és vissza-nyíl felül; alul (a kártyák alatt) az idő, sötét mód, nyelvváltó, beállítások és hang', !!(await page.$('.gf-head .logo')) && !!(await page.$('.gf-head [data-act="exit"]')) && !!(await page.$('.gf-left .gf-foot select.lang')) && !!(await page.$('.gf-left .gf-foot [data-act="dark"]')) && !!(await page.$('.gf-left .gf-foot [data-timer]')) && !!(await page.$('.gf-left .gf-foot [data-act="settings"]')) && !!(await page.$('.gf-left .gf-foot [data-act="sound"]')) && (await y('.gf-foot')) > (await y('.suspect')))
+ok('jobb oszlop: csak az eszközök (✕ van legfelül, nincs idő / nyelv / beállítás / hang)', !(await page.$('.gf-tools [data-timer]')) && !(await page.$('.gf-tools select.lang')) && !(await page.$('.gf-tools [data-act="settings"]')) && !(await page.$('.gf-tools [data-act="sound"]')) && (await y('[data-tool="x"]')) < (await y('[data-act="hint"]')))
 const bg = (sel) => page.$eval(sel, (e) => getComputedStyle(e).backgroundColor)
 ok('alapból sötét: fekete keret, sötét játék-lap', (await bg('.gf')) === 'rgb(7, 6, 10)' && (await bg('.gf-board')) === 'rgb(21, 17, 29)', `${await bg('.gf')} / ${await bg('.gf-board')}`)
 await page.click('[data-act="dark"]')
@@ -115,10 +122,10 @@ await page.mouse.up()
 ok('~1 mp után a karakter lekerül', (await page.$$('.token')).length === 1)
 ok('a karakter kártyája jelzi a helyét', !!(await page.$(`[data-char="${first}"].placed`)))
 
-// visszavonás / újra
+// visszavonás (gomb) / újra (Y billentyű)
 await page.click('[data-act="undo"]')
 ok('visszavonás: a karakter felkerül a kártyára', (await page.$$('.token')).length === 0)
-await page.click('[data-act="redo"]')
+await page.keyboard.press('y') // nincs „Újra” gomb: a Y billentyű
 ok('újra: visszaáll', (await page.$$('.token')).length === 1)
 
 // teljes törlés: a radírt nyomva tartva
@@ -146,8 +153,9 @@ ok('rossz beküldés: 2 piros és a többi zöld karika', (await page.$$('.vring
 await page.click('[data-act="verdict-look"]')
 ok('„megnézem": a karikák megmaradnak', (await page.$$('.vring')).length === puzzle.size && !(await page.$('[data-result="verdict"]')))
 await page.click('[data-act="undo"]')
+await sleep(300) // a karikák törlése a megjelenítés utáni hatás (effect) — nem azonnali
 ok('módosítás után a karikák eltűnnek', (await page.$$('.vring')).length === 0)
-await page.click('[data-act="redo"]')
+await page.keyboard.press('y') // nincs „Újra” gomb: a Y billentyű
 await page.click('[data-act="submit"]')
 await page.waitForSelector('[data-result="verdict"]', { timeout: 3000 })
 await page.click('[data-act="verdict-restart"]')
@@ -183,7 +191,7 @@ await sleep(10_800)
 ok('a tipp ~10 mp után eltűnik', (await page.$$('.nd-toast')).length === 0)
 await page.click('[data-act="exit"]')
 await page.waitForSelector('[data-puzzle]')
-ok('félbehagyott ügy: Folytatás', (await page.$eval('[data-puzzle="classic-1-02-playground"] .state', (e) => e.textContent)).includes('Folytatás'))
+ok('félbehagyott ügy: Folytatás (▶ jelzés)', (await page.$eval('[data-puzzle="classic-1-02-playground"] .state', (e) => e.textContent)).includes('▶'))
 await page.click('[data-puzzle="classic-1-02-playground"]')
 await page.waitForSelector('.board')
 ok('a tipp megmaradt (2)', (await page.$eval('[data-act="hint"]', (e) => e.textContent)).includes('(2)'))

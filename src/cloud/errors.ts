@@ -21,6 +21,13 @@ export function errorText(r: { code: ErrorCode; message: string }): string {
       return /closed/i.test(r.message) ? t('err.room_closed') : t('err.forbidden')
     case 'invalid':
       if (r.message === 'chat_length') return t('err.chat_length')
+      if (/^(cooldown|another effect)/i.test(r.message)) return t('err.k.cooldown')
+      if (/^not now/i.test(r.message)) return t('err.k.notnow')
+      if (/limit reached|^abilit/i.test(r.message)) return t('err.k.limit')
+      if (/no sniffs/i.test(r.message)) return t('err.k.nosniff')
+      if (/no meetings|meetings need/i.test(r.message)) return t('err.k.nomeeting')
+      if (/at least 2 players/i.test(r.message)) return t('lobby.needTwo')
+      if (/no time limit/i.test(r.message)) return t('err.k.notime')
       return r.message === 'username_length' ? t('err.username_length') : t('err.invalid')
     case 'rate_limited':
       return r.message === 'chat_rate' ? t('err.rate_chat') : t('err.rate')

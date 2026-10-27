@@ -1,13 +1,14 @@
 import { huB } from './hu.b'
 
-// Magyar szövegek. Minden, amit a játékos lát, kulcsból jön (később: en.ts). Az AI-B kulcsai a `hu.b.ts`-ben vannak.
+// Magyar szövegek. Minden, amit a játékos lát, kulcsból jön; az angol megfelelők az `en.ts`-ben vannak (minden kulcshoz kötelező).
+// Az AI-B kulcsai a `hu.b.ts`-ben vannak. Valódi franchise-ra (játék, sorozat, film) a szövegek nem utalhatnak (lásd franchise.md).
 export const hu = {
   ...huB,
   'app.tagline': 'Ahol a sudoku vért ont.',
   'menu.classic': 'Klasszikus',
-  'menu.classic.sub': '100 előre megírt pálya · sima Murdoku',
+  'menu.classic.sub': '100 előre megírt pálya · hétköznapi ügyek',
   'menu.event': 'Esemény',
-  'menu.event.sub': '19 világ × 5 ügy híres horror-játékokból és -sorozatokból',
+  'menu.event.sub': '19 világ × 5 ügy eredeti horror-történetekből',
   'menu.random': 'Random',
   'menu.random.sub': 'végtelen, véletlen ügyek · bárhol folytatható',
   'menu.together': 'Együtt',

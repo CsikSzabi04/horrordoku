@@ -1,0 +1,182 @@
+{
+  "v": 1,
+  "id": "event-13-portal-garage-1",
+  "mode": "event",
+  "world": "portal-garage",
+  "title": "Nézzrám úr",
+  "story": "Nézzrám úr holtan hever — valaki túl sokat kért tőle. A portálok mindkét oldalra átlátnak: a portál melletti nyomok a szomszéd helyiségre is érvényesek.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "K": "Konyha",
+    "M": "Murci szobája",
+    "R": "Űrhajó",
+    "E": "Erőd-város",
+    "C": "Csőlakás-dimenzió"
+  },
+  "layout": [
+    "RKKCC",
+    "RKKCC",
+    "RKKMM",
+    "RMMME",
+    "REEEE"
+  ],
+  "objects": [
+    {
+      "type": "crate",
+      "at": [
+        "B1",
+        "A2"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "C5",
+        "B4"
+      ]
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "E3",
+        "D1"
+      ]
+    },
+    {
+      "type": "doorGreen",
+      "at": "B5",
+      "blocking": true
+    },
+    {
+      "type": "doorBlue",
+      "at": "A4",
+      "blocking": true
+    },
+    {
+      "type": "doorOrange",
+      "at": "C1",
+      "blocking": true
+    },
+    {
+      "type": "machine",
+      "at": [
+        "D5",
+        "C4",
+        "C2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "toolbox",
+      "at": "C3",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "rikard-santa",
+      "name": "Rich Sandrez",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "A Konyhában ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Rich and Marty"
+      }
+    },
+    {
+      "id": "zsanett-szmit",
+      "name": "Autumn Miller",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Konyhában volt."
+      ],
+      "source": {
+        "game": "Rich and Marty"
+      }
+    },
+    {
+      "id": "csippento",
+      "name": "Gyűrci",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "zsanett-szmit",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Autumn Millertől délre** volt."
+      ],
+      "source": {
+        "game": "Rich and Marty"
+      }
+    },
+    {
+      "id": "mr-kerek",
+      "name": "Nézzrám úr",
+      "race": "ghost",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Murci szobájában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Rich and Marty"
+      }
+    },
+    {
+      "id": "murci-szmit",
+      "name": "Marty Miller",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "**Nem** az Űrhajón volt."
+      ],
+      "source": {
+        "game": "Rich and Marty"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "rikard-santa": "B1",
+    "zsanett-szmit": "A2",
+    "csippento": "E3",
+    "mr-kerek": "D4",
+    "murci-szmit": "C5"
+  },
+  "murderer": "csippento",
+  "rev": 1,
+  "worldRule": "doors"
+}

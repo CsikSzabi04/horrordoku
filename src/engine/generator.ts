@@ -20,7 +20,11 @@ const EXTRA_KINDS = ['notIn', 'besideChar', 'sameRoom', 'leftOf', 'corner'] as c
 /** Változatos, de játékosbarát nyomfajták (égtájak, tagadások, kategóriák, sor-oszlop relációk…) — minden módban használhatók. */
 export const VARIETY_KINDS = ['notIn', 'dir', 'notBeside', 'besideCat', 'notBesideCat', 'line', 'edge', 'roomCount', 'notSameRoom', 'diagonal', 'besideChar'] as const
 export const MURDOKU_KINDS = [...CLASSIC_KINDS, 'col', 'row', 'northOf', 'southOf', 'roomAlone', 'aloneWith', ...VARIETY_KINDS, 'terrain', 'withGender', 'sameRoom'] as const
-export type ClueKind = (typeof CLASSIC_KINDS)[number] | (typeof EXTRA_KINDS)[number] | (typeof MURDOKU_KINDS)[number] | 'distance' | 'lit' | 'dark'
+/** Csak a mező(k) tulajdonságától függő nyomfajták (a más szereplőktől függők nélkül). */
+const UNARY_KINDS = new Set<string>(['on', 'onlyOn', 'in', 'notIn', 'beside', 'besideAny', 'notBeside', 'besideCat', 'notBesideCat', 'terrain', 'line', 'edge', 'corner', 'distance', 'col', 'row', 'lit', 'dark'])
+export type ClueKind = (typeof CLASSIC_KINDS)[number] | (typeof EXTRA_KINDS)[number] | (typeof MURDOKU_KINDS)[number] | 'distance' | 'lit' | 'dark' | 'onlyGender'
+/** A más szereplőkhöz viszonyító nyomok („X-től északra / balra / mellett / egy helyiségben…”): ezekből egy pályán csak kevés lehet (`GenOpts.maxRel`), mert láncolódnak és nehézzé teszik. */
+const RELATIONAL = new Set<string>(['northOf', 'southOf', 'dir', 'leftOf', 'diagonal', 'besideChar', 'sameRoom', 'notSameRoom', 'aloneWith'])
 
 /** A kézzel témázott (előre megírt) pályák paraméterei; a Random mód ezeket nem használja. */
 export interface GenOpts {
@@ -35,6 +39,8 @@ export interface GenOpts {
   stand?: string[] // állható tárgytípusok
   block?: string[] // foglalt tárgytípusok
   cast?: CastMember[] // gyanúsítottak (legalább size−1)
+  /** A `cast` azon tagjainak azonosítói, akik MINDIG szerepelnek a pályán (a világ főszereplői), akkor is, ha a gárda nagyobb, mint ahány gyanúsított kell. */
+  core?: string[]
   victim?: CastMember
   /** Csak a Murdoku nyomfajták (Klasszikus). */
   classicOnly?: boolean
@@ -51,6 +57,8 @@ export interface GenOpts {
   armoredRatio?: number
   hidden?: number // ennyi szereplőnek legyen egy plusz, zárolt nyoma (Until Dawn)
   redact?: boolean // a rádió melletti nyomok egy szava ki van takarva (Silent Hill)
+  /** Legfeljebb ennyi gyanúsított nyoma viszonyulhat másik szereplőhöz (északra / balra / mellett / egy helyiségben…) — Esemény-pályák: az első ügyekben kevés, a későbbiekben több. Megadva a „trükkös” egyedi nyomok is előnyt kapnak. */
+  maxRel?: number
   rich?: number // 0–1: ennyi hányadának legyen „összetett” nyoma (égtáj, átlós, kapcsolat, tagadás…; nem sima tárgy / sor) — Esemény-pályák
 }
 
@@ -210,6 +218,20 @@ function attempt(r: Rnd, seed: string, difficulty: Difficulty, opts: GenOpts): P
   const names = new Set<string>()
   const murd = opts.murdoku ? classicCast(r, n) : null
   const cast = murd ? [...murd.suspects] : shuffle(r, opts.cast ?? CAST)
+  if (opts.core?.length && !murd) {
+    // a főszereplők mindig szerepelnek: ha a megkevert sorrend gyanúsítottnak kiválasztott elejéről kiesnének, a nem-főszereplők közül a legutolsót cseréljük le
+    // (extra véletlen nélkül — ami eddig is tartalmazta őket, az változatlan marad)
+    const need = opts.victim ? n - 1 : n
+    const want = opts.core.filter((id) => cast.some((m) => m.id === id))
+    for (const id of want) {
+      const from = cast.findIndex((m) => m.id === id)
+      if (from < need) continue
+      let j = need - 1
+      while (j >= 0 && want.includes(cast[j]!.id)) j--
+      if (j < 0) break
+      ;[cast[j], cast[from]] = [cast[from]!, cast[j]!]
+    }
+  }
   const characters: PuzzleCharacter[] = at.map((_, i) => {
     const victim = i === victimIdx
     const given = victim ? (murd?.victim ?? opts.victim ?? cast.shift()) : cast.shift()
@@ -234,11 +256,42 @@ function attempt(r: Rnd, seed: string, difficulty: Difficulty, opts: GenOpts): P
 
   const kinds: readonly ClueKind[] = opts.kinds ?? (opts.murdoku ? MURDOKU_KINDS : difficulty >= 2 && !opts.classicOnly ? [...CLASSIC_KINDS, ...EXTRA_KINDS, ...VARIETY_KINDS] : CLASSIC_KINDS)
   const types = [...byType.keys()]
+  /**
+   * Ha az áldozat kártyája kimondja a helyiséget (nem Murdoku-stílus), akkor az a szereplő, aki KIZÁRÓLAG ott lehet, a gyilkos: az ilyen nyom egyből
+   * kiadná („A Lépcsőházban volt", vagy egy olyan tárgy mellett, ami csak ott van), a „nem ott volt" nyom pedig egyből kizárna valakit.
+   */
+  const revealsKiller = (cl: Clue): boolean => {
+    if (opts.murdoku) return false
+    if (cl.kind === 'notIn') return cl.room === victimRoom
+    // „ő volt az egyetlen férfi (a Konyhában)”: az áldozat szobáját nevezi meg, ill. ha az áldozat is ilyen nemű, a gyanúsított nem lehet az áldozat szobájában (kizárná a gyilkosságból)
+    if (cl.kind === 'onlyGender') return cl.room ? cl.room === victimRoom : characters[victimIdx]!.gender === cl.gender
+    if (!UNARY_KINDS.has(cl.kind)) return false
+    let any = false
+    for (let rr = 0; rr < g.n; rr++)
+      for (let cc = 0; cc < g.n; cc++) {
+        if (g.blocked[rr][cc] || !unaryOk(g, cl, rr, cc)) continue
+        any = true
+        if (g.room[rr][cc] !== victimRoom) return false
+      }
+    return any
+  }
   const candidates = (me: PuzzleCharacter): Clue[] => {
     const [y, x] = pos.get(me.id)!
     const out: Clue[] = []
     const rl = roomOf(y, x)
-    for (const t of g.objs[y][x]) out.push({ kind: 'on', object: t }, { kind: 'on', object: t, room: rl }, { kind: 'onlyOn', object: t })
+    // „tipp-mód” (Esemény): a szobás „tárgyon volt” és az „egyedül ült” nyom csak akkor érdekes, ha a tárgyból tényleg több van (a szobában, ill. a pályán) — egyetlen széknél csak egy mezőt jelölne ki
+    const multi = (t: string, inRoom?: string): boolean => {
+      if (opts.maxRel === undefined) return true
+      let k2 = 0
+      for (let rr = 0; rr < n; rr++) for (let cc = 0; cc < n; cc++) if (g.objs[rr]![cc]!.includes(t) && (!inRoom || g.room[rr]![cc] === inRoom)) k2++
+      return k2 >= 2
+    }
+    for (const t of g.objs[y][x]) {
+      out.push({ kind: 'on', object: t })
+      if (multi(t, rl)) out.push({ kind: 'on', object: t, room: rl })
+      if (multi(t)) out.push({ kind: 'onlyOn', object: t })
+    }
+    if (kinds.includes('onlyGender') && me.gender) out.push({ kind: 'onlyGender', gender: me.gender }, { kind: 'onlyGender', gender: me.gender, room: rl })
     out.push({ kind: 'in', room: rl })
     if (kinds.includes('col')) out.push({ kind: 'col', n: x + 1 })
     if (kinds.includes('row')) out.push({ kind: 'row', n: y + 1 })
@@ -269,15 +322,18 @@ function attempt(r: Rnd, seed: string, difficulty: Difficulty, opts: GenOpts): P
     for (const o of characters)
       if (o.id !== me.id) {
         if (kinds.includes('northOf')) for (const k of [1, 2, 3]) out.push({ kind: 'northOf', of: o.id, rows: k }, { kind: 'southOf', of: o.id, rows: k })
-        if (kinds.includes('aloneWith')) out.push({ kind: 'aloneWith', with: o.id })
         if (kinds.includes('dir')) for (const d2 of ['N', 'E', 'S', 'W'] as const) out.push({ kind: 'dir', of: o.id, dir: d2 })
-        if (kinds.includes('notSameRoom')) out.push({ kind: 'notSameRoom', with: o.id })
+        if (kinds.includes('leftOf')) out.push({ kind: 'leftOf', of: o.id })
+        // Az áldozat kártyája: „egyedül volt a gyilkossal" — ezért az áldozattal egy helyiségben (vagy egyedül / mellette / átlósan vele) lévő szereplő
+        // a gyilkos, az áldozattal NEM egy helyiségben lévő pedig nem az. Az ilyen nyom egyből kiadná a gyilkost (vagy kizárná valakiről), ezért az áldozatra nem készül.
+        if (o.victim) continue
         if (kinds.includes('diagonal')) out.push({ kind: 'diagonal', of: o.id })
         if (kinds.includes('besideChar')) out.push({ kind: 'besideChar', char: o.id })
+        if (kinds.includes('aloneWith')) out.push({ kind: 'aloneWith', with: o.id })
+        if (kinds.includes('notSameRoom')) out.push({ kind: 'notSameRoom', with: o.id })
         if (kinds.includes('sameRoom')) out.push({ kind: 'sameRoom', with: o.id })
-        if (kinds.includes('leftOf')) out.push({ kind: 'leftOf', of: o.id })
       }
-    return out.filter((cl) => kinds.includes(cl.kind as ClueKind) && clueHolds(g, characters, pos, me, cl))
+    return out.filter((cl) => kinds.includes(cl.kind as ClueKind) && !revealsKiller(cl) && clueHolds(g, characters, pos, me, cl))
   }
 
   /** Megoldásszám `cap`-ig; ha a keret kevés a teljes kereséshez, `cap` (= „sok / nem bizonyított"). */
@@ -286,7 +342,14 @@ function attempt(r: Rnd, seed: string, difficulty: Difficulty, opts: GenOpts): P
     return rr.truncated ? cap : rr.solutions.length
   }
   const suspects = characters.filter((c) => !c.victim)
+  const REL_CAP = opts.maxRel ?? Infinity
+  const isRel = (cl: Clue) => RELATIONAL.has(cl.kind)
+  const relCount = () => suspects.filter((x) => x.clues[0] !== undefined && isRel(x.clues[0])).length
+  /** `s` nyoma `cl`-re cserélhető-e úgy, hogy a viszonyító nyomok száma nem lépi túl a keretet (`maxRel`)? */
+  const relOk = (s: PuzzleCharacter, cl: Clue): boolean => !isRel(cl) || (s.clues[0] !== undefined && isRel(s.clues[0])) || relCount() < REL_CAP
   const cand = new Map(suspects.map((c) => [c.id, candidates(c)]))
+  // ha valakinek (tipikusan a gyilkosnak) nem marad a gyilkost el nem áruló nyoma, ez a kísérlet nem jó — jöhet a következő
+  if (suspects.some((s) => cand.get(s.id)!.length === 0)) return null
   // 1. fázis: mindenkinek a legszűkebb (legkevesebb mezőre igaz) nyom — ettől rendszerint már egyértelmű
   for (const s of suspects) {
     const memo = new Map<Clue, number>()
@@ -314,7 +377,7 @@ function attempt(r: Rnd, seed: string, difficulty: Difficulty, opts: GenOpts): P
       const options: { s: PuzzleCharacter; cl: Clue; l: number }[] = []
       for (const s2 of suspects) {
         if (alt[s2.id] === solution[s2.id]) continue
-        for (const cl of cand.get(s2.id)!) if (cl !== s2.clues[0] && !clueHolds(g, characters, altPos, s2, cl)) options.push({ s: s2, cl, l: looseness(g, cl) })
+        for (const cl of cand.get(s2.id)!) if (cl !== s2.clues[0] && !clueHolds(g, characters, altPos, s2, cl) && relOk(s2, cl)) options.push({ s: s2, cl, l: looseness(g, cl) })
       }
       options.sort((x, y) => x.l - y.l)
       let done = false
@@ -355,7 +418,7 @@ function attempt(r: Rnd, seed: string, difficulty: Difficulty, opts: GenOpts): P
     const byKind = new Map<string, Clue[]>()
     for (const c2 of shuffle(r, cand.get(s2.id)!.filter((c3) => NOVEL.has(c3.kind)))) byKind.set(c2.kind, [...(byKind.get(c2.kind) ?? []), c2])
     const rounds = shuffle(r, [...byKind.values()]).flatMap((list) => list.slice(0, 2))
-    for (const cl of shuffle(r, rounds).slice(0, 14)) {
+    for (const cl of shuffle(r, rounds.filter((x) => relOk(s2, x))).slice(0, 14)) {
       s2.clues = [cl]
       if (count(2, 100_000) === 1) break
       s2.clues = keep
@@ -363,9 +426,12 @@ function attempt(r: Rnd, seed: string, difficulty: Difficulty, opts: GenOpts): P
   }
   // 2. fázis: gyengítés — a leglazább nyom, ami mellett még egyértelmű (ettől lesz kizárásos, „szép" a pálya)
   // összetett nyomok (Esemény): a sima „tárgyon / mellett / sor” nyomok egy részét összetettebbre cseréljük, ha így is egyértelmű
-  const RICHK = new Set<string>([...NOVEL, 'leftOf'])
+  const RICHK = new Set<string>([...NOVEL, 'leftOf', 'onlyOn'])
   RICHK.delete('line')
-  const isRich = (x: PuzzleCharacter) => RICHK.has(x.clues[0]!.kind)
+  // a szobás „tárgyon volt” (két az egyben) is ötletes nyom; a sima „tárgyon volt” nem
+  const roomOn = (cl: Clue) => opts.maxRel !== undefined && cl.kind === 'on' && !!cl.room
+  const richClue = (cl: Clue) => RICHK.has(cl.kind) || roomOn(cl)
+  const isRich = (x: PuzzleCharacter) => richClue(x.clues[0]!)
   const enrich = () => {
     const want = Math.ceil(suspects.length * (opts.rich ?? 0))
     // két kör: egy csere más szereplőnek is megnyithatja a lehetőséget
@@ -374,7 +440,7 @@ function attempt(r: Rnd, seed: string, difficulty: Difficulty, opts: GenOpts): P
         if (suspects.filter(isRich).length >= want) return
         const keep = s2.clues
         const byKind = new Map<string, Clue[]>()
-        for (const c2 of shuffle(r, cand.get(s2.id)!.filter((c3) => RICHK.has(c3.kind)))) byKind.set(c2.kind, [...(byKind.get(c2.kind) ?? []), c2])
+        for (const c2 of shuffle(r, cand.get(s2.id)!.filter((c3) => richClue(c3) && relOk(s2, c3)))) byKind.set(roomOn(c2) ? 'on+room' : c2.kind, [...(byKind.get(roomOn(c2) ? 'on+room' : c2.kind) ?? []), c2])
         const tries = shuffle(r, [...byKind.values()].flatMap((list) => list.slice(0, 4)))
         for (const cl of tries.slice(0, 48)) {
           s2.clues = [cl]
@@ -387,7 +453,7 @@ function attempt(r: Rnd, seed: string, difficulty: Difficulty, opts: GenOpts): P
   const nWeak = Math.round(suspects.length * WEAKEN[difficulty])
   for (const s of shuffle(r, suspects.filter((x) => !pinned.has(x.id) && !(opts.rich && isRich(x)))).slice(0, nWeak)) {
     const keep = s.clues
-    const loose = cand.get(s.id)!.filter((cl) => looseness(g, cl) > looseness(g, keep[0]))
+    const loose = cand.get(s.id)!.filter((cl) => looseness(g, cl) > looseness(g, keep[0]) && relOk(s, cl))
     // a leglazább jelöltek közül sorsolunk (így változatosabb a nyomfajta), nem mindig ugyanaz az első
     for (const cl of shuffle(r, loose.slice(0, 24)).slice(0, 14)) {
       s.clues = [cl]
@@ -398,7 +464,9 @@ function attempt(r: Rnd, seed: string, difficulty: Difficulty, opts: GenOpts): P
   if (opts.rich) enrich() // gyengítés után még egyszer: ami addig nem sikerült
   // zárolt plusz nyom (Until Dawn): igaz, tehát az egyértelműséget nem rontja
   for (const s2 of shuffle(r, suspects).slice(0, opts.hidden ?? 0)) {
-    const extra = cand.get(s2.id)!.filter((cl) => cl.kind !== s2.clues[0]!.kind)
+    const extra0 = cand.get(s2.id)!.filter((cl) => cl.kind !== s2.clues[0]!.kind)
+    // a zárolt plusz nyom is lehetőleg ne viszonyuljon másik szereplőhöz (ha a pálya „kevés viszonyító nyomos”)
+    const extra = opts.maxRel !== undefined && extra0.some((cl) => !isRel(cl)) ? extra0.filter((cl) => !isRel(cl)) : extra0
     if (extra.length === 0) continue
     s2.clues = [...s2.clues, extra[extra.length - 1]!]
     s2.hidden = [1]
@@ -430,7 +498,7 @@ function attempt(r: Rnd, seed: string, difficulty: Difficulty, opts: GenOpts): P
       redacted.push(c)
     }
   }
-  return count(2, BIG) === 1 ? p : null
+  return count(2, BIG) === 1 && relCount() <= REL_CAP ? p : null
 }
 
 /** Seedelt, determinisztikus generátor: ugyanaz a (seed, nehézség) mindig ugyanazt a — pontosan 1 megoldású — pályát adja. */

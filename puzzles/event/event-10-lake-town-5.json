@@ -1,0 +1,300 @@
+{
+  "v": 1,
+  "id": "event-10-lake-town-5",
+  "mode": "event",
+  "world": "lake-town",
+  "title": "A rádiós hangja",
+  "story": "Pete Mayne hangja elhallgatott. A fény és a sötétség mezői kijelölik, hol állhatott a Birtokolt.",
+  "size": 10,
+  "difficulty": 5,
+  "rooms": {
+    "F": "Fűrésztelep",
+    "V": "Vendégház",
+    "R": "Rádióállomás",
+    "E": "Rendőrség",
+    "D": "Erdei ösvény",
+    "T": "Tóparti stég",
+    "Z": "Zsolnai kunyhója",
+    "L": "Elme-kórház"
+  },
+  "layout": [
+    "ZTTTTTTTDD",
+    "ZZTZTTTTDD",
+    "ZZZZZTTDDD",
+    "ZZZZZLLDDD",
+    "VVLLLLDDDD",
+    "VVVLLLFFFD",
+    "RVVLVVFFFF",
+    "RRVVVVVVFF",
+    "RRRRRREEEE",
+    "RRRRREEEEE"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "I7",
+        "B7",
+        "G6",
+        "J1"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "A10",
+        "B6",
+        "C4",
+        "E3",
+        "H4"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "F9",
+        "J5"
+      ]
+    },
+    {
+      "type": "lamp",
+      "at": [
+        "D9",
+        "I8",
+        "E8",
+        "B2",
+        "F5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "charger",
+      "at": [
+        "C3",
+        "A1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "typewriter",
+      "at": [
+        "A3",
+        "D10"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "coffeemaker",
+      "at": [
+        "G10",
+        "J8",
+        "E10",
+        "C9",
+        "F1"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "cintia-szovo",
+      "name": "Sylvia Webber",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "coffeemaker"
+        }
+      ],
+      "clueText": [
+        "Egy **kávéfőző mellett** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "sara-toro",
+      "name": "Sara Breakwell",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "dr-emil-hofer"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Dr. Emery Hartwellel**."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "dr-emil-hofer",
+      "name": "Dr. Emery Hartwell",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "Z"
+        }
+      ],
+      "clueText": [
+        "Zsolnai kunyhójában egy **ládán** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "barna-vincze",
+      "name": "Benny Wheelwright",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "charger"
+        }
+      ],
+      "clueText": [
+        "Egy **elemlámpa-töltő mellett** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "tamas-zsolnai",
+      "name": "Tobias Zayne",
+      "race": "ghost",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "dark"
+        }
+      ],
+      "clueText": [
+        "Sötét mezőn állt — a Sötétség megszállta."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "attila-vago",
+      "name": "Adam Waken",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate"
+        }
+      ],
+      "clueText": [
+        "Egy **ládán** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "rozsa-csikos",
+      "name": "Rosie Goldflower",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Fűrésztelepen egy **padon** ült."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "odon-andrasfi",
+      "name": "Woden Anders",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "V"
+        }
+      ],
+      "clueText": [
+        "A Vendégházban volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "patrik-meszar",
+      "name": "Pete Mayne",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Rádióállomáson **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "ilona-vago",
+      "name": "Alicia Waken",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A **2. oszloptól balra** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "cintia-szovo": "G1",
+    "sara-toro": "D2",
+    "dr-emil-hofer": "E3",
+    "barna-vincze": "C4",
+    "tamas-zsolnai": "J5",
+    "attila-vago": "B6",
+    "rozsa-csikos": "I7",
+    "odon-andrasfi": "H8",
+    "patrik-meszar": "F9",
+    "ilona-vago": "A10"
+  },
+  "murderer": "ilona-vago",
+  "rev": 1,
+  "worldRule": "light"
+}

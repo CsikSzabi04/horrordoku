@@ -28,15 +28,48 @@ describe('StorageService', () => {
     expect((await s.getProfile()).id).toBeNull()
     expect((await s.getProgress()).puzzles).toEqual({})
   })
-  it('scope-ok el vannak különítve, a beállítás közös', async () => {
+  it('scope-ok el vannak különítve, az eszköz-beállítások (hang, jumpscare…) közösek', async () => {
     const { s } = mk()
     await s.addUnlock('character', 'vlad')
     await s.setScope('u_ab12cd34')
     expect((await s.getUnlocks()).items).toEqual([])
+    await s.patchSettings({ screenShake: false })
+    await s.setScope('guest')
+    expect((await s.getSettings()).screenShake).toBe(false)
+    expect((await s.getUnlocks()).items).toHaveLength(1)
+  })
+  it('a nyelv alapból angol mindenkinek, és a PROFILÉ: a váltás nem érinti a vendéget / más fiókot', async () => {
+    const { s } = mk()
+    expect((await s.getSettings()).language).toBe('en')
+    await s.setScope('u_a')
+    expect((await s.getSettings()).language).toBe('en') // az új fiók is angol
+    await s.patchSettings({ language: 'hu' })
+    expect((await s.getSettings()).language).toBe('hu')
+    await s.setScope('guest')
+    expect((await s.getSettings()).language).toBe('en') // kilépve a vendég saját (angol) nyelve
+    await s.setScope('u_b')
+    expect((await s.getSettings()).language).toBe('en') // egy másik fiókot sem érint
+    await s.setScope('u_a')
+    expect((await s.getSettings()).language).toBe('hu') // a fiók visszalépve a sajátját kapja
+  })
+  it('a vendég nyelve az ÚJ fióknak a kiindulás, a meglévő saját nyelvét nem írja felül', async () => {
+    const { s } = mk()
+    await s.patchSettings({ language: 'hu' }) // vendégként magyarra váltott
+    await s.setScope('u_new')
+    expect((await s.getSettings()).language).toBe('hu') // az új fiók ezt örökli
     await s.patchSettings({ language: 'en' })
     await s.setScope('guest')
-    expect((await s.getSettings()).language).toBe('en')
-    expect((await s.getUnlocks()).items).toHaveLength(1)
+    await s.setScope('u_new')
+    expect((await s.getSettings()).language).toBe('en') // a saját választása nyer
+    await s.setScope('u_b')
+    expect((await s.getSettings()).language).toBe('en') // fiókról fiókra nincs öröklés
+  })
+  it('a profil-váltás „settings” eseményt ad (a nyelv ettől frissül)', async () => {
+    const { s } = mk()
+    const seen: string[] = []
+    s.onChange((e) => seen.push(e.type))
+    await s.setScope('u_x')
+    expect(seen).toContain('settings')
   })
   it('recordRun: legjobb idő, hibás beküldések összege, utolsó 20 futás', async () => {
     const { s } = mk()

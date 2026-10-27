@@ -1,0 +1,230 @@
+{
+  "v": 1,
+  "id": "event-19-wizard-school-3",
+  "mode": "event",
+  "world": "wizard-school",
+  "title": "A félvér herceg",
+  "story": "Severin Vipera a sötétben fekszik, a térkép pedig hallgat. Válts helyiséget, a többi nyom elhalványul.",
+  "size": 8,
+  "difficulty": 4,
+  "rooms": {
+    "N": "Nagyterem",
+    "O": "Oroszlán-torony",
+    "F": "Főzőterem",
+    "T": "Tiltott Erdő",
+    "K": "Kívánság Terme",
+    "R": "Repülő-pálya"
+  },
+  "layout": [
+    "FFFTTTTT",
+    "NFFTTTTT",
+    "NNFFFTTT",
+    "NFFFFOOO",
+    "NFFFROOO",
+    "NNNRRKOO",
+    "NNNRKKKK",
+    "NNRRKKKK"
+  ],
+  "objects": [
+    {
+      "type": "broom",
+      "at": [
+        "F3",
+        "B8",
+        "A4",
+        "C8"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": "C4"
+    },
+    {
+      "type": "bench",
+      "at": [
+        "A2",
+        "H1",
+        "D5",
+        "E6"
+      ]
+    },
+    {
+      "type": "painting",
+      "at": [
+        "C5",
+        "H2",
+        "D4",
+        "B5",
+        "E8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "armor",
+      "at": "D1",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "perec-pitvar",
+      "name": "Severin Vipera",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Tiltott Erdőben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "minerva-kopjas",
+      "name": "Mina McRaven",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 2
+        }
+      ],
+      "clueText": [
+        "A helyiségében **ketten** voltak."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "dorian-galambos",
+      "name": "Drake Malgrave",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "broom"
+        }
+      ],
+      "clueText": [
+        "Egy **seprűn** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "remi-vasvari",
+      "name": "Rory Weswick",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "nandor-hosszuszar",
+      "name": "Nevin Longbrook",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "remi-vasvari"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Rory Weswickkel**."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "gina-vasvari",
+      "name": "Ginnie Weswick",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "leftOf",
+          "of": "perec-pitvar"
+        }
+      ],
+      "clueText": [
+        "**Severin Viperától balra** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "hermina-gazdag",
+      "name": "Hermina Greenwood",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "painting"
+        }
+      ],
+      "clueText": [
+        "Egy **festmény mellett** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "hugo-pakozdi",
+      "name": "Henry Villámseb",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "broom",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "A Nagyteremben egy **seprűn** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "perec-pitvar": "H1",
+    "minerva-kopjas": "A2",
+    "dorian-galambos": "F3",
+    "remi-vasvari": "C4",
+    "nandor-hosszuszar": "D5",
+    "gina-vasvari": "G6",
+    "hermina-gazdag": "E7",
+    "hugo-pakozdi": "B8"
+  },
+  "murderer": "dorian-galambos",
+  "rev": 1,
+  "worldRule": "cameras"
+}

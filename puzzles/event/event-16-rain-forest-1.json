@@ -1,0 +1,190 @@
+{
+  "v": 1,
+  "id": "event-16-rain-forest-1",
+  "mode": "event",
+  "world": "rain-forest",
+  "title": "A vámpír-követő",
+  "story": "Crossroads Város, az örök eső városa. Jamie, a követő vámpír holtan fekszik. A totemek mellett Alyssa látomásai feltárulnak: az ott álló szereplők plusz nyomot kapnak.",
+  "size": 5,
+  "difficulty": 1,
+  "rooms": {
+    "E": "Erdei tisztás",
+    "C": "Csendes-part",
+    "L": "Lenkei-ház",
+    "S": "Esőerdő kórház",
+    "V": "Vérkő-torony"
+  },
+  "layout": [
+    "SSSCC",
+    "SCCCC",
+    "SSLLC",
+    "SLLLL",
+    "VVEEE"
+  ],
+  "objects": [
+    {
+      "type": "sofa",
+      "at": [
+        "B2",
+        "D3",
+        "B1",
+        "E1"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "C5",
+        "E4"
+      ]
+    },
+    {
+      "type": "totem",
+      "at": [
+        "E3",
+        "C3",
+        "B4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "fireplace",
+      "at": [
+        "B5",
+        "A3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": "A4",
+      "blocking": true
+    },
+    {
+      "type": "rock",
+      "at": "A2",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "rozalia-hajdu",
+      "name": "Rosalyn Hales",
+      "race": "vampire",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "notIn",
+          "room": "C"
+        },
+        {
+          "kind": "beside",
+          "object": "rock"
+        }
+      ],
+      "clueText": [
+        "**Nem** a Csendes-parton volt.",
+        "Egy **szikla mellett** volt."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "bella-lenkei",
+      "name": "Belle Heron",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "jakob-fekete",
+          "dir": "N"
+        }
+      ],
+      "clueText": [
+        "**Jakob Darktól északra** volt."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "gabor-sas",
+      "name": "Jamie",
+      "race": "vampire",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Lenkei-házban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "jakob-fekete",
+      "name": "Jakob Dark",
+      "race": "werewolf",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge"
+        },
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt.",
+        "Egy **padon** ült."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    },
+    {
+      "id": "ede-kollar",
+      "name": "Edmund Callen",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Erdei tisztáson ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Nightfall"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "rozalia-hajdu": "A1",
+    "bella-lenkei": "B2",
+    "gabor-sas": "D3",
+    "jakob-fekete": "E4",
+    "ede-kollar": "C5"
+  },
+  "murderer": "jakob-fekete",
+  "rev": 1,
+  "worldRule": "totems"
+}

@@ -7,13 +7,13 @@ Vite + React + TypeScript webalkalmazás (az asztali csomag később jön).
 
 | Mód | Mi ez |
 |---|---|
-| 🕯️ **Klasszikus** | Sima Murdoku: 100 előre megírt pálya, 5 szint × 20 hétköznapi helyszín (virágbolt, iskola, strand…), nincs horror. |
-| 🎬 **Esemény** | 19 világ híres horror-játékokból és -sorozatokból (Five Nights at Freddy's, Resident Evil, Dead Space, Alan Wake, Stranger Things…), mindegyikben 5 egymás utáni ügy és egy saját világ-szabály (kamerák, vákuum, éjjellátó, rádió…). 16+ |
+| 🕯️ **Klasszikus** | Logikai gyilkossági rejtvény: 100 előre megírt pálya, 5 szint × 20 hétköznapi helyszín (virágbolt, iskola, strand…), nincs horror. |
+| 🎬 **Esemény** | 19 világ eredeti horror-történetekből, mindegyikben 5 egymás utáni ügy és egy saját világ-szabály (kamerák, vákuum, éjjellátó, rádió…). 16+ |
 | 🎲 **Random** | Végtelen, a gép által összeállított ügyek (mindig egyetlen megoldással), megosztható ügykóddal és napi üggyel. |
 | 🤝 **Együtt** | Közös tábla és chat, 2–4 játékos (bejelentkezés kell). |
 | 🔪 **Gyilkos** | Egyikőtök áruló, 3–6 játékos (bejelentkezés kell). |
 
-A játék a murdoku.com elrendezését követi: bal oldalt a karakterek, középen a térkép, jobbra az eszközök. Koppintás = kezdőbetű (jegyzet), ~1 mp nyomva tartás = lerakás.
+A játék elrendezése: bal oldalt a cím és a karakterek (alul az idő, a nyelv, a sötét mód, a beállítások és a hang), középen a térkép, jobbra az eszközök. Koppintás = kezdőbetű (jegyzet), ~1 mp nyomva tartás = lerakás.
 A jumpscare alapból ki van kapcsolva; a *Nyugodt mód* és a `prefers-reduced-motion` mindig érvényesül.
 
 ## Futtatás
@@ -59,3 +59,9 @@ Két AI-ügynök dolgozik a repón párhuzamosan (játék / felhő és társas m
 ## Megjegyzés a nevekről
 
 Az Esemény mód világainak és szereplőinek nevei harmadik felek védjegyei; a helyi fejlesztésben a játéktervezési dokumentum szerinti nevek szerepelnek, nyilvános kiadás előtt cserélendők (GDD 21. fejezet).
+
+## Gyorsaság és biztonság
+
+- Az induló csomag ~106 KB (tömörítve): a képernyők külön csomagok, a felhős kliens (Supabase) a főmenü után töltődik, a betűtípusok saját tárhelyről jönnek, a statikus fájlok hosszan gyorsítótárazottak.
+- Tartalom-biztonsági szabály (CSP) és biztonsági fejlécek (`vercel.json`, `vite.config.ts`); a hálózatról érkező adatot (társak üzenetei, betöltött mentés) a kliens ellenőrzi; az adatbázis-oldali védelem a `supabase/migrations/` fájlokban (RLS, korlátok, sebességkorlát) — a migrációkat a projekt SQL Editorában kell lefuttatni.
+

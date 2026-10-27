@@ -1,0 +1,245 @@
+{
+  "v": 1,
+  "id": "event-05-mountain-cabin-3",
+  "mode": "event",
+  "world": "mountain-cabin",
+  "title": "Zárt kabinajtó",
+  "story": "Jessamine bezárkózott, amikor a fények kialudtak. Reggelre az ajtó nyitva volt — belülről.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "N": "Nappali",
+    "K": "Konyha",
+    "F": "Fürdő",
+    "P": "Pince",
+    "H": "Hálók",
+    "T": "Tisztás",
+    "E": "Felvonó"
+  },
+  "layout": [
+    "EEEEPPP",
+    "TEEEPPP",
+    "TTTEFFF",
+    "TTTEFFF",
+    "HHHHFFN",
+    "KKKNNNN",
+    "KKKNNNN"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "C7",
+        "G6",
+        "B1"
+      ]
+    },
+    {
+      "type": "sofa",
+      "at": [
+        "E2",
+        "A5",
+        "D3",
+        "G2"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "F4",
+        "F2",
+        "E6"
+      ]
+    },
+    {
+      "type": "totem",
+      "at": [
+        "B6",
+        "G4",
+        "D4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "fireplace",
+      "at": [
+        "G5",
+        "A6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "trophy",
+      "at": "C5",
+      "blocking": true
+    },
+    {
+      "type": "gunrack",
+      "at": [
+        "G7",
+        "F1"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "julia",
+      "name": "Jessamine",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Felvonóban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    },
+    {
+      "id": "mihaly",
+      "name": "Mick",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "sofa",
+          "room": "P"
+        },
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "P"
+        }
+      ],
+      "clueText": [
+        "A Pincében egy **kanapén** ült.",
+        "A Pincében ő volt az **egyetlen férfi**."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    },
+    {
+      "id": "emese",
+      "name": "Emery",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "mihaly",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Micktől délre** volt."
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    },
+    {
+      "id": "dani",
+      "name": "Sammy",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "bench"
+        },
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **padon** ült.",
+        "Egy **padon** ült."
+      ],
+      "hidden": [
+        1
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    },
+    {
+      "id": "agnes",
+      "name": "Ashlyn",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    },
+    {
+      "id": "a-hegyi-szellem",
+      "name": "Az Agancsos Éhség",
+      "race": "werewolf",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "fireplace"
+        }
+      ],
+      "clueText": [
+        "Egy **kandalló mellett** volt."
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    },
+    {
+      "id": "mate",
+      "name": "Matty",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Before Daybreak"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "julia": "B1",
+    "mihaly": "E2",
+    "emese": "D3",
+    "dani": "F4",
+    "agnes": "A5",
+    "a-hegyi-szellem": "G6",
+    "mate": "C7"
+  },
+  "murderer": "emese",
+  "rev": 1,
+  "worldRule": "totems"
+}

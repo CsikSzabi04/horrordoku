@@ -1,4 +1,5 @@
 // A szoba-statisztika kijelzéséhez: idő (ms → m:ss / ó:pp:mm) és dátum.
+import { getLang } from '../../i18n/lang'
 
 /** 90000 → "1:30", 3 725 000 → "1:02:05"; hiányzó érték: "—". */
 export function fmtMs(ms: number | undefined): string {
@@ -15,5 +16,5 @@ export function fmtMs(ms: number | undefined): string {
 export function fmtDate(iso: string | undefined): string {
   if (!iso) return '—'
   const d = new Date(iso)
-  return Number.isNaN(d.getTime()) ? '—' : d.toLocaleDateString('hu-HU')
+  return Number.isNaN(d.getTime()) ? '—' : d.toLocaleDateString(getLang() === 'en' ? 'en-GB' : 'hu-HU')
 }

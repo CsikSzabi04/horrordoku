@@ -1,0 +1,283 @@
+{
+  "v": 1,
+  "id": "event-10-lake-town-4",
+  "mode": "event",
+  "world": "lake-town",
+  "title": "A testvér árnyéka",
+  "story": "Thunder Anders a villanyoszlop alatt fekszik, a fény már nem éri el. A Birtokoltak sötétben mozognak.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "F": "Fűrésztelep",
+    "V": "Vendégház",
+    "R": "Rádióállomás",
+    "E": "Rendőrség",
+    "D": "Erdei ösvény",
+    "T": "Tóparti stég",
+    "L": "Elme-kórház"
+  },
+  "layout": [
+    "FFFFFFVVV",
+    "FFFFFFVVV",
+    "DFFFFRVVV",
+    "DDDTTRVVL",
+    "DDDTTRLLL",
+    "DDDETRRRL",
+    "DDDEERRRL",
+    "EDEEERLLL",
+    "EEEEEELLL"
+  ],
+  "objects": [
+    {
+      "type": "crate",
+      "at": [
+        "A8",
+        "G4",
+        "B9",
+        "D1"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "E6",
+        "I7",
+        "C3",
+        "H5",
+        "B4"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "F2",
+        "E5",
+        "B2",
+        "C5"
+      ]
+    },
+    {
+      "type": "lamp",
+      "at": [
+        "G5",
+        "I1",
+        "D5",
+        "F1",
+        "A2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "charger",
+      "at": [
+        "H3",
+        "A9"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "typewriter",
+      "at": [
+        "F4",
+        "D3",
+        "H4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "coffeemaker",
+      "at": [
+        "E1",
+        "I9",
+        "C1"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "patrik-meszar",
+      "name": "Pete Mayne",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "dark"
+        }
+      ],
+      "clueText": [
+        "Sötét mezőn állt — a Sötétség megszállta."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "odon-andrasfi",
+      "name": "Woden Anders",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Fűrésztelepen egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "attila-vago",
+      "name": "Adam Waken",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Egy **padon** ült."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "tamas-zsolnai",
+      "name": "Tobias Zayne",
+      "race": "ghost",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "odon-andrasfi",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Woden Anderstől délre** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "tibor-andrasfi",
+      "name": "Thunder Anders",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Az Elme-kórházban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "sara-toro",
+      "name": "Sara Breakwell",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "f",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A Tóparti stégen ő volt az **egyetlen nő**."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "barna-vincze",
+      "name": "Benny Wheelwright",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "gt",
+          "n": 8
+        }
+      ],
+      "clueText": [
+        "A **8. oszloptól jobbra** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "dr-emil-hofer",
+      "name": "Dr. Emery Hartwell",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "tibor-andrasfi",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Thunder Anderstől délre** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    },
+    {
+      "id": "ilona-vago",
+      "name": "Alicia Waken",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "A Rendőrségen egy **ládán** volt."
+      ],
+      "source": {
+        "game": "Adam Waken"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "patrik-meszar": "D1",
+    "odon-andrasfi": "F2",
+    "attila-vago": "C3",
+    "tamas-zsolnai": "G4",
+    "tibor-andrasfi": "H5",
+    "sara-toro": "E6",
+    "barna-vincze": "I7",
+    "dr-emil-hofer": "A8",
+    "ilona-vago": "B9"
+  },
+  "murderer": "barna-vincze",
+  "rev": 1,
+  "worldRule": "light"
+}

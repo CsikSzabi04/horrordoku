@@ -1,4 +1,5 @@
 import type { JumpscareMode } from '../shared/storage'
+import { pick } from '../i18n/lang'
 
 /** A jumpscare tiszta (hang nélküli) logikája: mikor, mekkora, melyik változat. A kimenetet az `audio` és a `jumpscare` játssza le. */
 export const clamp01 = (x: number): number => (Number.isFinite(x) ? Math.max(0, Math.min(1, x)) : 0)
@@ -57,14 +58,21 @@ export function scarePlan(inp: ScareInput, rnd: () => number): ScarePlan | null 
 export interface Variant {
   emoji: string
   dir: 'bottom' | 'left' | 'right' | 'center' | 'grid'
-  caption: string
+  /** A változat neve az aktuális nyelven (olvasáskor számolódik; a képernyőn nem jelenik meg, csak a megnevezéshez kell). */
+  readonly caption: string
 }
-const V = (emoji: string, dir: Variant['dir'], caption: string): Variant => ({ emoji, dir, caption })
+const V = (emoji: string, dir: Variant['dir'], caption: string, captionEn: string = caption): Variant => ({
+  emoji,
+  dir,
+  get caption() {
+    return pick(caption, captionEn)
+  },
+})
 /** Világonként 3–5 változat. A Hollowmere (Random mód) a saját lényeit használja; a többi világ az `event` bővítésekor jön. */
 export const SCARES: Record<string, Variant[]> = {
   hollowmere: [V('🦇', 'bottom', 'Vlad'), V('👁️', 'center', 'Lilith'), V('👻', 'left', 'Silas'), V('🐺', 'right', 'Ezekiel'), V('🌒', 'grid', 'Morrigan')],
-  fnaf: [V('🐻', 'center', 'Animatronika'), V('👁️', 'bottom', 'Szemek'), V('🎪', 'grid', 'Függöny')],
-  'poppy-playtime': [V('🧸', 'bottom', 'Plüss'), V('🎁', 'center', 'Játékdoboz'), V('🖐️', 'right', 'Kéz')],
+  fnaf: [V('🐻', 'center', 'Animatronika', 'Animatronic'), V('👁️', 'bottom', 'Szemek', 'Eyes'), V('🎪', 'grid', 'Függöny', 'Curtain')],
+  'poppy-playtime': [V('🧸', 'bottom', 'Plüss', 'Plush'), V('🎁', 'center', 'Játékdoboz', 'Toy box'), V('🖐️', 'right', 'Kéz', 'Hand')],
 }
 export const variantsFor = (world: string): Variant[] => SCARES[world] ?? SCARES.hollowmere!
 

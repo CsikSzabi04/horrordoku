@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { puzzleTitle } from '../content/localize'
 import { listPuzzles } from '../content/catalog'
 import type { PuzzleMeta } from '../content/catalog'
 import { content } from '../content'
@@ -24,6 +25,8 @@ interface Props {
   reward: Reward | null
   lang: Lang
   next: PuzzleMeta | null
+  /** Kis megjegyzés a gombok alatt (pl. Együtt: a következő pályát a host választja). */
+  note?: string
   onClose: () => void
   onMenu: () => void
   onNext: (p: PuzzleMeta) => void
@@ -36,7 +39,7 @@ const fmt = (ms: number) => {
 const RANK_KEY = { rookie: 'rank0', guard: 'rank1', detective: 'rank2', hunter: 'rank3', ninth: 'rank4' } as const
 
 /** A pálya végén (megoldás vagy feladás): az eredmény, a profil, a haladás — és a „Menü” / „Folytatás” gombok. */
-export function FinishModal({ open, won, puzzle, murderer, elapsed, hints, wrong, reward, lang, next, onClose, onMenu, onNext }: Props) {
+export function FinishModal({ open, won, puzzle, murderer, elapsed, hints, wrong, reward, lang, next, note, onClose, onMenu, onNext }: Props) {
   const t = (k: Parameters<typeof tr>[1]) => tr(lang, k)
   const [profile, setProfile] = useState<ProfileSnapshot | null>(null)
   const [progress, setProgress] = useState<ProgressFile | null>(null)
@@ -81,7 +84,7 @@ export function FinishModal({ open, won, puzzle, murderer, elapsed, hints, wrong
           <div>
             <h3>{won ? t('solved') : t('fGaveUp')}</h3>
             <small>
-              {puzzle.title} · {puzzle.size}×{puzzle.size}
+              {puzzleTitle(puzzle)} · {puzzle.size}×{puzzle.size}
               {level ? ` · ${level.emoji} ${lang === 'en' ? level.en : level.name}` : ''}
             </small>
           </div>
@@ -178,6 +181,7 @@ export function FinishModal({ open, won, puzzle, murderer, elapsed, hints, wrong
             {t('fNextUp')}: {next.icon ?? '🔎'} {next.title}
           </small>
         )}
+        {note && <small className="fin-next">{note}</small>}
       </div>
     </Modal>
   )

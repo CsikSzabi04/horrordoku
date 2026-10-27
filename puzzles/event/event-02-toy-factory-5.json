@@ -1,0 +1,224 @@
+{
+  "v": 1,
+  "id": "event-02-toy-factory-5",
+  "mode": "event",
+  "world": "toy-factory",
+  "title": "A baba utolsó szava",
+  "story": "Daisy a vitrin mellett fekszik, a gyár pedig egész éjjel zúgott. Valaki elvette a hangját.",
+  "size": 7,
+  "difficulty": 5,
+  "rooms": {
+    "E": "Előcsarnok",
+    "G": "Gyártósor",
+    "J": "Játékbolt",
+    "T": "Játszószoba",
+    "R": "Raktár",
+    "S": "Szellőzőrendszer"
+  },
+  "layout": [
+    "SSSSGGG",
+    "SSSSGGG",
+    "SSSSSGG",
+    "SSSSSSG",
+    "TJJEEEG",
+    "TRREEGG",
+    "TTRREGG"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "G6",
+        "D4",
+        "A3",
+        "A5",
+        "G7"
+      ]
+    },
+    {
+      "type": "toybox",
+      "at": [
+        "E2",
+        "F5",
+        "A4"
+      ]
+    },
+    {
+      "type": "panel",
+      "at": [
+        "A7",
+        "D6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "speaker",
+      "at": [
+        "C6",
+        "A1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "conveyor",
+      "at": "D5",
+      "blocking": true
+    },
+    {
+      "type": "blocks",
+      "at": [
+        "C2",
+        "B1"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "kutyanap",
+      "name": "KutyaHajnal",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "ne",
+          "n": 1
+        }
+      ],
+      "clueText": [
+        "**Nem** az **első oszlopban** volt."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "olelo-leny",
+      "name": "Öleli Bújli",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "toybox"
+        }
+      ],
+      "clueText": [
+        "Egy **játékdobozon** volt."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "macskanap",
+      "name": "CicaSzundi",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "babika-rozsi",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Daisytől északra** volt."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "hosszulabu-anyu",
+      "name": "Nyújtólábú Anyu",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "A Szellőzőrendszerben egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "dobos-nyuszi",
+      "name": "Bongó Nyuszi",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "E"
+        }
+      ],
+      "clueText": [
+        "Az Előcsarnokban ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "babika-rozsi",
+      "name": "Daisy",
+      "race": "ghoul",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Gyártósoron **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    },
+    {
+      "id": "csokos-mici",
+      "name": "Puszis Mici",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "f",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A Játszószobában ő volt az **egyetlen nő**."
+      ],
+      "source": {
+        "game": "Daisy Toytime"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "kutyanap": "C1",
+    "olelo-leny": "E2",
+    "macskanap": "A3",
+    "hosszulabu-anyu": "D4",
+    "dobos-nyuszi": "F5",
+    "babika-rozsi": "G6",
+    "csokos-mici": "B7"
+  },
+  "murderer": "olelo-leny",
+  "rev": 1,
+  "worldRule": "grab"
+}

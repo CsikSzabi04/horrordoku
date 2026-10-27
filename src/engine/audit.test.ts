@@ -3,7 +3,9 @@ import { join } from 'node:path'
 import { describe, expect, it } from 'vitest'
 import type { Clue, Difficulty, Puzzle } from '../shared/puzzle'
 import { generate } from './generator'
+import { buildGrid } from './grid'
 import { makeReference } from './reference'
+import { unaryOk } from './rules'
 import { CATEGORIES, OBJECTS, roomIn, TERRAIN } from './vocab'
 
 /**
@@ -32,6 +34,39 @@ function refs(cl: Clue): { objects: string[]; rooms: string[]; chars: string[] }
   return { objects, rooms, chars }
 }
 
+const UNARY_KINDS = new Set<string>(['on', 'onlyOn', 'in', 'notIn', 'beside', 'besideAny', 'notBeside', 'besideCat', 'notBesideCat', 'terrain', 'line', 'edge', 'corner', 'distance', 'col', 'row', 'lit', 'dark'])
+const SAME_ROOM_AS_VICTIM = new Set<string>(['sameRoom', 'aloneWith', 'besideChar', 'diagonal', 'notSameRoom'])
+
+/**
+ * Elárulja-e egy gyanúsított nyoma a gyilkost (vagy zár ki valakit)? Az áldozat kártyája „egyedül volt a gyilkossal", ezért:
+ *  - az áldozattal egy helyiségben lévő (egyedül / mellette / átlósan vele) vagy NEM ott lévő szereplő nyoma egyből a gyilkost adja ki / zárja ki;
+ *  - ha a kártya a helyiséget is kimondja: az a nyom, ami a szereplőt KIZÁRÓLAG ebbe a helyiségbe teszi („A Lépcsőházban volt", vagy egy csak ott álló tárgy mellett),
+ *    illetve a „nem ott volt" nyom ugyanezt teszi.
+ * Visszatérés: az ok szövege, vagy `null`, ha rendben van.
+ */
+function killerLeak(p: Puzzle, g: ReturnType<typeof buildGrid>, cl: Clue): string | null {
+  const victim = p.characters.find((c) => c.victim)
+  const target = (cl as { with?: string; of?: string; char?: string }).with ?? (cl as { of?: string }).of ?? (cl as { char?: string }).char
+  if (victim && target === victim.id && SAME_ROOM_AS_VICTIM.has(cl.kind)) return 'az áldozattal egy helyiségben (nem) lévő szereplő nyoma'
+  const stated = victim?.clues.find((c) => c.kind === 'aloneWithKiller')
+  const room = stated && stated.kind === 'aloneWithKiller' ? stated.room : undefined
+  if (!room) return null // Murdoku-stílus: az áldozat szobája nincs kimondva
+  if (cl.kind === 'notIn' && cl.room === room) return 'az áldozat szobájában „nem" volt'
+  if (cl.kind === 'onlyGender') {
+    if (cl.room) return cl.room === room ? 'az áldozat szobáját nevezi meg' : null
+    return victim?.gender === cl.gender ? 'az áldozattal azonos nemű „egyetlen"-nyom: kizárja az áldozat szobáját' : null
+  }
+  if (!UNARY_KINDS.has(cl.kind)) return null
+  let any = false
+  for (let r = 0; r < g.n; r++)
+    for (let c = 0; c < g.n; c++) {
+      if (g.blocked[r]![c]! || !unaryOk(g, cl, r, c)) continue
+      any = true
+      if (g.room[r]![c] !== room) return null
+    }
+  return any ? 'a nyom csak az áldozat szobájában lehet igaz' : null
+}
+
 function audit(p: Puzzle) {
   it(`${p.id}: a megoldás kielégíti a referencia-szabályokat, és egyértelmű`, () => {
     const ref = makeReference(p)
@@ -43,17 +78,20 @@ function audit(p: Puzzle) {
 
   it(`${p.id}: a nyomok csak létező tárgyra / helyiségre / szereplőre utalnak, és a szöveg kimondja`, () => {
     const onBoard = new Set(p.objects.map((o) => o.type))
+    const grid = buildGrid(p)
     for (const ch of p.characters) {
       expect(ch.clueText).toHaveLength(ch.clues.length)
       ch.clues.forEach((cl, i) => {
         const text = ch.clueText[i]!.replaceAll('**', '')
         const hidden = text.includes('███') || text.includes('🔒')
         const x = refs(cl)
+        if (!ch.victim) expect(killerLeak(p, grid, cl), `${ch.name}: „${text}" — a nyom elárulja a gyilkost (vagy kizár valakit)`).toBeNull()
         if ('cat' in cl) {
           expect(CATEGORIES[cl.cat], `${ch.name}: ismeretlen kategória ${cl.cat}`).toBeTruthy()
           expect(CATEGORIES[cl.cat]!.types.some((t) => onBoard.has(t)), `${ch.name}: nincs ${cl.cat} a pályán`).toBe(true)
-          expect(text.includes(CATEGORIES[cl.cat]!.hu), `${ch.name}: „${text}" nem említi: ${CATEGORIES[cl.cat]!.hu}`).toBe(true)
-        }
+          // a kártya a PÁLYÁN lévő tagok nevét mondja ki (mint a térkép felirata), nem a kategória általános szavát
+          for (const t of CATEGORIES[cl.cat]!.types.filter((t) => onBoard.has(t)))
+            expect(text.includes(OBJECTS[t]!.hu), `${ch.name}: „${text}" nem említi a pályán lévő tárgyat: ${OBJECTS[t]!.hu}`).toBe(true)        }
         if (cl.kind === 'terrain') {
           expect(Object.values(p.floors ?? {}), `${ch.name}: nincs ${cl.style} padló a pályán`).toContain(cl.style)
           expect(text.toLowerCase().includes(TERRAIN[cl.style]!.in), `${ch.name}: „${text}" nem említi: ${TERRAIN[cl.style]!.in}`).toBe(true)
@@ -62,7 +100,9 @@ function audit(p: Puzzle) {
           expect(onBoard.has(t), `${ch.name}: „${text}" — a(z) ${t} nincs a pályán`).toBe(true)
           expect(OBJECTS[t]?.emoji, `${t}: nincs jelkép`).toBeTruthy()
           const o = OBJECTS[t]!
-          if (!hidden) expect([o.hu, o.on, o.abl].some((s) => s && text.includes(s)), `${ch.name}: „${text}" nem említi: ${o.hu}`).toBe(true)
+          // a ragozott alak is jó (kapszula → kapszulától), névelő nélkül és kis/nagybetűre érzéketlenül („A legközelebbi kapszulától…")
+          const named = [o.hu, o.on, o.abl?.replace(/^az? /, '')].some((s) => s && text.toLowerCase().includes(s.toLowerCase()))
+          if (!hidden) expect(named, `${ch.name}: „${text}" nem említi: ${o.hu}`).toBe(true)
         }
         for (const r of x.rooms) {
           expect(p.rooms[r], `${ch.name}: ismeretlen helyiség ${r}`).toBeTruthy()

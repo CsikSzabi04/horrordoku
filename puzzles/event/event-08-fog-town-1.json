@@ -1,0 +1,176 @@
+{
+  "v": 1,
+  "id": "event-08-fog-town-1",
+  "mode": "event",
+  "world": "fog-town",
+  "title": "Az Obeliszkfejű Hóhér",
+  "story": "A ködben az Obeliszkfejű Hóhér holtteste fekszik. A rádió sistereg: a nyomok néhány szava kitakarva marad.",
+  "size": 5,
+  "difficulty": 2,
+  "rooms": {
+    "A": "Apartman",
+    "B": "Bowlingpálya",
+    "T": "Tóparti szálló",
+    "M": "Másik világ"
+  },
+  "layout": [
+    "TTTTB",
+    "TTTBB",
+    "AABBB",
+    "MAAAM",
+    "MMMMM"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "E4",
+        "D2",
+        "A5"
+      ]
+    },
+    {
+      "type": "wheelchair",
+      "at": "B1"
+    },
+    {
+      "type": "radio",
+      "at": [
+        "D5",
+        "B3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "window",
+      "at": "B2",
+      "blocking": true
+    },
+    {
+      "type": "hospbed",
+      "at": [
+        "A2",
+        "A4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "doll",
+      "at": "E5",
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": [
+        "A3",
+        "C2"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "sandor-szeles",
+      "name": "Jamie Sunderwood",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "wheelchair"
+        }
+      ],
+      "clueText": [
+        "Egy **kerekesszéken** ült."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "a-piramisfeju",
+      "name": "Az Obeliszkfejű Hóhér",
+      "race": "ghoul",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "B"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Bowlingpályán **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "lujza",
+      "name": "Laurel",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "dir",
+          "of": "a-piramisfeju",
+          "dir": "S"
+        }
+      ],
+      "clueText": [
+        "**Az Obeliszkfejű Hóhértől délre** volt."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "anna-oroszi",
+      "name": "Angelica Orsino",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "doll"
+        }
+      ],
+      "clueText": [
+        "Egy **varrott baba mellett** volt."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    },
+    {
+      "id": "marianna",
+      "name": "Marina",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "A Másik világban egy **███** volt."
+      ],
+      "source": {
+        "game": "Hushed Heights"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "sandor-szeles": "B1",
+    "a-piramisfeju": "D2",
+    "lujza": "C3",
+    "anna-oroszi": "E4",
+    "marianna": "A5"
+  },
+  "murderer": "lujza",
+  "rev": 1,
+  "worldRule": "radio"
+}

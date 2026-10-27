@@ -1,0 +1,205 @@
+{
+  "v": 1,
+  "id": "event-11-sunshine-mall-4",
+  "mode": "event",
+  "world": "sunshine-mall",
+  "title": "A játékterem",
+  "story": "Erin St. Clair a játékteremből sosem ment el nyerés nélkül. Ma este mégis elnémultak a gépek.",
+  "size": 7,
+  "difficulty": 4,
+  "rooms": {
+    "F": "Fagylaltozó",
+    "T": "Étterem-udvar",
+    "M": "Mozi",
+    "J": "Játékbolt",
+    "S": "Szökőkút-tér",
+    "Z": "Szolgálati folyosó",
+    "I": "Titkos labor"
+  },
+  "layout": [
+    "MMMIIII",
+    "MMMMIII",
+    "ZSSSSIJ",
+    "ZSFSSJJ",
+    "ZFFTJJJ",
+    "ZFTTTJJ",
+    "ZFFFTTT"
+  ],
+  "objects": [
+    {
+      "type": "chair",
+      "at": [
+        "A6",
+        "E7"
+      ]
+    },
+    {
+      "type": "carpet",
+      "at": [
+        "C5",
+        "F4",
+        "B6"
+      ]
+    },
+    {
+      "type": "fountain",
+      "at": [
+        "G5",
+        "C4",
+        "C3",
+        "B5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "popcorn",
+      "at": "C6",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "lorant-sarkany",
+      "name": "Luke St. Clair",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "A Moziban ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "dezso-hunyadi",
+      "name": "Dusty Hendricks",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "erika-sarosi",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Erin St. Clairtól északra** volt."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "erika-sarosi",
+      "name": "Erin St. Clair",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Titkos laborban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "mariann-majer",
+      "name": "Maxine Meadows",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "a-liderc",
+      "name": "Az Átokúr",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Fagylaltozóban egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "matyas-palfi",
+      "name": "Mick Wheelwright",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "chair"
+        }
+      ],
+      "clueText": [
+        "Egy **széken** ült."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    },
+    {
+      "id": "nyolc",
+      "name": "Tizenkettő",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "f",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Fagylaltozóban ő volt az **egyetlen nő**."
+      ],
+      "source": {
+        "game": "Odder Matters"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "lorant-sarkany": "B1",
+    "dezso-hunyadi": "E2",
+    "erika-sarosi": "F3",
+    "mariann-majer": "G4",
+    "a-liderc": "C5",
+    "matyas-palfi": "A6",
+    "nyolc": "D7"
+  },
+  "murderer": "dezso-hunyadi",
+  "rev": 1,
+  "worldRule": "nightvision"
+}

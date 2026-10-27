@@ -1,0 +1,290 @@
+{
+  "v": 1,
+  "id": "event-19-wizard-school-5",
+  "mode": "event",
+  "world": "wizard-school",
+  "title": "A legmagasabb pont",
+  "story": "Albin Bumblewick a legmagasabb pontról hagyta el a kastélyt. A Kalandozók Térképe egyszerre csak egy helyiséget mutat.",
+  "size": 10,
+  "difficulty": 5,
+  "rooms": {
+    "N": "Nagyterem",
+    "O": "Oroszlán-torony",
+    "F": "Főzőterem",
+    "T": "Tiltott Erdő",
+    "A": "Akadémia kapuja",
+    "G": "Gyuri kunyhója",
+    "K": "Kívánság Terme",
+    "R": "Repülő-pálya"
+  },
+  "layout": [
+    "FFFFFFFFFF",
+    "TTTTTTTFFF",
+    "NNTTKKKKFF",
+    "NNNNKKKKKF",
+    "NNNKKKKKKR",
+    "NGGGRRRKRR",
+    "GGGGRRRRRR",
+    "GGGRRRAAAA",
+    "OOGRRAAAAA",
+    "OOOOOAAAAA"
+  ],
+  "objects": [
+    {
+      "type": "bench",
+      "at": [
+        "I8",
+        "F1",
+        "A7",
+        "G2",
+        "A8",
+        "C8"
+      ]
+    },
+    {
+      "type": "broom",
+      "at": [
+        "E5",
+        "J3",
+        "H1"
+      ]
+    },
+    {
+      "type": "cauldron",
+      "at": "F8",
+      "blocking": true
+    },
+    {
+      "type": "armor",
+      "at": [
+        "E1",
+        "G4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "candle",
+      "at": [
+        "B5",
+        "D2",
+        "I4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "painting",
+      "at": "B6",
+      "blocking": true
+    },
+    {
+      "type": "carpet",
+      "at": "D1"
+    }
+  ],
+  "characters": [
+    {
+      "id": "gyuri-bozontos",
+      "name": "Haldric",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "beside",
+          "object": "armor"
+        }
+      ],
+      "clueText": [
+        "Egy **páncél mellett** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "hermina-gazdag",
+      "name": "Hermina Greenwood",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "f",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A Tiltott Erdőben ő volt az **egyetlen nő**."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "hugo-pakozdi",
+      "name": "Henry Villámseb",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "broom",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "A Főzőteremben egy **seprűn** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "minerva-kopjas",
+      "name": "Mina McRaven",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "f",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "A Nagyteremben ő volt az **egyetlen nő**."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "lujza-szerelmes",
+      "name": "Selene Jószív",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "broom"
+        }
+      ],
+      "clueText": [
+        "Egy **seprűn** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "albert-dombo",
+      "name": "Albin Bumblewick",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "K"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Kívánság Termében **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "remi-vasvari",
+      "name": "Rory Weswick",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "bench",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "Gyuri kunyhójában egy **padon** ült."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "gina-vasvari",
+      "name": "Ginnie Weswick",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "perec-pitvar",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Severin Viperától északra** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "perec-pitvar",
+      "name": "Severin Vipera",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "in",
+          "room": "R"
+        }
+      ],
+      "clueText": [
+        "A Repülő-pályán volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    },
+    {
+      "id": "nandor-hosszuszar",
+      "name": "Nevin Longbrook",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "col",
+          "op": "lt",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A **3. oszloptól balra** volt."
+      ],
+      "source": {
+        "game": "Henry LightningScar"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "gyuri-bozontos": "F1",
+    "hermina-gazdag": "G2",
+    "hugo-pakozdi": "J3",
+    "minerva-kopjas": "C4",
+    "lujza-szerelmes": "E5",
+    "albert-dombo": "H6",
+    "remi-vasvari": "A7",
+    "gina-vasvari": "I8",
+    "perec-pitvar": "D9",
+    "nandor-hosszuszar": "B10"
+  },
+  "murderer": "lujza-szerelmes",
+  "rev": 1,
+  "worldRule": "cameras"
+}

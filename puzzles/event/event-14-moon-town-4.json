@@ -1,0 +1,257 @@
+{
+  "v": 1,
+  "id": "event-14-moon-town-4",
+  "mode": "event",
+  "world": "moon-town",
+  "title": "A szellem látogatása",
+  "story": "Jerome Gilmore utoljára a régi házban látták. A lámpák fénykörén kívül minden árnyék.",
+  "size": 8,
+  "difficulty": 5,
+  "rooms": {
+    "H": "Holdi Kocsma",
+    "S": "Sárvári-kúria",
+    "G": "Gyöngyösi-ház",
+    "F": "Fűzfa-híd",
+    "L": "Lukács-kúria",
+    "T": "Temető",
+    "I": "Gimnázium",
+    "R": "Régi templom"
+  },
+  "layout": [
+    "SSHGGGGG",
+    "SSHHFFFG",
+    "SSHTFFFF",
+    "SHHTTRFF",
+    "IIIITRRF",
+    "ILIITRRR",
+    "ILLLTRRR",
+    "LLLLTRRR"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "H8",
+        "A3"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "E2",
+        "A5",
+        "C6"
+      ]
+    },
+    {
+      "type": "lamp",
+      "at": [
+        "C4",
+        "D4",
+        "F5",
+        "G8",
+        "D7"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "charger",
+      "at": [
+        "A8",
+        "H2"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "grave",
+      "at": [
+        "C1",
+        "E5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": [
+        "F4",
+        "A1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "candle",
+      "at": [
+        "G7",
+        "G6"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "chair",
+      "at": "B3"
+    }
+  ],
+  "characters": [
+    {
+      "id": "mark-denes",
+      "name": "Matty Donnelly",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "dark"
+        }
+      ],
+      "clueText": [
+        "Sötét mezőn állt — a Sötétség megszállta."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "szabolcs-sarvari",
+      "name": "Stephen Salvatori",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **padon** ült."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "kata-pasztor",
+      "name": "Katerina Pearce",
+      "race": "vampire",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "Egy **pad vagy szék mellett** volt."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "jeromos-gyongyosi",
+      "name": "Jerome Gilmore",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Fűzfa-hídon **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "daniel-sarvari",
+      "name": "Damian Salvatori",
+      "race": "vampire",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "szabolcs-sarvari",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Stephen Salvatoritól délre** volt."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "ella-gyongyosi",
+      "name": "Elina Gilmore",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "f",
+          "room": "L"
+        }
+      ],
+      "clueText": [
+        "A Lukács-kúriában ő volt az **egyetlen nő**."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "bogi-bertalan",
+      "name": "Bea Bennetson",
+      "race": "witch",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "alfred-sos",
+          "rows": 1
+        }
+      ],
+      "clueText": [
+        "Pontosan egy sorral **Aldric Saltwelltől északra** volt."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    },
+    {
+      "id": "alfred-sos",
+      "name": "Aldric Saltwell",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "The Bloodsucker Journals"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "mark-denes": "D1",
+    "szabolcs-sarvari": "E2",
+    "kata-pasztor": "A3",
+    "jeromos-gyongyosi": "G4",
+    "daniel-sarvari": "C5",
+    "ella-gyongyosi": "B6",
+    "bogi-bertalan": "F7",
+    "alfred-sos": "H8"
+  },
+  "murderer": "szabolcs-sarvari",
+  "rev": 1,
+  "worldRule": "light"
+}

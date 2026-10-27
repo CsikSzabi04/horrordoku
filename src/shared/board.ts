@@ -9,9 +9,9 @@ export interface BoardState {
 }
 
 export type Op =
-  | { op: 'place';   char: CharId; cell: CellId }
+  | { op: 'place';   char: CharId; cell: CellId; trap?: true }   // trap: a Gyilkos „Eltüntetés” csapda-mezőjére (épp eltűnt tárgy) — a motor ilyenkor a foglalt mezőt is elfogadja
   | { op: 'unplace'; char: CharId }
-  | { op: 'move';    char: CharId; to: CellId }      // co-op: a másik lerakását is el lehet vinni
+  | { op: 'move';    char: CharId; to: CellId; trap?: true }      // co-op: a másik lerakását is el lehet vinni
   | { op: 'mark';    cell: CellId; on: boolean }
   | { op: 'note';    cell: CellId; chars: CharId[] }
   | { op: 'erase';   cell: CellId }

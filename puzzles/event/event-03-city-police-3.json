@@ -1,0 +1,232 @@
+{
+  "v": 1,
+  "id": "event-03-city-police-3",
+  "mode": "event",
+  "world": "city-police",
+  "title": "Az utolsó rádióüzenet",
+  "story": "Martin Brannick az utolsó üzenetét rádión adta le, aztán csend lett. A rendőrség folyosói éjszaka másként néznek ki.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "F": "Főcsarnok",
+    "N": "Nyugati iroda",
+    "S": "Sötétkamra",
+    "K": "Könyvtár",
+    "M": "Mentőszoba",
+    "A": "Kapitányi iroda",
+    "L": "Lőtér"
+  },
+  "layout": [
+    "KKMMMMM",
+    "KKMMMFF",
+    "KKMMMAF",
+    "AAAAAAF",
+    "ALSSSSF",
+    "LLLSSFF",
+    "LLNNNFF"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "B4",
+        "A5",
+        "C7"
+      ]
+    },
+    {
+      "type": "itembox",
+      "at": [
+        "E1",
+        "B2"
+      ]
+    },
+    {
+      "type": "herb",
+      "at": "F6"
+    },
+    {
+      "type": "doorSpade",
+      "at": "D5",
+      "blocking": true
+    },
+    {
+      "type": "doorDiamond",
+      "at": "E3",
+      "blocking": true
+    },
+    {
+      "type": "doorCircle",
+      "at": "E2",
+      "blocking": true
+    },
+    {
+      "type": "typewriter",
+      "at": [
+        "D1",
+        "A2",
+        "F4",
+        "D4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "statue",
+      "at": "F1",
+      "blocking": true
+    },
+    {
+      "type": "crate",
+      "at": [
+        "E5",
+        "G6"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "banfi-bruno",
+      "name": "Bryce Steel",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "itembox"
+        }
+      ],
+      "clueText": [
+        "Egy **tárolódobozon** volt."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "biro-csenge",
+      "name": "Cherry Birkley",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "banfi-bruno"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Bryce Steellel**."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "lin-adel",
+      "name": "Ava Wei",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "a-sotet-ur",
+          "rows": 2
+        }
+      ],
+      "clueText": [
+        "Pontosan két sorral **Y úrtól északra** volt."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "lazar-leo",
+      "name": "Leo S. Kendrick",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "A"
+        }
+      ],
+      "clueText": [
+        "A Kapitányi irodában egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "a-sotet-ur",
+      "name": "Y úr",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "A"
+        }
+      ],
+      "clueText": [
+        "A Kapitányi irodában egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "bodor-marcell",
+      "name": "Martin Brannick",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "F"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Főcsarnokban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    },
+    {
+      "id": "hegedus-klara",
+      "name": "Clara Redbrook",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "f",
+          "room": "N"
+        }
+      ],
+      "clueText": [
+        "A Nyugati irodában ő volt az **egyetlen nő**."
+      ],
+      "source": {
+        "game": "Vile Dweller"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "banfi-bruno": "E1",
+    "biro-csenge": "D2",
+    "lin-adel": "G3",
+    "lazar-leo": "B4",
+    "a-sotet-ur": "A5",
+    "bodor-marcell": "F6",
+    "hegedus-klara": "C7"
+  },
+  "murderer": "lin-adel",
+  "rev": 1,
+  "worldRule": "doors"
+}

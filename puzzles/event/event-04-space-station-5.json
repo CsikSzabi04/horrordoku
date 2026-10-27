@@ -1,0 +1,238 @@
+{
+  "v": 1,
+  "id": "event-04-space-station-5",
+  "mode": "event",
+  "world": "space-station",
+  "title": "A hívás megszakadt",
+  "story": "Nora Tailor hangja félbeszakadt a rádióban, aztán sisteregni kezdett. A Novastopol Állomás újra hallgat.",
+  "size": 8,
+  "difficulty": 5,
+  "rooms": {
+    "H": "Híd",
+    "O": "Orvosi szárny",
+    "A": "Hangár",
+    "G": "Gépház",
+    "S": "Szellőzőrendszer",
+    "L": "Légzsilip"
+  },
+  "layout": [
+    "HHGGOOOO",
+    "HGGOOAAA",
+    "HGGOOAAA",
+    "HHOOOAAA",
+    "HSOOAAAA",
+    "SSSLAALL",
+    "SSSLLLLL",
+    "SSSLLLLL"
+  ],
+  "objects": [
+    {
+      "type": "cryopod",
+      "at": [
+        "C5",
+        "A6",
+        "H7",
+        "B8",
+        "C1"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "F4",
+        "C6",
+        "A2"
+      ]
+    },
+    {
+      "type": "airlock",
+      "at": "E6",
+      "blocking": true
+    },
+    {
+      "type": "tracker",
+      "at": "A8",
+      "blocking": true
+    },
+    {
+      "type": "flamer",
+      "at": [
+        "B7",
+        "D4",
+        "G2",
+        "A7",
+        "E8"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "cardreader",
+      "at": "D6",
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "rokus",
+      "name": "Rico",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "cryopod",
+          "cells": 4
+        }
+      ],
+      "clueText": [
+        "A legközelebbi hibernálókapszulától pontosan **4 mezőre** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "sos",
+      "name": "Sampson",
+      "race": "ghost",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "airlock",
+          "cells": 4
+        }
+      ],
+      "clueText": [
+        "A légzsiliptől pontosan **4 mezőre** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "antal-anita",
+      "name": "Amelia Ridley",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "leftOf",
+          "of": "sos"
+        }
+      ],
+      "clueText": [
+        "**Sampsontól balra** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "az-urleny",
+      "name": "Az Űrszülött",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "A"
+        }
+      ],
+      "clueText": [
+        "A Hangárban ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "meszaros",
+      "name": "Harlow",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "cryopod"
+        }
+      ],
+      "clueText": [
+        "Egy **hibernálókapszulán** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "toth-nora",
+      "name": "Nora Tailor",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Szellőzőrendszerben **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "akos",
+      "name": "Axton",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "veres",
+      "name": "Wade",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "meszaros",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Harlowtól délre** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "rokus": "G1",
+    "sos": "E2",
+    "antal-anita": "D3",
+    "az-urleny": "F4",
+    "meszaros": "C5",
+    "toth-nora": "A6",
+    "akos": "H7",
+    "veres": "B8"
+  },
+  "murderer": "veres",
+  "rev": 1,
+  "worldRule": "motion"
+}

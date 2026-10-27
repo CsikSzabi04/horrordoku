@@ -8,9 +8,7 @@ export interface ToolsProps {
   tool: Tool
   onTool: (t: Tool) => void
   canUndo: boolean
-  canRedo: boolean
   onUndo: () => void
-  onRedo: () => void
   /** Radír hosszú nyomása: minden mező törlése. */
   onClearAll: () => void
   onHint: () => void
@@ -18,23 +16,16 @@ export interface ToolsProps {
   canSubmit: boolean
   onSubmit: () => void
   onHow: () => void
-  onHelp: () => void
-  onShare: () => void
-  onSave: () => void
-  onSound: () => void
-  muted: boolean
-  onSettings: () => void
-  /** Együtt módban a beállítások nem nyílnak meg a játékból (a szoba kapcsolata megszakadna). */
-  hideSettings?: boolean
   disabled?: boolean
-  /** Mód-specifikus extra gombok (pl. Gyilkos-képességek) — az alsó sor fölé kerülnek. */
+  /** Mód-specifikus extra gombok (pl. Feladom, Gyilkos-képességek) — a Tipp és a Beküldés közé kerülnek. */
   extra?: ReactNode
 }
-export type ToolKey = 'xTool' | 'erase' | 'eraseHint' | 'undo' | 'redo' | 'hint' | 'submit' | 'submitHint' | 'how' | 'help' | 'share' | 'save' | 'sound' | 'settings'
+export type ToolKey = 'xTool' | 'erase' | 'eraseHint' | 'undo' | 'hint' | 'submit' | 'submitHint' | 'how'
 
 /**
- * A jobb szélső eszközoszlop (minden játékmódban ugyanez): ✕, radír (nyomva tartva teljes törlés), visszavonás / újra,
- * tipp, beküldés, súgó, megosztás, mentés, hang, beállítások.
+ * A jobb szélső eszközoszlop (minden játékmódban ugyanez), fentről lefelé: ✕, radír (nyomva tartva teljes törlés), visszavonás,
+ * lent tipp, feladom (extra), beküldés, hogyan kell játszani. Az idő / sötét mód / nyelv és a beállítások / hang a bal oszlop alján van
+ * (`GameFooter`). A mentés automatikus, ezért nincs hozzá gomb.
  */
 export function Tools(p: ToolsProps) {
   const { t } = p
@@ -71,6 +62,7 @@ export function Tools(p: ToolsProps) {
         data-tool="erase"
         aria-pressed={p.tool === 'erase'}
         title={`${t('erase')} — ${t('eraseHint')}`}
+        aria-label={`${t('erase')} — ${t('eraseHint')}`}
         disabled={p.disabled}
         onPointerDown={start}
         onPointerUp={() => stop(true)}
@@ -80,7 +72,6 @@ export function Tools(p: ToolsProps) {
         onContextMenu={(e) => e.preventDefault()}
       >
         <span className="eico">🧽</span>
-        <small>{t('eraseHint')}</small>
         {ring && (
           <svg className="bring" viewBox="0 0 100 100" aria-hidden="true" preserveAspectRatio="none" style={{ ['--hold' as string]: `${HOLD_MS}ms` }}>
             <rect x="3" y="3" width="94" height="94" rx="14" pathLength="100" />
@@ -89,25 +80,15 @@ export function Tools(p: ToolsProps) {
       </button>
       <div className="pair">
         <button type="button" className="tbtn wide" data-act="undo" disabled={!p.canUndo || p.disabled} onClick={p.onUndo}>{t('undo')}</button>
-        <button type="button" className="tbtn sq" data-act="redo" disabled={!p.canRedo || p.disabled} onClick={p.onRedo} title={t('redo')} aria-label={t('redo')}>↷</button>
       </div>
       <div className="grow" />
-      {p.extra}
       <button type="button" className="tbtn" data-act="hint" disabled={p.disabled} onClick={p.onHint}>💡 {t('hint')}{p.hints > 0 ? ` (${p.hints})` : ''}</button>
+      {p.extra}
       <button type="button" className="tbtn submit" data-act="submit" disabled={!p.canSubmit || p.disabled} onClick={p.onSubmit}>
         {t('submit')}
         {!p.canSubmit && <small>{t('submitHint')}</small>}
       </button>
       <button type="button" className="tbtn" data-act="how" onClick={p.onHow}>{t('how')}</button>
-      <div className="row3">
-        <button type="button" className="tbtn sq" data-act="help" title={t('help')} aria-label={t('help')} onClick={p.onHelp}>?</button>
-        <button type="button" className="tbtn sq" data-act="share" title={t('share')} aria-label={t('share')} onClick={p.onShare}>↗</button>
-        <button type="button" className="tbtn sq" data-act="save" title={t('save')} aria-label={t('save')} onClick={p.onSave}>💾</button>
-      </div>
-      <div className="row2">
-        <button type="button" className={`tbtn sq${p.muted ? ' on' : ''}`} data-act="sound" title={t('sound')} aria-label={t('sound')} aria-pressed={p.muted} onClick={p.onSound}>{p.muted ? '🔇' : '🔊'}</button>
-        {!p.hideSettings && <button type="button" className="tbtn sq" data-act="settings" title={t('settings')} aria-label={t('settings')} onClick={p.onSettings}>⚙</button>}
-      </div>
     </div>
   )
 }

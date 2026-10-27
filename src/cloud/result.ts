@@ -23,6 +23,8 @@ export const iso = (t: string) => new Date(t).toISOString().replace(/\.\d{3}Z$/,
 /** A SQL-függvények `raise exception '…'` üzenetei (0002/0003) → ErrorCode. */
 function fromRaise(msg: string): Result<never> {
   if (/not authenticated/i.test(msg)) return fail('unauthenticated', msg)
+  // a Gyilkos-mód játékszabály-hibái (0007): „most nem lehet”, hűtés, keret — nem ütközés és nem jogosultság
+  if (/^(cooldown|another effect|not now|abilit|unknown ability|no time limit|no sniffs|no meetings|meetings need|no vote|no submission|no epilogue|no running game|not a player|only a detective|only the killer|invalid (mode|target|text)|at least 2 players)/i.test(msg)) return fail('invalid', msg)
   if (/not found/i.test(msg)) return fail('not_found', msg)
   if (/full|already|exists|rev_conflict|limit/i.test(msg)) return fail('conflict', msg)
   if (/closed|only the (host|owner)|owner cannot|not a member|not friends|forbidden/i.test(msg)) return fail('forbidden', msg)

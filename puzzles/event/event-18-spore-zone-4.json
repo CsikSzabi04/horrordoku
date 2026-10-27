@@ -1,0 +1,271 @@
+{
+  "v": 1,
+  "id": "event-18-spore-zone-4",
+  "mode": "event",
+  "world": "spore-zone",
+  "title": "A Szentjánosbogarak",
+  "story": "Marlena a kórház felé indult, de nem ért oda. A rádió recseg, a szavak elmosódnak.",
+  "size": 9,
+  "difficulty": 5,
+  "rooms": {
+    "K": "Karantén-zóna",
+    "D": "Dunaváros",
+    "Z": "Zsilip-gát",
+    "T": "Tetőtelep",
+    "E": "Egyetem",
+    "R": "Kórház",
+    "M": "Metró",
+    "H": "Hegyi kabin"
+  },
+  "layout": [
+    "HHHHRRRRR",
+    "HHHHRRRRR",
+    "ZZZZZREEE",
+    "ZZDZDDEEE",
+    "MZDDDDEEE",
+    "MZKKDKTEE",
+    "MMKKKKTTT",
+    "MMMKKTTTT",
+    "MMMMTTTTT"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "B2",
+        "A6",
+        "F8",
+        "I7",
+        "G1",
+        "A5",
+        "G9"
+      ]
+    },
+    {
+      "type": "crate",
+      "at": [
+        "E9",
+        "H3"
+      ]
+    },
+    {
+      "type": "radio",
+      "at": [
+        "C3",
+        "A3"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "tree",
+      "at": [
+        "F9",
+        "C9",
+        "B6",
+        "H1"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "rock",
+      "at": "G6",
+      "blocking": true
+    },
+    {
+      "type": "car",
+      "at": "A4",
+      "blocking": true
+    },
+    {
+      "type": "bench",
+      "at": [
+        "B1",
+        "I8"
+      ]
+    }
+  ],
+  "characters": [
+    {
+      "id": "renata",
+      "name": "Rylee",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "ella-szucs",
+      "name": "Ella Williamson",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "f",
+          "room": "H"
+        }
+      ],
+      "clueText": [
+        "A Hegyi kabinban ő volt az **egyetlen nő**."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "tomi-muller",
+      "name": "Toby Millward",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "crate"
+        }
+      ],
+      "clueText": [
+        "Egy **ládán** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "marcsi-makai",
+      "name": "Marlena",
+      "race": "human",
+      "gender": "f",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "D"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Dunavárosban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "jozsef-muller",
+      "name": "Jonah Millward",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "northOf",
+          "of": "szabi",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Sammytől északra** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "abigel-andrasy",
+      "name": "Addie Anders",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "M"
+        }
+      ],
+      "clueText": [
+        "A Metróban egy **███** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "tesza",
+      "name": "Tessa",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "besideCat",
+          "cat": "seat"
+        }
+      ],
+      "clueText": [
+        "Egy **pad mellett** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "szabi",
+      "name": "Sammy",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet",
+          "room": "T"
+        }
+      ],
+      "clueText": [
+        "A Tetőtelepen egy **███** volt."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    },
+    {
+      "id": "hektor",
+      "name": "Hank",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "roomCount",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "A helyiségében **hárman** voltak."
+      ],
+      "source": {
+        "game": "The Remaining Few"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "renata": "G1",
+    "ella-szucs": "B2",
+    "tomi-muller": "H3",
+    "marcsi-makai": "C4",
+    "jozsef-muller": "D5",
+    "abigel-andrasy": "A6",
+    "tesza": "I7",
+    "szabi": "F8",
+    "hektor": "E9"
+  },
+  "murderer": "jozsef-muller",
+  "rev": 1,
+  "worldRule": "radio"
+}

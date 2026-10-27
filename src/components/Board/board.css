@@ -85,8 +85,17 @@
   animation: nd-pop 0.18s ease-out;
 }
 .x.auto {
-  color: rgba(0, 0, 0, 0.14);
+  color: rgba(0, 0, 0, 0.4);
   animation: none;
+}
+/* a padló nélküli (horror) mezők sötétek: ott világos ✕ kell */
+.cell:not(.fl) .x {
+  color: #efe7e9;
+  text-shadow: 0 0 3px #000;
+}
+.cell:not(.fl) .x.auto {
+  color: rgba(239, 231, 233, 0.42);
+  text-shadow: none;
 }
 .lock {
   position: absolute;
@@ -108,15 +117,16 @@
 }
 .letter {
   font: 900 calc(var(--cell) * 0.36) / 1 var(--ui, system-ui);
-  color: #b0412a;
+  color: var(--lc, #b0412a); /* a karakter saját színe (Board: colors) */
   -webkit-text-stroke: calc(var(--cell) * 0.075) #000;
   paint-order: stroke fill;
   letter-spacing: 0.02em;
   animation: nd-pop 0.16s ease-out;
 }
+/* az előnézet (a kijelölt karakter, még nincs lerakva): a saját színe, kissé áttetszően */
 .letter.pv {
-  color: #2f7de1;
-  opacity: 0.95;
+  color: var(--lc, #2f7de1);
+  opacity: 0.8;
   animation: none;
 }
 .token {
@@ -244,6 +254,11 @@
   z-index: 8;
   pointer-events: none;
   background: radial-gradient(circle at var(--ex) var(--ey), transparent 0, transparent calc(var(--cell) * 1.4), rgba(0, 0, 0, 0.96) calc(var(--cell) * 2.2));
+  transition: opacity 0.7s ease;
+}
+/* beküldés után / a játék végén a köd felold: a zöld / piros karikák és a megoldás látszanak */
+.fog.off {
+  opacity: 0;
 }
 
 @keyframes nd-fall {
@@ -396,4 +411,16 @@
 
 .obj.rugobj {
   margin-bottom: 0;
+}
+
+/* Gyilkos-mód „Névvel mutatott lerakások”: a legutóbbi lerakó színe, kis pont a karakteren */
+.token .placer {
+  position: absolute;
+  right: 2px;
+  bottom: 2px;
+  width: 0.55rem;
+  height: 0.55rem;
+  border: 1.5px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.5);
 }

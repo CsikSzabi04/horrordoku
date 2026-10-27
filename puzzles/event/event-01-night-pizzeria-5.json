@@ -1,0 +1,211 @@
+{
+  "v": 1,
+  "id": "event-01-night-pizzeria-5",
+  "mode": "event",
+  "world": "night-pizzeria",
+  "title": "Mögötte a függöny",
+  "story": "Amikor a kamerák újra visszajöttek, Rozsdás Róka már nem mozdult. A fények közben többször is villogtak — valaki a sötétben futott.",
+  "size": 7,
+  "difficulty": 5,
+  "rooms": {
+    "S": "Színpad",
+    "E": "Ebédlő",
+    "K": "Kalóz-öböl",
+    "O": "Konyha",
+    "I": "Iroda",
+    "N": "Nyugati folyosó"
+  },
+  "layout": [
+    "NNNNKKK",
+    "NNNNKKK",
+    "NNNNKSK",
+    "OOONSSS",
+    "OOOOSSS",
+    "OOOEIII",
+    "OOOEIII"
+  ],
+  "objects": [
+    {
+      "type": "carpet",
+      "at": [
+        "F6",
+        "B6"
+      ]
+    },
+    {
+      "type": "giftbox",
+      "at": [
+        "D5",
+        "F4",
+        "D2"
+      ]
+    },
+    {
+      "type": "partytable",
+      "at": "B2"
+    },
+    {
+      "type": "camera",
+      "at": [
+        "E6",
+        "C5",
+        "E4"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "oven",
+      "at": [
+        "B7",
+        "C3"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "kiss-marton",
+      "name": "Miles Schmitt",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "line",
+          "axis": "row",
+          "op": "ne",
+          "n": 3
+        }
+      ],
+      "clueText": [
+        "**Nem** a **3. sorban** volt."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "nyuszi",
+      "name": "Benny Nyuszi",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "diagonal",
+          "of": "varga-ferenc"
+        }
+      ],
+      "clueText": [
+        "Átlósan szomszédos volt **Warren Ashforddal**."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "varga-ferenc",
+      "name": "Warren Ashford",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "notBeside",
+          "object": "oven"
+        }
+      ],
+      "clueText": [
+        "**Nem** volt **pizzasütő mellett**."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "a-babu",
+      "name": "A Zsinórmester",
+      "race": "ghost",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyGender",
+          "gender": "m",
+          "room": "S"
+        }
+      ],
+      "clueText": [
+        "A Színpadon ő volt az **egyetlen férfi**."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "csibi",
+      "name": "Csipi Csibe",
+      "race": "ghoul",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "southOf",
+          "of": "nyuszi",
+          "rows": 3
+        }
+      ],
+      "clueText": [
+        "Pontosan három sorral **Benny Nyuszitól délre** volt."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "brumi",
+      "name": "Teddy Bolyhosmackó",
+      "race": "ghoul",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "carpet"
+        }
+      ],
+      "clueText": [
+        "Egy **vörös szőnyegen** volt."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    },
+    {
+      "id": "roko",
+      "name": "Rozsdás Róka",
+      "race": "ghoul",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "I"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. Az Irodában **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Five Evenings at Teddy's"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "kiss-marton": "C1",
+    "nyuszi": "B2",
+    "varga-ferenc": "A3",
+    "a-babu": "G4",
+    "csibi": "D5",
+    "brumi": "F6",
+    "roko": "E7"
+  },
+  "murderer": "brumi",
+  "rev": 1,
+  "worldRule": "cameras"
+}

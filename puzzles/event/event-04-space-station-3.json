@@ -1,0 +1,222 @@
+{
+  "v": 1,
+  "id": "event-04-space-station-3",
+  "mode": "event",
+  "world": "space-station",
+  "title": "Riasztás után",
+  "story": "Wade ott maradt, ahol a riasztás megszólalt. A szállítókocsi még mindig az ajtó előtt áll.",
+  "size": 7,
+  "difficulty": 3,
+  "rooms": {
+    "H": "Híd",
+    "O": "Orvosi szárny",
+    "A": "Hangár",
+    "G": "Gépház",
+    "S": "Szellőzőrendszer",
+    "L": "Légzsilip"
+  },
+  "layout": [
+    "HHGGGGG",
+    "HHHHGGG",
+    "HHHHGGG",
+    "HHHSSGG",
+    "HALLSSO",
+    "AALLLSO",
+    "AAAASSO"
+  ],
+  "objects": [
+    {
+      "type": "cryopod",
+      "at": [
+        "D3",
+        "D2"
+      ]
+    },
+    {
+      "type": "vent",
+      "at": [
+        "B5",
+        "E1",
+        "G2"
+      ]
+    },
+    {
+      "type": "bench",
+      "at": [
+        "C6",
+        "B4"
+      ]
+    },
+    {
+      "type": "airlock",
+      "at": "A1",
+      "blocking": true
+    },
+    {
+      "type": "tracker",
+      "at": "F3",
+      "blocking": true
+    },
+    {
+      "type": "cardreader",
+      "at": [
+        "B3",
+        "F5"
+      ],
+      "blocking": true
+    },
+    {
+      "type": "flamer",
+      "at": [
+        "E6",
+        "C7",
+        "F6"
+      ],
+      "blocking": true
+    }
+  ],
+  "characters": [
+    {
+      "id": "meszaros",
+      "name": "Harlow",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "on",
+          "object": "vent",
+          "room": "G"
+        }
+      ],
+      "clueText": [
+        "A Gépházban egy **szellőzőrácson** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "rokus",
+      "name": "Rico",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "cardreader",
+          "cells": 3
+        }
+      ],
+      "clueText": [
+        "A legközelebbi kártyaolvasótól pontosan **3 mezőre** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "antal-anita",
+      "name": "Amelia Ridley",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "cryopod"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **hibernálókapszulán** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "toth-nora",
+      "name": "Nora Tailor",
+      "race": "human",
+      "gender": "f",
+      "clues": [
+        {
+          "kind": "edge"
+        }
+      ],
+      "clueText": [
+        "A pálya **szélén** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "sos",
+      "name": "Sampson",
+      "race": "ghost",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "distance",
+          "fromObject": "airlock",
+          "cells": 4
+        }
+      ],
+      "clueText": [
+        "A légzsiliptől pontosan **4 mezőre** volt."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "akos",
+      "name": "Axton",
+      "race": "human",
+      "gender": "m",
+      "clues": [
+        {
+          "kind": "onlyOn",
+          "object": "bench"
+        }
+      ],
+      "clueText": [
+        "Ő volt az egyetlen, aki **padon** ült."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    },
+    {
+      "id": "veres",
+      "name": "Wade",
+      "race": "human",
+      "gender": "m",
+      "victim": true,
+      "clues": [
+        {
+          "kind": "aloneWithKiller",
+          "room": "A"
+        }
+      ],
+      "clueText": [
+        "Az áldozat. A Hangárban **egyedül** volt a gyilkossal."
+      ],
+      "source": {
+        "game": "Outsider: Solitude"
+      }
+    }
+  ],
+  "activePowers": [],
+  "solution": {
+    "meszaros": "E1",
+    "rokus": "F2",
+    "antal-anita": "D3",
+    "toth-nora": "G4",
+    "sos": "B5",
+    "akos": "C6",
+    "veres": "A7"
+  },
+  "murderer": "sos",
+  "rev": 1,
+  "worldRule": "motion"
+}

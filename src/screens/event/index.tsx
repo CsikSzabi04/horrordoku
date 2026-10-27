@@ -1,8 +1,11 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNav } from '../../app/nav'
+import { WorldIcon } from '../../components/WorldIcon'
 import { listPuzzles, startedIds } from '../../content/catalog'
 import type { PuzzleMeta } from '../../content/catalog'
-import { ruleInfo, WORLDS } from '../../game/worlds'
+import { puzzleTitle } from '../../content/localize'
+import { ruleInfo, worldInfo } from '../../game/worlds'
+import { pick } from '../../i18n/lang'
 import { getStorage } from '../../storage'
 import type { ProgressEntry } from '../../shared/storage'
 import { Button, Chip } from '../../ui'
@@ -12,7 +15,7 @@ import './event.css'
 const STARS = ['', '★☆☆☆☆', '★★☆☆☆', '★★★☆☆', '★★★★☆', '★★★★★']
 const fmt = (ms: number) => `${Math.floor(ms / 60000)}:${String(Math.floor(ms / 1000) % 60).padStart(2, '0')}`
 
-/** Esemény mód: híres horror-játékok és -sorozatok világai; mindegyikben 5 egymás utáni ügy (egyre nehezebb), saját világ-szabállyal. 16+ */
+/** Esemény mód: eredeti horror-történetek világai; mindegyikben 5 egymás utáni ügy (egyre nehezebb), saját világ-szabállyal. 16+ */
 export default function EventScreen() {
   const { go, back, route } = useNav()
   const world = route.name === 'event' ? route.world : undefined
@@ -37,18 +40,22 @@ export default function EventScreen() {
   const open = world ? worlds.find((w) => w.id === world) : undefined
 
   if (open) {
-    const w = WORLDS[open.id]
+    const w = worldInfo(open.id)
     const rule = ruleInfo(open.id, open.cases[0]?.worldRule ?? undefined)
     const next = open.cases.find((c) => !done(c.id))
     return (
       <main className="classic event" data-world={open.id}>
         <header>
-          <Button variant="ghost" size="sm" onClick={back}>← Világok</Button>
-          <h2>{w?.emoji} {w?.title ?? open.id}</h2>
-          <Chip>{open.cases.filter((c) => done(c.id)).length} / {open.cases.length} megoldva</Chip>
+          <Button variant="ghost" size="sm" onClick={back}>← {pick('Világok', 'Worlds')}</Button>
+          <h2>{w && <WorldIcon id={open.id} emoji={w.emoji} />} {w?.title ?? open.id}</h2>
+          <Chip>{open.cases.filter((c) => done(c.id)).length} / {open.cases.length} {pick('megoldva', 'solved')}</Chip>
         </header>
         <p className="lead">
-          {w?.game}. Öt ügy sorban, egyre nehezebben — bármelyiket megnyithatod, a félbehagyott játék elmentődik.
+          {w?.game}.{' '}
+          {pick(
+            'Öt ügy sorban, egyre nehezebben — bármelyiket megnyithatod, a félbehagyott játék elmentődik.',
+            'Five cases in a row, each harder than the last — open any of them; an unfinished game is saved.',
+          )}
           {rule && (
             <>
               {' '}<b>{rule.name}:</b> {rule.text}
@@ -62,11 +69,11 @@ export default function EventScreen() {
               <li key={p.id}>
                 <button type="button" className={`case world${pr?.solved ? ' done' : ''}${next?.id === p.id ? ' next' : ''}`} data-puzzle={p.id} data-no={p.no} onClick={() => go({ name: 'game', ref: p.id })}>
                   <span className="no">{p.no}</span>
-                  <b>{p.title}</b>
+                  <b>{puzzleTitle(p)}</b>
                   <small>
                     {p.size}×{p.size} · {STARS[p.difficulty]}
                   </small>
-                  <span className="state">{pr?.solved ? `✔ ${pr.bestMs ? fmt(pr.bestMs) : ''}` : started.has(p.id) ? '▶ Folytatás' : next?.id === p.id ? 'Következő ügy' : 'Új ügy'}</span>
+                  <span className="state">{pr?.solved ? `✔ ${pr.bestMs ? fmt(pr.bestMs) : ''}` : started.has(p.id) ? pick('▶ Folytatás', '▶ Continue') : next?.id === p.id ? pick('Következő ügy', 'Next case') : pick('Új ügy', 'New case')}</span>
                 </button>
               </li>
             )
@@ -79,26 +86,29 @@ export default function EventScreen() {
   return (
     <main className="classic event">
       <header>
-        <Button variant="ghost" size="sm" onClick={back}>← Menü</Button>
-        <h2>Esemény</h2>
-        <Chip>{solved} / {total} megoldva</Chip>
+        <Button variant="ghost" size="sm" onClick={back}>← {pick('Menü', 'Menu')}</Button>
+        <h2>{pick('Esemény', 'Event')}</h2>
+        <Chip>{solved} / {total} {pick('megoldva', 'solved')}</Chip>
       </header>
       <p className="lead">
-        {worlds.length} világ híres horror-játékokból és -sorozatokból, mindegyikben 5 ügy sorban. Minden világnak saját szabálya van — olvasd el, mielőtt belevágsz. A jumpscare itt élhet (a Beállításokban kapcsolható). <b>16+</b>
+        {pick(
+          `${worlds.length} világ eredeti horror-történetekből, mindegyikben 5 ügy sorban. Minden világnak saját szabálya van — olvasd el, mielőtt belevágsz. A jumpscare itt élhet (a Beállításokban kapcsolható).`,
+          `${worlds.length} worlds of original horror stories, each with 5 cases in a row. Every world has its own rule — read it before you dive in. Jumpscares can happen here (toggle them in Settings).`,
+        )}{' '}
+        <b>16+</b>
       </p>
       <div className="cases worlds">
         {worlds.map((wd, i) => {
-          const w = WORLDS[wd.id]
+          const w = worldInfo(wd.id)
           const n = wd.cases.filter((c) => done(c.id)).length
           const going = wd.cases.some((c) => started.has(c.id))
           return (
             <button key={wd.id} type="button" className={`case world${n === wd.cases.length ? ' done' : ''}`} data-world={wd.id} onClick={() => go({ name: 'event', world: wd.id })}>
-              <span className="no">{w?.emoji ?? String(i + 1)}</span>
+              <span className="no">{w ? <WorldIcon id={wd.id} emoji={w.emoji} /> : String(i + 1)}</span>
               <b>{w?.title ?? wd.id}</b>
               <small>{w?.game}</small>
-              <span className="rulename">{ruleInfo(wd.id, wd.cases[0]?.worldRule ?? undefined)?.name ?? ''}</span>
               <span className="state">
-                {n === wd.cases.length ? '✔ ' : ''}{n} / {wd.cases.length} ügy{going ? ' · ▶ Folytatás' : ''}
+                {n === wd.cases.length ? '✔ ' : ''}{n} / {wd.cases.length} {pick('ügy', wd.cases.length === 1 ? 'case' : 'cases')}{going ? pick(' · ▶ Folytatás', ' · ▶ Continue') : ''}
               </span>
             </button>
           )
